@@ -45,7 +45,7 @@ export interface Product {
 
 export type SortOption = 'price_asc' | 'price_desc' | 'gpu' | 'cpu' | 'ram' | 'ssd' | 'deal_score';
 
-export type SpecTagCategory = 'cpu' | 'ram' | 'ssd' | 'gpu';
+export type SpecTagCategory = 'cpu' | 'ram' | 'ssd' | 'gpu' | 'screen' | 'weight';
 export type SpecTagSelection = Partial<Record<SpecTagCategory, string | number>>;
 
 export interface FilterState {

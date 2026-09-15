@@ -1,6 +1,6 @@
 import React from 'react';
 import { FilterState, StampType, ConditionType, SortOption, Product, SpecTagCategory } from '../types/product';
-import { SlidersHorizontal, ArrowDownAZ, RotateCcw, Cpu, MemoryStick as RamIcon, HardDrive, Gamepad2, BarChart3 } from 'lucide-react';
+import { SlidersHorizontal, ArrowDownAZ, RotateCcw, Cpu, MemoryStick as RamIcon, HardDrive, Gamepad2, BarChart3, Monitor, Weight as WeightIcon } from 'lucide-react';
 import { collectTagOptions, isTagAvailable, minPriceForSelection } from '../utils/specTags';
 
 interface FiltersBarProps {
@@ -22,6 +22,8 @@ const TAG_GROUPS: { key: SpecTagCategory; label: string; icon: React.ReactNode }
   { key: 'ram', label: 'RAM', icon: <RamIcon className="w-3.5 h-3.5 text-orange-400" /> },
   { key: 'ssd', label: 'Storage', icon: <HardDrive className="w-3.5 h-3.5 text-orange-400" /> },
   { key: 'gpu', label: 'Scheda Video', icon: <Gamepad2 className="w-3.5 h-3.5 text-orange-400" /> },
+  { key: 'screen', label: 'Dimensione Schermo', icon: <Monitor className="w-3.5 h-3.5 text-orange-400" /> },
+  { key: 'weight', label: 'Peso', icon: <WeightIcon className="w-3.5 h-3.5 text-orange-400" /> },
 ];
 
 export const FiltersBar: React.FC<FiltersBarProps> = ({
