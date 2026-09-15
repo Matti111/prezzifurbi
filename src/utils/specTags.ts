@@ -1,8 +1,12 @@
 import { Product, SpecTagCategory, SpecTagSelection } from '../types/product';
+import { CPU_BENCHMARKS, GPU_BENCHMARKS } from '../data/hardwareBenchmarks';
 
 export interface ParsedTag {
   label: string;
+  /** Punteggio di prestazione (circa 0-100): dato reale da benchmark se `sourced`
+   * è true, altrimenti una stima approssimativa dedotta dal modello. */
   rank: number;
+  sourced: boolean;
 }
 
 export function parseRamGB(value: string): number {
@@ -17,37 +21,47 @@ export function parseSsdGB(value: string): number {
   return gb ? parseInt(gb[1], 10) : 0;
 }
 
+/** Applica il punteggio reale da benchmark se la famiglia è in tabella, altrimenti
+ * tiene la stima euristica passata come fallback (finché qualcuno non aggiunge il
+ * dato reale in hardwareBenchmarks.ts). */
+function withBenchmark(table: Record<string, number>, label: string, fallbackRank: number): ParsedTag {
+  if (label in table) {
+    return { label, rank: table[label], sourced: true };
+  }
+  return { label, rank: fallbackRank, sourced: false };
+}
+
 export function parseCpuTag(value: string): ParsedTag {
   let m = value.match(/Core\s+Ultra\s+([579])/i);
-  if (m) return { label: `Core Ultra ${m[1]}`, rank: 400 + parseInt(m[1], 10) };
+  if (m) return withBenchmark(CPU_BENCHMARKS, `Core Ultra ${m[1]}`, 40 + parseInt(m[1], 10));
 
   m = value.match(/\bi([3579])\b/i);
-  if (m) return { label: `Intel i${m[1]}`, rank: 300 + parseInt(m[1], 10) };
+  if (m) return withBenchmark(CPU_BENCHMARKS, `Intel i${m[1]}`, 30 + parseInt(m[1], 10));
 
   m = value.match(/Ryzen\s+([3579])/i);
-  if (m) return { label: `Ryzen ${m[1]}`, rank: 300 + parseInt(m[1], 10) };
+  if (m) return withBenchmark(CPU_BENCHMARKS, `Ryzen ${m[1]}`, 30 + parseInt(m[1], 10));
 
-  return { label: value.split(' ').slice(0, 2).join(' '), rank: 0 };
+  return { label: value.split(' ').slice(0, 2).join(' '), rank: 0, sourced: false };
 }
 
 export function parseGpuTag(value: string): ParsedTag {
   let m = value.match(/RTX\s?(\d{3,4})/i);
-  if (m) return { label: `RTX ${m[1]}`, rank: 1000 + parseInt(m[1], 10) };
+  if (m) return withBenchmark(GPU_BENCHMARKS, `RTX ${m[1]}`, 40 + parseInt(m[1], 10) / 100);
 
   m = value.match(/GTX\s?(\d{3,4})/i);
-  if (m) return { label: `GTX ${m[1]}`, rank: 500 + parseInt(m[1], 10) };
+  if (m) return withBenchmark(GPU_BENCHMARKS, `GTX ${m[1]}`, 15 + parseInt(m[1], 10) / 100);
 
   m = value.match(/Quadro\s?([A-Za-z0-9]+)/i);
-  if (m) return { label: `Quadro ${m[1]}`, rank: 700 };
+  if (m) return withBenchmark(GPU_BENCHMARKS, `Quadro ${m[1]}`, 16);
 
   m = value.match(/Radeon\s?(\d{3}[A-Za-z]?)/i);
-  if (m) return { label: `Radeon ${m[1]}`, rank: 200 + parseInt(m[1], 10) / 10 };
+  if (m) return withBenchmark(GPU_BENCHMARKS, `Radeon ${m[1]}`, 15 + parseInt(m[1], 10) / 100);
 
-  if (/Iris\s?Xe/i.test(value)) return { label: 'Iris Xe', rank: 100 };
-  if (/Radeon/i.test(value)) return { label: 'Radeon integrata', rank: 150 };
-  if (/UHD Graphics/i.test(value)) return { label: 'UHD Graphics', rank: 50 };
+  if (/Iris\s?Xe/i.test(value)) return withBenchmark(GPU_BENCHMARKS, 'Iris Xe', 11);
+  if (/Radeon/i.test(value)) return withBenchmark(GPU_BENCHMARKS, 'Radeon integrata', 15);
+  if (/UHD Graphics/i.test(value)) return withBenchmark(GPU_BENCHMARKS, 'UHD Graphics', 6);
 
-  return { label: value.split(' ').slice(0, 2).join(' '), rank: 0 };
+  return { label: value.split(' ').slice(0, 2).join(' '), rank: 0, sourced: false };
 }
 
 export function specValueForProduct(p: Product, category: SpecTagCategory): string | number {
@@ -109,6 +123,8 @@ export interface TagOption {
   value: string | number;
   label: string;
   rank: number;
+  /** Solo per cpu/gpu: true se `rank` è un punteggio reale da benchmark, false se stimato. */
+  sourced?: boolean;
 }
 
 export function collectTagOptions(products: Product[], category: SpecTagCategory): TagOption[] {
@@ -125,7 +141,7 @@ export function collectTagOptions(products: Product[], category: SpecTagCategory
       }
     } else {
       const tag = category === 'cpu' ? parseCpuTag(p.specs.cpu.value) : parseGpuTag(p.specs.gpu.value);
-      map.set(tag.label, { value: tag.label, label: tag.label, rank: tag.rank });
+      map.set(tag.label, { value: tag.label, label: tag.label, rank: tag.rank, sourced: tag.sourced });
     }
   }
   return Array.from(map.values()).sort((a, b) => a.rank - b.rank);

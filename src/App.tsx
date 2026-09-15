@@ -6,6 +6,7 @@ import { FiltersBar } from './components/FiltersBar';
 import { ProductCard } from './components/ProductCard';
 import { ProductDetailModal } from './components/ProductDetailModal';
 import { HowItWorksModal } from './components/HowItWorksModal';
+import { PerformanceCompareModal } from './components/PerformanceCompareModal';
 import { AffiliateDisclaimer } from './components/AffiliateDisclaimer';
 import { productMatchesSelection } from './utils/specTags';
 import { Shield, Flame, CheckCircle2 } from 'lucide-react';
@@ -27,6 +28,7 @@ export function App() {
   const [filters, setFilters] = useState<FilterState>(initialFilters);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isHowItWorksOpen, setIsHowItWorksOpen] = useState(false);
+  const [isCompareOpen, setIsCompareOpen] = useState(false);
 
   const handleFilterChange = (newFilters: Partial<FilterState>) => {
     setFilters((prev) => ({ ...prev, ...newFilters }));
@@ -220,6 +222,7 @@ export function App() {
           onReset={handleResetFilters}
           resultCount={filteredProducts.length}
           productsForTags={baseFilteredProducts}
+          onOpenCompare={() => setIsCompareOpen(true)}
         />
 
         {/* Product Cards Grid */}
@@ -262,6 +265,13 @@ export function App() {
       <HowItWorksModal
         isOpen={isHowItWorksOpen}
         onClose={() => setIsHowItWorksOpen(false)}
+      />
+
+      {/* Performance Comparison Modal */}
+      <PerformanceCompareModal
+        isOpen={isCompareOpen}
+        onClose={() => setIsCompareOpen(false)}
+        products={baseFilteredProducts}
       />
 
       {/* Affiliate Compliance & Footer */}

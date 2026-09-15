@@ -1,6 +1,6 @@
 import React from 'react';
 import { FilterState, StampType, ConditionType, SortOption, Product, SpecTagCategory } from '../types/product';
-import { SlidersHorizontal, ArrowDownAZ, RotateCcw, Cpu, MemoryStick as RamIcon, HardDrive, Gamepad2 } from 'lucide-react';
+import { SlidersHorizontal, ArrowDownAZ, RotateCcw, Cpu, MemoryStick as RamIcon, HardDrive, Gamepad2, BarChart3 } from 'lucide-react';
 import { collectTagOptions, isTagAvailable, minPriceForSelection } from '../utils/specTags';
 
 interface FiltersBarProps {
@@ -11,6 +11,7 @@ interface FiltersBarProps {
   /** Catalogo già filtrato per ricerca/timbro/stato/categoria (non per prezzo o tag
    * di specifica): è la base su cui i tag sotto calcolano disponibilità e prezzo minimo. */
   productsForTags: Product[];
+  onOpenCompare: () => void;
 }
 
 const BUDGET_MIN = 300;
@@ -29,6 +30,7 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
   onReset,
   resultCount,
   productsForTags,
+  onOpenCompare,
 }) => {
   const handleTagClick = (category: SpecTagCategory, value: string | number) => {
     const current = filters.specTags[category];
@@ -208,7 +210,17 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
 
       {/* 2B. Tag di specifica (CPU/RAM/SSD/GPU): mostrano dove si trova il limite di
           budget per avere quella caratteristica, combinabili se compatibili tra loro */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 pt-3 border-t border-slate-800 mt-3">
+      <div className="flex items-center justify-between pt-3 border-t border-slate-800 mt-3 mb-2">
+        <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Caratteristiche</span>
+        <button
+          onClick={onOpenCompare}
+          className="inline-flex items-center gap-1 text-[11px] font-semibold text-orange-400 hover:text-orange-300 transition-colors"
+        >
+          <BarChart3 className="w-3.5 h-3.5" />
+          <span>Confronta prestazioni</span>
+        </button>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
         {TAG_GROUPS.map((group) => {
           const options = collectTagOptions(productsForTags, group.key);
           if (options.length === 0) return null;
