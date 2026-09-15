@@ -1,0 +1,40 @@
+name: Aggiorna catalogo prodotti
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # ogni giorno alle 06:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Installa dipendenze
+        run: |
+          pip install requests playwright
+          playwright install --with-deps firefox
+
+      - name: Esegui aggiornamento catalogo
+        env:
+          AMAZON_CREATORS_CLIENT_ID: ${{ secrets.AMAZON_CREATORS_CLIENT_ID }}
+          AMAZON_CREATORS_CLIENT_SECRET: ${{ secrets.AMAZON_CREATORS_CLIENT_SECRET }}
+        run: python test_db.py
+
+      - name: Commit ed effettua il push se il catalogo e' cambiato
+        run: |
+          git config user.name "prezzifurbi-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add src/data/products.json
+          git diff --cached --quiet || git commit -m "chore: aggiornamento automatico prezzi catalogo"
+          git push

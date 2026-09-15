@@ -7,9 +7,11 @@ e sincronizzazione con il catalogo del sito (products.json).
 import re
 import json
 import os
+import time
 import asyncio
 from typing import Dict, List, Any, Optional
 from playwright.async_api import async_playwright
+import requests
 
 import sys
 
@@ -18,13 +20,38 @@ if sys.stdout.encoding != 'utf-8':
 if sys.stderr.encoding != 'utf-8':
     sys.stderr.reconfigure(encoding='utf-8')
 
+
+def _load_env_file():
+    """Carica variabili da un file .env locale (mai committato in git) se presente.
+    In produzione (GitHub Actions) le stesse variabili arrivano come secrets."""
+    env_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")
+    if os.path.exists(env_path):
+        with open(env_path, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                key, _, val = line.partition("=")
+                os.environ.setdefault(key.strip(), val.strip().strip('"').strip("'"))
+
+
+_load_env_file()
+
 # --- CONFIGURAZIONE AFFILIAZIONI ---
 CONFIG = {
     "awin_affid": "YOUR_AWIN_ID",         # Sostituisci con il tuo Publisher ID Awin
     "awin_mid_refurbed": "18037",          # Merchant ID di Refurbed su Awin
     "ebay_campid": "5339209756",           # Campaign ID eBay Partner Network
     "amazon_tag": "prezzifurbi-21",        # Tracking Tag Amazon Associates
-    "products_file": os.path.abspath("src/data/products.json")
+    "products_file": os.path.abspath("src/data/products.json"),
+
+    # Creators API (successore ufficiale di PA-API 5) - credenziali da variabili d'ambiente,
+    # MAI hardcoded nel codice. Vedi .env.example per come configurarle in locale.
+    "amazon_creators_client_id": os.environ.get("AMAZON_CREATORS_CLIENT_ID", ""),
+    "amazon_creators_client_secret": os.environ.get("AMAZON_CREATORS_CLIENT_SECRET", ""),
+    "amazon_creators_token_url": "https://api.amazon.co.uk/auth/o2/token",  # endpoint regione EU (marketplace IT)
+    "amazon_creators_base_url": "https://creatorsapi.amazon",
+    "amazon_marketplace": "www.amazon.it",
 }
 
 # --- 1. HARDWARE PARSER ENGINE (REGEX & NLP) ---
@@ -694,90 +721,176 @@ async def scrape_ebay_deals(query: str = "notebook rtx 4060", max_deals: int = 3
     return deals
 
 
-async def scrape_amazon_deals(query: str = "notebook gaming rtx 4060", max_deals: int = 3) -> List[Dict[str, Any]]:
-    """Cerca occasioni reali su Amazon.it ed estrae ASIN, prezzo reale e scheda tecnica"""
-    deals = []
-    print(f"\n🔍 [3/3] Avvio scansione Amazon.it per '{query}'...")
-    import urllib.parse
-    q_enc = urllib.parse.quote(query)
-    url = f"https://www.amazon.it/s?k={q_enc}&i=computers"
-    
-    async with async_playwright() as p:
-        browser = await p.firefox.launch(headless=True)
-        page = await browser.new_page(
-            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:124.0) Gecko/20100101 Firefox/124.0",
-            viewport={"width": 1280, "height": 900}
+# --- 3B. AMAZON CREATORS API (integrazione ufficiale, sostituisce lo scraping) ---
+#
+# Lo scraping delle pagine di ricerca Amazon è stato rimosso: violava le regole del
+# programma Associates ed era la causa dei prezzi imprecisi (lo snippet nei risultati
+# di ricerca spesso differisce dal prezzo reale della scheda prodotto) e dei link non
+# sempre diretti. La Creators API restituisce prezzo live, disponibilità e l'URL
+# ufficiale della scheda prodotto (con tag di affiliazione già incluso) per ogni ASIN.
+#
+# Richiede AMAZON_CREATORS_CLIENT_ID e AMAZON_CREATORS_CLIENT_SECRET (variabili
+# d'ambiente / file .env locale, MAI nel codice). L'accesso è idoneo solo dopo aver
+# raggiunto 10 vendite idonee negli ultimi 30 giorni: finché non è così, le chiamate
+# rispondono 403 e le funzioni sotto lasciano il catalogo invariato senza interrompere
+# il resto della pipeline.
+
+_creators_token_cache: Dict[str, Any] = {"access_token": None, "expires_at": 0}
+
+ITEM_RESOURCES = [
+    "images.primary.large",
+    "itemInfo.title",
+    "itemInfo.features",
+    "itemInfo.technicalInfo",
+    "offersV2.listings.price",
+    "offersV2.listings.availability",
+    "offersV2.listings.condition",
+    "offersV2.listings.dealDetails",
+    "parentASIN",
+]
+
+
+def get_amazon_access_token() -> Optional[str]:
+    """Ottiene (e mette in cache) un access token OAuth2 per la Creators API."""
+    if _creators_token_cache["access_token"] and time.time() < _creators_token_cache["expires_at"] - 30:
+        return _creators_token_cache["access_token"]
+
+    client_id = CONFIG["amazon_creators_client_id"]
+    client_secret = CONFIG["amazon_creators_client_secret"]
+    if not client_id or not client_secret:
+        print(" ⚠️  [Creators API] Credenziali mancanti (AMAZON_CREATORS_CLIENT_ID / AMAZON_CREATORS_CLIENT_SECRET non impostate)")
+        return None
+
+    try:
+        resp = requests.post(
+            CONFIG["amazon_creators_token_url"],
+            json={
+                "grant_type": "client_credentials",
+                "client_id": client_id,
+                "client_secret": client_secret,
+                "scope": "creatorsapi::default",
+            },
+            headers={"Content-Type": "application/json"},
+            timeout=15,
         )
-        try:
-            await page.goto(url, wait_until="domcontentloaded", timeout=20000)
-            await page.wait_for_timeout(2000)
-            print(f" [Amazon] Titolo pagina: '{await page.title()}' | URL: {page.url}")
-            
-            # Gestione banner cookie Amazon
-            try:
-                cookie_btn = await page.query_selector("#sp-cc-accept")
-                if cookie_btn:
-                    await cookie_btn.click()
-                    await page.wait_for_timeout(500)
-            except:
-                pass
-                
-            items = await page.evaluate('''() => {
-                const results = [];
-                const cards = document.querySelectorAll('div[data-component-type="s-search-result"], div.s-result-item[data-asin]');
-                for (const c of cards) {
-                    const asin = c.getAttribute('data-asin');
-                    if (!asin) continue;
-                    const titleEl = c.querySelector('h2 a span, h2 span');
-                    const priceWhole = c.querySelector('.a-price-whole');
-                    const imgEl = c.querySelector('img.s-image');
-                    
-                    if (!titleEl || !priceWhole) continue;
-                    
-                    const title = titleEl.innerText.trim();
-                    const whole = priceWhole.innerText.replace(/[^0-9]/g, '');
-                    const price = parseFloat(whole);
-                    const img = imgEl ? imgEl.src : '';
-                    const href = 'https://www.amazon.it/dp/' + asin;
-                    
-                    if (title && price > 250 && price < 3500) {
-                        results.push({ asin, title, price, img, href });
-                    }
-                }
-                return results.slice(0, 8);
-            }''')
-            print(f" [Amazon] Prodotti grezzi trovati: {len(items)}")
-            
-            for it in items:
-                title = it["title"]
-                # Escludi accessori
-                if any(bad in title.lower() for bad in ['cover', 'custodia', 'borsa', 'caricatore', 'supporto', 'zaino', 'docking']):
-                    continue
-                    
-                brand = title.split()[0] if title.split() else "Notebook"
-                model = " ".join(title.split()[1:4])
-                
-                deals.append({
-                    "title": title[:75],
-                    "brand": brand,
-                    "model": model,
-                    "price": int(it["price"]),
-                    "originalPrice": int(it["price"] * 1.25),
-                    "condition": "Nuovo",
-                    "store": "Amazon.it",
-                    "raw_url": it["href"],
-                    "imageUrl": it["img"] or "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?auto=format&fit=crop&w=800&q=80",
-                    "specs_text": title
-                })
-                if len(deals) >= max_deals:
-                    break
-        except Exception as e:
-            print(f" [Amazon Scraper Note]: {e}")
-        finally:
-            await browser.close()
-            
-    print(f" ✅ Trovati {len(deals)} portatili validi da Amazon!")
-    return deals
+        if resp.status_code != 200:
+            print(f" ⚠️  [Creators API] Token non ottenuto ({resp.status_code}): {resp.text[:200]}")
+            return None
+        data = resp.json()
+        _creators_token_cache["access_token"] = data["access_token"]
+        _creators_token_cache["expires_at"] = time.time() + data.get("expires_in", 3600)
+        return _creators_token_cache["access_token"]
+    except Exception as e:
+        print(f" ⚠️  [Creators API] Errore richiesta token: {e}")
+        return None
+
+
+def _creators_api_post(operation: str, payload: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    token = get_amazon_access_token()
+    if not token:
+        return None
+    try:
+        resp = requests.post(
+            f"{CONFIG['amazon_creators_base_url']}/catalog/v1/{operation}",
+            json=payload,
+            headers={
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json",
+                "x-marketplace": CONFIG["amazon_marketplace"],
+            },
+            timeout=20,
+        )
+        if resp.status_code == 403:
+            print(f" ⚠️  [Creators API] Accesso negato (403) su '{operation}': l'account probabilmente non ha ancora raggiunto le 10 vendite idonee negli ultimi 30 giorni richieste per l'accesso API.")
+            return None
+        if resp.status_code != 200:
+            print(f" ⚠️  [Creators API] Errore su '{operation}' ({resp.status_code}): {resp.text[:300]}")
+            return None
+        return resp.json()
+    except Exception as e:
+        print(f" ⚠️  [Creators API] Eccezione durante '{operation}': {e}")
+        return None
+
+
+def _extract_asin(url: str) -> Optional[str]:
+    m = re.search(r'/dp/([A-Z0-9]{10})', url or "", re.I)
+    return m.group(1).upper() if m else None
+
+
+def _extract_price_from_item(item: Dict[str, Any]) -> Optional[float]:
+    listings = (item.get("offersV2") or {}).get("listings") or []
+    if not listings:
+        return None
+    price_info = listings[0].get("price") or {}
+    return price_info.get("amount")
+
+
+def creators_api_get_items(asins: List[str]) -> Dict[str, Dict[str, Any]]:
+    """Recupera prezzo esatto, disponibilità e link diretto (con tag) per una lista di ASIN.
+    Max 10 ASIN per chiamata: li divide automaticamente in gruppi."""
+    results: Dict[str, Dict[str, Any]] = {}
+    for i in range(0, len(asins), 10):
+        chunk = asins[i:i + 10]
+        payload = {
+            "itemIds": chunk,
+            "itemIdType": "ASIN",
+            "marketplace": CONFIG["amazon_marketplace"],
+            "partnerTag": CONFIG["amazon_tag"],
+            "resources": ITEM_RESOURCES,
+        }
+        data = _creators_api_post("getItems", payload)
+        if not data:
+            continue
+        for err in (data.get("errors") or []):
+            print(f" ⚠️  [Creators API] {err.get('code')}: {err.get('message')}")
+        for item in (data.get("itemResults", {}).get("items") or []):
+            asin = item.get("asin")
+            if asin:
+                results[asin] = item
+    return results
+
+
+def refresh_amazon_catalog_prices(catalog: List[Dict[str, Any]]) -> int:
+    """Aggiorna prezzo, link diretto (con tag) e immagine di tutti i prodotti Amazon nel
+    catalogo con i dati live della Creators API. Ritorna il numero di prodotti aggiornati."""
+    amazon_products = [
+        p for p in catalog
+        if "amazon" in p.get("store", "").lower() and _extract_asin(p.get("affiliateUrl", ""))
+    ]
+    if not amazon_products:
+        return 0
+
+    asin_map = {_extract_asin(p["affiliateUrl"]): p for p in amazon_products}
+    print(f"\n💰 [Creators API] Aggiornamento prezzi live per {len(asin_map)} prodotti Amazon...")
+    items = creators_api_get_items(list(asin_map.keys()))
+
+    if not items:
+        print(" ⚠️  [Creators API] Nessun dato ricevuto (account non ancora idoneo o errore di rete). Catalogo Amazon lasciato invariato.")
+        return 0
+
+    updated = 0
+    for asin, product in asin_map.items():
+        item = items.get(asin)
+        if not item:
+            continue
+
+        new_price = _extract_price_from_item(item)
+        detail_url = item.get("detailPageURL")
+        image_url = (((item.get("images") or {}).get("primary") or {}).get("large") or {}).get("url")
+
+        old_price = product.get("price")
+        if new_price is not None:
+            product["price"] = round(new_price)
+        if detail_url:
+            product["affiliateUrl"] = detail_url
+        if image_url:
+            product["imageUrl"] = image_url
+
+        if new_price is not None and old_price != round(new_price):
+            print(f" 🔄 {product['title'][:40]}: {old_price}€ -> {round(new_price)}€ (prezzo live verificato)")
+        updated += 1
+
+    return updated
 
 
 # --- 5. SINCRONIZZAZIONE CON PRODUCTS.JSON ---
@@ -1003,26 +1116,35 @@ async def verify_catalog_links():
 
 async def main():
     print("=" * 65)
-    print("🦊 PREZZI FURBI - APPLICAZIONE SCHEDE PRODOTTO DIRETTE & VERIFICA")
+    print("🦊 PREZZI FURBI - AGGIORNAMENTO CATALOGO & VERIFICA")
     print("=" * 65)
-    
-    # 1. Applica le schede prodotto dirette garantite
+
     path = CONFIG["products_file"]
     if os.path.exists(path):
         with open(path, "r", encoding="utf-8") as f:
             catalog = json.load(f)
+
+        # 1. Applica le schede prodotto dirette garantite (mai pagine di ricerca)
         sanitize_catalog(catalog)
+
+        # 2. Prezzo, link diretto e immagine live per i prodotti Amazon (Creators API)
+        updated = refresh_amazon_catalog_prices(catalog)
+
         with open(path, "w", encoding="utf-8") as f:
             json.dump(catalog, f, ensure_ascii=False, indent=2)
-            
-    # 2. Verifica live di ogni link del catalogo
-    await verify_catalog_links()
-    
-    # 3. Cattura screenshot aggiornato
-    await take_live_screenshots()
-    
-    print("\n✅ Tutte le schede prodotto Amazon e Refurbed sono 100% REALI e funzionanti!")
-    print("=" * 65)
+
+        print(f"\n✅ {updated} prodotti Amazon aggiornati con prezzo live dalla Creators API.")
+
+    # 3. Verifica live di ogni link del catalogo (richiede Playwright, va bene anche in CI)
+    if os.environ.get("SKIP_LINK_VERIFY") != "1":
+        await verify_catalog_links()
+
+    # 4. Screenshot solo su richiesta esplicita: richiedono il sito avviato su
+    #    localhost:5173 e un percorso locale, quindi non fanno parte del job automatico.
+    if os.environ.get("CAPTURE_SCREENSHOTS") == "1":
+        await take_live_screenshots()
+
+    print("\n" + "=" * 65)
 
 if __name__ == "__main__":
     asyncio.run(main())
