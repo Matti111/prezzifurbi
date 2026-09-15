@@ -52,9 +52,12 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
   };
 
   const hasSpecSelection = Object.keys(filters.specTags).length > 0;
-  const dashPrice = hasSpecSelection ? minPriceForSelection(productsForTags, filters.specTags) : null;
+  // Senza nessun tag selezionato, la selezione vuota combacia con ogni prodotto:
+  // il trattino mostra semplicemente il prezzo del prodotto più economico disponibile.
+  const rawDashPrice = minPriceForSelection(productsForTags, filters.specTags);
+  const dashPrice = isFinite(rawDashPrice) ? rawDashPrice : null;
   const dashPercent =
-    dashPrice !== null && isFinite(dashPrice)
+    dashPrice !== null
       ? Math.min(100, Math.max(0, ((dashPrice - BUDGET_MIN) / (BUDGET_MAX - BUDGET_MIN)) * 100))
       : null;
   const stampOptions: { label: string; value: StampType | 'all'; icon?: string }[] = [
