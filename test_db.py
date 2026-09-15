@@ -52,6 +52,12 @@ CONFIG = {
     "amazon_creators_token_url": "https://api.amazon.co.uk/auth/o2/token",  # endpoint regione EU (marketplace IT)
     "amazon_creators_base_url": "https://creatorsapi.amazon",
     "amazon_marketplace": "www.amazon.it",
+
+    # eBay Browse API (ricerca ufficiale, sostituisce lo scraping) - App Keys da
+    # developer.ebay.com, ambiente Production. Diverse dal Campaign ID del Partner
+    # Network qui sopra, che serve solo per il tracking dei click.
+    "ebay_client_id": os.environ.get("EBAY_CLIENT_ID", ""),
+    "ebay_client_secret": os.environ.get("EBAY_CLIENT_SECRET", ""),
 }
 
 # --- 1. HARDWARE PARSER ENGINE (REGEX & NLP) ---
@@ -563,160 +569,138 @@ async def scrape_refurbed_deals(max_deals: int = 4) -> List[Dict[str, Any]]:
     return deals
 
 
-async def scrape_ebay_deals(query: str = "notebook rtx 4060", max_deals: int = 3) -> List[Dict[str, Any]]:
-    """Cerca occasioni reali su eBay Partner Network con anti-bot stealth e fallback RSS"""
+# --- 2B. EBAY BROWSE API (integrazione ufficiale, sostituisce lo scraping) ---
+#
+# Come per Amazon, lo scraping delle pagine di ricerca eBay è stato sostituito con
+# l'API ufficiale Browse (eBay Developer Program - developer.ebay.com, account
+# separato dal Partner Network usato solo per il tracking dei click). Restituisce
+# prezzo reale e "itemWebUrl", cioè il link diretto alla singola inserzione (mai una
+# pagina di ricerca), che passa comunque da wrap_affiliate_link() per aggiungere il
+# tracking EPN (campid) già configurato.
+#
+# Richiede EBAY_CLIENT_ID e EBAY_CLIENT_SECRET (le "Application Keys" del tuo account
+# eBay Developer, ambiente Production) come variabili d'ambiente / file .env locale.
+
+_ebay_token_cache: Dict[str, Any] = {"access_token": None, "expires_at": 0}
+
+
+def get_ebay_access_token() -> Optional[str]:
+    """Ottiene (e mette in cache) un Application access token OAuth2 per la Browse API."""
+    if _ebay_token_cache["access_token"] and time.time() < _ebay_token_cache["expires_at"] - 30:
+        return _ebay_token_cache["access_token"]
+
+    client_id = CONFIG["ebay_client_id"]
+    client_secret = CONFIG["ebay_client_secret"]
+    if not client_id or not client_secret:
+        print(" ⚠️  [eBay Browse API] Credenziali mancanti (EBAY_CLIENT_ID / EBAY_CLIENT_SECRET non impostate)")
+        return None
+
+    try:
+        import base64
+        basic = base64.b64encode(f"{client_id}:{client_secret}".encode()).decode()
+        resp = requests.post(
+            "https://api.ebay.com/identity/v1/oauth2/token",
+            headers={
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Authorization": f"Basic {basic}",
+            },
+            data={
+                "grant_type": "client_credentials",
+                "scope": "https://api.ebay.com/oauth/api_scope",
+            },
+            timeout=15,
+        )
+        if resp.status_code != 200:
+            print(f" ⚠️  [eBay Browse API] Token non ottenuto ({resp.status_code}): {resp.text[:200]}")
+            return None
+        data = resp.json()
+        _ebay_token_cache["access_token"] = data["access_token"]
+        _ebay_token_cache["expires_at"] = time.time() + data.get("expires_in", 7200)
+        return _ebay_token_cache["access_token"]
+    except Exception as e:
+        print(f" ⚠️  [eBay Browse API] Errore richiesta token: {e}")
+        return None
+
+
+def ebay_browse_search(keywords: str, min_price: int = 150, max_price: int = 2500, limit: int = 10) -> List[Dict[str, Any]]:
+    """Cerca annunci reali su eBay.it (solo Compralo Subito) tramite la Browse API ufficiale."""
+    token = get_ebay_access_token()
+    if not token:
+        return []
+
+    filters = ["buyingOptions:{FIXED_PRICE}", f"price:[{min_price}..{max_price}]", "priceCurrency:EUR"]
+
+    try:
+        resp = requests.get(
+            "https://api.ebay.com/buy/browse/v1/item_summary/search",
+            headers={
+                "Authorization": f"Bearer {token}",
+                "X-EBAY-C-MARKETPLACE-ID": "EBAY_IT",
+            },
+            params={
+                "q": keywords,
+                "filter": ",".join(filters),
+                "limit": min(limit, 50),
+            },
+            timeout=20,
+        )
+        if resp.status_code != 200:
+            print(f" ⚠️  [eBay Browse API] Errore ricerca ({resp.status_code}): {resp.text[:300]}")
+            return []
+        return resp.json().get("itemSummaries", []) or []
+    except Exception as e:
+        print(f" ⚠️  [eBay Browse API] Eccezione durante la ricerca: {e}")
+        return []
+
+
+def discover_ebay_deals(query: str = "notebook gaming rtx 4060", max_deals: int = 3, max_price: int = 1200) -> List[Dict[str, Any]]:
+    """Trova nuove occasioni reali su eBay.it tramite la Browse API, pronte per evaluate_laptop()."""
+    print(f"\n🔍 [eBay Browse API] Ricerca '{query}'...")
+    items = ebay_browse_search(query, min_price=150, max_price=max_price)
+
+    bad_words = ['cover', 'custodia', 'borsa', 'caricatore', 'alimentatore', 'cavo', 'adesivo',
+                 'batteria per', 'schermo per', 'solo per pezzi', 'guasto', 'rotto', 'per ricambi']
+
     deals = []
-    print(f"\n🔍 [2/3] Avvio scansione eBay (Network EPN) per '{query}'...")
-    import urllib.parse
-    q_enc = urllib.parse.quote(query)
-    
-    # 1. Tentativo con Chromium Stealth
-    async with async_playwright() as p:
-        browser = await p.chromium.launch(
-            headless=True,
-            args=[
-                "--disable-blink-features=AutomationControlled",
-                "--no-sandbox",
-                "--disable-setuid-sandbox"
-            ]
-        )
-        context = await browser.new_context(
-            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
-            viewport={"width": 1366, "height": 768},
-            locale="it-IT"
-        )
-        page = await context.new_page()
-        await page.add_init_script("delete Object.getPrototypeOf(navigator).webdriver")
-        
+    for it in items:
+        title = it.get("title", "")
+        if not title or any(bad in title.lower() for bad in bad_words):
+            continue
+
+        price_info = it.get("price") or {}
         try:
-            url = f"https://www.ebay.it/sch/i.html?_nkw={q_enc}&LH_BIN=1&_sop=15"
-            await page.goto(url, wait_until="domcontentloaded", timeout=20000)
-            await page.wait_for_timeout(2000)
-            
-            # Gestione eventuale banner cookie eBay
-            try:
-                cookie_btn = await page.query_selector("#gdpr-banner-accept, button:has-text('Accetta tutto')")
-                if cookie_btn:
-                    await cookie_btn.click()
-                    await page.wait_for_timeout(500)
-            except:
-                pass
-                
-            print(f" [eBay] Navigazione completata: {page.url}")
-            
-            if "splashui/challenge" not in page.url:
-                items = await page.evaluate('''() => {
-                    const elements = document.querySelectorAll('.s-item, li[id^="item"]');
-                    const results = [];
-                    for (const el of elements) {
-                        const titleEl = el.querySelector('.s-item__title, .vip');
-                        const priceEl = el.querySelector('.s-item__price, .amt');
-                        const linkEl = el.querySelector('.s-item__link, a');
-                        const imgEl = el.querySelector('.s-item__image-img, img');
-                        
-                        if (!titleEl || !priceEl || !linkEl) continue;
-                        const title = titleEl.innerText.trim();
-                        const price = priceEl.innerText.trim();
-                        const href = linkEl.href;
-                        const img = imgEl ? (imgEl.src || imgEl.getAttribute('data-src') || '') : '';
-                        
-                        if (title && !title.toLowerCase().includes('annuncio sponsorizzato') && title.length > 10) {
-                            results.push({ title, price, href, img });
-                        }
-                    }
-                    return results.slice(0, 10);
-                }''')
-                
-                for it in items:
-                    raw_p = it["price"].replace("EUR", "").replace("€", "").strip()
-                    if "," in raw_p and "." in raw_p:
-                        raw_p = raw_p.replace(".", "").replace(",", ".")
-                    elif "," in raw_p:
-                        raw_p = raw_p.replace(",", ".")
-                    
-                    m2 = re.search(r'(\d+(?:\.\d+)?)', raw_p)
-                    if not m2:
-                        continue
-                    price_val = float(m2.group(1))
-                    if price_val < 200 or price_val > 2500:
-                        continue
-                        
-                    title = it["title"]
-                    if any(bad in title.lower() for bad in ['cover', 'custodia', 'borsa', 'caricatore', 'alimentatore', 'cavo', 'adesivo', 'batteria per', 'schermo per', 'solo per pezzi', 'guasto']):
-                        continue
-                        
-                    brand = title.split()[0] if title.split() else "Notebook"
-                    model = " ".join(title.split()[1:4])
-                    
-                    deals.append({
-                        "title": title,
-                        "brand": brand,
-                        "model": model,
-                        "price": int(price_val),
-                        "originalPrice": int(price_val * 1.35),
-                        "condition": "Usato",
-                        "store": "eBay.it",
-                        "raw_url": it["href"],
-                        "imageUrl": it["img"] or "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=800&q=80",
-                        "specs_text": title
-                    })
-                    if len(deals) >= max_deals:
-                        break
-        except Exception as e:
-            print(f" [eBay Playwright Exception]: {e}")
-        finally:
-            await browser.close()
-            
-    # 2. Fallback RSS feed se Playwright viene limitato
-    if len(deals) == 0:
-        print(" [eBay] Tentativo estrazione via feed strutturato...")
-        try:
-            import urllib.request
-            import xml.etree.ElementTree as ET
-            rss_url = f"https://www.ebay.it/sch/i.html?_nkw={q_enc}&LH_BIN=1&_sop=15&_rss=1"
-            req = urllib.request.Request(
-                rss_url,
-                headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) PrezziFurbiBot/1.0"}
-            )
-            with urllib.request.urlopen(req, timeout=10) as resp:
-                xml_data = resp.read()
-                root = ET.fromstring(xml_data)
-                for item in root.findall(".//item"):
-                    title_elem = item.find("title")
-                    link_elem = item.find("link")
-                    desc_elem = item.find("description")
-                    if title_elem is None or link_elem is None:
-                        continue
-                    t = title_elem.text or ""
-                    l = link_elem.text or ""
-                    d = desc_elem.text or "" if desc_elem is not None else ""
-                    
-                    # Cerca prezzo nella descrizione o titolo
-                    p_match = re.search(r'(\d+[\d.,]*)\s*EUR', d + " " + t, re.I) or re.search(r'EUR\s*(\d+[\d.,]*)', d + " " + t, re.I)
-                    if not p_match:
-                        continue
-                    p_val = float(p_match.group(1).replace(".", "").replace(",", "."))
-                    if p_val < 200 or p_val > 2500:
-                        continue
-                    if any(bad in t.lower() for bad in ['cover', 'custodia', 'borsa', 'caricatore', 'alimentatore', 'cavo', 'guasto']):
-                        continue
-                    deals.append({
-                        "title": t,
-                        "brand": t.split()[0] if t.split() else "Notebook",
-                        "model": " ".join(t.split()[1:4]),
-                        "price": int(p_val),
-                        "originalPrice": int(p_val * 1.35),
-                        "condition": "Usato",
-                        "store": "eBay.it",
-                        "raw_url": l,
-                        "imageUrl": "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=800&q=80",
-                        "specs_text": f"{t} {d}"
-                    })
-                    if len(deals) >= max_deals:
-                        break
-        except Exception as e:
-            print(f" [eBay RSS Note]: {e}")
-            
+            price_val = float(price_info.get("value", 0))
+        except (TypeError, ValueError):
+            continue
+        if price_val < 150 or price_val > 2500:
+            continue
+
+        item_web_url = it.get("itemWebUrl")
+        if not item_web_url:
+            continue
+
+        condition_text = (it.get("condition") or "").lower()
+        mapped_condition = "Nuovo" if "new" in condition_text else "Usato"
+
+        brand = title.split()[0] if title.split() else "Notebook"
+        model = " ".join(title.split()[1:4])
+        image_url = (it.get("image") or {}).get("imageUrl", "")
+
+        deals.append({
+            "title": title,
+            "brand": brand,
+            "model": model,
+            "price": round(price_val),
+            "originalPrice": round(price_val * 1.35),
+            "condition": mapped_condition,
+            "store": "eBay.it",
+            "raw_url": item_web_url,
+            "imageUrl": image_url or "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=800&q=80",
+            "specs_text": title,
+        })
+        if len(deals) >= max_deals:
+            break
+
     print(f" ✅ Trovate {len(deals)} offerte valide su eBay!")
     return deals
 
@@ -1135,11 +1119,20 @@ async def main():
 
         print(f"\n✅ {updated} prodotti Amazon aggiornati con prezzo live dalla Creators API.")
 
-    # 3. Verifica live di ogni link del catalogo (richiede Playwright, va bene anche in CI)
+    # 3. Scopri nuove occasioni reali su eBay (Browse API) e aggiungile al catalogo
+    #    (poche query mirate per far crescere il catalogo con calma, non a raffica)
+    ebay_queries = ["notebook gaming rtx 4060", "notebook ricondizionato i7 16gb"]
+    new_ebay_items = []
+    for q in ebay_queries:
+        new_ebay_items.extend(discover_ebay_deals(q, max_deals=2))
+    if new_ebay_items:
+        sync_catalog(new_ebay_items)
+
+    # 4. Verifica live di ogni link del catalogo (richiede Playwright, va bene anche in CI)
     if os.environ.get("SKIP_LINK_VERIFY") != "1":
         await verify_catalog_links()
 
-    # 4. Screenshot solo su richiesta esplicita: richiedono il sito avviato su
+    # 5. Screenshot solo su richiesta esplicita: richiedono il sito avviato su
     #    localhost:5173 e un percorso locale, quindi non fanno parte del job automatico.
     if os.environ.get("CAPTURE_SCREENSHOTS") == "1":
         await take_live_screenshots()
