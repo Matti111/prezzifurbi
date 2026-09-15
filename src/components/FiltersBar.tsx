@@ -1,20 +1,62 @@
 import React from 'react';
-import { FilterState, StampType, ConditionType, SortOption } from '../types/product';
-import { SlidersHorizontal, ArrowDownAZ, RotateCcw } from 'lucide-react';
+import { FilterState, StampType, ConditionType, SortOption, Product, SpecTagCategory } from '../types/product';
+import { SlidersHorizontal, ArrowDownAZ, RotateCcw, Cpu, MemoryStick as RamIcon, HardDrive, Gamepad2 } from 'lucide-react';
+import { collectTagOptions, isTagAvailable, minPriceForSelection } from '../utils/specTags';
 
 interface FiltersBarProps {
   filters: FilterState;
   onFilterChange: (newFilters: Partial<FilterState>) => void;
   onReset: () => void;
   resultCount: number;
+  /** Catalogo già filtrato per ricerca/timbro/stato/categoria (non per prezzo o tag
+   * di specifica): è la base su cui i tag sotto calcolano disponibilità e prezzo minimo. */
+  productsForTags: Product[];
 }
+
+const BUDGET_MIN = 300;
+const BUDGET_MAX = 1200;
+
+const TAG_GROUPS: { key: SpecTagCategory; label: string; icon: React.ReactNode }[] = [
+  { key: 'cpu', label: 'Processore', icon: <Cpu className="w-3.5 h-3.5 text-orange-400" /> },
+  { key: 'ram', label: 'RAM', icon: <RamIcon className="w-3.5 h-3.5 text-orange-400" /> },
+  { key: 'ssd', label: 'Storage', icon: <HardDrive className="w-3.5 h-3.5 text-orange-400" /> },
+  { key: 'gpu', label: 'Scheda Video', icon: <Gamepad2 className="w-3.5 h-3.5 text-orange-400" /> },
+];
 
 export const FiltersBar: React.FC<FiltersBarProps> = ({
   filters,
   onFilterChange,
   onReset,
   resultCount,
+  productsForTags,
 }) => {
+  const handleTagClick = (category: SpecTagCategory, value: string | number) => {
+    const current = filters.specTags[category];
+
+    // Click sullo stesso tag già selezionato -> lo deseleziona
+    if (current === value) {
+      const next = { ...filters.specTags };
+      delete next[category];
+      onFilterChange({ specTags: next });
+      return;
+    }
+
+    const available = isTagAvailable(productsForTags, filters.specTags, category, value, filters.maxPrice);
+    if (available) {
+      // Compatibile con la selezione attuale -> si aggiunge/sostituisce solo questa categoria
+      onFilterChange({ specTags: { ...filters.specTags, [category]: value } });
+    } else {
+      // Non compatibile -> azzera la selezione e parte solo da questo tag
+      onFilterChange({ specTags: { [category]: value } });
+    }
+  };
+
+  const hasSpecSelection = Object.keys(filters.specTags).length > 0;
+  const dashPrice = hasSpecSelection ? minPriceForSelection(productsForTags, filters.specTags) : null;
+  const dashPercent =
+    dashPrice !== null && isFinite(dashPrice)
+      ? Math.min(100, Math.max(0, ((dashPrice - BUDGET_MIN) / (BUDGET_MAX - BUDGET_MIN)) * 100))
+      : null;
   const stampOptions: { label: string; value: StampType | 'all'; icon?: string }[] = [
     { label: 'Tutti', value: 'all' },
     { label: 'Scelta Furba', value: 'scelta_furba', icon: '🦊' },
@@ -34,7 +76,7 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
     filters.category !== 'all' ||
     filters.condition !== 'all' ||
     filters.maxPrice < 1200 ||
-    filters.minRam > 8 ||
+    hasSpecSelection ||
     filters.searchQuery !== '';
 
   return (
@@ -99,8 +141,8 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
       </div>
 
       {/* 2. Detailed Filter Controls */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 pt-3">
-        
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 pt-3">
+
         {/* Max Budget Slider */}
         <div>
           <div className="flex justify-between items-center mb-1">
@@ -111,36 +153,30 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
               Fino a {filters.maxPrice} €
             </span>
           </div>
-          <input
-            type="range"
-            min={300}
-            max={1200}
-            step={50}
-            value={filters.maxPrice}
-            onChange={(e) => onFilterChange({ maxPrice: Number(e.target.value) })}
-            className="w-full accent-orange-500 bg-slate-950 h-2 rounded-lg cursor-pointer"
-          />
-        </div>
-
-        {/* RAM Minima */}
-        <div>
-          <label className="block text-[11px] font-semibold text-slate-400 mb-1">
-            RAM Minima
-          </label>
-          <div className="grid grid-cols-3 gap-1.5">
-            {[8, 16, 32].map((ram) => (
-              <button
-                key={ram}
-                onClick={() => onFilterChange({ minRam: ram })}
-                className={`py-1 rounded-lg text-xs font-semibold transition-colors border ${
-                  filters.minRam === ram
-                    ? 'bg-slate-700 text-white border-orange-500/80 font-bold'
-                    : 'bg-slate-950 text-slate-400 border-slate-800 hover:text-slate-200'
-                }`}
-              >
-                {ram} GB+
-              </button>
-            ))}
+          <div className={`relative ${dashPercent !== null ? 'pt-4' : ''}`}>
+            {dashPercent !== null && (
+              <>
+                <span
+                  className="absolute top-0 -translate-x-1/2 text-[10px] font-black text-emerald-400 whitespace-nowrap"
+                  style={{ left: `${dashPercent}%` }}
+                >
+                  {dashPrice}€
+                </span>
+                <span
+                  className="absolute top-3.5 -translate-x-1/2 w-0.5 h-2.5 bg-emerald-400 pointer-events-none rounded-full"
+                  style={{ left: `${dashPercent}%` }}
+                />
+              </>
+            )}
+            <input
+              type="range"
+              min={BUDGET_MIN}
+              max={BUDGET_MAX}
+              step={50}
+              value={filters.maxPrice}
+              onChange={(e) => onFilterChange({ maxPrice: Number(e.target.value) })}
+              className="w-full accent-orange-500 bg-slate-950 h-2 rounded-lg cursor-pointer"
+            />
           </div>
         </div>
 
@@ -165,6 +201,48 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
           </select>
         </div>
 
+      </div>
+
+      {/* 2B. Tag di specifica (CPU/RAM/SSD/GPU): mostrano dove si trova il limite di
+          budget per avere quella caratteristica, combinabili se compatibili tra loro */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 pt-3 border-t border-slate-800 mt-3">
+        {TAG_GROUPS.map((group) => {
+          const options = collectTagOptions(productsForTags, group.key);
+          if (options.length === 0) return null;
+
+          return (
+            <div key={group.key}>
+              <label className="text-[11px] font-semibold text-slate-400 mb-1 flex items-center gap-1">
+                {group.icon}
+                <span>{group.label}</span>
+              </label>
+              <div className="flex flex-wrap gap-1.5">
+                {options.map((opt) => {
+                  const isSelected = filters.specTags[group.key] === opt.value;
+                  const available =
+                    isSelected || isTagAvailable(productsForTags, filters.specTags, group.key, opt.value, filters.maxPrice);
+
+                  return (
+                    <button
+                      key={String(opt.value)}
+                      onClick={() => handleTagClick(group.key, opt.value)}
+                      title={!available ? 'Non compatibile con la selezione attuale: clicca per sostituirla' : undefined}
+                      className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-all border ${
+                        isSelected
+                          ? 'bg-orange-500 text-white border-orange-400 shadow-sm shadow-orange-500/25'
+                          : available
+                          ? 'bg-slate-800/90 text-slate-300 hover:bg-slate-700 hover:text-white border-slate-700/60'
+                          : 'bg-slate-950 text-slate-600 border-slate-800/80 opacity-60'
+                      }`}
+                    >
+                      {opt.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       {/* 3. Filter Status Bar */}

@@ -7,6 +7,7 @@ import { ProductCard } from './components/ProductCard';
 import { ProductDetailModal } from './components/ProductDetailModal';
 import { HowItWorksModal } from './components/HowItWorksModal';
 import { AffiliateDisclaimer } from './components/AffiliateDisclaimer';
+import { productMatchesSelection } from './utils/specTags';
 import { Shield, Flame, CheckCircle2 } from 'lucide-react';
 
 const products = rawProducts as Product[];
@@ -17,8 +18,7 @@ const initialFilters: FilterState = {
   category: 'all',
   condition: 'all',
   maxPrice: 1200,
-  minRam: 8,
-  minSsd: 256,
+  specTags: {},
   gpuFilter: 'all',
   sortBy: 'deal_score',
 };
@@ -44,47 +44,54 @@ export function App() {
     return 'gpu';
   }, [filters.sortBy]);
 
+  // Prodotti filtrati per tutto tranne prezzo e tag di specifica: è la base su cui
+  // i tag sotto lo slider del budget calcolano disponibilità e prezzo minimo, così
+  // restano stabili mentre l'utente sposta lo slider o seleziona i tag stessi.
+  const baseFilteredProducts = useMemo(() => {
+    return products.filter((p) => {
+      // Search query
+      if (filters.searchQuery) {
+        const q = filters.searchQuery.toLowerCase();
+        const matchTitle = p.title.toLowerCase().includes(q);
+        const matchBrand = p.brand.toLowerCase().includes(q);
+        const matchModel = p.model.toLowerCase().includes(q);
+        const matchGpu = p.specs.gpu.value.toLowerCase().includes(q);
+        const matchCpu = p.specs.cpu.value.toLowerCase().includes(q);
+        if (!matchTitle && !matchBrand && !matchModel && !matchGpu && !matchCpu) {
+          return false;
+        }
+      }
+
+      // Stamp filter
+      if (filters.stamp !== 'all' && p.stamp !== filters.stamp) {
+        return false;
+      }
+
+      // Condition filter
+      if (filters.condition !== 'all' && p.condition !== filters.condition) {
+        return false;
+      }
+
+      // Category
+      if (filters.category !== 'all' && p.category !== filters.category) {
+        return false;
+      }
+
+      return true;
+    });
+  }, [filters.searchQuery, filters.stamp, filters.condition, filters.category]);
+
   // Filtered and Sorted Products
   const filteredProducts = useMemo(() => {
-    return products
+    return baseFilteredProducts
       .filter((p) => {
-        // Search query
-        if (filters.searchQuery) {
-          const q = filters.searchQuery.toLowerCase();
-          const matchTitle = p.title.toLowerCase().includes(q);
-          const matchBrand = p.brand.toLowerCase().includes(q);
-          const matchModel = p.model.toLowerCase().includes(q);
-          const matchGpu = p.specs.gpu.value.toLowerCase().includes(q);
-          const matchCpu = p.specs.cpu.value.toLowerCase().includes(q);
-          if (!matchTitle && !matchBrand && !matchModel && !matchGpu && !matchCpu) {
-            return false;
-          }
-        }
-
-        // Stamp filter
-        if (filters.stamp !== 'all' && p.stamp !== filters.stamp) {
-          return false;
-        }
-
-        // Condition filter
-        if (filters.condition !== 'all' && p.condition !== filters.condition) {
-          return false;
-        }
-
-        // Category
-        if (filters.category !== 'all' && p.category !== filters.category) {
-          return false;
-        }
-
         // Max Price
         if (p.price > filters.maxPrice) {
           return false;
         }
 
-        // Min RAM
-        const ramMatch = p.specs.ram.value.match(/(\d+)\s*GB/i);
-        const ramNumber = ramMatch ? parseInt(ramMatch[1], 10) : 16;
-        if (ramNumber < filters.minRam) {
+        // Tag di specifica (CPU/RAM/SSD/GPU)
+        if (!productMatchesSelection(p, filters.specTags)) {
           return false;
         }
 
@@ -151,7 +158,7 @@ export function App() {
         const scoreB = stampWeight[b.stamp] + b.rating * 10 - (b.price / 80);
         return scoreB - scoreA;
       });
-  }, [filters]);
+  }, [baseFilteredProducts, filters.maxPrice, filters.specTags, filters.sortBy]);
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 selection:bg-orange-500 selection:text-white w-full max-w-full overflow-x-hidden">
@@ -212,6 +219,7 @@ export function App() {
           onFilterChange={handleFilterChange}
           onReset={handleResetFilters}
           resultCount={filteredProducts.length}
+          productsForTags={baseFilteredProducts}
         />
 
         {/* Product Cards Grid */}

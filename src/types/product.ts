@@ -45,14 +45,16 @@ export interface Product {
 
 export type SortOption = 'price_asc' | 'price_desc' | 'gpu' | 'cpu' | 'ram' | 'ssd' | 'deal_score';
 
+export type SpecTagCategory = 'cpu' | 'ram' | 'ssd' | 'gpu';
+export type SpecTagSelection = Partial<Record<SpecTagCategory, string | number>>;
+
 export interface FilterState {
   searchQuery: string;
   stamp: StampType | 'all';
   category: 'all' | 'gaming_ai' | 'lavoro_ufficio' | 'budget_studenti';
   condition: 'all' | ConditionType;
   maxPrice: number;
-  minRam: number;
-  minSsd: number;
+  specTags: SpecTagSelection;
   gpuFilter: string;
   sortBy: SortOption;
 }
