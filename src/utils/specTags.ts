@@ -1,5 +1,5 @@
 import { Product, SpecTagCategory, SpecTagSelection } from '../types/product';
-import { CPU_BENCHMARKS, GPU_BENCHMARKS } from '../data/hardwareBenchmarks';
+import { CPU_GEN_BENCHMARKS, GPU_BENCHMARKS } from '../data/hardwareBenchmarks';
 
 export interface ParsedTag {
   label: string;
@@ -56,42 +56,68 @@ export function weightBucketFor(value?: string): WeightBucket | null {
 /** Applica il punteggio reale da benchmark se la famiglia è in tabella, altrimenti
  * tiene la stima euristica passata come fallback (finché qualcuno non aggiunge il
  * dato reale in hardwareBenchmarks.ts). */
-function withBenchmark(table: Record<string, number>, label: string, fallbackRank: number): ParsedTag {
+function withFamilyBenchmark(table: Record<string, number>, label: string, fallbackRank: number): ParsedTag {
   if (label in table) {
     return { label, rank: table[label], sourced: true };
   }
   return { label, rank: fallbackRank, sourced: false };
 }
 
+/** Come withFamilyBenchmark, ma la chiave in tabella è "<label>|<fascia>": la stessa
+ * label CPU (es. "Intel i7") può valere punteggi molto diversi a seconda della
+ * generazione del chip, mentre il tag/filtro mostrato resta solo la label. */
+function withGenBenchmark(table: Record<string, number>, label: string, bracket: string, fallbackRank: number): ParsedTag {
+  const key = `${label}|${bracket}`;
+  if (key in table) {
+    return { label, rank: table[key], sourced: true };
+  }
+  return { label, rank: fallbackRank, sourced: false };
+}
+
+/** Fascia di generazione: stesso "Intel i7" può valere ~33 (10a gen) o ~52 (13a/14a
+ * gen), quindi va dedotta dal modello per pescare il punteggio giusto in tabella
+ * (vedi CPU_GEN_BENCHMARKS in hardwareBenchmarks.ts). L'etichetta del tag resta solo
+ * "Intel i7": la generazione entra nel punteggio, non moltiplica i pulsanti filtro. */
+function intelGeneration(value: string): 'legacy' | '10-11' | '12' | '13-14' {
+  if (/i[3579][- ]1[34]\d{3}/i.test(value)) return '13-14';
+  if (/i[3579][- ]12\d{3}/i.test(value)) return '12';
+  if (/i[3579][- ]1[01]\d{3}/i.test(value)) return '10-11';
+  return 'legacy'; // 8a/9a gen o non riconosciuta
+}
+
+function ryzenGeneration(value: string): 'legacy' | '7000' {
+  return /Ryzen\s+[3579]\s+[5-8]\d{3}/i.test(value) ? '7000' : 'legacy';
+}
+
 export function parseCpuTag(value: string): ParsedTag {
   let m = value.match(/Core\s+Ultra\s+([579])/i);
-  if (m) return withBenchmark(CPU_BENCHMARKS, `Core Ultra ${m[1]}`, 40 + parseInt(m[1], 10));
+  if (m) return withGenBenchmark(CPU_GEN_BENCHMARKS, `Core Ultra ${m[1]}`, 'na', 40 + parseInt(m[1], 10));
 
   m = value.match(/\bi([3579])\b/i);
-  if (m) return withBenchmark(CPU_BENCHMARKS, `Intel i${m[1]}`, 30 + parseInt(m[1], 10));
+  if (m) return withGenBenchmark(CPU_GEN_BENCHMARKS, `Intel i${m[1]}`, intelGeneration(value), 30 + parseInt(m[1], 10));
 
   m = value.match(/Ryzen\s+([3579])/i);
-  if (m) return withBenchmark(CPU_BENCHMARKS, `Ryzen ${m[1]}`, 30 + parseInt(m[1], 10));
+  if (m) return withGenBenchmark(CPU_GEN_BENCHMARKS, `Ryzen ${m[1]}`, ryzenGeneration(value), 30 + parseInt(m[1], 10));
 
   return { label: value.split(' ').slice(0, 2).join(' '), rank: 0, sourced: false };
 }
 
 export function parseGpuTag(value: string): ParsedTag {
   let m = value.match(/RTX\s?(\d{3,4})/i);
-  if (m) return withBenchmark(GPU_BENCHMARKS, `RTX ${m[1]}`, 40 + parseInt(m[1], 10) / 100);
+  if (m) return withFamilyBenchmark(GPU_BENCHMARKS, `RTX ${m[1]}`, 40 + parseInt(m[1], 10) / 100);
 
   m = value.match(/GTX\s?(\d{3,4})/i);
-  if (m) return withBenchmark(GPU_BENCHMARKS, `GTX ${m[1]}`, 15 + parseInt(m[1], 10) / 100);
+  if (m) return withFamilyBenchmark(GPU_BENCHMARKS, `GTX ${m[1]}`, 15 + parseInt(m[1], 10) / 100);
 
   m = value.match(/Quadro\s?([A-Za-z0-9]+)/i);
-  if (m) return withBenchmark(GPU_BENCHMARKS, `Quadro ${m[1]}`, 16);
+  if (m) return withFamilyBenchmark(GPU_BENCHMARKS, `Quadro ${m[1]}`, 16);
 
   m = value.match(/Radeon\s?(\d{3}[A-Za-z]?)/i);
-  if (m) return withBenchmark(GPU_BENCHMARKS, `Radeon ${m[1]}`, 15 + parseInt(m[1], 10) / 100);
+  if (m) return withFamilyBenchmark(GPU_BENCHMARKS, `Radeon ${m[1]}`, 15 + parseInt(m[1], 10) / 100);
 
-  if (/Iris\s?Xe/i.test(value)) return withBenchmark(GPU_BENCHMARKS, 'Iris Xe', 11);
-  if (/Radeon/i.test(value)) return withBenchmark(GPU_BENCHMARKS, 'Radeon integrata', 15);
-  if (/UHD Graphics/i.test(value)) return withBenchmark(GPU_BENCHMARKS, 'UHD Graphics', 6);
+  if (/Iris\s?Xe/i.test(value)) return withFamilyBenchmark(GPU_BENCHMARKS, 'Iris Xe', 11);
+  if (/Radeon/i.test(value)) return withFamilyBenchmark(GPU_BENCHMARKS, 'Radeon integrata', 15);
+  if (/UHD Graphics/i.test(value)) return withFamilyBenchmark(GPU_BENCHMARKS, 'UHD Graphics', 6);
 
   return { label: value.split(' ').slice(0, 2).join(' '), rank: 0, sourced: false };
 }
@@ -164,6 +190,30 @@ export interface TagOption {
 }
 
 export function collectTagOptions(products: Product[], category: SpecTagCategory): TagOption[] {
+  if (category === 'cpu' || category === 'gpu') {
+    // Il punteggio mostrato per un tag ("Intel i7", "RTX 4060"...) è la media reale
+    // dei prodotti effettivamente nel catalogo con quella label, non un valore fisso
+    // per famiglia: così riflette sempre le generazioni/modelli davvero in vendita
+    // ed è sempre coerente con le frecce mostrate sulle singole card.
+    const acc = new Map<string, { sum: number; count: number; sourcedCount: number }>();
+    for (const p of products) {
+      const tag = category === 'cpu' ? parseCpuTag(p.specs.cpu.value) : parseGpuTag(p.specs.gpu.value);
+      const entry = acc.get(tag.label) ?? { sum: 0, count: 0, sourcedCount: 0 };
+      entry.sum += tag.rank;
+      entry.count += 1;
+      if (tag.sourced) entry.sourcedCount += 1;
+      acc.set(tag.label, entry);
+    }
+    return Array.from(acc.entries())
+      .map(([label, { sum, count, sourcedCount }]) => ({
+        value: label,
+        label,
+        rank: sum / count,
+        sourced: sourcedCount > 0,
+      }))
+      .sort((a, b) => a.rank - b.rank);
+  }
+
   const map = new Map<string | number, TagOption>();
   for (const p of products) {
     if (category === 'ram') {
@@ -181,9 +231,6 @@ export function collectTagOptions(products: Product[], category: SpecTagCategory
     } else if (category === 'weight') {
       const bucket = weightBucketFor(p.weight);
       if (bucket) map.set(bucket.index, { value: bucket.index, label: bucket.label, rank: bucket.index });
-    } else {
-      const tag = category === 'cpu' ? parseCpuTag(p.specs.cpu.value) : parseGpuTag(p.specs.gpu.value);
-      map.set(tag.label, { value: tag.label, label: tag.label, rank: tag.rank, sourced: tag.sourced });
     }
   }
   return Array.from(map.values()).sort((a, b) => a.rank - b.rank);

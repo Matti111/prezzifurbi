@@ -135,12 +135,12 @@
       },
       "gpu": {
         "value": "NVIDIA GeForce RTX 4050 (6GB GDDR6)",
-        "indicator": "neutral",
+        "indicator": "up",
         "note": "Buona per 1080p medio-alto"
       },
       "cpu": {
         "value": "Intel Core i7-12650H (10 Core, fino a 4.7 GHz)",
-        "indicator": "neutral",
+        "indicator": "double_up",
         "note": "Generazione 12a Intel, solida"
       },
       "ram": {
@@ -191,7 +191,7 @@
       },
       "gpu": {
         "value": "NVIDIA Quadro T2000 (4GB GDDR6 certificati ISV)",
-        "indicator": "up",
+        "indicator": "neutral",
         "note": "Certificata per AutoCAD, SolidWorks, Revit e Premiere"
       },
       "cpu": {
@@ -248,7 +248,7 @@
       },
       "gpu": {
         "value": "NVIDIA Quadro T2000 (4GB GDDR6)",
-        "indicator": "up",
+        "indicator": "neutral",
         "note": "Accelerazione per suite Adobe e DaVinci"
       },
       "cpu": {
@@ -305,7 +305,7 @@
       },
       "gpu": {
         "value": "NVIDIA Quadro P620 (4GB GDDR5)",
-        "indicator": "neutral",
+        "indicator": "down",
         "note": "Certificata per software CAD 2D/3D leggeri"
       },
       "cpu": {
@@ -419,12 +419,12 @@
       },
       "gpu": {
         "value": "NVIDIA GeForce RTX 4050 (6GB GDDR6)",
-        "indicator": "neutral",
+        "indicator": "up",
         "note": "Perfetta per tutti i giochi moderni in 1080p"
       },
       "cpu": {
         "value": "Intel Core i7-13620H (10 Core, 16 Thread)",
-        "indicator": "up",
+        "indicator": "double_up",
         "note": "Prestazioni eccellenti per multitasking"
       },
       "ram": {
@@ -533,12 +533,12 @@
       },
       "gpu": {
         "value": "Intel UHD Graphics 620",
-        "indicator": "down",
+        "indicator": "neutral",
         "note": "Solo compiti standard"
       },
       "cpu": {
         "value": "Intel Core i5-8265U (4 Core / 8 Thread)",
-        "indicator": "neutral",
+        "indicator": "down",
         "note": "Windows 11 Pro originale"
       },
       "ram": {

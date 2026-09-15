@@ -119,13 +119,15 @@ def extract_gpu(text: str) -> Dict[str, Any]:
     if 'RTX 3050' in text_upper or 'RTX 2050' in text_upper:
         return {"value": "NVIDIA GeForce RTX 3050 (4GB GDDR6)", "tier": 2, "dedicated": True}
         
-    # NVIDIA Quadro Workstation
+    # NVIDIA Quadro Workstation - silicio debole (benchmark reali: T2000 ~17,
+    # T1000/P620 ~14 su una scala 0-100 comparabile a RTX 4050 ~45): NON sono
+    # GPU da gaming, quindi restano su tier basso nonostante il nome "professionale".
     if 'QUADRO T2000' in text_upper or 'T2000' in text_upper:
-        return {"value": "NVIDIA Quadro T2000 (4GB GDDR6 ISV)", "tier": 3, "dedicated": True}
+        return {"value": "NVIDIA Quadro T2000 (4GB GDDR6 ISV)", "tier": 2, "dedicated": True}
     if 'QUADRO T1000' in text_upper or 'T1000' in text_upper:
-        return {"value": "NVIDIA Quadro T1000 (4GB GDDR6)", "tier": 2, "dedicated": True}
+        return {"value": "NVIDIA Quadro T1000 (4GB GDDR6)", "tier": 1, "dedicated": True}
     if 'QUADRO P620' in text_upper or 'P620' in text_upper:
-        return {"value": "NVIDIA Quadro P620 (4GB GDDR5)", "tier": 2, "dedicated": True}
+        return {"value": "NVIDIA Quadro P620 (4GB GDDR5)", "tier": 1, "dedicated": True}
         
     # NVIDIA RTX Generica / Nuove serie
     m_rtx = re.search(r'RTX\s*(\d{4})', text_upper)
@@ -145,39 +147,58 @@ def extract_gpu(text: str) -> Dict[str, Any]:
     return {"value": "Intel UHD Graphics integrata", "tier": 1, "dedicated": False}
 
 
+# Tier (1=debole, 4=top) derivati dai punteggi reali NotebookCheck.net per fascia di
+# generazione (stessa fonte/tabella usata lato frontend in hardwareBenchmarks.ts).
+# A differenza della vecchia logica, qui i3/i5/i7/i9 vengono valutati SEPARATAMENTE
+# dentro ogni generazione invece di condividere lo stesso tier: un i5 e un i9 della
+# stessa generazione non sono equivalenti.
+_INTEL_TIER = {
+    ('legacy', '3'): 1, ('legacy', '5'): 1, ('legacy', '7'): 2, ('legacy', '9'): 2,
+    ('10-11', '3'): 2, ('10-11', '5'): 2, ('10-11', '7'): 2, ('10-11', '9'): 3,
+    ('12', '3'): 3, ('12', '5'): 3, ('12', '7'): 4, ('12', '9'): 4,
+    ('13-14', '3'): 3, ('13-14', '5'): 4, ('13-14', '7'): 4, ('13-14', '9'): 4,
+}
+_RYZEN_TIER = {
+    ('legacy', '3'): 1, ('legacy', '5'): 2, ('legacy', '7'): 3, ('legacy', '9'): 3,
+    ('7000', '3'): 2, ('7000', '5'): 3, ('7000', '7'): 3, ('7000', '9'): 4,
+}
+_CORE_ULTRA_TIER = {'5': 3, '7': 3, '9': 4}
+
+
 def extract_cpu(text: str) -> Dict[str, Any]:
     text_clean = text.replace("  ", " ")
-    
+
     # Intel Core Ultra
-    m = re.search(r'(Core\s+Ultra\s+[579]\s+\d+[a-zA-Z]*)', text_clean, re.I)
+    m = re.search(r'(Core\s+Ultra\s+([579])\s+\d+[a-zA-Z]*)', text_clean, re.I)
     if m:
-        return {"value": f"Intel {m.group(1)}", "tier": 4}
-        
+        return {"value": f"Intel {m.group(1)}", "tier": _CORE_ULTRA_TIER[m.group(2)]}
+
     # Intel 13a e 14a Gen
-    m = re.search(r'(i[579][- ]1[34]\d{3}[a-zA-Z]*)', text_clean, re.I)
+    m = re.search(r'(i([579])[- ]1[34]\d{3}[a-zA-Z]*)', text_clean, re.I)
     if m:
-        return {"value": f"Intel Core {m.group(1).replace(' ', '-')}", "tier": 4 if '7' in m.group(1) or '9' in m.group(1) else 3}
-        
+        return {"value": f"Intel Core {m.group(1).replace(' ', '-')}", "tier": _INTEL_TIER[('13-14', m.group(2))]}
+
     # Intel 12a Gen
-    m = re.search(r'(i[579][- ]12\d{3}[a-zA-Z]*)', text_clean, re.I)
+    m = re.search(r'(i([579])[- ]12\d{3}[a-zA-Z]*)', text_clean, re.I)
     if m:
-        return {"value": f"Intel Core {m.group(1).replace(' ', '-')}", "tier": 3}
-        
+        return {"value": f"Intel Core {m.group(1).replace(' ', '-')}", "tier": _INTEL_TIER[('12', m.group(2))]}
+
     # Intel 10a e 11a Gen
-    m = re.search(r'(i[579][- ]1[01]\d{3}[a-zA-Z]*)', text_clean, re.I)
+    m = re.search(r'(i([579])[- ]1[01]\d{3}[a-zA-Z]*)', text_clean, re.I)
     if m:
-        return {"value": f"Intel Core {m.group(1).replace(' ', '-')}", "tier": 2}
-        
-    # Intel 8a Gen
-    m = re.search(r'(i[579][- ]8\d{3}[a-zA-Z]*)', text_clean, re.I)
+        return {"value": f"Intel Core {m.group(1).replace(' ', '-')}", "tier": _INTEL_TIER[('10-11', m.group(2))]}
+
+    # Intel 8a/9a Gen (o generazione non riconosciuta)
+    m = re.search(r'(i([579])[- ][89]\d{3}[a-zA-Z]*)', text_clean, re.I)
     if m:
-        return {"value": f"Intel Core {m.group(1).replace(' ', '-')}", "tier": 1}
-        
+        return {"value": f"Intel Core {m.group(1).replace(' ', '-')}", "tier": _INTEL_TIER[('legacy', m.group(2))]}
+
     # AMD Ryzen
-    m = re.search(r'(Ryzen\s+[579]\s+[5-8]\d{3}[a-zA-Z]*)', text_clean, re.I)
+    m = re.search(r'(Ryzen\s+([579])\s+([5-8]\d{3})[a-zA-Z]*)', text_clean, re.I)
     if m:
-        return {"value": f"AMD {m.group(1)}", "tier": 4 if '7' in m.group(1) or '7000' in m.group(1) else 3}
-        
+        bracket = '7000' if m.group(3).startswith('7') else 'legacy'
+        return {"value": f"AMD {m.group(1)}", "tier": _RYZEN_TIER[(bracket, m.group(2))]}
+
     return {"value": "Intel Core i5 Multicore", "tier": 2}
 
 
@@ -218,6 +239,30 @@ def extract_ssd(text: str) -> Dict[str, Any]:
 
 # --- 2. IL MOTORE DI VALUTAZIONE DELLA VOLPE 🦊 ---
 
+def compute_gpu_indicator(tier: int, price: int) -> str:
+    """Freccia GPU dal tier (1-5, vedi extract_gpu) relativo al prezzo pagato.
+    Condivisa tra evaluate_laptop() e regenerate_indicators() così le card e la
+    rigenerazione del catalogo esistente non possono mai andare fuori sincrono."""
+    if tier >= 4 and price <= 800:
+        return "double_up"
+    if tier >= 3 or (tier >= 2 and price <= 450):
+        return "up"
+    if tier == 2 or (tier == 1 and price <= 350):
+        return "neutral"
+    return "down"
+
+
+def compute_cpu_indicator(tier: int, price: int) -> str:
+    """Freccia CPU dal tier (1-4, vedi extract_cpu), stessa logica di compute_gpu_indicator."""
+    if tier >= 4 and price <= 750:
+        return "double_up"
+    if tier >= 3:
+        return "up"
+    if tier >= 2:
+        return "neutral"
+    return "down"
+
+
 def evaluate_laptop(raw: Dict[str, Any]) -> Dict[str, Any]:
     """
     Applica la formula di valutazione Prezzi Furbi:
@@ -239,25 +284,8 @@ def evaluate_laptop(raw: Dict[str, Any]) -> Dict[str, Any]:
     ssd = extract_ssd(full_text)
     
     # 1. Calcolo Frecce Benchmark (relativo al prezzo)
-    # GPU
-    if gpu["tier"] >= 4 and price <= 800:
-        gpu_ind = "double_up"
-    elif gpu["tier"] >= 3 or (gpu["tier"] >= 2 and price <= 450):
-        gpu_ind = "up"
-    elif gpu["tier"] == 2 or (gpu["tier"] == 1 and price <= 350):
-        gpu_ind = "neutral"
-    else:
-        gpu_ind = "down"
-        
-    # CPU
-    if cpu["tier"] >= 4 and price <= 750:
-        cpu_ind = "double_up"
-    elif cpu["tier"] >= 3:
-        cpu_ind = "up"
-    elif cpu["tier"] >= 2:
-        cpu_ind = "neutral"
-    else:
-        cpu_ind = "down"
+    gpu_ind = compute_gpu_indicator(gpu["tier"], price)
+    cpu_ind = compute_cpu_indicator(cpu["tier"], price)
         
     # RAM
     if ram["gb"] >= 32:
@@ -926,6 +954,38 @@ def sanitize_catalog(catalog: List[Dict[str, Any]]):
         print(f" 🚀 Aggiornati con successo {cleaned} prodotti con SCHEDA PRODOTTO DIRETTA (zero pagine di ricerca)!")
 
 
+def regenerate_indicators(catalog: List[Dict[str, Any]]) -> int:
+    """Ricalcola SOLO le frecce CPU/GPU (specs.cpu.indicator / specs.gpu.indicator)
+    di ogni prodotto già nel catalogo, con extract_cpu/extract_gpu e le soglie
+    aggiornate. Non tocca timbro, rating, verdetto o pro/contro: quelli restano
+    quelli originali. Serve a tenere le frecce sincronizzate con i dati reali di
+    benchmark ogni volta che la tabella di riferimento viene aggiornata."""
+    updated = 0
+    for p in catalog:
+        specs = p.get("specs", {})
+        cpu_spec = specs.get("cpu")
+        gpu_spec = specs.get("gpu")
+        price = p.get("price", 500)
+
+        if cpu_spec:
+            cpu = extract_cpu(cpu_spec.get("value", ""))
+            new_ind = compute_cpu_indicator(cpu["tier"], price)
+            if cpu_spec.get("indicator") != new_ind:
+                print(f" 🔄 CPU {p.get('title','')[:35]}: {cpu_spec.get('indicator')} -> {new_ind}")
+                cpu_spec["indicator"] = new_ind
+                updated += 1
+
+        if gpu_spec:
+            gpu = extract_gpu(gpu_spec.get("value", ""))
+            new_ind = compute_gpu_indicator(gpu["tier"], price)
+            if gpu_spec.get("indicator") != new_ind:
+                print(f" 🔄 GPU {p.get('title','')[:35]}: {gpu_spec.get('indicator')} -> {new_ind}")
+                gpu_spec["indicator"] = new_ind
+                updated += 1
+
+    return updated
+
+
 def sync_catalog(new_items: List[Dict[str, Any]]):
     """Integra le nuove offerte nel catalogo del sito"""
     path = CONFIG["products_file"]
@@ -1111,15 +1171,19 @@ async def main():
         # 1. Applica le schede prodotto dirette garantite (mai pagine di ricerca)
         sanitize_catalog(catalog)
 
-        # 2. Prezzo, link diretto e immagine live per i prodotti Amazon (Creators API)
+        # 2. Ricalcola le frecce CPU/GPU con le soglie/tier aggiornate (non tocca
+        #    timbro, rating o testi: solo specs.cpu.indicator e specs.gpu.indicator)
+        indicators_updated = regenerate_indicators(catalog)
+
+        # 3. Prezzo, link diretto e immagine live per i prodotti Amazon (Creators API)
         updated = refresh_amazon_catalog_prices(catalog)
 
         with open(path, "w", encoding="utf-8") as f:
             json.dump(catalog, f, ensure_ascii=False, indent=2)
 
-        print(f"\n✅ {updated} prodotti Amazon aggiornati con prezzo live dalla Creators API.")
+        print(f"\n✅ {indicators_updated} frecce CPU/GPU ricalcolate, {updated} prodotti Amazon aggiornati con prezzo live dalla Creators API.")
 
-    # 3. Scopri nuove occasioni reali su eBay (Browse API) e aggiungile al catalogo
+    # 4. Scopri nuove occasioni reali su eBay (Browse API) e aggiungile al catalogo
     #    (poche query mirate per far crescere il catalogo con calma, non a raffica)
     ebay_queries = ["notebook gaming rtx 4060", "notebook ricondizionato i7 16gb"]
     new_ebay_items = []
@@ -1128,11 +1192,11 @@ async def main():
     if new_ebay_items:
         sync_catalog(new_ebay_items)
 
-    # 4. Verifica live di ogni link del catalogo (richiede Playwright, va bene anche in CI)
+    # 5. Verifica live di ogni link del catalogo (richiede Playwright, va bene anche in CI)
     if os.environ.get("SKIP_LINK_VERIFY") != "1":
         await verify_catalog_links()
 
-    # 5. Screenshot solo su richiesta esplicita: richiedono il sito avviato su
+    # 6. Screenshot solo su richiesta esplicita: richiedono il sito avviato su
     #    localhost:5173 e un percorso locale, quindi non fanno parte del job automatico.
     if os.environ.get("CAPTURE_SCREENSHOTS") == "1":
         await take_live_screenshots()
