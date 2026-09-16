@@ -436,8 +436,16 @@ def wrap_affiliate_link(store: str, raw_url: str) -> str:
     if "ebay" in store_lower:
         if CONFIG["ebay_campid"] != "YOUR_EBAY_CAMPID":
             import urllib.parse
-            enc = urllib.parse.quote(raw_url, safe="")
-            return f"https://rover.ebay.com/rover/1/724-53478-19255-0/1?campid={CONFIG['ebay_campid']}&toolid=10001&mpre={enc}"
+            parts = urllib.parse.urlsplit(raw_url)
+            query = urllib.parse.parse_qsl(parts.query)
+            query += [
+                ("mkevt", "1"),
+                ("mkcid", "1"),
+                ("mkrid", "724-53478-19255-0"),
+                ("campid", CONFIG["ebay_campid"]),
+                ("toolid", "10001"),
+            ]
+            return urllib.parse.urlunsplit(parts._replace(query=urllib.parse.urlencode(query)))
         return raw_url
         
     return raw_url
