@@ -40,3 +40,22 @@ jobs:
           git add src/data/products.json
           git diff --cached --quiet || git commit -m "chore: aggiornamento automatico catalogo (prezzi Amazon + nuove offerte eBay)"
           git push
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Installa dipendenze e builda il sito
+        run: |
+          npm ci
+          npm run build
+
+      - name: Pubblica su Kaliweb via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/
+          server-dir: ${{ secrets.FTP_REMOTE_DIR }}
