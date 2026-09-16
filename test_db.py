@@ -39,8 +39,7 @@ _load_env_file()
 
 # --- CONFIGURAZIONE AFFILIAZIONI ---
 CONFIG = {
-    "awin_affid": "YOUR_AWIN_ID",         # Sostituisci con il tuo Publisher ID Awin
-    "awin_mid_refurbed": "18037",          # Merchant ID di Refurbed su Awin
+    "awin_affid": os.environ.get("AWIN_AFFID", "3095611"),  # Publisher ID Awin (Prezzifurbi)
     "ebay_campid": "5339209756",           # Campaign ID eBay Partner Network
     "amazon_tag": "prezzifurbi-21",        # Tracking Tag Amazon Associates
     "products_file": os.path.abspath("src/data/products.json"),
@@ -433,13 +432,6 @@ def wrap_affiliate_link(store: str, raw_url: str) -> str:
         # Pulisci parametri esistenti e usa esattamente il tag ufficiale
         clean_base = raw_url.split('?')[0]
         return f"{clean_base}?tag={CONFIG['amazon_tag']}"
-        
-    if "refurbed" in store_lower or "refurbed.it" in raw_url:
-        if CONFIG["awin_affid"] != "YOUR_AWIN_ID":
-            import urllib.parse
-            enc = urllib.parse.quote(raw_url, safe="")
-            return f"https://www.awin1.com/cread.php?awinmid={CONFIG['awin_mid_refurbed']}&awinaffid={CONFIG['awin_affid']}&clickref=prezzifurbi&ued={enc}"
-        return raw_url
         
     if "ebay" in store_lower:
         if CONFIG["ebay_campid"] != "YOUR_EBAY_CAMPID":
