@@ -236,6 +236,18 @@ def extract_ssd(text: str) -> Dict[str, Any]:
     return {"value": "512 GB SSD NVMe M.2", "gb": 512, "is_hdd": False}
 
 
+def extract_weight(text: str) -> Optional[str]:
+    """Cerca un peso esplicito nel testo (es. '1,49 kg', '1.5kg'). None se assente,
+    cosi' il chiamante puo' ricadere sulla stima di default in base alla condizione."""
+    m = re.search(r'(\d[.,]\d{1,2})\s*kg', text.lower())
+    if not m:
+        return None
+    kg = float(m.group(1).replace(',', '.'))
+    if kg < 0.8 or kg > 5:
+        return None
+    return f"{kg:.2f} kg"
+
+
 # --- 2. IL MOTORE DI VALUTAZIONE DELLA VOLPE 🦊 ---
 
 def compute_gpu_indicator(tier: int, price: int) -> str:
@@ -681,6 +693,40 @@ def ebay_browse_search(keywords: str, min_price: int = 150, max_price: int = 250
         return []
 
 
+def get_ebay_item_details(item_id: str) -> str:
+    """Recupera descrizione e 'specifiche articolo' (item aspects) reali di un annuncio eBay.
+
+    I titoli eBay sono spesso troppo corti per contenere tutte le specifiche (es. la
+    dimensione dello schermo), mentre gli 'item specifics' inseriti dal venditore sono
+    dati strutturati molto più affidabili. Il testo restituito qui viene aggiunto al
+    testo analizzato dai parser (extract_screen, extract_cpu, ecc.) così le sigle tipo
+    '13,3 pollici' vengono trovate anche se assenti dal titolo.
+    """
+    token = get_ebay_access_token()
+    if not token or not item_id:
+        return ""
+    try:
+        import urllib.parse
+        resp = requests.get(
+            f"https://api.ebay.com/buy/browse/v1/item/{urllib.parse.quote(item_id, safe='')}",
+            headers={"Authorization": f"Bearer {token}", "X-EBAY-C-MARKETPLACE-ID": "EBAY_IT"},
+            timeout=15,
+        )
+        if resp.status_code != 200:
+            return ""
+        data = resp.json()
+        parts = [data.get("shortDescription", "") or ""]
+        for aspect in data.get("localizedAspects", []) or []:
+            name = aspect.get("name", "")
+            value = aspect.get("value", "")
+            if name and value:
+                parts.append(f"{name}: {value}")
+        return " ".join(parts)
+    except Exception as e:
+        print(f" ⚠️  [eBay Browse API] Impossibile recuperare le specifiche dell'annuncio: {e}")
+        return ""
+
+
 def discover_ebay_deals(query: str = "notebook gaming rtx 4060", max_deals: int = 3, max_price: int = 1200) -> List[Dict[str, Any]]:
     """Trova nuove occasioni reali su eBay.it tramite la Browse API, pronte per evaluate_laptop()."""
     print(f"\n🔍 [eBay Browse API] Ricerca '{query}'...")
@@ -713,6 +759,7 @@ def discover_ebay_deals(query: str = "notebook gaming rtx 4060", max_deals: int 
         brand = title.split()[0] if title.split() else "Notebook"
         model = " ".join(title.split()[1:4])
         image_url = (it.get("image") or {}).get("imageUrl", "")
+        item_details = get_ebay_item_details(it.get("itemId", ""))
 
         deals.append({
             "title": title,
@@ -724,7 +771,7 @@ def discover_ebay_deals(query: str = "notebook gaming rtx 4060", max_deals: int 
             "store": "eBay.it",
             "raw_url": item_web_url,
             "imageUrl": image_url or "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=800&q=80",
-            "specs_text": title,
+            "specs_text": f"{title} {item_details}".strip(),
         })
         if len(deals) >= max_deals:
             break
@@ -1034,7 +1081,7 @@ def sync_catalog(new_items: List[Dict[str, Any]]):
             "flopComment": evaluation["flopComment"],
             "flopWarnings": evaluation["flopWarnings"],
             "idealFor": "Lavoro d'ufficio, studio e produttività affidabile." if item["condition"] == "Ricondizionato" else "Gaming, AI e uso intenso.",
-            "weight": "1.80 kg" if item["condition"] == "Ricondizionato" else "2.20 kg",
+            "weight": extract_weight(f"{item['title']} {item.get('specs_text', '')}") or ("1.80 kg" if item["condition"] == "Ricondizionato" else "2.20 kg"),
             "warranty": "12 Mesi di Garanzia Inclusa"
         }
         
