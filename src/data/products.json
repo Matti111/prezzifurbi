@@ -989,7 +989,7 @@
       },
       "gpu": {
         "value": "NVIDIA GeForce RTX 4060 dedicata",
-        "indicator": "up"
+        "indicator": "double_up"
       },
       "cpu": {
         "value": "Intel Core i5 Multicore",
@@ -1134,6 +1134,56 @@
     "rating": 4.5,
     "stamp": "cheaper_good",
     "stampRationale": "Prezzo d'attacco minimo di 290€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "specs": {
+      "screen": {
+        "value": "14\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "neutral"
+      },
+      "cpu": {
+        "value": "Intel Core i5 Multicore",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "up"
+      },
+      "ssd": {
+        "value": "256 GB SSD NVMe M.2",
+        "indicator": "neutral"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+    "flopWarnings": [
+      "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB"
+    ],
+    "idealFor": "Gaming, AI e uso intenso.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa"
+  },
+  {
+    "id": "notebook-hp-840-g8-i7-116-255",
+    "title": "NOTEBOOK HP 840 G8 i7-1165G7 16GB RAM 256GB SSD 14\" INTEL FHD GRADO B C GARANZIA",
+    "brand": "NOTEBOOK",
+    "model": "HP 840 G8",
+    "category": "gaming_ai",
+    "condition": "Usato",
+    "price": 255,
+    "originalPrice": 344,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/257364614173?_skw=notebook+ricondizionato+i7+16gb&hash=item3bec205c1d%3Ag%3A4OwAAeSwHthplC4i&amdata=enc%3AAQALAAABAACCtXRWQnOEpyOqnQQ8KGbfphSPJ2R8l7eRYIEbiYfJYzq1I3MHElII5EW%2BIXdBtZrcd6lNP2HKoQdFyCv4z58TMjZE9R%2FbXSq8%2F6WOE9R154T%2FI7dTG1mF8FaSNonJKoeB%2FEzKT5F6jJPlG5l0g%2Fc3Tzm8RTTDR1K59jTxU6u07xMioAQiAoJdTlcNN6G3RiFXIMUDcML9vtHArbHZhcwFfug8Z0cTEcY5WANqXSr8LbRvVGHxtBbLpnCmk4bRzmg%2BpLfoOWtPe5ueumZu8kMjGLQOLeae6BeT2Bw0H7WLlf6BMF0q0mrqU1ypMiVlwR%2F7DBaJ1BqcmMaBNEWq2KI%3D&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/4OwAAeSwHthplC4i/s-l225.jpg",
+    "rating": 4.5,
+    "stamp": "cheaper_good",
+    "stampRationale": "Prezzo d'attacco minimo di 255€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
     "specs": {
       "screen": {
         "value": "14\" FHD (1920x1080) LED",
