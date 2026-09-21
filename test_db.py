@@ -1231,11 +1231,19 @@ async def main():
         print(f"\n✅ {indicators_updated} frecce CPU/GPU ricalcolate, {updated} prodotti Amazon aggiornati con prezzo live dalla Creators API.")
 
     # 4. Scopri nuove occasioni reali su eBay (Browse API) e aggiungile al catalogo
-    #    (poche query mirate per far crescere il catalogo con calma, non a raffica)
-    ebay_queries = ["notebook gaming rtx 4060", "notebook ricondizionato i7 16gb"]
+    #    (poche query mirate per far crescere il catalogo con calma, non a raffica).
+    #    max_price alzato per le query 32/64GB: un ricondizionato con tanta RAM è
+    #    quasi sempre una workstation e raramente sta sotto i 1200€ di default.
+    ebay_queries = [
+        ("notebook gaming rtx", 1200),
+        ("notebook Quadro", 1200),
+        ("notebook ricondizionato 16gb", 1200),
+        ("notebook ricondizionato 32gb", 1600),
+        ("notebook ricondizionato 64gb", 2200),
+    ]
     new_ebay_items = []
-    for q in ebay_queries:
-        new_ebay_items.extend(discover_ebay_deals(q, max_deals=2))
+    for q, max_price in ebay_queries:
+        new_ebay_items.extend(discover_ebay_deals(q, max_deals=2, max_price=max_price))
     if new_ebay_items:
         sync_catalog(new_ebay_items)
 
