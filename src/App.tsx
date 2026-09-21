@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Product, FilterState, StampType, SpecKey } from './types/product';
 import rawProducts from './data/products.json';
+import { ConstructionBanner } from './components/ConstructionBanner';
 import { Navbar } from './components/Navbar';
 import { FiltersBar } from './components/FiltersBar';
 import { ProductCard } from './components/ProductCard';
@@ -165,6 +166,9 @@ export function App() {
   return (
     <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 selection:bg-orange-500 selection:text-white w-full max-w-full overflow-x-hidden">
       
+      {/* Construction Notice */}
+      <ConstructionBanner />
+
       {/* Navbar */}
       <Navbar
         searchQuery={filters.searchQuery}
