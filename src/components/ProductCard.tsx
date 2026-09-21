@@ -11,8 +11,9 @@ import {
   Cpu, 
   MemoryStick as RamIcon, 
   HardDrive, 
-  CheckCircle2, 
+  CheckCircle2,
   AlertTriangle,
+  ShieldAlert,
   MessageSquare,
   Sparkles,
   RefreshCw,
@@ -117,6 +118,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
   // Helper for row highlighting
   const isHighlighted = (key: SpecKey) => highlightedSpec === key;
+
+  // Amazon prices are still static (Creators API not fully unlocked yet) and
+  // Refurbed offers come from scraping, not a live API: flag both as unverified
+  // while the catalog automation is being finished.
+  const showUnverifiedNotice = /amazon|refurbed/i.test(product.store);
 
   return (
     <div className={`group relative flex flex-col rounded-2xl border transition-all duration-300 w-full max-w-full overflow-hidden ${cardTheme}`}>
@@ -429,6 +435,18 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         </div>
 
       </div>
+
+      {/* Unverified Link Notice (Amazon & Refurbed only, while catalog automation is finished) */}
+      {showUnverifiedNotice && (
+        <div className={`px-3 sm:px-4 py-1.5 flex items-center gap-1.5 border-t text-[10px] sm:text-[11px] font-bold ${
+          isLightCard
+            ? 'bg-amber-100 border-amber-300 text-amber-800'
+            : 'bg-amber-500/10 border-amber-500/30 text-amber-400'
+        }`}>
+          <ShieldAlert className="w-3 h-3 sm:w-3.5 sm:h-3.5 flex-shrink-0" />
+          <span>Link non verificato: sito in aggiornamento</span>
+        </div>
+      )}
 
       {/* 5. Card Footer with Clean Price & CTA */}
       <div className={`mt-auto p-3 sm:p-3.5 sm:px-4 border-t flex items-center justify-between gap-2 max-w-full ${footerTheme}`}>
