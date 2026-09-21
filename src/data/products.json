@@ -1218,5 +1218,55 @@
     "idealFor": "Gaming, AI e uso intenso.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa"
+  },
+  {
+    "id": "acer-nitro-v-16-anv16-41--976",
+    "title": "Acer Nitro V 16 ANV16-41-R0E8 Notebook Gaming, NVIDIA GeForce RTX 4060 8 GB...",
+    "brand": "Acer",
+    "model": "Nitro V 16",
+    "category": "gaming_ai",
+    "condition": "Usato",
+    "price": 976,
+    "originalPrice": 1317,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/188462020654?_skw=notebook+gaming+rtx+4060&hash=item2be136382e%3Ag%3Aj3kAAeSwyOlqIFDx&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/j3kAAeSwyOlqIFDx/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 976€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "16\" FHD (1920x1080) 144Hz LED",
+        "indicator": "up"
+      },
+      "gpu": {
+        "value": "NVIDIA GeForce RTX 4060 (8GB GDDR6)",
+        "indicator": "up"
+      },
+      "cpu": {
+        "value": "Intel Core i5 Multicore",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "neutral"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "neutral"
+      }
+    },
+    "topComment": "Scheda grafica NVIDIA RTX serie 40 con DLSS 3.5 e Frame Generation",
+    "topHighlights": [
+      "Scheda grafica NVIDIA RTX serie 40 con DLSS 3.5 e Frame Generation",
+      "Display ad alto refresh rate da 144Hz: fluidità visiva eccezionale"
+    ],
+    "flopComment": "Peso superiore a 2.3 kg con alimentatore voluminoso",
+    "flopWarnings": [
+      "Peso superiore a 2.3 kg con alimentatore voluminoso"
+    ],
+    "idealFor": "Gaming, AI e uso intenso.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa"
   }
 ]
