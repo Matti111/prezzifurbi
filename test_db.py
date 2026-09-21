@@ -97,7 +97,11 @@ def extract_screen(text: str) -> Dict[str, Any]:
 
 def extract_gpu(text: str) -> Dict[str, Any]:
     text_upper = text.upper()
-    
+
+    # Normalizza "RTX4060" (venditore senza spazio) in "RTX 4060" così i controlli
+    # letterali sotto riconoscono il modello a prescindere da come è scritto
+    text_upper = re.sub(r'(RTX|GTX)\s*(\d{3,4})', r'\1 \2', text_upper)
+
     # NVIDIA RTX Serie 40
     if 'RTX 4090' in text_upper:
         return {"value": "NVIDIA GeForce RTX 4090 (16GB GDDR6)", "tier": 5, "dedicated": True}
@@ -1048,18 +1052,45 @@ def sync_catalog(new_items: List[Dict[str, Any]]):
     
     existing_ids = {p["id"] for p in catalog}
     added_count = 0
-    
+    replaced_count = 0
+
+    def spec_fingerprint(specs: Dict[str, Any], condition: str):
+        # Stesse 5 specifiche + condizione = quasi certamente lo stesso identico
+        # modello di portatile in vendita da un altro negozio/venditore
+        return (
+            specs["screen"]["value"], specs["gpu"]["value"], specs["cpu"]["value"],
+            specs["ram"]["value"], specs["ssd"]["value"], condition,
+        )
+
+    fingerprint_index: Dict[Any, Dict[str, Any]] = {
+        spec_fingerprint(p["specs"], p["condition"]): p for p in catalog
+    }
+
     for item in new_items:
         # Genera ID univoco
         clean_name = re.sub(r'[^a-zA-Z0-9]+', '-', item["title"].lower()).strip('-')
         pid = f"{clean_name[:25]}-{item['price']}"
-        
+
         if pid in existing_ids:
             continue
-            
+
         # Valuta con il motore della Volpe
         evaluation = evaluate_laptop(item)
-        
+
+        # Stesso portatile (specifiche identiche) già in catalogo da un altro
+        # negozio/venditore: teniamo solo il prezzo più basso
+        fp = spec_fingerprint(evaluation["specs"], item["condition"])
+        twin = fingerprint_index.get(fp)
+        if twin:
+            if item["price"] < twin["price"]:
+                catalog.remove(twin)
+                existing_ids.discard(twin["id"])
+                print(f" 🔁 Sostituita offerta duplicata (stesse specifiche): '{twin['title']}' ({twin['price']}€) -> '{item['title']}' ({item['price']}€)")
+                replaced_count += 1
+            else:
+                print(f" ⏭️  Scartata offerta duplicata (stesse specifiche, prezzo più alto): '{item['title']}' ({item['price']}€), già presente a {twin['price']}€")
+                continue
+
         product_entry = {
             "id": pid,
             "title": item["title"],
@@ -1087,13 +1118,15 @@ def sync_catalog(new_items: List[Dict[str, Any]]):
         
         catalog.append(product_entry)
         existing_ids.add(pid)
+        fingerprint_index[fp] = product_entry
         added_count += 1
         print(f" 🦊 Aggiunta offerta: {product_entry['title']} ({product_entry['price']} €) -> Timbro: {product_entry['stamp']}")
-        
+
     with open(path, "w", encoding="utf-8") as f:
         json.dump(catalog, f, ensure_ascii=False, indent=2)
-        
-    print(f"\n🎉 Catalogo sincronizzato con successo! ({len(catalog)} offerte totali presenti sul sito, +{added_count} nuove aggiunte)")
+
+    replaced_note = f", {replaced_count} sostituite con un prezzo migliore" if replaced_count else ""
+    print(f"\n🎉 Catalogo sincronizzato con successo! ({len(catalog)} offerte totali presenti sul sito, +{added_count} nuove aggiunte{replaced_note})")
 
 
 # --- 6. SCREENSHOT & LINK VERIFICATION ENGINE ---

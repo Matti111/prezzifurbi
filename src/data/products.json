@@ -1019,57 +1019,6 @@
     "warranty": "12 Mesi di Garanzia Inclusa"
   },
   {
-    "id": "notebook-gaming-15-6-fhd--926",
-    "title": "Notebook Gaming 15,6\" FHD Ram 16 GB SSD 1 TB RTX 4060 W11 Deputy P60 Erazer",
-    "brand": "Notebook",
-    "model": "Gaming 15,6\" FHD",
-    "category": "gaming_ai",
-    "condition": "Usato",
-    "price": 926,
-    "originalPrice": 1251,
-    "store": "eBay.it",
-    "affiliateUrl": "https://www.ebay.it/itm/236504732618?_skw=notebook+gaming+rtx+4060&hash=item3710c7d3ca%3Ag%3AmIoAAeSwwatp82E-&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
-    "imageUrl": "https://i.ebayimg.com/images/g/mIoAAeSwwatp82E-/s-l225.jpg",
-    "rating": 4.0,
-    "stamp": "nessuno",
-    "stampRationale": "Prodotto bilanciato e affidabile a 926€ con un buon prezzo netto verificato.",
-    "specs": {
-      "screen": {
-        "value": "15.6\" FHD (1920x1080) 144Hz LED",
-        "indicator": "up"
-      },
-      "gpu": {
-        "value": "NVIDIA GeForce RTX 4060 (8GB GDDR6)",
-        "indicator": "up"
-      },
-      "cpu": {
-        "value": "Intel Core i5 Multicore",
-        "indicator": "neutral"
-      },
-      "ram": {
-        "value": "16 GB DDR4",
-        "indicator": "neutral"
-      },
-      "ssd": {
-        "value": "1 TB SSD NVMe PCIe",
-        "indicator": "double_up"
-      }
-    },
-    "topComment": "Scheda grafica NVIDIA RTX serie 40 con DLSS 3.5 e Frame Generation",
-    "topHighlights": [
-      "Scheda grafica NVIDIA RTX serie 40 con DLSS 3.5 e Frame Generation",
-      "Maxi SSD da 1 TB per salvare decine di giochi e progetti pesanti",
-      "Display ad alto refresh rate da 144Hz: fluidità visiva eccezionale"
-    ],
-    "flopComment": "Peso superiore a 2.3 kg con alimentatore voluminoso",
-    "flopWarnings": [
-      "Peso superiore a 2.3 kg con alimentatore voluminoso"
-    ],
-    "idealFor": "Gaming, AI e uso intenso.",
-    "weight": "2.20 kg",
-    "warranty": "12 Mesi di Garanzia Inclusa"
-  },
-  {
     "id": "pc-portatile-notebook-ric-289",
     "title": "PC PORTATILE NOTEBOOK RICONDIZIONATO HP 430 G6 I7-8565U RAM 16GB SSD 256GB W11",
     "brand": "PC",
