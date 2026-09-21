@@ -23,11 +23,17 @@ comprare. Repo GitHub: https://github.com/Matti111/prezzifurbi (privato).
   - `sync_catalog()` — scrive su `src/data/products.json`
 - **CI/CD**: `.github/workflows/refresh-catalog.yml` — gira ogni notte alle 6:00 UTC
   (+ trigger manuale). Pipeline: esegue `test_db.py` → commit/push di
-  `products.json` se cambiato → `npm ci && npm run build` → deploy di `dist/` su
-  Kaliweb via FTP (`SamKirkland/FTP-Deploy-Action`).
-- **Hosting**: il provider si chiama **Keliweb** (non "Kaliweb" — nome corretto,
-  attenzione a non confondersi), hosting cPanel classico. Sito servito da file
-  statici via FTP, nessun backend server-side.
+  `products.json` se cambiato. Il deploy del sito è gestito interamente da Vercel
+  (vedi Hosting sotto), quindi il workflow **non builda né deploya** — si limita ad
+  aggiornare `products.json` sul branch `main`.
+- **Hosting**: il sito è servito da **Vercel** (Git integration: ogni push su `main`
+  triggera automaticamente build + deploy lato Vercel, incluso quello generato dal
+  commit notturno del workflow sopra). Il dominio `prezzifurbi.it` ha i nameserver
+  puntati su `ns1/ns2.vercel-dns.com`. **Keliweb non è più in uso** (2026-09-21): il
+  vecchio step di deploy FTP verso Keliweb nel workflow falliva sempre con
+  "Timeout (control socket)" perché il DNS del dominio non punta più a Keliweb da
+  tempo — è stato rimosso dal workflow. Se in futuro serve riattivare Keliweb,
+  bisogna prima ripuntare i nameserver del dominio.
 
 ## Stato attuale dei programmi di affiliazione
 
@@ -43,37 +49,34 @@ comprare. Repo GitHub: https://github.com/Matti111/prezzifurbi (privato).
 | Awin → MediaWorld IT | ⏳ In attesa di approvazione | |
 | Awin → Cyberport | 🔲 Non richiesto | Nessun programma IT specifico su Awin, solo AT/DE/EE/PL. Valutato ma non prioritario (commission rate basso, 2,3%) |
 
-## Deploy automatico — stato da verificare
+## Deploy — risolto (2026-09-21)
 
-Il workflow ha lo step di build+deploy FTP aggiunto (commit `e2e6bc6`), e i secret
-GitHub sono stati impostati dall'utente:
-`EBAY_CLIENT_ID`, `EBAY_CLIENT_SECRET`, `AMAZON_CREATORS_CLIENT_ID`,
-`AMAZON_CREATORS_CLIENT_SECRET`, `FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD`,
-`FTP_REMOTE_DIR` (quest'ultimo probabilmente `/public_html/`, standard cPanel).
-
-**Non è mai stato confermato un run notturno completo con successo end-to-end del
-deploy FTP** — gli ultimi aggiornamenti del sito live sono stati fatti con upload
-manuale (`npm run build` + FileZilla). Prima cosa da fare in una nuova sessione:
-controllare i log dell'ultimo run schedulato su GitHub Actions e verificare che lo
-step "Pubblica su Kaliweb via FTP" sia andato a buon fine.
+Il vecchio step di deploy FTP verso Keliweb falliva sempre con "Timeout (control
+socket)": il dominio `prezzifurbi.it` ha i nameserver puntati su Vercel
+(`ns1/ns2.vercel-dns.com`) da tempo, quindi `FTP_SERVER` non raggiungeva mai
+Keliweb. Il sito era già live e funzionante su **Vercel** (Git integration:
+push su `main` → build + deploy automatico lato Vercel), semplicemente non
+tramite questo workflow. Lo step FTP e lo step di build Node sono stati rimossi
+da `refresh-catalog.yml`: ora il workflow si limita ad aggiornare
+`products.json` e pushare su `main`, e Vercel fa il resto da solo. I secret
+`FTP_SERVER`/`FTP_USERNAME`/`FTP_PASSWORD`/`FTP_REMOTE_DIR` sono rimasti su
+GitHub ma non sono più usati da nessun workflow — Keliweb non è più in uso.
 
 ## TODO aperti
 
-1. **Verificare il deploy FTP automatico** (vedi sopra) — se fallisce, il problema
-   più probabile è `FTP_REMOTE_DIR` sbagliato o placeholder non sostituito
-2. Quando Back Market IT / MediaWorld IT approvano su Awin: recuperare il loro
+1. Quando Back Market IT / MediaWorld IT approvano su Awin: recuperare il loro
    Merchant ID (MID) dalla scheda programma su MyAwin e aggiungere un branch in
    `wrap_affiliate_link()` analogo a quello rimosso per Refurbed (usare il formato
    `https://www.awin1.com/cread.php?awinmid={MID}&awinaffid={AFFID}&clickref=prezzifurbi&ued={url-encoded-destination}`)
-3. Amazon Creators API: nessuna azione necessaria, si sblocca da sola raggiunta la
+2. Amazon Creators API: nessuna azione necessaria, si sblocca da sola raggiunta la
    soglia di 10 vendite/30gg — non generare acquisti artificiali/coordinati con
    amici per raggiungerla apposta, rischia di far segnalare l'account Associates
    dai sistemi antifrode Amazon
-4. Il parser specifiche eBay è stato migliorato di recente (commit `2f1d3ea`) per
+3. Il parser specifiche eBay è stato migliorato di recente (commit `2f1d3ea`) per
    leggere le "item specifics" reali invece di indovinare dal titolo — non ancora
    verificato su un run notturno reale dopo la modifica, controllare la qualità dei
    prossimi prodotti eBay aggiunti automaticamente
-5. In generale: quando si aggiungono nuovi prodotti (specialmente eBay, dati meno
+4. In generale: quando si aggiungono nuovi prodotti (specialmente eBay, dati meno
    strutturati), ricontrollare a occhio le specifiche sul sito live — il parser è a
    regex, non infallibile
 
