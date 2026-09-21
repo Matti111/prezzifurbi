@@ -1268,5 +1268,455 @@
     "idealFor": "Gaming, AI e uso intenso.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa"
+  },
+  {
+    "id": "hp-victus-notebook-gaming-565",
+    "title": "HP Victus Notebook Gaming Ryzen 5 5600H RTX 3050 Laptop GPU Win 11 Nero",
+    "brand": "HP",
+    "model": "Victus Notebook Gaming",
+    "category": "gaming_ai",
+    "condition": "Usato",
+    "price": 565,
+    "originalPrice": 763,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/820122457575?_skw=notebook+gaming+rtx&hash=itembef31b95e7%3Ag%3AN9EAAeSwpr5qptaQ&amdata=enc%3AAQALAAAA8ACCtXRWQnOEpyOqnQQ8KGauI58Zh9BKSRcuuuxHOwgdbIUZ3STRNPlziTfzcNWfc%2FGm1QwKhGzVJLBkLmSiHCboDJQfzEiLndKEewMgdsENO16e9C%2FsGkq1vRx9Tr4tQeNLAOEpEz4habbTiZ3njikrOeVWLQCYbtLpKSZ6V4ImEHIqWs%2BAFWKYNN6WA7d3pI82zsES60qCxFpwrYv9vRUF6tgAGkyzvSREy4Ni0MBikIVSmz6PdrNmpPoFUZS32svuZpiPcKjcIrvLLnNb27YUstdApIkqBBgz%2FTowjS5ExD9CKTM63M282BoagETvAw%3D%3D&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/N9EAAeSwpr5qptaQ/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 565€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "14.2\" FHD (1920x1080) 144Hz LED",
+        "indicator": "up"
+      },
+      "gpu": {
+        "value": "NVIDIA GeForce RTX 3050 (4GB GDDR6)",
+        "indicator": "neutral"
+      },
+      "cpu": {
+        "value": "AMD Ryzen 5 5600H",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "neutral"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "up"
+      }
+    },
+    "topComment": "Display ad alto refresh rate da 144Hz: fluidità visiva eccezionale",
+    "topHighlights": [
+      "Display ad alto refresh rate da 144Hz: fluidità visiva eccezionale",
+      "Ottima dotazione di porte USB e ricarica rapida"
+    ],
+    "flopComment": "Webcam integrata con sensore base per videochiamate ordinarie",
+    "flopWarnings": [
+      "Webcam integrata con sensore base per videochiamate ordinarie"
+    ],
+    "idealFor": "Gaming, AI e uso intenso.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa"
+  },
+  {
+    "id": "notebook-hp-zbook-17-g5-1-540",
+    "title": "Notebook HP ZBook 17 G5 17,3\" i7-8850H 32GB RAM P2000 Quadro 4GB 512GB SSD",
+    "brand": "Notebook",
+    "model": "HP ZBook 17",
+    "category": "gaming_ai",
+    "condition": "Usato",
+    "price": 540,
+    "originalPrice": 729,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/257620755974?_skw=notebook+Quadro&hash=item3bfb64c606%3Ag%3A5gIAAeSwwtVqjLtR&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/5gIAAeSwwtVqjLtR/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 540€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "17.3\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core i7-8850H",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "32 GB DDR4",
+        "indicator": "double_up"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "up"
+      }
+    },
+    "topComment": "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+    "topHighlights": [
+      "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+      "Ottima dotazione di porte USB e ricarica rapida"
+    ],
+    "flopComment": "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering",
+    "flopWarnings": [
+      "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering"
+    ],
+    "idealFor": "Gaming, AI e uso intenso.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa"
+  },
+  {
+    "id": "notebook-fujitsu-celsius--429",
+    "title": "NOTEBOOK FUJITSU CELSIUS H5511 INTEL CORE I7-1185G7 32GB RAM 512B SSD FHD NVIDIA",
+    "brand": "NOTEBOOK",
+    "model": "FUJITSU CELSIUS H5511",
+    "category": "gaming_ai",
+    "condition": "Usato",
+    "price": 429,
+    "originalPrice": 579,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/128085620263?_skw=notebook+Quadro&hash=item1dd27f7627%3Ag%3Ay5kAAeSwwlhqrQQC&amdata=enc%3AAQALAAAA8ACCtXRWQnOEpyOqnQQ8KGbIkCNIPj4p1WANCGVaXv9%2BMNyXuU9819uY%2FqEDbpAGB5bUehhbWU%2FxUnRR3ed%2FH%2BpKS8VAk0q3Of4PeSNsLtQ3OpLt9Yy5aTD23Alyiwl4E50WjUKXkaqWq1wxpPLqM41OJZ1O5GVZLE5Xn1nkapdBuF5wj696m0L7GFNdZkL3xtW6idPf9KfGw9Fmot%2F3kFAT7sU%2BtqLL0Tbdea0MiHT6APrMtA%2BPqQXMfCxfu9rJ4ku%2BWry0LlrWK5sBhYGoGc7W%2BNR79FvuiVfWj46JjEQVt34KHoXHaodgbQQUqZHtEg%3D%3D&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/y5kAAeSwwlhqrQQC/s-l225.jpg",
+    "rating": 4.5,
+    "stamp": "cheaper_good",
+    "stampRationale": "Prezzo d'attacco minimo di 429€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core i5 Multicore",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "32 GB DDR4",
+        "indicator": "double_up"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "up"
+      }
+    },
+    "topComment": "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+    "topHighlights": [
+      "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+      "Ottima dotazione di porte USB e ricarica rapida"
+    ],
+    "flopComment": "Webcam integrata con sensore base per videochiamate ordinarie",
+    "flopWarnings": [
+      "Webcam integrata con sensore base per videochiamate ordinarie"
+    ],
+    "idealFor": "Gaming, AI e uso intenso.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa"
+  },
+  {
+    "id": "pc-portatile-notebook-ric-269",
+    "title": "PC PORTATILE NOTEBOOK RICONDIZIONATO HP G14U I5-8350U RAM 16GB SSD 256GB WIN 11",
+    "brand": "PC",
+    "model": "PORTATILE NOTEBOOK RICONDIZIONATO",
+    "category": "gaming_ai",
+    "condition": "Usato",
+    "price": 269,
+    "originalPrice": 363,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/389066472507?_skw=notebook+ricondizionato+16gb&hash=item5a962b3c3b%3Ag%3A6~cAAeSw4kFqsUll&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/6~cAAeSw4kFqsUll/s-l225.jpg",
+    "rating": 4.5,
+    "stamp": "cheaper_good",
+    "stampRationale": "Prezzo d'attacco minimo di 269€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "specs": {
+      "screen": {
+        "value": "14\" 4K UHD (3840x2160) LED",
+        "indicator": "double_up"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "neutral"
+      },
+      "cpu": {
+        "value": "Intel Core I5-8350U",
+        "indicator": "down"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "up"
+      },
+      "ssd": {
+        "value": "256 GB SSD NVMe M.2",
+        "indicator": "neutral"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+    "flopWarnings": [
+      "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB"
+    ],
+    "idealFor": "Gaming, AI e uso intenso.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa"
+  },
+  {
+    "id": "notebook-hp-845-g8-ryzen--320",
+    "title": "NOTEBOOK HP 845 G8 RYZEN 7 PRO R7-5850U 16GB 256 NVME HDMI 14 FHD RICONDIZIONATO",
+    "brand": "NOTEBOOK",
+    "model": "HP 845 G8",
+    "category": "gaming_ai",
+    "condition": "Usato",
+    "price": 320,
+    "originalPrice": 432,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/257051854779?_skw=notebook+ricondizionato+16gb&hash=item3bd97c07bb%3Ag%3AwukAAeSwwc1o7P6t&amdata=enc%3AAQALAAABAACCtXRWQnOEpyOqnQQ8KGbdO74sfpVzt0w9oGzwjyfCGmucs1xC0SSZXD9AlVfk9XJY8l3LA5%2BBKrk2j%2BBelTIEkJhBDe5LRDTt352cwZLXqL4w2SVEj%2FzFmXwpg07l2bZDcrh5Sv%2BQK75ItdEV98HcVAqgbfb%2F8IQyp7dVodb5QwdKfe3vPge25EuIRarhaNtQfRTX3iSoLFj3qEWszLYA%2BlRDW8JQBJBXYC7mJVbyzlZHZppa1xCIMADvl5JQZQzRVun%2Fdn3Hvr8r%2FeDOXUeGmWbQyA7vGP39efAfglXsLcct126yXd0zlLPdiD3hM2XYqYrCwf7tzAyJAIQTM2E%3D&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/wukAAeSwwc1o7P6t/s-l225.jpg",
+    "rating": 4.5,
+    "stamp": "cheaper_good",
+    "stampRationale": "Prezzo d'attacco minimo di 320€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "specs": {
+      "screen": {
+        "value": "14\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "AMD Radeon Graphics integrata",
+        "indicator": "neutral"
+      },
+      "cpu": {
+        "value": "Intel Core i5 Multicore",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "up"
+      },
+      "ssd": {
+        "value": "256 GB SSD NVMe M.2",
+        "indicator": "neutral"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+    "flopWarnings": [
+      "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB"
+    ],
+    "idealFor": "Gaming, AI e uso intenso.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa"
+  },
+  {
+    "id": "notebook-pc-computer-dell-429",
+    "title": "Notebook PC Computer Dell 14\" i7-10610U Ram 32GB SSD 512GB W11 (Ricondizionato)",
+    "brand": "Notebook",
+    "model": "PC Computer Dell",
+    "category": "gaming_ai",
+    "condition": "Usato",
+    "price": 429,
+    "originalPrice": 579,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/198356783110?_skw=notebook+ricondizionato+32gb&hash=item2e2efc5006%3Ag%3AFe0AAeSwxChqBvkg&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/Fe0AAeSwxChqBvkg/s-l225.jpg",
+    "rating": 4.5,
+    "stamp": "cheaper_good",
+    "stampRationale": "Prezzo d'attacco minimo di 429€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "specs": {
+      "screen": {
+        "value": "14\" 4K UHD (3840x2160) LED",
+        "indicator": "double_up"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core i7-10610U",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "32 GB DDR4",
+        "indicator": "double_up"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "up"
+      }
+    },
+    "topComment": "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+    "topHighlights": [
+      "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+      "Ottima dotazione di porte USB e ricarica rapida"
+    ],
+    "flopComment": "Webcam integrata con sensore base per videochiamate ordinarie",
+    "flopWarnings": [
+      "Webcam integrata con sensore base per videochiamate ordinarie"
+    ],
+    "idealFor": "Gaming, AI e uso intenso.",
+    "weight": "1.47 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa"
+  },
+  {
+    "id": "notebook-pc-portatile-hp--380",
+    "title": "NOTEBOOK PC PORTATILE HP ZBOOK 15 G6 INTEL I7-9850H NVIDIA 512GB 32GB WIN 11 PRO",
+    "brand": "NOTEBOOK",
+    "model": "PC PORTATILE HP",
+    "category": "gaming_ai",
+    "condition": "Usato",
+    "price": 380,
+    "originalPrice": 513,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/327325865661?_skw=notebook+ricondizionato+32gb&hash=item4c362456bd%3Ag%3AQo8AAeSwHbJqGD4V&amdata=enc%3AAQALAAABAACCtXRWQnOEpyOqnQQ8KGauaBC2qx3D9kMy4CY4GaHV3ZY5HMSA%2BVtZ4dvDyxPTBWJXynzBY4kxSiKNPYKEM5%2Fpjw9mxtsVnNSM9H--paYpG%2F8s2SQi2djaZUizqUtiLOB64oWD4IAmLObknHmI%2BDnzqVapkPnFy2kUt7mQaMHsbw0Jcn4ydV9WqUwMx1LBFmv49KSTiilEkxtgt21986HdwAXsj2JHuSC%2Blfylsmj1HWepDc1rLBveyuZMlGV7%2BUbQYbaKdA%2FjTS9tpehStjkCFdt%2FFVYmCbEFd0qcZfTbgK4r1pjJhP%2FyiFw8v2oMHysdf0YHzw3bSoCw9hxxe9A%3D&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/Qo8AAeSwHbJqGD4V/s-l225.jpg",
+    "rating": 4.5,
+    "stamp": "cheaper_good",
+    "stampRationale": "Prezzo d'attacco minimo di 380€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "NVIDIA Quadro T1000 (4GB GDDR6)",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core I7-9850H",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "32 GB DDR4",
+        "indicator": "double_up"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "up"
+      }
+    },
+    "topComment": "Scheda video professionale con driver certificati per software CAD e 3D",
+    "topHighlights": [
+      "Scheda video professionale con driver certificati per software CAD e 3D",
+      "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco"
+    ],
+    "flopComment": "Webcam integrata con sensore base per videochiamate ordinarie",
+    "flopWarnings": [
+      "Webcam integrata con sensore base per videochiamate ordinarie"
+    ],
+    "idealFor": "Gaming, AI e uso intenso.",
+    "weight": "2.60 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa"
+  },
+  {
+    "id": "notebook-pc-12-5-i5-6200u-529",
+    "title": "NOTEBOOK PC 12,5\" i5-6200U 64GB RAM 2TB SSD WINDOWS 11 PRO TASTIERA US ITA",
+    "brand": "NOTEBOOK",
+    "model": "PC 12,5\" i5-6200U",
+    "category": "gaming_ai",
+    "condition": "Usato",
+    "price": 529,
+    "originalPrice": 714,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/227501112648?_skw=notebook+ricondizionato+64gb&hash=item34f81f7d48%3Ag%3AMkMAAeSwAetqsV97&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/MkMAAeSwAetqsV97/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 529€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core i5 Multicore",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "64 GB DDR4",
+        "indicator": "double_up"
+      },
+      "ssd": {
+        "value": "2 TB SSD NVMe PCIe",
+        "indicator": "double_up"
+      }
+    },
+    "topComment": "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+    "topHighlights": [
+      "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+      "Maxi SSD da 1 TB per salvare decine di giochi e progetti pesanti"
+    ],
+    "flopComment": "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering",
+    "flopWarnings": [
+      "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering"
+    ],
+    "idealFor": "Gaming, AI e uso intenso.",
+    "weight": "1.30 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa"
+  },
+  {
+    "id": "notebook-12-5-i5-6200u-64-443",
+    "title": "Notebook 12,5\" I5-6200u 64gb 120gb W11 Pro Mini Dp Hdmi Bt Lte 4g Layout Ita_",
+    "brand": "Notebook",
+    "model": "12,5\" I5-6200u 64gb",
+    "category": "gaming_ai",
+    "condition": "Usato",
+    "price": 443,
+    "originalPrice": 598,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/278331222317?_skw=notebook+ricondizionato+64gb&hash=item40cdd5692d%3Ag%3Ag88AAeSwgkJqsWJR&amdata=enc%3AAQALAAABAACCtXRWQnOEpyOqnQQ8KGb1nJqdmslY1SaFBvRC3PYWfTd%2Fafgv2k8tnRdThjZVW8RUsn9TGCKCsOA%2BOa96mUDx9S1hliKVHSz6WcEegCsjDHVCeRJHGrSm8IQZYFVvE1IjdXX6dCdJy8EZRnOBHsqFgHn5wVXwMt4d9y9uRA0BoWQSwhgQazCpvXY5gxc65Xc%2Foy2M1K6lZZjbzvrif6cJDKL8MQnaJ5FIkvqiO66YGChQ58%2BtcOnFO2%2BxmY%2Fq%2BI85r8xIELPIkmdNmTeAlh2euZkTC7ItOxNg56wCOHnjfN%2FSrDg76EQxqInscbHeHqKk0OjKTJwyV4gykTT1h6I%3D&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/g88AAeSwgkJqsWJR/s-l225.jpg",
+    "rating": 4.5,
+    "stamp": "cheaper_good",
+    "stampRationale": "Prezzo d'attacco minimo di 443€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core i5 Multicore",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "64 GB DDR4",
+        "indicator": "double_up"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "up"
+      }
+    },
+    "topComment": "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+    "topHighlights": [
+      "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+      "Ottima dotazione di porte USB e ricarica rapida"
+    ],
+    "flopComment": "Webcam integrata con sensore base per videochiamate ordinarie",
+    "flopWarnings": [
+      "Webcam integrata con sensore base per videochiamate ordinarie"
+    ],
+    "idealFor": "Gaming, AI e uso intenso.",
+    "weight": "1.30 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa"
   }
 ]
