@@ -564,10 +564,47 @@ def _ebay_budget_allows(cost: int = 1) -> bool:
     """Controlla (e consuma) budget prima di ogni chiamata reale all'API eBay.
     Ritorna False senza consumare nulla se andremmo oltre DAILY_API_BUDGET."""
     global _ebay_api_calls_used
-    if _ebay_api_calls_used + cost > DAILY_API_BUDGET:
+    if _ebay_throttled or _ebay_api_calls_used + cost > DAILY_API_BUDGET:
         return False
     _ebay_api_calls_used += cost
     return True
+
+
+# Ritmo minimo tra chiamate reali all'API eBay: il tetto DAILY_API_BUDGET protegge
+# dal limite giornaliero (5000/giorno) ma non da un limite di frequenza a breve
+# termine (query/secondo) - scoperto il 2026-09-22 quando un run lanciato subito
+# dopo un altro molto attivo ha ricevuto 429 "Too many requests" su OGNI chiamata,
+# fin dalla prima, sparate tutte a distanza di millisecondi l'una dall'altra.
+_EBAY_MIN_CALL_INTERVAL = 1.0  # secondi
+_ebay_last_call_at = 0.0
+# Circuit breaker: dopo troppi 429 consecutivi il problema non è "riprova", è che
+# l'endpoint è throttled per questo run - continuare a martellarlo spreca solo
+# tempo. Una volta scattato, tutte le chiamate successive vengono saltate subito.
+_EBAY_MAX_CONSECUTIVE_429 = 3
+_ebay_consecutive_429 = 0
+_ebay_throttled = False
+
+
+def _ebay_rate_limit_pace():
+    """Aspetta il tempo minimo dall'ultima chiamata reale, per non superare un
+    eventuale limite di frequenza a breve termine dell'API eBay."""
+    global _ebay_last_call_at
+    wait = _EBAY_MIN_CALL_INTERVAL - (time.time() - _ebay_last_call_at)
+    if wait > 0:
+        time.sleep(wait)
+    _ebay_last_call_at = time.time()
+
+
+def _ebay_note_response(status_code: int):
+    """Aggiorna il circuit breaker in base all'esito dell'ultima chiamata reale."""
+    global _ebay_consecutive_429, _ebay_throttled
+    if status_code == 429:
+        _ebay_consecutive_429 += 1
+        if _ebay_consecutive_429 >= _EBAY_MAX_CONSECUTIVE_429:
+            _ebay_throttled = True
+            print(f" 🛑 [eBay Browse API] {_ebay_consecutive_429} risposte 429 consecutive: endpoint throttled, salto le chiamate rimanenti di questo run")
+    else:
+        _ebay_consecutive_429 = 0
 
 
 def _numeric_listing_id(raw: str) -> str:
@@ -697,6 +734,7 @@ def ebay_browse_search(
         }
         if sort:
             params["sort"] = sort
+        _ebay_rate_limit_pace()
         resp = requests.get(
             "https://api.ebay.com/buy/browse/v1/item_summary/search",
             headers={
@@ -706,6 +744,7 @@ def ebay_browse_search(
             params=params,
             timeout=20,
         )
+        _ebay_note_response(resp.status_code)
         if resp.status_code != 200:
             print(f" ⚠️  [eBay Browse API] Errore ricerca ({resp.status_code}): {resp.text[:300]}")
             return []
@@ -733,11 +772,13 @@ def get_ebay_item_details(item_id: str) -> str:
         return ""
     try:
         import urllib.parse
+        _ebay_rate_limit_pace()
         resp = requests.get(
             f"https://api.ebay.com/buy/browse/v1/item/{urllib.parse.quote(item_id, safe='')}",
             headers={"Authorization": f"Bearer {token}", "X-EBAY-C-MARKETPLACE-ID": "EBAY_IT"},
             timeout=15,
         )
+        _ebay_note_response(resp.status_code)
         if resp.status_code != 200:
             return ""
         data = resp.json()

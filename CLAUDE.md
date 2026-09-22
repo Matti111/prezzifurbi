@@ -68,6 +68,15 @@ comprare. Repo GitHub: https://github.com/Matti111/prezzifurbi (privato).
     mette un tetto alla crescita per notte (non limita gli aggiornamenti di
     prezzo su annunci già noti, solo i prodotti genuinamente nuovi) finché la
     qualità non è verificata su più notti — alzare o rimuovere quando lo è.
+    **Rate limit a breve termine** (2026-09-22): un run lanciato subito dopo un
+    altro molto attivo ha ricevuto 429 "Too many requests" su OGNI chiamata,
+    fin dalla prima — un limite di frequenza diverso e più stringente del tetto
+    giornaliero (5000/giorno), probabilmente query/secondo o una finestra di
+    cooldown, mai documentato esplicitamente da eBay per questo tier. Aggiunto
+    `_ebay_rate_limit_pace()` (min. 1s tra chiamate reali) e un circuit breaker
+    (`_ebay_throttled`, scatta dopo 3 risposte 429 consecutive e salta il resto
+    del run) — non ancora verificato che risolva, dato che un throttle già
+    attivo lato eBay non si sblocca solo perché noi rallentiamo
   - Integrazioni: Amazon Creators API, eBay Browse API. **Refurbed.it rimosso
     interamente** (2026-09-21): mai stato trovato un programma di affiliazione
     Refurbed attivo su Awin per questo account, quindi niente tracciamento/
