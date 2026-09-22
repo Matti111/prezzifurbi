@@ -1,6 +1,6 @@
 import React from 'react';
-import { FilterState, StampType, ConditionType, SortOption, Product, SpecTagCategory } from '../types/product';
-import { SlidersHorizontal, ArrowDownAZ, RotateCcw, Cpu, MemoryStick as RamIcon, HardDrive, Gamepad2, BarChart3, Monitor, Weight as WeightIcon } from 'lucide-react';
+import { FilterState, StampType, ConditionType, SortOption, Product, SpecTagCategory, UseCase } from '../types/product';
+import { SlidersHorizontal, ArrowDownAZ, RotateCcw, Cpu, MemoryStick as RamIcon, HardDrive, Gamepad2, BarChart3, Monitor, Weight as WeightIcon, Home, Briefcase, GraduationCap, Palette, Code2 } from 'lucide-react';
 import { collectTagOptions, isTagAvailable, minPriceForSelection } from '../utils/specTags';
 
 interface FiltersBarProps {
@@ -16,6 +16,15 @@ interface FiltersBarProps {
 
 const BUDGET_MIN = 300;
 const BUDGET_MAX = 1200;
+
+const USE_CASE_OPTIONS: { value: UseCase; label: string; icon: React.ReactNode }[] = [
+  { value: 'gaming', label: 'Gaming', icon: <Gamepad2 className="w-3.5 h-3.5" /> },
+  { value: 'creativita', label: 'Creatività', icon: <Palette className="w-3.5 h-3.5" /> },
+  { value: 'programmazione', label: 'Programmazione', icon: <Code2 className="w-3.5 h-3.5" /> },
+  { value: 'studio', label: 'Studio', icon: <GraduationCap className="w-3.5 h-3.5" /> },
+  { value: 'lavoro', label: 'Lavoro', icon: <Briefcase className="w-3.5 h-3.5" /> },
+  { value: 'home', label: 'Home', icon: <Home className="w-3.5 h-3.5" /> },
+];
 
 const TAG_GROUPS: { key: SpecTagCategory; label: string; icon: React.ReactNode }[] = [
   { key: 'cpu', label: 'Processore', icon: <Cpu className="w-3.5 h-3.5 text-orange-400" /> },
@@ -78,9 +87,17 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
     { label: 'Usato', value: 'Usato', icon: '🤝' },
   ];
 
+  const toggleUseCase = (uc: UseCase) => {
+    const next = filters.useCases.includes(uc)
+      ? filters.useCases.filter((x) => x !== uc)
+      : [...filters.useCases, uc];
+    onFilterChange({ useCases: next });
+  };
+
   const isFiltered =
     filters.stamp !== 'all' ||
     filters.category !== 'all' ||
+    filters.useCases.length > 0 ||
     filters.condition !== 'all' ||
     filters.maxPrice < 1200 ||
     hasSpecSelection ||
@@ -145,6 +162,33 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
           </div>
         </div>
 
+      </div>
+
+      {/* 1B. Utilizzo: un prodotto può avere più tag, il filtro è multi-selezione
+          (combacia se almeno uno dei tag selezionati è tra gli useCases del prodotto) */}
+      <div className="flex flex-wrap items-center gap-1.5 pt-3">
+        <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mr-1 flex-shrink-0">
+          Per cosa ti serve:
+        </span>
+        <div className="flex flex-wrap gap-1.5">
+          {USE_CASE_OPTIONS.map((opt) => {
+            const isActive = filters.useCases.includes(opt.value);
+            return (
+              <button
+                key={opt.value}
+                onClick={() => toggleUseCase(opt.value)}
+                className={`px-2.5 py-1 rounded-xl text-[11px] sm:text-xs font-bold transition-all flex items-center gap-1 ${
+                  isActive
+                    ? 'bg-orange-500 text-white shadow-md shadow-orange-500/25 ring-1 ring-orange-400/50'
+                    : 'bg-slate-800/90 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700/60'
+                }`}
+              >
+                {opt.icon}
+                <span>{opt.label}</span>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* 2. Detailed Filter Controls */}

@@ -10,7 +10,8 @@ import { HowItWorksModal } from './components/HowItWorksModal';
 import { PerformanceCompareModal } from './components/PerformanceCompareModal';
 import { AffiliateDisclaimer } from './components/AffiliateDisclaimer';
 import { productMatchesSelection } from './utils/specTags';
-import { Shield, Flame, CheckCircle2 } from 'lucide-react';
+import { findDominator, getValueFraming, qualifiesForFox } from './utils/valuation';
+import { Shield, Flame, CheckCircle2, ChevronDown } from 'lucide-react';
 
 const products = rawProducts as Product[];
 
@@ -18,6 +19,7 @@ const initialFilters: FilterState = {
   searchQuery: '',
   stamp: 'all',
   category: 'all',
+  useCases: [],
   condition: 'all',
   maxPrice: 1200,
   specTags: {},
@@ -30,6 +32,7 @@ export function App() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isHowItWorksOpen, setIsHowItWorksOpen] = useState(false);
   const [isCompareOpen, setIsCompareOpen] = useState(false);
+  const [showDominated, setShowDominated] = useState(false);
 
   const handleFilterChange = (newFilters: Partial<FilterState>) => {
     setFilters((prev) => ({ ...prev, ...newFilters }));
@@ -80,9 +83,15 @@ export function App() {
         return false;
       }
 
+      // Utilizzo (Gaming/Home/Lavoro/Studio/...): combacia se almeno uno dei
+      // tag selezionati è tra gli useCases del prodotto
+      if (filters.useCases.length > 0 && !filters.useCases.some((uc) => p.useCases.includes(uc))) {
+        return false;
+      }
+
       return true;
     });
-  }, [filters.searchQuery, filters.stamp, filters.condition, filters.category]);
+  }, [filters.searchQuery, filters.stamp, filters.condition, filters.category, filters.useCases]);
 
   // Filtered and Sorted Products
   const filteredProducts = useMemo(() => {
@@ -163,6 +172,25 @@ export function App() {
       });
   }, [baseFilteredProducts, filters.maxPrice, filters.specTags, filters.sortBy]);
 
+  // Dominanza: confronto SOLO nel pool contestuale (baseFilteredProducts, mai
+  // sul catalogo intero) — i prodotti dominati non spariscono, restano
+  // disponibili sotto "Mostra alternative" (punto 5 del documento sul valore).
+  const { visibleProducts, dominatedProducts } = useMemo(() => {
+    const visible: Product[] = [];
+    const dominated: Product[] = [];
+    for (const p of filteredProducts) {
+      const dominator = findDominator(p, baseFilteredProducts);
+      if (dominator) {
+        dominated.push(p);
+      } else {
+        visible.push(p);
+      }
+    }
+    return { visibleProducts: visible, dominatedProducts: dominated };
+  }, [filteredProducts, baseFilteredProducts]);
+
+  const displayedProducts = showDominated ? filteredProducts : visibleProducts;
+
   return (
     <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 selection:bg-orange-500 selection:text-white w-full max-w-full overflow-x-hidden">
       
@@ -231,16 +259,37 @@ export function App() {
 
         {/* Product Cards Grid */}
         {filteredProducts.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {filteredProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                highlightedSpec={highlightedSpec}
-                onSelect={(p) => setSelectedProduct(p)}
-              />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+              {displayedProducts.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  highlightedSpec={highlightedSpec}
+                  onSelect={(p) => setSelectedProduct(p)}
+                  valueFraming={getValueFraming(baseFilteredProducts, product)}
+                  foxUseCase={qualifiesForFox(product, products)}
+                  isDominated={showDominated && dominatedProducts.includes(product)}
+                />
+              ))}
+            </div>
+
+            {dominatedProducts.length > 0 && (
+              <div className="flex justify-center mt-5 sm:mt-6">
+                <button
+                  onClick={() => setShowDominated((v) => !v)}
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 text-xs font-bold transition-colors"
+                >
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showDominated ? 'rotate-180' : ''}`} />
+                  <span>
+                    {showDominated
+                      ? 'Nascondi le alternative dominate'
+                      : `Mostra anche ${dominatedProducts.length} alternative (stesso tipo, meno convenienti)`}
+                  </span>
+                </button>
+              </div>
+            )}
+          </>
         ) : (
           <div className="text-center py-16 sm:py-20 bg-slate-900/50 rounded-3xl border border-slate-800 space-y-3 sm:space-y-4 px-4">
             <span className="text-4xl sm:text-5xl select-none">🦊</span>
@@ -263,6 +312,7 @@ export function App() {
       <ProductDetailModal
         product={selectedProduct}
         onClose={() => setSelectedProduct(null)}
+        pool={baseFilteredProducts}
       />
 
       {/* How it works Guide Modal */}

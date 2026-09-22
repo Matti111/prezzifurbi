@@ -4,6 +4,15 @@ export type StampType = 'scelta_furba' | 'best_buy' | 'cheaper_good' | 'nessuno'
 
 export type ConditionType = 'Nuovo' | 'Ricondizionato' | 'Usato';
 
+/** Utilizzi per cui il prodotto è adatto, derivati dalle specifiche reali (mai
+ * da un punteggio unico): un prodotto può averne più di uno contemporaneamente. */
+export type UseCase = 'gaming' | 'creativita' | 'programmazione' | 'studio' | 'lavoro' | 'home';
+
+export interface PriceHistoryEntry {
+  price: number;
+  date: string; // ISO
+}
+
 export type SpecKey = 'screen' | 'gpu' | 'cpu' | 'ram' | 'ssd';
 
 export interface SpecItem {
@@ -18,6 +27,7 @@ export interface Product {
   brand: string;
   model: string;
   category: 'gaming_ai' | 'lavoro_ufficio' | 'budget_studenti';
+  useCases: UseCase[];
   condition: ConditionType;
   price: number;
   originalPrice?: number;
@@ -27,6 +37,8 @@ export interface Product {
   rating: number; // 0 to 5 (es. 4.8)
   stamp: StampType;
   stampRationale: string;
+  lastUpdated?: string; // ISO date, per il semaforo di freschezza
+  priceHistory?: PriceHistoryEntry[];
   specs: {
     screen: SpecItem;
     gpu: SpecItem;
@@ -52,6 +64,7 @@ export interface FilterState {
   searchQuery: string;
   stamp: StampType | 'all';
   category: 'all' | 'gaming_ai' | 'lavoro_ufficio' | 'budget_studenti';
+  useCases: UseCase[]; // vuoto = nessun filtro (tutti gli utilizzi)
   condition: 'all' | ConditionType;
   maxPrice: number;
   specTags: SpecTagSelection;

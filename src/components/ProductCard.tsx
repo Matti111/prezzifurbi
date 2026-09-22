@@ -1,42 +1,77 @@
 import React, { useState } from 'react';
-import { Product, SpecKey } from '../types/product';
+import { Product, SpecKey, UseCase } from '../types/product';
+import { ValueFraming, freshnessLevel } from '../utils/valuation';
 import { StampBadge } from './StampBadge';
 import { SpecIndicator } from './SpecIndicator';
-import { 
-  Star, 
-  ExternalLink, 
-  Info, 
-  Monitor, 
-  Gamepad2, 
-  Cpu, 
-  MemoryStick as RamIcon, 
-  HardDrive, 
+import {
+  Star,
+  ExternalLink,
+  Info,
+  Monitor,
+  Gamepad2,
+  Cpu,
+  MemoryStick as RamIcon,
+  HardDrive,
   CheckCircle2,
   AlertTriangle,
   ShieldAlert,
   MessageSquare,
   Sparkles,
   RefreshCw,
-  Handshake
+  Handshake,
+  Home,
+  Briefcase,
+  GraduationCap,
+  Palette,
+  Code2
 } from 'lucide-react';
 
 interface ProductCardProps {
   product: Product;
   highlightedSpec: SpecKey;
   onSelect: (product: Product) => void;
+  /** Risparmio "onesto": mai una percentuale sul prezzo dichiarato dal
+   * venditore, solo un prezzo di riferimento reale o tipico (vedi valuation.ts). */
+  valueFraming: ValueFraming;
+  /** Utilizzo per cui il prodotto è tra il 15% più conveniente in catalogo,
+   * se lo è: la volpe compare solo quando questo non è null (rara per design). */
+  foxUseCase: UseCase | null;
+  /** true se il prodotto è dominato da un'alternativa migliore/pari a prezzo
+   * uguale o inferiore (vedi App.tsx): resta visibile ma marcato come tale. */
+  isDominated?: boolean;
 }
 
-export const ProductCard: React.FC<ProductCardProps> = ({ 
-  product, 
+const USE_CASE_META: Record<UseCase, { label: string; icon: React.ReactNode }> = {
+  gaming: { label: 'Gaming', icon: <Gamepad2 className="w-3 h-3" /> },
+  creativita: { label: 'Creatività', icon: <Palette className="w-3 h-3" /> },
+  programmazione: { label: 'Programmazione', icon: <Code2 className="w-3 h-3" /> },
+  studio: { label: 'Studio', icon: <GraduationCap className="w-3 h-3" /> },
+  lavoro: { label: 'Lavoro', icon: <Briefcase className="w-3 h-3" /> },
+  home: { label: 'Home', icon: <Home className="w-3 h-3" /> },
+};
+
+const FRESHNESS_META = {
+  green: { color: 'bg-emerald-500', title: 'Prezzo verificato di recente' },
+  yellow: { color: 'bg-amber-500', title: 'Prezzo verificato da un po’: potrebbe essere lievemente cambiato' },
+  red: { color: 'bg-rose-500', title: 'Dato non aggiornato da tempo: verifica il prezzo sul negozio prima di acquistare' },
+};
+
+export const ProductCard: React.FC<ProductCardProps> = ({
+  product,
   highlightedSpec,
-  onSelect 
+  onSelect,
+  valueFraming,
+  foxUseCase,
+  isDominated,
 }) => {
   // 3 tabs: 'top' | 'flop' | 'comment'
   const [activeTab, setActiveTab] = useState<'top' | 'flop' | 'comment'>('top');
 
-  const discountPercent = product.originalPrice 
-    ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
-    : 0;
+  // La volpe è rara per design (vedi qualifiesForFox): se il timbro backend è
+  // "scelta_furba" ma il prodotto non supera il confronto contestuale per
+  // utilizzo, si mostra comunque come Best Buy invece di sparire del tutto.
+  const effectiveStamp = product.stamp === 'scelta_furba' && !foxUseCase ? 'best_buy' : product.stamp;
+  const freshness = FRESHNESS_META[freshnessLevel(product.lastUpdated)];
 
   // Background style & color scheme according to user rule:
   // "da bianco nuovo, quasi bianco come nuovo... a grigio scuro usato"
@@ -125,16 +160,27 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   const showUnverifiedNotice = /amazon|mediaworld/i.test(product.store);
 
   return (
-    <div className={`group relative flex flex-col rounded-2xl border transition-all duration-300 w-full max-w-full overflow-hidden ${cardTheme}`}>
-      
-      {/* 1. Header: Left = Stamp (Only Fox for Scelta Furba) | Middle = Condition Symbol | Right = Big Discount */}
+    <div className={`group relative flex flex-col rounded-2xl border transition-all duration-300 w-full max-w-full overflow-hidden ${isDominated ? 'opacity-75' : ''} ${cardTheme}`}>
+
+      {isDominated && (
+        <div className="absolute top-0 left-0 z-10 px-2.5 py-0.5 rounded-br-xl text-[9px] font-extrabold uppercase tracking-wider bg-slate-700 text-slate-200">
+          Alternativa
+        </div>
+      )}
+
+      {/* 1. Header: Left = Stamp (Volpe solo se davvero rara) | Middle = Condition Symbol | Right = Sconto reale, se c'è */}
       <div className={`px-3 sm:px-4 py-2.5 sm:py-3 flex items-center justify-between gap-2 border-b ${
         isLightCard ? 'border-slate-300/90 bg-slate-50/80' : 'border-slate-800/80 bg-slate-950/40'
       }`}>
-        
+
         {/* Left: Stamp */}
-        <div className="flex items-center flex-shrink-0">
-          <StampBadge stamp={product.stamp} size="md" />
+        <div className="flex items-center gap-1.5 flex-shrink-0 min-w-0">
+          <StampBadge stamp={effectiveStamp} size="md" />
+          {foxUseCase && (
+            <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-wide text-amber-600 truncate">
+              {USE_CASE_META[foxUseCase].label}
+            </span>
+          )}
         </div>
 
         {/* Middle: Condition Symbol */}
@@ -142,11 +188,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           {renderConditionBadge()}
         </div>
 
-        {/* Right: Big Discount */}
+        {/* Right: Sconto SOLO se reale (dichiarato dal negozio), mai stimato/percentuale finta */}
         <div className="flex items-center justify-end flex-shrink-0">
-          {discountPercent > 0 ? (
+          {valueFraming.savings && valueFraming.isSourced ? (
             <span className="text-xl sm:text-2xl font-black text-rose-600 tracking-tight leading-none">
-              -{discountPercent}%
+              -{Math.round((valueFraming.savings / valueFraming.referencePrice!) * 100)}%
             </span>
           ) : (
             <span className={`text-[10px] sm:text-xs font-bold uppercase tracking-wider ${
@@ -187,6 +233,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             </h3>
             <div className="mt-0.5 sm:mt-1">
               {renderStars(product.rating)}
+            </div>
+            <div className="flex flex-wrap gap-1 mt-1">
+              {product.useCases.map((uc) => (
+                <span
+                  key={uc}
+                  className={`inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md text-[9px] font-bold ${
+                    isLightCard ? 'bg-slate-100 text-slate-600' : 'bg-slate-800 text-slate-400'
+                  }`}
+                >
+                  {USE_CASE_META[uc].icon}
+                  <span>{USE_CASE_META[uc].label}</span>
+                </span>
+              ))}
             </div>
           </div>
         </div>
@@ -455,14 +514,23 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             <span className={`text-xl sm:text-2xl font-black ${isLightCard ? 'text-slate-900' : 'text-white'}`}>
               {product.price} €
             </span>
-            {product.originalPrice && (
+            {valueFraming.referencePrice && (
               <span className="text-[10px] sm:text-xs text-slate-400 line-through truncate">
-                {product.originalPrice} €
+                {valueFraming.referencePrice} €
               </span>
             )}
           </div>
-          <div className={`text-[10px] sm:text-[11px] font-medium truncate ${isLightCard ? 'text-slate-600' : 'text-slate-400'}`}>
-            {product.store}
+          {valueFraming.savings && (
+            <div className="text-[10px] sm:text-[11px] font-bold text-emerald-600 truncate">
+              {valueFraming.savings} € in meno {valueFraming.isSourced ? 'del prezzo di listino' : 'del prezzo tipico'}
+            </div>
+          )}
+          <div className={`flex items-center gap-1 text-[10px] sm:text-[11px] font-medium truncate ${isLightCard ? 'text-slate-600' : 'text-slate-400'}`}>
+            <span
+              className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${freshness.color}`}
+              title={freshness.title}
+            />
+            <span className="truncate">{product.store}</span>
           </div>
         </div>
 

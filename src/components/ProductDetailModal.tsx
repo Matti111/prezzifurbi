@@ -1,4 +1,5 @@
 import { Product } from '../types/product';
+import { getValueFraming } from '../utils/valuation';
 import { StampBadge } from './StampBadge';
 import { SpecIndicator } from './SpecIndicator';
 import { 
@@ -20,14 +21,15 @@ import {
 interface ProductDetailModalProps {
   product: Product | null;
   onClose: () => void;
+  /** Pool contestuale (stesso usato per le card) per calcolare un prezzo
+   * tipico onesto quando non c'è un prezzo di listino reale. */
+  pool: Product[];
 }
 
-export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product, onClose }) => {
+export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product, onClose, pool }) => {
   if (!product) return null;
 
-  const discountPercent = product.originalPrice 
-    ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
-    : 0;
+  const valueFraming = getValueFraming(pool, product);
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 animate-fadeIn">
@@ -50,9 +52,9 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
             <span className="text-xs px-3 py-1 rounded-full bg-slate-800 text-slate-200 border border-slate-700 font-semibold">
               {product.condition}
             </span>
-            {discountPercent > 0 && (
+            {valueFraming.savings && (
               <span className="text-xs px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/40 font-bold">
-                Risparmi il {discountPercent}% ({product.originalPrice! - product.price} € in meno)
+                Risparmi {valueFraming.savings} € rispetto al {valueFraming.isSourced ? 'prezzo di listino' : 'prezzo tipico'} ({valueFraming.referencePrice} €)
               </span>
             )}
           </div>
@@ -245,9 +247,9 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
             <div className="text-xs text-slate-400 font-medium">Prezzo attuale verificato:</div>
             <div className="flex items-baseline gap-2">
               <span className="text-3xl font-black text-white">{product.price} €</span>
-              {product.originalPrice && (
+              {valueFraming.referencePrice && (
                 <span className="text-sm text-slate-500 line-through">
-                  Listino {product.originalPrice} €
+                  {valueFraming.isSourced ? 'Listino' : 'Tipico'} {valueFraming.referencePrice} €
                 </span>
               )}
             </div>

@@ -7,16 +7,33 @@ comprare. Repo GitHub: https://github.com/Matti111/prezzifurbi (privato).
 ## Stack e architettura
 
 - **Frontend**: React 18 + TypeScript + Vite + Tailwind, in `src/`. Card prodotto con
-  timbri ("Scelta Furba" 🦊, "Best Buy" ⚡, "Cheaper" 🏷️), filtri per specifica tecnica,
-  slider budget, confronto benchmark CPU/GPU.
+  timbri ("Scelta Furba" 🦊, "Best Buy" ⚡, "Cheaper" 🏷️), tag di utilizzo (Gaming/
+  Creatività/Programmazione/Studio/Lavoro/Home), filtri dinamici per specifica
+  tecnica e utilizzo, slider budget, confronto benchmark CPU/GPU.
+- **Motore del valore** (2026-09-22, da specifica utente — vedi `src/utils/valuation.ts`):
+  principio centrale "non guardiamo lo sconto, guardiamo il valore". Nessuna
+  percentuale di sconto viene mai fabbricata: `originalPrice` esiste solo se una
+  fonte lo dichiara davvero (es. "più basso ultimi 30gg" di MediaWorld). Quando
+  manca, il "prezzo tipico" è la mediana di prodotti comparabili nello stesso
+  pool contestuale (mai il catalogo intero), mostrato solo con ≥3 comparabili.
+  La volpe 🦊 è rara per design: il backend assegna un timbro candidato su
+  soglie assolute (`evaluate_laptop`, **mai sullo sconto**), il frontend
+  (`qualifiesForFox`) la mostra solo se il prodotto è anche tra il 15% più
+  conveniente per almeno uno dei suoi `useCases`, altrimenti si vede come Best
+  Buy. `findDominator` calcola la dominanza (stesso pool contestuale): i
+  prodotti dominati non spariscono, restano dietro "Mostra alternative".
+  `freshnessLevel` è il semaforo 🟢/🟡/🔴 su `lastUpdated`.
 - **Dati**: `src/data/products.json` — il catalogo. Aggiornato in parte a mano, in
-  parte automaticamente ogni notte.
+  parte automaticamente ogni notte. Ogni prodotto ha `useCases`, `lastUpdated`,
+  `priceHistory` (accumulato ad ogni cambio di prezzo reale — nessuna UI dedicata
+  ancora, serve a costruire uno storico vero nel tempo).
 - **Automazione**: `test_db.py` (Python) — un unico script monolitico che fa tutto:
   - Parser hardware a regex (`extract_screen`, `extract_gpu`, `extract_cpu`,
     `extract_ram`, `extract_ssd`, `extract_weight`) che legge titolo + descrizione +
     "item specifics" e ne deduce le caratteristiche
   - Motore di valutazione "la Volpe" (`evaluate_laptop`) che calcola frecce
-    benchmark, badge, TOP/FLOP, rating
+    benchmark, badge, TOP/FLOP, rating, `useCases` (`derive_use_cases`) — **senza
+    mai usare lo sconto dichiarato**, né nel punteggio né nel prezzo di riferimento
   - Integrazioni: Amazon Creators API, eBay Browse API. **Refurbed.it rimosso
     interamente** (2026-09-21): mai stato trovato un programma di affiliazione
     Refurbed attivo su Awin per questo account, quindi niente tracciamento/
@@ -132,6 +149,20 @@ stessa logica già applicata a Refurbed prima della rimozione. La card mostra
 4. In generale: quando si aggiungono nuovi prodotti (specialmente eBay, dati meno
    strutturati), ricontrollare a occhio le specifiche sul sito live — il parser è a
    regex, non infallibile
+6. **Raggruppamento offerte identiche tra negozi diversi** (es. stesso Dell XPS 15
+   venduto da MediaWorld/Unieuro/eBay/Amazon in un'unica scheda con "altre
+   offerte") — esplicitamente rimandato durante l'implementazione del motore del
+   valore (2026-09-22): richiede un vero algoritmo di matching prodotto (non solo
+   fingerprint sulle 5 specifiche, serve normalizzazione brand/modello) e la
+   separazione formale prodotto/offerta nello schema dati. Con ~19 prodotti su 3
+   fonti quasi sempre non sovrapposte l'investimento non si giustificava ancora;
+   da rivalutare quando il catalogo cresce
+7. Soglie del motore del valore (in `src/utils/valuation.ts` e `evaluate_laptop`
+   in `test_db.py`) sono punti di partenza ragionevoli ma non ancora tarati su
+   dati reali di più settimane: soglia punteggio volpe (`score >= 6.0`), soglia
+   percentile volpe contestuale (15%), soglie semaforo freschezza (10/30 giorni),
+   minimo comparabili per prezzo tipico (3) — aggiustarli se in pratica la volpe
+   compare troppo/poco spesso o il semaforo sembra troppo aggressivo/permissivo
 
 ## File locali che NON sono su git (da ricreare se serve lavorare in locale)
 

@@ -9,6 +9,7 @@ import json
 import os
 import time
 import asyncio
+from datetime import datetime, timezone
 from typing import Dict, List, Any, Optional
 from playwright.async_api import async_playwright
 import requests
@@ -36,6 +37,12 @@ def _load_env_file():
 
 
 _load_env_file()
+
+
+def _today_iso() -> str:
+    """Data odierna (UTC) in formato ISO, usata per lastUpdated e priceHistory."""
+    return datetime.now(timezone.utc).date().isoformat()
+
 
 # --- CONFIGURAZIONE AFFILIAZIONI ---
 CONFIG = {
@@ -276,6 +283,29 @@ def compute_gpu_indicator(tier: int, price: int) -> str:
     return "down"
 
 
+def derive_use_cases(gpu: Dict[str, Any], cpu: Dict[str, Any], ram: Dict[str, Any], weight_kg: Optional[float], price: int) -> List[str]:
+    """Tag di utilizzo (Gaming/Home/Lavoro/Studio/Creatività/Programmazione) dalle
+    specifiche reali: un prodotto può avere più utilizzi, mai un punteggio unico.
+    Sostituisce la vecchia categoria singola come contesto per volpe e filtri."""
+    tags = []
+    gpu_strong = gpu["dedicated"] and gpu["tier"] >= 3
+    gpu_professional = "quadro" in gpu["value"].lower()
+
+    if gpu_strong:
+        tags.append("gaming")
+    if gpu_strong or gpu_professional or (ram["gb"] >= 32 and cpu["tier"] >= 3):
+        tags.append("creativita")
+    if ram["gb"] >= 16 and cpu["tier"] >= 2:
+        tags.append("programmazione")
+    if (weight_kg is not None and weight_kg < 2) or price <= 500:
+        tags.append("studio")
+    if not (ram["gb"] <= 8 and cpu["tier"] <= 1):
+        tags.append("lavoro")
+    if not tags:
+        tags.append("home")
+    return tags
+
+
 def compute_cpu_indicator(tier: int, price: int) -> str:
     """Freccia CPU dal tier (1-4, vedi extract_cpu), stessa logica di compute_gpu_indicator."""
     if tier >= 4 and price <= 750:
@@ -296,8 +326,6 @@ def evaluate_laptop(raw: Dict[str, Any]) -> Dict[str, Any]:
     - Rating a stelle e Verdetto della Volpe
     """
     price = raw.get("price", 500)
-    original_price = raw.get("originalPrice", int(price * 1.35))
-    discount = int(((original_price - price) / original_price) * 100) if original_price > price else 0
     
     full_text = f"{raw.get('title', '')} {raw.get('specs_text', '')} {raw.get('description', '')}"
     
@@ -306,6 +334,10 @@ def evaluate_laptop(raw: Dict[str, Any]) -> Dict[str, Any]:
     cpu = extract_cpu(full_text)
     ram = extract_ram(full_text)
     ssd = extract_ssd(full_text)
+
+    weight_text = extract_weight(full_text)
+    weight_kg = float(weight_text.split()[0]) if weight_text else None
+    use_cases = derive_use_cases(gpu, cpu, ram, weight_kg, price)
     
     # 1. Calcolo Frecce Benchmark (relativo al prezzo)
     gpu_ind = compute_gpu_indicator(gpu["tier"], price)
@@ -392,14 +424,15 @@ def evaluate_laptop(raw: Dict[str, Any]) -> Dict[str, Any]:
         flop_list.append("Webcam integrata con sensore base per videochiamate ordinarie")
         
     # 3. Assegnazione Timbro (Scelta Furba, Best Buy, Cheaper but Good)
+    # Punteggio di VALORE puro: solo specifiche reali relative al prezzo pagato
+    # (già calcolate sopra), mai lo sconto dichiarato dal venditore.
     score = (
         (3 if gpu_ind == "double_up" else 1.5 if gpu_ind == "up" else 0) +
         (2.5 if cpu_ind == "double_up" else 1 if cpu_ind == "up" else 0) +
         (2 if ram_ind == "double_up" else 1 if ram_ind == "up" else 0) +
-        (1.5 if ssd_ind == "double_up" else 0.5 if ssd_ind == "up" else 0) +
-        (discount / 20)
+        (1.5 if ssd_ind == "double_up" else 0.5 if ssd_ind == "up" else 0)
     )
-    
+
     stamp = "nessuno"
     if gpu["tier"] >= 4 and ram["gb"] >= 16 and price <= 850:
         if ram["gb"] >= 32 or cpu["tier"] >= 4:
@@ -408,7 +441,7 @@ def evaluate_laptop(raw: Dict[str, Any]) -> Dict[str, Any]:
             stamp = "scelta_furba"
     elif price <= 480 and ram["gb"] >= 16 and not ssd["is_hdd"]:
         stamp = "cheaper_good"
-    elif score >= 5.0 and discount >= 25:
+    elif score >= 6.0:
         stamp = "scelta_furba"
         
     # 4. Rating (0 to 5)
@@ -424,7 +457,7 @@ def evaluate_laptop(raw: Dict[str, Any]) -> Dict[str, Any]:
         
     # 5. Verdetto della Volpe (Commento)
     if stamp == "best_buy":
-        rationale = f"La massima potenza hardware sul mercato per {price}€: GPU di livello, processore top e componentistica da fascia alta con un risparmio del {discount}%."
+        rationale = f"La massima potenza hardware sul mercato per {price}€: GPU di livello, processore top e componentistica da fascia alta."
     elif stamp == "scelta_furba":
         rationale = f"L'affare d'oro: rapporto prestazioni/prezzo imbattibile a {price}€. Spesa intelligente per chi vuole sostanza senza pagare il prezzo pieno da scaffale."
     elif stamp == "cheaper_good":
@@ -436,6 +469,7 @@ def evaluate_laptop(raw: Dict[str, Any]) -> Dict[str, Any]:
         "stamp": stamp,
         "rating": round(rating, 1),
         "stampRationale": rationale,
+        "useCases": use_cases,
         "specs": {
             "screen": {"value": screen["value"], "indicator": screen_ind},
             "gpu": {"value": gpu["value"], "indicator": gpu_ind},
@@ -633,18 +667,31 @@ def discover_ebay_deals(query: str = "notebook gaming rtx 4060", max_deals: int 
         image_url = (it.get("image") or {}).get("imageUrl", "")
         item_details = get_ebay_item_details(it.get("itemId", ""))
 
-        deals.append({
+        # Mai inventare un prezzo di riferimento: usa il "prezzo originale" reale
+        # di eBay solo se il venditore lo ha impostato (marketingPrice), altrimenti
+        # niente originalPrice (la card mostra il prezzo netto, senza sconto finto).
+        real_original = None
+        try:
+            mp_val = (it.get("marketingPrice") or {}).get("originalPrice", {}).get("value")
+            if mp_val and float(mp_val) > price_val:
+                real_original = round(float(mp_val))
+        except (TypeError, ValueError):
+            pass
+
+        deal = {
             "title": title,
             "brand": brand,
             "model": model,
             "price": round(price_val),
-            "originalPrice": round(price_val * 1.35),
             "condition": mapped_condition,
             "store": "eBay.it",
             "raw_url": item_web_url,
             "imageUrl": image_url or "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=800&q=80",
             "specs_text": f"{title} {item_details}".strip(),
-        })
+        }
+        if real_original:
+            deal["originalPrice"] = real_original
+        deals.append(deal)
         if len(deals) >= max_deals:
             break
 
@@ -810,6 +857,7 @@ def refresh_amazon_catalog_prices(catalog: List[Dict[str, Any]]) -> int:
         image_url = (((item.get("images") or {}).get("primary") or {}).get("large") or {}).get("url")
 
         old_price = product.get("price")
+        price_changed = new_price is not None and old_price != round(new_price)
         if new_price is not None:
             product["price"] = round(new_price)
         if detail_url:
@@ -817,8 +865,11 @@ def refresh_amazon_catalog_prices(catalog: List[Dict[str, Any]]) -> int:
         if image_url:
             product["imageUrl"] = image_url
 
-        if new_price is not None and old_price != round(new_price):
+        if price_changed:
+            today = _today_iso()
             print(f" 🔄 {product['title'][:40]}: {old_price}€ -> {round(new_price)}€ (prezzo live verificato)")
+            product["lastUpdated"] = today
+            product.setdefault("priceHistory", []).append({"price": round(new_price), "date": today})
         updated += 1
 
     return updated
@@ -943,15 +994,21 @@ def sync_catalog(new_items: List[Dict[str, Any]]):
                 print(f" ⏭️  Scartata offerta duplicata (stesse specifiche, prezzo più alto): '{item['title']}' ({item['price']}€), già presente a {twin['price']}€")
                 continue
 
+        # Mai inventare un prezzo di riferimento: originalPrice solo se la fonte
+        # ne fornisce davvero uno (es. "più basso ultimi 30gg" mostrato dal
+        # negozio stesso), altrimenti il campo resta assente.
+        real_original_price = item.get("originalPrice")
+        today = _today_iso()
+
         product_entry = {
             "id": pid,
             "title": item["title"],
             "brand": item.get("brand", "Notebook"),
             "model": item.get("model", ""),
             "category": "lavoro_ufficio" if item["condition"] == "Ricondizionato" else "gaming_ai",
+            "useCases": evaluation["useCases"],
             "condition": item["condition"],
             "price": item["price"],
-            "originalPrice": item.get("originalPrice", int(item["price"] * 1.4)),
             "store": item["store"],
             "affiliateUrl": wrap_affiliate_link(item["store"], item["raw_url"]),
             "imageUrl": item["imageUrl"],
@@ -965,8 +1022,12 @@ def sync_catalog(new_items: List[Dict[str, Any]]):
             "flopWarnings": evaluation["flopWarnings"],
             "idealFor": "Lavoro d'ufficio, studio e produttività affidabile." if item["condition"] == "Ricondizionato" else "Gaming, AI e uso intenso.",
             "weight": extract_weight(f"{item['title']} {item.get('specs_text', '')}") or ("1.80 kg" if item["condition"] == "Ricondizionato" else "2.20 kg"),
-            "warranty": "12 Mesi di Garanzia Inclusa"
+            "warranty": "12 Mesi di Garanzia Inclusa",
+            "lastUpdated": today,
+            "priceHistory": [{"price": item["price"], "date": today}],
         }
+        if real_original_price:
+            product_entry["originalPrice"] = real_original_price
         
         catalog.append(product_entry)
         existing_ids.add(pid)

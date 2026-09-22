@@ -7,13 +7,12 @@
     "category": "gaming_ai",
     "condition": "Usato",
     "price": 777,
-    "originalPrice": 1049,
     "store": "eBay.it",
     "affiliateUrl": "https://www.ebay.it/itm/227306323358?_skw=notebook+gaming+rtx+4060&hash=item34ec833d9e%3Ag%3ARRMAAeSwFO1p429e&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/RRMAAeSwFO1p429e/s-l225.jpg",
-    "rating": 4.0,
-    "stamp": "nessuno",
-    "stampRationale": "Prodotto bilanciato e affidabile a 777€ con un buon prezzo netto verificato.",
+    "rating": 4.8,
+    "stamp": "scelta_furba",
+    "stampRationale": "L'affare d'oro: rapporto prestazioni/prezzo imbattibile a 777€. Spesa intelligente per chi vuole sostanza senza pagare il prezzo pieno da scaffale.",
     "specs": {
       "screen": {
         "value": "15.6\" FHD (1920x1080) 144Hz LED",
@@ -48,7 +47,20 @@
     ],
     "idealFor": "Gaming, AI e uso intenso.",
     "weight": "2.20 kg",
-    "warranty": "12 Mesi di Garanzia Inclusa"
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "useCases": [
+      "gaming",
+      "creativita",
+      "programmazione",
+      "lavoro"
+    ],
+    "lastUpdated": "2026-09-22",
+    "priceHistory": [
+      {
+        "price": 777,
+        "date": "2026-09-22"
+      }
+    ]
   },
   {
     "id": "pc-portatile-notebook-ric-289",
@@ -58,7 +70,6 @@
     "category": "gaming_ai",
     "condition": "Usato",
     "price": 289,
-    "originalPrice": 390,
     "store": "eBay.it",
     "affiliateUrl": "https://www.ebay.it/itm/800485587355?_skw=notebook+ricondizionato+i7+16gb&hash=itemba60a8b99b%3Ag%3AnNkAAeSwe-pqkXb5&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/nNkAAeSwe-pqkXb5/s-l225.jpg",
@@ -98,7 +109,19 @@
     ],
     "idealFor": "Gaming, AI e uso intenso.",
     "weight": "1.50 kg",
-    "warranty": "12 Mesi di Garanzia Inclusa"
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "useCases": [
+      "programmazione",
+      "studio",
+      "lavoro"
+    ],
+    "lastUpdated": "2026-09-22",
+    "priceHistory": [
+      {
+        "price": 289,
+        "date": "2026-09-22"
+      }
+    ]
   },
   {
     "id": "notebook-hp-440-g8-i7-116-290",
@@ -108,7 +131,6 @@
     "category": "gaming_ai",
     "condition": "Usato",
     "price": 290,
-    "originalPrice": 392,
     "store": "eBay.it",
     "affiliateUrl": "https://www.ebay.it/itm/257692302649?_skw=notebook+ricondizionato+i7+16gb&hash=item3bffa87d39%3Ag%3AEmwAAeSwJmhqhsBi&amdata=enc%3AAQALAAABAACCtXRWQnOEpyOqnQQ8KGYSDlqo7ZXl7TZbxFQH5GfNgxjnhGBF4K7cBejuG98Ukp7W3iF9Bc9N%2FtupobB%2FX%2FYsSiCj0Z4wrc2gY+yiNDur7jnNkNIFHdc7Ni2uxRRPHSHqqxjicmt7e7FsFmtkFVE517Flao1G08PU3hDUpB4mvr2BMG2L6VMxGe6fZnc2dfWze6znsNDyBvG5KMhOTS8sEpSJn2wOVqCjzA02NYa1RHWPHJa02yMAvq7rdQDI4wQ2HtXiwQz%2FssuSw8a3168uiP5FXpP+Hgk4uyC9i1tbo+tgq0dgoOPas%2F9eEjAZtqDtJAZndhnVIwSf0lSDAxI%3D&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/EmwAAeSwJmhqhsBi/s-l225.jpg",
@@ -148,7 +170,19 @@
     ],
     "idealFor": "Gaming, AI e uso intenso.",
     "weight": "2.20 kg",
-    "warranty": "12 Mesi di Garanzia Inclusa"
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "useCases": [
+      "programmazione",
+      "studio",
+      "lavoro"
+    ],
+    "lastUpdated": "2026-09-22",
+    "priceHistory": [
+      {
+        "price": 290,
+        "date": "2026-09-22"
+      }
+    ]
   },
   {
     "id": "notebook-hp-840-g8-i7-116-255",
@@ -158,7 +192,6 @@
     "category": "gaming_ai",
     "condition": "Usato",
     "price": 255,
-    "originalPrice": 344,
     "store": "eBay.it",
     "affiliateUrl": "https://www.ebay.it/itm/257364614173?_skw=notebook+ricondizionato+i7+16gb&hash=item3bec205c1d%3Ag%3A4OwAAeSwHthplC4i&amdata=enc%3AAQALAAABAACCtXRWQnOEpyOqnQQ8KGbfphSPJ2R8l7eRYIEbiYfJYzq1I3MHElII5EW%2BIXdBtZrcd6lNP2HKoQdFyCv4z58TMjZE9R%2FbXSq8%2F6WOE9R154T%2FI7dTG1mF8FaSNonJKoeB%2FEzKT5F6jJPlG5l0g%2Fc3Tzm8RTTDR1K59jTxU6u07xMioAQiAoJdTlcNN6G3RiFXIMUDcML9vtHArbHZhcwFfug8Z0cTEcY5WANqXSr8LbRvVGHxtBbLpnCmk4bRzmg%2BpLfoOWtPe5ueumZu8kMjGLQOLeae6BeT2Bw0H7WLlf6BMF0q0mrqU1ypMiVlwR%2F7DBaJ1BqcmMaBNEWq2KI%3D&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/4OwAAeSwHthplC4i/s-l225.jpg",
@@ -198,7 +231,19 @@
     ],
     "idealFor": "Gaming, AI e uso intenso.",
     "weight": "2.20 kg",
-    "warranty": "12 Mesi di Garanzia Inclusa"
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "useCases": [
+      "programmazione",
+      "studio",
+      "lavoro"
+    ],
+    "lastUpdated": "2026-09-22",
+    "priceHistory": [
+      {
+        "price": 255,
+        "date": "2026-09-22"
+      }
+    ]
   },
   {
     "id": "acer-nitro-v-16-anv16-41--976",
@@ -208,7 +253,6 @@
     "category": "gaming_ai",
     "condition": "Usato",
     "price": 976,
-    "originalPrice": 1317,
     "store": "eBay.it",
     "affiliateUrl": "https://www.ebay.it/itm/188462020654?_skw=notebook+gaming+rtx+4060&hash=item2be136382e%3Ag%3Aj3kAAeSwyOlqIFDx&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/j3kAAeSwyOlqIFDx/s-l225.jpg",
@@ -248,7 +292,20 @@
     ],
     "idealFor": "Gaming, AI e uso intenso.",
     "weight": "2.20 kg",
-    "warranty": "12 Mesi di Garanzia Inclusa"
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "useCases": [
+      "gaming",
+      "creativita",
+      "programmazione",
+      "lavoro"
+    ],
+    "lastUpdated": "2026-09-22",
+    "priceHistory": [
+      {
+        "price": 976,
+        "date": "2026-09-22"
+      }
+    ]
   },
   {
     "id": "hp-victus-notebook-gaming-565",
@@ -258,7 +315,6 @@
     "category": "gaming_ai",
     "condition": "Usato",
     "price": 565,
-    "originalPrice": 763,
     "store": "eBay.it",
     "affiliateUrl": "https://www.ebay.it/itm/820122457575?_skw=notebook+gaming+rtx&hash=itembef31b95e7%3Ag%3AN9EAAeSwpr5qptaQ&amdata=enc%3AAQALAAAA8ACCtXRWQnOEpyOqnQQ8KGauI58Zh9BKSRcuuuxHOwgdbIUZ3STRNPlziTfzcNWfc%2FGm1QwKhGzVJLBkLmSiHCboDJQfzEiLndKEewMgdsENO16e9C%2FsGkq1vRx9Tr4tQeNLAOEpEz4habbTiZ3njikrOeVWLQCYbtLpKSZ6V4ImEHIqWs%2BAFWKYNN6WA7d3pI82zsES60qCxFpwrYv9vRUF6tgAGkyzvSREy4Ni0MBikIVSmz6PdrNmpPoFUZS32svuZpiPcKjcIrvLLnNb27YUstdApIkqBBgz%2FTowjS5ExD9CKTM63M282BoagETvAw%3D%3D&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/N9EAAeSwpr5qptaQ/s-l225.jpg",
@@ -298,7 +354,18 @@
     ],
     "idealFor": "Gaming, AI e uso intenso.",
     "weight": "2.20 kg",
-    "warranty": "12 Mesi di Garanzia Inclusa"
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "useCases": [
+      "programmazione",
+      "lavoro"
+    ],
+    "lastUpdated": "2026-09-22",
+    "priceHistory": [
+      {
+        "price": 565,
+        "date": "2026-09-22"
+      }
+    ]
   },
   {
     "id": "notebook-hp-zbook-17-g5-1-540",
@@ -308,7 +375,6 @@
     "category": "gaming_ai",
     "condition": "Usato",
     "price": 540,
-    "originalPrice": 729,
     "store": "eBay.it",
     "affiliateUrl": "https://www.ebay.it/itm/257620755974?_skw=notebook+Quadro&hash=item3bfb64c606%3Ag%3A5gIAAeSwwtVqjLtR&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/5gIAAeSwwtVqjLtR/s-l225.jpg",
@@ -348,7 +414,18 @@
     ],
     "idealFor": "Gaming, AI e uso intenso.",
     "weight": "2.20 kg",
-    "warranty": "12 Mesi di Garanzia Inclusa"
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "useCases": [
+      "programmazione",
+      "lavoro"
+    ],
+    "lastUpdated": "2026-09-22",
+    "priceHistory": [
+      {
+        "price": 540,
+        "date": "2026-09-22"
+      }
+    ]
   },
   {
     "id": "notebook-fujitsu-celsius--429",
@@ -358,7 +435,6 @@
     "category": "gaming_ai",
     "condition": "Usato",
     "price": 429,
-    "originalPrice": 579,
     "store": "eBay.it",
     "affiliateUrl": "https://www.ebay.it/itm/128085620263?_skw=notebook+Quadro&hash=item1dd27f7627%3Ag%3Ay5kAAeSwwlhqrQQC&amdata=enc%3AAQALAAAA8ACCtXRWQnOEpyOqnQQ8KGbIkCNIPj4p1WANCGVaXv9%2BMNyXuU9819uY%2FqEDbpAGB5bUehhbWU%2FxUnRR3ed%2FH%2BpKS8VAk0q3Of4PeSNsLtQ3OpLt9Yy5aTD23Alyiwl4E50WjUKXkaqWq1wxpPLqM41OJZ1O5GVZLE5Xn1nkapdBuF5wj696m0L7GFNdZkL3xtW6idPf9KfGw9Fmot%2F3kFAT7sU%2BtqLL0Tbdea0MiHT6APrMtA%2BPqQXMfCxfu9rJ4ku%2BWry0LlrWK5sBhYGoGc7W%2BNR79FvuiVfWj46JjEQVt34KHoXHaodgbQQUqZHtEg%3D%3D&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/y5kAAeSwwlhqrQQC/s-l225.jpg",
@@ -398,7 +474,19 @@
     ],
     "idealFor": "Gaming, AI e uso intenso.",
     "weight": "2.20 kg",
-    "warranty": "12 Mesi di Garanzia Inclusa"
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "useCases": [
+      "programmazione",
+      "studio",
+      "lavoro"
+    ],
+    "lastUpdated": "2026-09-22",
+    "priceHistory": [
+      {
+        "price": 429,
+        "date": "2026-09-22"
+      }
+    ]
   },
   {
     "id": "pc-portatile-notebook-ric-269",
@@ -408,7 +496,6 @@
     "category": "gaming_ai",
     "condition": "Usato",
     "price": 269,
-    "originalPrice": 363,
     "store": "eBay.it",
     "affiliateUrl": "https://www.ebay.it/itm/389066472507?_skw=notebook+ricondizionato+16gb&hash=item5a962b3c3b%3Ag%3A6~cAAeSw4kFqsUll&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/6~cAAeSw4kFqsUll/s-l225.jpg",
@@ -448,7 +535,18 @@
     ],
     "idealFor": "Gaming, AI e uso intenso.",
     "weight": "2.20 kg",
-    "warranty": "12 Mesi di Garanzia Inclusa"
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "useCases": [
+      "studio",
+      "lavoro"
+    ],
+    "lastUpdated": "2026-09-22",
+    "priceHistory": [
+      {
+        "price": 269,
+        "date": "2026-09-22"
+      }
+    ]
   },
   {
     "id": "notebook-hp-845-g8-ryzen--320",
@@ -458,7 +556,6 @@
     "category": "gaming_ai",
     "condition": "Usato",
     "price": 320,
-    "originalPrice": 432,
     "store": "eBay.it",
     "affiliateUrl": "https://www.ebay.it/itm/257051854779?_skw=notebook+ricondizionato+16gb&hash=item3bd97c07bb%3Ag%3AwukAAeSwwc1o7P6t&amdata=enc%3AAQALAAABAACCtXRWQnOEpyOqnQQ8KGbdO74sfpVzt0w9oGzwjyfCGmucs1xC0SSZXD9AlVfk9XJY8l3LA5%2BBKrk2j%2BBelTIEkJhBDe5LRDTt352cwZLXqL4w2SVEj%2FzFmXwpg07l2bZDcrh5Sv%2BQK75ItdEV98HcVAqgbfb%2F8IQyp7dVodb5QwdKfe3vPge25EuIRarhaNtQfRTX3iSoLFj3qEWszLYA%2BlRDW8JQBJBXYC7mJVbyzlZHZppa1xCIMADvl5JQZQzRVun%2Fdn3Hvr8r%2FeDOXUeGmWbQyA7vGP39efAfglXsLcct126yXd0zlLPdiD3hM2XYqYrCwf7tzAyJAIQTM2E%3D&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/wukAAeSwwc1o7P6t/s-l225.jpg",
@@ -498,7 +595,19 @@
     ],
     "idealFor": "Gaming, AI e uso intenso.",
     "weight": "2.20 kg",
-    "warranty": "12 Mesi di Garanzia Inclusa"
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "useCases": [
+      "programmazione",
+      "studio",
+      "lavoro"
+    ],
+    "lastUpdated": "2026-09-22",
+    "priceHistory": [
+      {
+        "price": 320,
+        "date": "2026-09-22"
+      }
+    ]
   },
   {
     "id": "notebook-pc-computer-dell-429",
@@ -508,7 +617,6 @@
     "category": "gaming_ai",
     "condition": "Usato",
     "price": 429,
-    "originalPrice": 579,
     "store": "eBay.it",
     "affiliateUrl": "https://www.ebay.it/itm/198356783110?_skw=notebook+ricondizionato+32gb&hash=item2e2efc5006%3Ag%3AFe0AAeSwxChqBvkg&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/Fe0AAeSwxChqBvkg/s-l225.jpg",
@@ -548,7 +656,19 @@
     ],
     "idealFor": "Gaming, AI e uso intenso.",
     "weight": "1.47 kg",
-    "warranty": "12 Mesi di Garanzia Inclusa"
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "useCases": [
+      "programmazione",
+      "studio",
+      "lavoro"
+    ],
+    "lastUpdated": "2026-09-22",
+    "priceHistory": [
+      {
+        "price": 429,
+        "date": "2026-09-22"
+      }
+    ]
   },
   {
     "id": "notebook-pc-portatile-hp--380",
@@ -558,7 +678,6 @@
     "category": "gaming_ai",
     "condition": "Usato",
     "price": 380,
-    "originalPrice": 513,
     "store": "eBay.it",
     "affiliateUrl": "https://www.ebay.it/itm/327325865661?_skw=notebook+ricondizionato+32gb&hash=item4c362456bd%3Ag%3AQo8AAeSwHbJqGD4V&amdata=enc%3AAQALAAABAACCtXRWQnOEpyOqnQQ8KGauaBC2qx3D9kMy4CY4GaHV3ZY5HMSA%2BVtZ4dvDyxPTBWJXynzBY4kxSiKNPYKEM5%2Fpjw9mxtsVnNSM9H--paYpG%2F8s2SQi2djaZUizqUtiLOB64oWD4IAmLObknHmI%2BDnzqVapkPnFy2kUt7mQaMHsbw0Jcn4ydV9WqUwMx1LBFmv49KSTiilEkxtgt21986HdwAXsj2JHuSC%2Blfylsmj1HWepDc1rLBveyuZMlGV7%2BUbQYbaKdA%2FjTS9tpehStjkCFdt%2FFVYmCbEFd0qcZfTbgK4r1pjJhP%2FyiFw8v2oMHysdf0YHzw3bSoCw9hxxe9A%3D&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/Qo8AAeSwHbJqGD4V/s-l225.jpg",
@@ -598,7 +717,20 @@
     ],
     "idealFor": "Gaming, AI e uso intenso.",
     "weight": "2.60 kg",
-    "warranty": "12 Mesi di Garanzia Inclusa"
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "useCases": [
+      "creativita",
+      "programmazione",
+      "studio",
+      "lavoro"
+    ],
+    "lastUpdated": "2026-09-22",
+    "priceHistory": [
+      {
+        "price": 380,
+        "date": "2026-09-22"
+      }
+    ]
   },
   {
     "id": "notebook-pc-12-5-i5-6200u-529",
@@ -608,7 +740,6 @@
     "category": "gaming_ai",
     "condition": "Usato",
     "price": 529,
-    "originalPrice": 714,
     "store": "eBay.it",
     "affiliateUrl": "https://www.ebay.it/itm/227501112648?_skw=notebook+ricondizionato+64gb&hash=item34f81f7d48%3Ag%3AMkMAAeSwAetqsV97&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/MkMAAeSwAetqsV97/s-l225.jpg",
@@ -648,7 +779,19 @@
     ],
     "idealFor": "Gaming, AI e uso intenso.",
     "weight": "1.30 kg",
-    "warranty": "12 Mesi di Garanzia Inclusa"
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "useCases": [
+      "programmazione",
+      "studio",
+      "lavoro"
+    ],
+    "lastUpdated": "2026-09-22",
+    "priceHistory": [
+      {
+        "price": 529,
+        "date": "2026-09-22"
+      }
+    ]
   },
   {
     "id": "notebook-12-5-i5-6200u-64-443",
@@ -658,7 +801,6 @@
     "category": "gaming_ai",
     "condition": "Usato",
     "price": 443,
-    "originalPrice": 598,
     "store": "eBay.it",
     "affiliateUrl": "https://www.ebay.it/itm/278331222317?_skw=notebook+ricondizionato+64gb&hash=item40cdd5692d%3Ag%3Ag88AAeSwgkJqsWJR&amdata=enc%3AAQALAAABAACCtXRWQnOEpyOqnQQ8KGb1nJqdmslY1SaFBvRC3PYWfTd%2Fafgv2k8tnRdThjZVW8RUsn9TGCKCsOA%2BOa96mUDx9S1hliKVHSz6WcEegCsjDHVCeRJHGrSm8IQZYFVvE1IjdXX6dCdJy8EZRnOBHsqFgHn5wVXwMt4d9y9uRA0BoWQSwhgQazCpvXY5gxc65Xc%2Foy2M1K6lZZjbzvrif6cJDKL8MQnaJ5FIkvqiO66YGChQ58%2BtcOnFO2%2BxmY%2Fq%2BI85r8xIELPIkmdNmTeAlh2euZkTC7ItOxNg56wCOHnjfN%2FSrDg76EQxqInscbHeHqKk0OjKTJwyV4gykTT1h6I%3D&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/g88AAeSwgkJqsWJR/s-l225.jpg",
@@ -698,7 +840,19 @@
     ],
     "idealFor": "Gaming, AI e uso intenso.",
     "weight": "1.30 kg",
-    "warranty": "12 Mesi di Garanzia Inclusa"
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "useCases": [
+      "programmazione",
+      "studio",
+      "lavoro"
+    ],
+    "lastUpdated": "2026-09-22",
+    "priceHistory": [
+      {
+        "price": 443,
+        "date": "2026-09-22"
+      }
+    ]
   },
   {
     "id": "tulpar-t5-i7-rtx4060",
@@ -748,7 +902,20 @@
     ],
     "idealFor": "Gaming ad alto refresh rate in Full HD e produttività pesante grazie alla CPU i7 di 12ª generazione.",
     "weight": "2.20 kg",
-    "warranty": "24 Mesi Garanzia Legale Italia"
+    "warranty": "24 Mesi Garanzia Legale Italia",
+    "useCases": [
+      "gaming",
+      "creativita",
+      "programmazione",
+      "lavoro"
+    ],
+    "lastUpdated": "2026-09-22",
+    "priceHistory": [
+      {
+        "price": 926,
+        "date": "2026-09-22"
+      }
+    ]
   },
   {
     "id": "aukabrex-16-i7-6500u",
@@ -797,7 +964,19 @@
     ],
     "idealFor": "Lavoro d'ufficio, studio e multitasking leggero: la grafica integrata non regge i giochi 3D moderni nonostante il nome \"Gaming\".",
     "weight": "2.20 kg",
-    "warranty": "24 Mesi Garanzia Legale Italia"
+    "warranty": "24 Mesi Garanzia Legale Italia",
+    "useCases": [
+      "programmazione",
+      "studio",
+      "lavoro"
+    ],
+    "lastUpdated": "2026-09-22",
+    "priceHistory": [
+      {
+        "price": 430,
+        "date": "2026-09-22"
+      }
+    ]
   },
   {
     "id": "cyclus-16-ryzen5-vega",
@@ -846,7 +1025,19 @@
     ],
     "idealFor": "Lavoro d'ufficio, studio e navigazione: la grafica Vega integrata non regge i giochi 3D moderni nonostante il nome \"Gaming\".",
     "weight": "2.20 kg",
-    "warranty": "24 Mesi Garanzia Legale Italia"
+    "warranty": "24 Mesi Garanzia Legale Italia",
+    "useCases": [
+      "programmazione",
+      "studio",
+      "lavoro"
+    ],
+    "lastUpdated": "2026-09-22",
+    "priceHistory": [
+      {
+        "price": 429,
+        "date": "2026-09-22"
+      }
+    ]
   },
   {
     "id": "hp-omen-15-rtx5050",
@@ -895,7 +1086,20 @@
     ],
     "idealFor": "Gaming competitivo con display 2K ad alto refresh rate e streaming, grazie alla RTX 5050 dedicata.",
     "weight": "2.20 kg",
-    "warranty": "24 Mesi Garanzia Legale Italia"
+    "warranty": "24 Mesi Garanzia Legale Italia",
+    "useCases": [
+      "gaming",
+      "creativita",
+      "programmazione",
+      "lavoro"
+    ],
+    "lastUpdated": "2026-09-22",
+    "priceHistory": [
+      {
+        "price": 950,
+        "date": "2026-09-22"
+      }
+    ]
   },
   {
     "id": "dell-precision-7540-i9-quadro",
@@ -909,9 +1113,9 @@
     "store": "MediaWorld.it",
     "affiliateUrl": "https://www.mediaworld.it/it/product/_dell-precision-7540-156-processore-intelr-intel-core-i9-9980hk-240-500-ghz-8-core-16-thread-16-mb-di-cache-32-gb-1-tb-ssd-nero-148846872.html",
     "imageUrl": "https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MP_148831855?x=697&y=523&format=webp&quality=60&sp=yes&strip=yes&trim=yes&ex=697&ey=523&align=center&resizesource&unsharp=0.5x0.5",
-    "rating": 4.8,
-    "stamp": "scelta_furba",
-    "stampRationale": "L'affare d'oro: rapporto prestazioni/prezzo imbattibile a 999€. Spesa intelligente per chi vuole sostanza senza pagare il prezzo pieno da scaffale.",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 999€ con un buon prezzo netto verificato.",
     "specs": {
       "screen": {
         "value": "15.6\" FHD (1920x1080) LED",
@@ -946,6 +1150,18 @@
     ],
     "idealFor": "Workstation mobile per CAD/3D, montaggio video e carichi professionali pesanti.",
     "weight": "2.60 kg",
-    "warranty": "12 Mesi di Garanzia Inclusa"
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "useCases": [
+      "creativita",
+      "programmazione",
+      "lavoro"
+    ],
+    "lastUpdated": "2026-09-22",
+    "priceHistory": [
+      {
+        "price": 999,
+        "date": "2026-09-22"
+      }
+    ]
   }
 ]
