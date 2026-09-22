@@ -274,7 +274,7 @@
       },
       "cpu": {
         "value": "Intel Core i5 Multicore",
-        "indicator": "neutral"
+        "indicator": "down"
       },
       "ram": {
         "value": "16 GB DDR4",
@@ -769,7 +769,7 @@
       },
       "cpu": {
         "value": "Intel Core i5 Multicore",
-        "indicator": "neutral"
+        "indicator": "down"
       },
       "ram": {
         "value": "64 GB DDR4",
@@ -831,7 +831,7 @@
       },
       "cpu": {
         "value": "Intel Core i5 Multicore",
-        "indicator": "neutral"
+        "indicator": "down"
       },
       "ram": {
         "value": "64 GB DDR4",
@@ -1017,7 +1017,7 @@
       },
       "cpu": {
         "value": "Intel Core i5 Multicore",
-        "indicator": "neutral"
+        "indicator": "down"
       },
       "ram": {
         "value": "16 GB DDR4",
