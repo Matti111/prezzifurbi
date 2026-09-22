@@ -9,7 +9,10 @@ comprare. Repo GitHub: https://github.com/Matti111/prezzifurbi (privato).
 - **Frontend**: React 18 + TypeScript + Vite + Tailwind, in `src/`. Card prodotto con
   timbri ("Scelta Furba" 🦊, "Best Buy" ⚡, "Cheaper" 🏷️), tag di utilizzo (Gaming/
   Creatività/Programmazione/Studio/Lavoro/Home), filtri dinamici per specifica
-  tecnica e utilizzo, slider budget, confronto benchmark CPU/GPU.
+  tecnica e utilizzo, slider budget, confronto benchmark CPU/GPU. In cima al sito
+  c'è `ConstructionBanner.tsx` ("Sito in fase di aggiornamento..."), aggiunto
+  2026-09-21 e ancora attivo: toglierlo quando prezzi/link saranno considerati
+  stabili (nessuna data/condizione precisa fissata, è una valutazione da fare).
 - **Motore del valore** (2026-09-22, da specifica utente — vedi `src/utils/valuation.ts`):
   principio centrale "non guardiamo lo sconto, guardiamo il valore". Nessuna
   percentuale di sconto viene mai fabbricata: `originalPrice` esiste solo se una
@@ -30,7 +33,11 @@ comprare. Repo GitHub: https://github.com/Matti111/prezzifurbi (privato).
 - **Automazione**: `test_db.py` (Python) — un unico script monolitico che fa tutto:
   - Parser hardware a regex (`extract_screen`, `extract_gpu`, `extract_cpu`,
     `extract_ram`, `extract_ssd`, `extract_weight`) che legge titolo + descrizione +
-    "item specifics" e ne deduce le caratteristiche
+    "item specifics" e ne deduce le caratteristiche. `extract_cpu` ha un fallback
+    per famiglia dichiarata senza numero di modello (es. "i7-16GB", dove 16GB è
+    la RAM non un modello CPU) che preserva almeno i5/i7/i9/Ryzen invece di
+    ricadere sempre su "Intel Core i5 Multicore" (fix 2026-09-22, ha corretto
+    7 prodotti già in catalogo con la CPU sbagliata)
   - Motore di valutazione "la Volpe" (`evaluate_laptop`) che calcola frecce
     benchmark, badge, TOP/FLOP, rating, `useCases` (`derive_use_cases`) — **senza
     mai usare lo sconto dichiarato**, né nel punteggio né nel prezzo di riferimento
@@ -45,8 +52,16 @@ comprare. Repo GitHub: https://github.com/Matti111/prezzifurbi (privato).
     annuncio a un prezzo diverso aggiorna `priceHistory` invece di creare un
     duplicato. `DAILY_API_BUDGET = 4000` (limite reale eBay: 5000/giorno) conta
     sia le chiamate di ricerca sia le `get_ebay_item_details()`, e queste ultime
-    vengono saltate per annunci già noti (risparmio budget). Raggruppamento
-    cross-store (stesso notebook su più negozi) resta fuori scope — vedi TODO #6.
+    vengono saltate per annunci già noti (risparmio budget). `sync_catalog()` ha
+    **due livelli** di deduplica: `listingId` per "stesso identico annuncio"
+    (aggiorna prezzo/storico) + il vecchio `spec_fingerprint`/`fingerprint_index`
+    (stesse 5 specifiche+condizione) per "stesso portatile, venditore diverso"
+    tra annunci genuinamente nuovi — tiene solo il più economico dei due, invariato
+    dalla sessione precedente. Raggruppamento cross-store vero (stesso notebook
+    su negozi diversi, es. eBay+Amazon+MediaWorld) resta fuori scope — vedi TODO #6.
+    `verify_catalog_links()` ora controlla i link in parallelo (`asyncio.Semaphore(8)`,
+    fix 2026-09-22): prima era sequenziale e con un catalogo cresciuto ha fatto
+    cancellare un run dopo 55 minuti senza mai arrivare al commit.
   - Integrazioni: Amazon Creators API, eBay Browse API. **Refurbed.it rimosso
     interamente** (2026-09-21): mai stato trovato un programma di affiliazione
     Refurbed attivo su Awin per questo account, quindi niente tracciamento/
