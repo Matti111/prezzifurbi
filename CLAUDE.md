@@ -180,7 +180,13 @@ stessa logica già applicata a Refurbed prima della rimozione. La card mostra
    (2026-09-22 ha solo verificato la logica con `py_compile`/test locali, senza
    credenziali eBay in locale): controllare nel log la riga finale
    "`X/4000 chiamate usate`" e che `get_ebay_item_details()` non esploda il conteggio
-   la prima notte (tantissimi annunci "nuovi" perché il catalogo parte da 19 prodotti)
+   la prima notte (tantissimi annunci "nuovi" perché il catalogo parte da 19 prodotti).
+   **Aggiornamento 2026-09-22**: il primo run reale con la Fase 1 è durato 55 minuti
+   ed è stato cancellato prima del commit (nessun dato salvato) — non per il budget
+   eBay ma per `verify_catalog_links()`, che controllava un prodotto alla volta via
+   Playwright e con un catalogo cresciuto diventava il collo di bottiglia. Parallelizzato
+   (`concurrency=8`, `asyncio.gather`); da riverificare che il prossimo run reale
+   completi in tempi ragionevoli e che il consumo budget eBay stesso sia nella norma
 9. Fase 2/3/4 della discovery (statistiche/Query Yield per query, rotazione basata
    sul rendimento invece che deterministica per data, budget diviso dinamicamente
    tra discovery/high-value/coverage/exploration, generazione di query dai gap di

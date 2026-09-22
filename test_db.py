@@ -218,6 +218,20 @@ def extract_cpu(text: str) -> Dict[str, Any]:
         bracket = '7000' if m.group(3).startswith('7') else 'legacy'
         return {"value": f"AMD {m.group(1)}", "tier": _RYZEN_TIER[(bracket, m.group(2))]}
 
+    # Famiglia CPU dichiarata ma senza numero di modello riconoscibile (es. un
+    # venditore che scrive "i7-16GB", dove "16GB" è la RAM non un modello CPU):
+    # non ricadere comunque su "i5" come se non ci fosse nessuna informazione,
+    # usa almeno la famiglia giusta con un tier generico (fascia "legacy").
+    m = re.search(r'\bi([579])\b', text_clean, re.I)
+    if m:
+        fam = m.group(1)
+        return {"value": f"Intel Core i{fam} Multicore", "tier": _INTEL_TIER[('legacy', fam)]}
+
+    m = re.search(r'\bRyzen\s+([579])\b', text_clean, re.I)
+    if m:
+        fam = m.group(1)
+        return {"value": f"AMD Ryzen {fam} Multicore", "tier": _RYZEN_TIER[('legacy', fam)]}
+
     return {"value": "Intel Core i5 Multicore", "tier": 2}
 
 
@@ -1275,43 +1289,55 @@ async def take_live_screenshots():
 
 # --- 7. VERIFICA REALE DI TUTTI I LINK DEL SITO ---
 
-async def verify_catalog_links():
-    """Verifica ogni link del catalogo per accertarsi che NON dia errore 404 / 'impossibile trovare la pagina'"""
+async def verify_catalog_links(concurrency: int = 8):
+    """Verifica ogni link del catalogo per accertarsi che NON dia errore 404 / 'impossibile
+    trovare la pagina'. Controlli in parallelo (una pagina Playwright per slot di
+    concorrenza, stesso browser): con la discovery ampliata in Fase 1 il catalogo
+    cresce molto più in fretta, e un controllo sequenziale (uno alla volta, fino a
+    12s ciascuno) diventava il vero collo di bottiglia del run notturno — una volta
+    ha fatto durare il job oltre 55 minuti fino alla cancellazione, senza mai
+    arrivare al commit. La concorrenza taglia il tempo totale di un fattore ~concurrency."""
     path = CONFIG["products_file"]
     with open(path, "r", encoding="utf-8") as f:
         catalog = json.load(f)
-        
-    print(f"\n🔍 Test live di verifica per tutti i {len(catalog)} prodotti presenti sul sito...")
+
+    print(f"\n🔍 Test live di verifica per tutti i {len(catalog)} prodotti presenti sul sito (concorrenza {concurrency})...")
+    semaphore = asyncio.Semaphore(concurrency)
+
     async with async_playwright() as p:
         browser = await p.firefox.launch(headless=True)
-        page = await browser.new_page(
-            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:124.0) Gecko/20100101 Firefox/124.0",
-            viewport={"width": 1280, "height": 900}
-        )
-        
-        for idx, p_item in enumerate(catalog, 1):
+
+        async def check_one(idx: int, p_item: Dict[str, Any]):
             url = p_item.get("affiliateUrl", "")
             title = p_item.get("title", "")
             store = p_item.get("store", "")
-            try:
-                await page.goto(url, wait_until="domcontentloaded", timeout=12000)
-                await page.wait_for_timeout(800)
-                page_title = await page.title()
-                
-                is_404 = any(err in page_title.lower() for err in [
-                    "impossibile trovare la pagina",
-                    "pagina non trovata",
-                    "page not found",
-                    "cane di amazon",
-                    "404"
-                ])
-                if is_404:
-                    print(f" ❌ [{idx}/{len(catalog)}] {store}: '{title[:35]}' -> ERRORE 404! ({url})")
-                else:
-                    print(f" ✅ [{idx}/{len(catalog)}] {store}: '{title[:35]}' -> SCHEDA ATTIVA: '{page_title[:45]}'")
-            except Exception as e:
-                print(f" ⚠️ [{idx}/{len(catalog)}] {store}: '{title[:35]}' -> Connessione: {e}")
-                
+            async with semaphore:
+                page = await browser.new_page(
+                    user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:124.0) Gecko/20100101 Firefox/124.0",
+                    viewport={"width": 1280, "height": 900}
+                )
+                try:
+                    await page.goto(url, wait_until="domcontentloaded", timeout=12000)
+                    await page.wait_for_timeout(800)
+                    page_title = await page.title()
+
+                    is_404 = any(err in page_title.lower() for err in [
+                        "impossibile trovare la pagina",
+                        "pagina non trovata",
+                        "page not found",
+                        "cane di amazon",
+                        "404"
+                    ])
+                    if is_404:
+                        print(f" ❌ [{idx}/{len(catalog)}] {store}: '{title[:35]}' -> ERRORE 404! ({url})")
+                    else:
+                        print(f" ✅ [{idx}/{len(catalog)}] {store}: '{title[:35]}' -> SCHEDA ATTIVA: '{page_title[:45]}'")
+                except Exception as e:
+                    print(f" ⚠️ [{idx}/{len(catalog)}] {store}: '{title[:35]}' -> Connessione: {e}")
+                finally:
+                    await page.close()
+
+        await asyncio.gather(*(check_one(idx, item) for idx, item in enumerate(catalog, 1)))
         await browser.close()
     return True
 

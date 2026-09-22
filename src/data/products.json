@@ -23,7 +23,7 @@
         "indicator": "double_up"
       },
       "cpu": {
-        "value": "Intel Core i5 Multicore",
+        "value": "Intel Core i7 Multicore",
         "indicator": "neutral"
       },
       "ram": {
@@ -149,7 +149,7 @@
         "indicator": "neutral"
       },
       "cpu": {
-        "value": "Intel Core i5 Multicore",
+        "value": "Intel Core i7 Multicore",
         "indicator": "neutral"
       },
       "ram": {
@@ -211,7 +211,7 @@
         "indicator": "neutral"
       },
       "cpu": {
-        "value": "Intel Core i5 Multicore",
+        "value": "Intel Core i7 Multicore",
         "indicator": "neutral"
       },
       "ram": {
@@ -458,7 +458,7 @@
         "indicator": "down"
       },
       "cpu": {
-        "value": "Intel Core i5 Multicore",
+        "value": "Intel Core i7 Multicore",
         "indicator": "neutral"
       },
       "ram": {
@@ -581,8 +581,8 @@
         "indicator": "neutral"
       },
       "cpu": {
-        "value": "Intel Core i5 Multicore",
-        "indicator": "neutral"
+        "value": "AMD Ryzen 7 Multicore",
+        "indicator": "up"
       },
       "ram": {
         "value": "16 GB DDR4",
@@ -955,7 +955,7 @@
         "indicator": "down"
       },
       "cpu": {
-        "value": "Intel Core i5 Multicore",
+        "value": "Intel Core i7 Multicore",
         "indicator": "neutral"
       },
       "ram": {
@@ -1207,7 +1207,7 @@
         "indicator": "down"
       },
       "cpu": {
-        "value": "Intel Core i5 Multicore",
+        "value": "Intel Core i7 Multicore",
         "indicator": "neutral"
       },
       "ram": {
