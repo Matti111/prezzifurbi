@@ -75,8 +75,19 @@ comprare. Repo GitHub: https://github.com/Matti111/prezzifurbi (privato).
     cooldown, mai documentato esplicitamente da eBay per questo tier. Aggiunto
     `_ebay_rate_limit_pace()` (min. 1s tra chiamate reali) e un circuit breaker
     (`_ebay_throttled`, scatta dopo 3 risposte 429 consecutive e salta il resto
-    del run) — non ancora verificato che risolva, dato che un throttle già
-    attivo lato eBay non si sblocca solo perché noi rallentiamo
+    del run) — **confermato che funzionano correttamente** (run successivo
+    fermato in 3 chiamate invece di martellare tutte le 32 query, run finito in
+    poco più di un minuto), ma **il 429 è persistito anche ~7 minuti dopo**
+    (pausa deliberata + overhead del job), quindi non è un burst a brevissimo
+    termine risolvibile solo rallentando: molto probabilmente il limite
+    giornaliero reale per questo account è **molto più basso dei 5000/giorno**
+    trovati nella documentazione generica eBay, già esaurito dai test di oggi
+    (soprattutto il run da 55 minuti che ha trovato ~270 prodotti, quindi
+    centinaia di chiamate reali). **Non ha senso ritentare oggi** — il prossimo
+    tentativo valido è il run schedulato di stanotte (6:00 UTC) o comunque dopo
+    che sia passato un giorno intero; se il 429 persiste anche allora, il vero
+    limite giornaliero dell'account va richiesto a eBay (Application Growth
+    Check, developer.ebay.com) invece di continuare a indovinare
   - Integrazioni: Amazon Creators API, eBay Browse API. **Refurbed.it rimosso
     interamente** (2026-09-21): mai stato trovato un programma di affiliazione
     Refurbed attivo su Awin per questo account, quindi niente tracciamento/
@@ -215,8 +226,16 @@ stessa logica già applicata a Refurbed prima della rimozione. La card mostra
    ed è stato cancellato prima del commit (nessun dato salvato) — non per il budget
    eBay ma per `verify_catalog_links()`, che controllava un prodotto alla volta via
    Playwright e con un catalogo cresciuto diventava il collo di bottiglia. Parallelizzato
-   (`concurrency=8`, `asyncio.gather`); da riverificare che il prossimo run reale
-   completi in tempi ragionevoli e che il consumo budget eBay stesso sia nella norma
+   (`concurrency=8`, `asyncio.gather`). Nei run successivi (stesso giorno) eBay ha
+   risposto 429 "Too many requests" su ogni chiamata, verosimilmente perché il
+   limite giornaliero reale dell'account è molto più basso dei 5000/giorno della
+   documentazione generica ed è già stato esaurito dai test di oggi. **Prossimo
+   passo**: aspettare il run schedulato di domani (6:00 UTC) o un giorno di
+   distanza dall'ultimo tentativo, controllare che parta senza 429 e che
+   `X/4000 chiamate usate` nel log rifletta finalmente un run reale completo. Se
+   il 429 persiste anche a distanza di un giorno, il limite reale per questo
+   account va chiesto direttamente a eBay (Application Growth Check su
+   developer.ebay.com), `DAILY_API_BUDGET` va abbassato di conseguenza
 9. Fase 2/3/4 della discovery (statistiche/Query Yield per query, rotazione basata
    sul rendimento invece che deterministica per data, budget diviso dinamicamente
    tra discovery/high-value/coverage/exploration, generazione di query dai gap di
