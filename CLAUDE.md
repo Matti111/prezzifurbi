@@ -61,7 +61,13 @@ comprare. Repo GitHub: https://github.com/Matti111/prezzifurbi (privato).
     su negozi diversi, es. eBay+Amazon+MediaWorld) resta fuori scope — vedi TODO #6.
     `verify_catalog_links()` ora controlla i link in parallelo (`asyncio.Semaphore(8)`,
     fix 2026-09-22): prima era sequenziale e con un catalogo cresciuto ha fatto
-    cancellare un run dopo 55 minuti senza mai arrivare al commit.
+    cancellare un run dopo 55 minuti senza mai arrivare al commit. Dopo il fix il
+    run è sceso a ~16 minuti, ma ha rivelato che il pool ampio trova **~270-280
+    prodotti nuovi in un solo run** (da 20 a ~290) — troppi per una revisione
+    umana della qualità. `MAX_NEW_PRODUCTS_PER_RUN = 60` in `sync_catalog()`
+    mette un tetto alla crescita per notte (non limita gli aggiornamenti di
+    prezzo su annunci già noti, solo i prodotti genuinamente nuovi) finché la
+    qualità non è verificata su più notti — alzare o rimuovere quando lo è.
   - Integrazioni: Amazon Creators API, eBay Browse API. **Refurbed.it rimosso
     interamente** (2026-09-21): mai stato trovato un programma di affiliazione
     Refurbed attivo su Awin per questo account, quindi niente tracciamento/

@@ -551,6 +551,14 @@ _ebay_token_cache: Dict[str, Any] = {"access_token": None, "expires_at": 0}
 DAILY_API_BUDGET = 4000
 _ebay_api_calls_used = 0
 
+# Tetto di sicurezza sui NUOVI prodotti aggiunti in una notte (non limita gli
+# aggiornamenti di prezzo su annunci già noti, solo la crescita del catalogo).
+# Il pool ampio di query di Fase 1 può campionare centinaia di annunci nuovi in
+# un run solo (verificato il 2026-09-22: ~275 in una notte) — troppo per una
+# revisione umana della qualità. Alzare o rimuovere quando la qualità è verificata
+# su più notti consecutive a ritmo più contenuto.
+MAX_NEW_PRODUCTS_PER_RUN = 60
+
 
 def _ebay_budget_allows(cost: int = 1) -> bool:
     """Controlla (e consuma) budget prima di ogni chiamata reale all'API eBay.
@@ -1143,6 +1151,11 @@ def sync_catalog(new_items: List[Dict[str, Any]]):
             existing["affiliateUrl"] = wrap_affiliate_link(item["store"], item["raw_url"])
             continue
 
+        # Tetto di sicurezza sulla crescita per notte (vedi MAX_NEW_PRODUCTS_PER_RUN):
+        # non limita gli aggiornamenti di prezzo sopra, solo i prodotti genuinamente nuovi
+        if added_count >= MAX_NEW_PRODUCTS_PER_RUN:
+            continue
+
         # Valuta con il motore della Volpe
         evaluation = evaluate_laptop(item)
 
@@ -1218,6 +1231,8 @@ def sync_catalog(new_items: List[Dict[str, Any]]):
     replaced_note = f", {replaced_count} sostituite con un prezzo migliore" if replaced_count else ""
     updated_note = f", {updated_count} prezzi aggiornati" if updated_count else ""
     print(f"\n🎉 Catalogo sincronizzato con successo! ({len(catalog)} offerte totali presenti sul sito, +{added_count} nuove aggiunte{replaced_note}{updated_note})")
+    if added_count >= MAX_NEW_PRODUCTS_PER_RUN:
+        print(f" 🛑 Tetto MAX_NEW_PRODUCTS_PER_RUN ({MAX_NEW_PRODUCTS_PER_RUN}) raggiunto: altri candidati trovati stanotte non sono stati aggiunti, verranno ritrovati alle prossime notti")
 
 
 # --- 6. SCREENSHOT & LINK VERIFICATION ENGINE ---
