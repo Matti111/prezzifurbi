@@ -82,7 +82,9 @@ def extract_screen(text: str) -> Dict[str, Any]:
         
     # Refresh Rate
     refresh_match = re.search(r'(120|144|165|240|300|360)\s*hz', text_lower)
-    refresh = f'{refresh_match.group(1)}Hz' if refresh_match else ('144Hz' if 'gaming' in text_lower else '60Hz')
+    # Non assumere 144Hz solo perché il venditore scrive "gaming" nel titolo: molti
+    # laptop marketing come "gaming" hanno in realtà un pannello 60Hz standard
+    refresh = f'{refresh_match.group(1)}Hz' if refresh_match else '60Hz'
     
     # Tipo pannello
     panel = 'OLED' if 'oled' in text_lower else ('IPS' if 'ips' in text_lower else 'LED')
@@ -146,6 +148,8 @@ def extract_gpu(text: str) -> Dict[str, Any]:
         return {"value": "AMD Radeon 780M RDNA3", "tier": 2, "dedicated": False}
     if 'RADEON' in text_upper:
         return {"value": "AMD Radeon Graphics integrata", "tier": 1, "dedicated": False}
+    if 'VEGA' in text_upper:
+        return {"value": "AMD Radeon Vega Graphics integrata", "tier": 1, "dedicated": False}
         
     return {"value": "Intel UHD Graphics integrata", "tier": 1, "dedicated": False}
 
@@ -175,6 +179,11 @@ def extract_cpu(text: str) -> Dict[str, Any]:
     m = re.search(r'(Core\s+Ultra\s+([579])\s+\d+[a-zA-Z]*)', text_clean, re.I)
     if m:
         return {"value": f"Intel {m.group(1)}", "tier": _CORE_ULTRA_TIER[m.group(2)]}
+
+    # Intel Core 3/5/7 (nuova nomenclatura 2024+, senza "i" né "Ultra": es. "Core 5-210H")
+    m = re.search(r'(Core\s+([357])[- ]?(\d{3})[a-zA-Z]*)', text_clean, re.I)
+    if m:
+        return {"value": f"Intel {m.group(1)}", "tier": _INTEL_TIER[('13-14', m.group(2))]}
 
     # Intel 13a e 14a Gen
     m = re.search(r'(i([579])[- ]1[34]\d{3}[a-zA-Z]*)', text_clean, re.I)
@@ -338,7 +347,10 @@ def evaluate_laptop(raw: Dict[str, Any]) -> Dict[str, Any]:
     
     # Check Top
     if gpu["tier"] >= 4:
-        top_list.append("Scheda grafica NVIDIA RTX serie 40 con DLSS 3.5 e Frame Generation")
+        if 'RTX 40' in gpu["value"].upper() or re.search(r'RTX\s*4\d{3}', gpu["value"].upper()):
+            top_list.append("Scheda grafica NVIDIA RTX serie 40 con DLSS 3.5 e Frame Generation")
+        else:
+            top_list.append("Scheda grafica NVIDIA RTX dedicata di fascia alta con DLSS e Frame Generation")
     elif gpu["tier"] == 3:
         top_list.append("GPU dedicata ideale per giocare a tutti i titoli moderni in Full HD")
     elif "quadro" in gpu["value"].lower():
@@ -468,150 +480,6 @@ def wrap_affiliate_link(store: str, raw_url: str) -> str:
 
 
 # --- 4. SCRAPER & DEAL INGESTION PIPELINE ---
-
-async def scrape_refurbed_deals(max_deals: int = 4) -> List[Dict[str, Any]]:
-    """Cerca e scarica offerte reali di portatili da Refurbed.it"""
-    deals = []
-    print("\n🔍 [1/3] Avvio scansione Refurbed.it (Network Awin)...")
-    
-    queries = ["thinkpad i5 16gb", "dell precision 32gb", "zbook fury"]
-    
-    async with async_playwright() as p:
-        browser = await p.firefox.launch(headless=True)
-        page = await browser.new_page(viewport={"width": 1280, "height": 800})
-        
-        for q in queries:
-            try:
-                print(f" -> Ricerca: '{q}'...")
-                await page.goto("https://www.refurbed.it/", wait_until="domcontentloaded", timeout=15000)
-                await page.wait_for_timeout(1500)
-                
-                # Consenso cookie
-                try:
-                    btn = await page.query_selector("button:has-text('Accetta'), button:has-text('Accetto')")
-                    if btn:
-                        await btn.click()
-                        await page.wait_for_timeout(500)
-                except:
-                    pass
-                    
-                search_input = await page.query_selector("input[type='search'], input[placeholder*='Cerca'], input[name='query'], input[id*='search']")
-                print(f" [Refurbed] Input di ricerca trovato: {search_input is not None}")
-                if not search_input:
-                    # Stampa gli input disponibili nella pagina
-                    inputs = await page.evaluate("() => Array.from(document.querySelectorAll('input')).map(i => ({ type: i.type, placeholder: i.placeholder, name: i.name, id: i.id }))")
-                    print(f" [Refurbed] Inputs presenti: {inputs[:5]}")
-                    continue
-                    
-                await search_input.fill(q)
-                await search_input.press("Enter")
-                await page.wait_for_timeout(3500)
-                print(f" [Refurbed] Nuova URL dopo invio: {page.url}")
-                
-                # Estrai risultati
-                cards = await page.evaluate('''() => {
-                    const links = Array.from(document.querySelectorAll('a[href*="/p/"], a[href*="/laptops/"]'));
-                    return links.map(a => {
-                        const img = a.querySelector('img');
-                        return {
-                            href: a.href,
-                            text: a.innerText.replace(/\\n+/g, ' | ').trim(),
-                            img: img ? img.src : ''
-                        };
-                    }).filter(x => x.text.length > 5).slice(0, 5);
-                }''')
-                print(f" [Refurbed] Elementi trovati con /p/ o /laptops/: {len(cards)}")
-                for c in cards[:2]:
-                    print(f"    -> Raw Refurbed: {c['text'][:50]} | href: {c['href']}")
-                
-                for c in cards:
-                    text = c["text"]
-                    price_val = 0
-                    
-                    # 1. Cerca prezzo nel testo della card
-                    price_match = re.search(r'(\d+[\d.,]*)\s*€', text)
-                    if price_match:
-                        price_val = float(price_match.group(1).replace(".", "").replace(",", "."))
-                    else:
-                        # 2. Visita la pagina del prodotto per estrarre prezzo esatto e scheda tecnica completa
-                        try:
-                            print(f"    -> [Refurbed] Apertura pagina prodotto: {c['href'][:55]}...")
-                            p_page = await browser.new_page()
-                            await p_page.goto(c["href"], wait_until="domcontentloaded", timeout=12000)
-                            await p_page.wait_for_timeout(1000)
-                            
-                            p_info = await p_page.evaluate('''() => {
-                                // Prezzo da JSON-LD o da elementi prezzo
-                                let p = 0;
-                                const ldScript = document.querySelector('script[type="application/ld+json"]');
-                                if (ldScript) {
-                                    try {
-                                        const ld = JSON.parse(ldScript.innerText);
-                                        if (ld.offers && ld.offers.price) p = parseFloat(ld.offers.price);
-                                        else if (Array.isArray(ld) && ld[0]?.offers?.price) p = parseFloat(ld[0].offers.price);
-                                    } catch(e) {}
-                                }
-                                if (!p) {
-                                    const match = document.body.innerText.match(/(\d+(?:[.,]\d+)?)\s*€/);
-                                    if (match) p = parseFloat(match[1].replace(',', '.'));
-                                }
-                                const bodyText = document.body.innerText;
-                                return { price: p, bodyText: bodyText.slice(0, 1500) };
-                            }''')
-                            await p_page.close()
-                            
-                            if p_info and p_info.get("price") and p_info["price"] > 100:
-                                price_val = p_info["price"]
-                                text = text + " " + p_info.get("bodyText", "")
-                        except Exception as p_err:
-                            print(f"    [Refurbed Page Error]: {p_err}")
-                            
-                    if not price_val or price_val < 200 or price_val > 2500:
-                        continue
-                        
-                    # Nome dal titolo o dal path URL /p/<slug>/
-                    title_part = text.split("|")[0].strip()
-                    slug_match = re.search(r'/p/([^/]+)/', c["href"])
-                    slug_text = slug_match.group(1).replace('-', ' ') if slug_match else ""
-                    
-                    bad_badges = ['pochi rimasti', 'più venduto', 'in offerta', 'novità', 'spedizione', 'garanzia', 'sconto', 'top']
-                    if any(b in title_part.lower() for b in bad_badges) or len(title_part) < 6 or title_part.lower().startswith('da '):
-                        if slug_text:
-                            title_part = slug_text.title()
-                    
-                    if len(title_part) < 3 or "iphone" in title_part.lower() or "ipad" in title_part.lower():
-                        continue
-                        
-                    brand = title_part.split()[0] if title_part.split() else "Notebook"
-                    model = " ".join(title_part.split()[1:4])
-                    
-                    deals.append({
-                        "title": title_part,
-                        "brand": brand,
-                        "model": model,
-                        "price": int(price_val),
-                        "originalPrice": int(price_val * 1.6),
-                        "condition": "Ricondizionato",
-                        "store": "Refurbed.it",
-                        "raw_url": c["href"],
-                        "imageUrl": c["img"] or "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80",
-                        "specs_text": f"{text} {slug_text}"
-                    })
-                    print(f"    ✅ Catturata offerta Refurbed: {title_part} a {int(price_val)} €!")
-                    if len(deals) >= max_deals:
-                        break
-                        
-            except Exception as e:
-                print(f" Errore durante scansione '{q}': {e}")
-                
-            if len(deals) >= max_deals:
-                break
-                
-        await browser.close()
-        
-    print(f" ✅ Trovati {len(deals)} portatili da Refurbed!")
-    return deals
-
 
 # --- 2B. EBAY BROWSE API (integrazione ufficiale, sostituisce lo scraping) ---
 #
@@ -959,23 +827,10 @@ def refresh_amazon_catalog_prices(catalog: List[Dict[str, Any]]) -> int:
 # --- 5. SINCRONIZZAZIONE CON PRODUCTS.JSON ---
 
 DIRECT_PRODUCT_URLS = {
-    "hp-victus-15-ryzen-4060": {"url": "https://www.amazon.it/dp/B0GQZLXHMY", "store": "Amazon.it"},
-    "lenovo-loq-i7-4060": {"url": "https://www.amazon.it/dp/B0GSFZLVGR", "store": "Amazon.it"},
-    "asus-tuf-gaming-a15-ryzen-849": {"url": "https://www.amazon.it/dp/B0GQH7ZDN4", "store": "Amazon.it"},
-    "asus-tuf-gaming-a15-ryzen-7-7735hs-rtx-4060-140w-849": {"url": "https://www.amazon.it/dp/B0GQH7ZDN4", "store": "Amazon.it"},
-    "acer-nitro-v15-rtx4050": {"url": "https://www.amazon.it/dp/B082WFPT28", "store": "Amazon.it"},
-    "medion-erazer-crawler-e50": {"url": "https://www.amazon.it/dp/B0GQZ5W9D1", "store": "Amazon.it"},
-    "lenovo-ryzen-7-170-geforce-1189": {"url": "https://www.amazon.it/dp/B0F2JDBNCR", "store": "Amazon.it"},
-    "acer-nitro-v-15-gaming-not-949": {"url": "https://www.amazon.it/dp/B082WFPT28", "store": "Amazon.it"},
-    "hp-zbook-fury-15-g7": {"url": "https://www.refurbed.it/p/hp-zbook-fury-15-g7-10850h-15-6/", "store": "Refurbed.it"},
-    "dell-precision-5540-4k": {"url": "https://www.refurbed.it/p/dell-precision-7540-i7-9850h-15-/", "store": "Refurbed.it"},
-    "dell-precision-3551": {"url": "https://www.refurbed.it/p/dell-precision-7540-i7-9750h-15-/", "store": "Refurbed.it"},
-    "hp-elitebook-850-g7": {"url": "https://www.refurbed.it/p/hp-elitebook-850-g7/", "store": "Refurbed.it"},
-    "lenovo-thinkpad-l15": {"url": "https://www.refurbed.it/p/lenovo-thinkpad-t16-g1-i5-1235u/", "store": "Refurbed.it"},
-    "lenovo-thinkpad-l590": {"url": "https://www.refurbed.it/p/lenovo-thinkpad-l590/", "store": "Refurbed.it"},
-    "lenovo-thinkpad-p16s-g1-681": {"url": "https://www.refurbed.it/p/lenovo-thinkpad-p16s-g1-1240p/505267b/", "store": "Refurbed.it"},
-    "lenovo-thinkpad-t16-g1-758": {"url": "https://www.refurbed.it/p/lenovo-thinkpad-t16-g1-i5-1245u/374640b/", "store": "Refurbed.it"},
-    "lenovo-thinkpad-t16-g1-i5-758": {"url": "https://www.refurbed.it/p/lenovo-thinkpad-t16-g1-i5-1245u/374640b/", "store": "Refurbed.it"}
+    "tulpar-t5-i7-rtx4060": {"url": "https://www.amazon.it/dp/B0D2R83MY4", "store": "Amazon.it"},
+    "aukabrex-16-i7-6500u": {"url": "https://www.amazon.it/dp/B0H6WSJSHV", "store": "Amazon.it"},
+    "cyclus-16-ryzen5-vega": {"url": "https://www.amazon.it/dp/B0G1FZ5F8N", "store": "Amazon.it"},
+    "hp-omen-15-rtx5050": {"url": "https://www.amazon.it/dp/B0GQZ5W9D1", "store": "Amazon.it"},
 }
 
 def sanitize_catalog(catalog: List[Dict[str, Any]]):
@@ -985,7 +840,7 @@ def sanitize_catalog(catalog: List[Dict[str, Any]]):
         pid = p.get("id", "")
         current_url = p.get("affiliateUrl", "")
         is_search = any(k in current_url for k in ['/search/?query=', '/s?k=', '/sch/i.html', 'prezzifurbi.it/out/'])
-        
+
         if pid in DIRECT_PRODUCT_URLS:
             direct_info = DIRECT_PRODUCT_URLS[pid]
             p["store"] = direct_info["store"]
@@ -994,10 +849,7 @@ def sanitize_catalog(catalog: List[Dict[str, Any]]):
             print(f" 🎯 Scheda prodotto diretta: {p['title'][:35]} -> {p['affiliateUrl']}")
         elif is_search:
             # Sostituisci link di ricerca generico con scheda reale
-            if "refurbed" in p.get("store", "").lower():
-                p["affiliateUrl"] = "https://www.refurbed.it/p/lenovo-thinkpad-t16-g1-i5-1245u/374640b/"
-            else:
-                p["affiliateUrl"] = wrap_affiliate_link("Amazon.it", "https://www.amazon.it/dp/B0BYZ28Z8H")
+            p["affiliateUrl"] = wrap_affiliate_link("Amazon.it", "https://www.amazon.it/dp/B0BYZ28Z8H")
             cleaned += 1
             print(f" 🎯 Scheda prodotto diretta: {p['title'][:35]} -> {p['affiliateUrl']}")
             

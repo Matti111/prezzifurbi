@@ -53,7 +53,7 @@ export const AffiliateDisclaimer: React.FC<AffiliateDisclaimerProps> = ({ onOpen
         {/* Legal Disclaimer compliant with Awin / Amazon / eBay guidelines */}
         <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 text-[11px] leading-relaxed text-slate-400 space-y-2">
           <p>
-            <strong>Informativa di Trasparenza sulle Affiliazioni Commerciali:</strong> Prezzi Furbi (prezzifurbi.it) partecipa a vari programmi di affiliazione, tra cui il Programma Affiliazione Awin (Refurbed, MediaWorld, Unieuro), eBay Partner Network e Amazon EU Associates, programmi che consentono ai siti web di percepire una commissione pubblicitaria promuovendo e creando collegamenti a offerte verificate.
+            <strong>Informativa di Trasparenza sulle Affiliazioni Commerciali:</strong> Prezzi Furbi (prezzifurbi.it) partecipa a vari programmi di affiliazione, tra cui il Programma Affiliazione Awin (MediaWorld, Unieuro, Euronics), eBay Partner Network e Amazon EU Associates, programmi che consentono ai siti web di percepire una commissione pubblicitaria promuovendo e creando collegamenti a offerte verificate.
           </p>
           <p>
             Le schede comparative, i timbri («Scelta Furba», «Best Buy», «Cheaper but Good») e le valutazioni a stelle sono formulati in modo totalmente indipendente dalla redazione sulla base delle specifiche tecniche oggettive e del prezzo effettivo di mercato. I prezzi e le disponibilità dei prodotti sono soggetti a variazioni da parte dei rispettivi venditori terzi.

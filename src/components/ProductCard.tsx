@@ -120,9 +120,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   const isHighlighted = (key: SpecKey) => highlightedSpec === key;
 
   // Amazon prices are still static (Creators API not fully unlocked yet) and
-  // Refurbed offers come from scraping, not a live API: flag both as unverified
-  // while the catalog automation is being finished.
-  const showUnverifiedNotice = /amazon|refurbed/i.test(product.store);
+  // MediaWorld has no affiliate tracking yet (Awin approval pending) nor a
+  // live price sync: flag both as unverified while catalog automation catches up.
+  const showUnverifiedNotice = /amazon|mediaworld/i.test(product.store);
 
   return (
     <div className={`group relative flex flex-col rounded-2xl border transition-all duration-300 w-full max-w-full overflow-hidden ${cardTheme}`}>

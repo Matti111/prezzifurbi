@@ -17,8 +17,11 @@ comprare. Repo GitHub: https://github.com/Matti111/prezzifurbi (privato).
     "item specifics" e ne deduce le caratteristiche
   - Motore di valutazione "la Volpe" (`evaluate_laptop`) che calcola frecce
     benchmark, badge, TOP/FLOP, rating
-  - Integrazioni: Amazon Creators API, eBay Browse API, scraping Playwright di
-    Refurbed.it
+  - Integrazioni: Amazon Creators API, eBay Browse API. **Refurbed.it rimosso
+    interamente** (2026-09-21): mai stato trovato un programma di affiliazione
+    Refurbed attivo su Awin per questo account, quindi niente tracciamento/
+    commissione possibile — rimossi sia i prodotti Refurbed dal catalogo sia la
+    funzione di scraping Playwright (`scrape_refurbed_deals`, non più nel codice)
   - `wrap_affiliate_link()` — genera i link di affiliazione per ogni store
   - `sync_catalog()` — scrive su `src/data/products.json`
 - **CI/CD**: `.github/workflows/refresh-catalog.yml` — gira ogni notte alle 6:00 UTC
@@ -44,9 +47,11 @@ comprare. Repo GitHub: https://github.com/Matti111/prezzifurbi (privato).
 | eBay Partner Network | ✅ Attivo | Campaign ID `5339209756`. Link generati appendendo `mkevt/mkcid/mkrid/campid/toolid` **direttamente sull'URL prodotto eBay** — **non** usare mai `rover.ebay.com/rover/...` come redirect diretto, quel formato restituisce solo un pixel di tracciamento 1×1, non un redirect (bug reale già risolto, vedi commit `0d0cf6a`) |
 | eBay Browse API | ✅ Attivo | Serviva richiedere l'**esenzione da Marketplace Account Deletion** (Alerts & Notifications su developer.ebay.com) perché l'app non gestisce dati membri eBay, altrimenti la keyset Production resta disabilitata |
 | Awin (network) | ✅ Approvato | Publisher ID `3095611` (in `CONFIG["awin_affid"]`, override via env `AWIN_AFFID`) |
-| Awin → Refurbed | ❌ Rimosso | Non è mai stato trovato un programma Refurbed attivo su Awin per questo account. Il Merchant ID `18037` usato in precedenza non era mai stato verificato ed è stato rimosso dal codice. I prodotti Refurbed restano in catalogo (scraping Playwright) ma con **link diretti senza tracciamento** |
+| Awin → Refurbed | ❌ Rimosso definitivamente | Mai stato trovato un programma Refurbed attivo su Awin per questo account (Merchant ID `18037` usato in precedenza non era mai stato verificato). 2026-09-21: rimossi anche tutti i prodotti Refurbed dal catalogo e la funzione di scraping — Refurbed non è più una fonte del sito |
 | Awin → Back Market IT | ⏳ In attesa di approvazione | |
 | Awin → MediaWorld IT | ⏳ In attesa di approvazione | |
+| Awin → Unieuro IT | ⏳ In attesa di approvazione | Richiesta inviata 2026-09-21 |
+| Awin → Euronics IT | ⏳ In attesa di approvazione | Richiesta inviata 2026-09-21 |
 | Awin → Cyberport | 🔲 Non richiesto | Nessun programma IT specifico su Awin, solo AT/DE/EE/PL. Valutato ma non prioritario (commission rate basso, 2,3%) |
 
 ## Deploy — risolto (2026-09-21)
@@ -62,12 +67,60 @@ da `refresh-catalog.yml`: ora il workflow si limita ad aggiornare
 `FTP_SERVER`/`FTP_USERNAME`/`FTP_PASSWORD`/`FTP_REMOTE_DIR` sono rimasti su
 GitHub ma non sono più usati da nessun workflow — Keliweb non è più in uso.
 
+## Catalogo Amazon — sostituito (2026-09-21)
+
+I 7 prodotti Amazon precedenti sono stati rimossi e sostituiti con 4 nuovi (link
+forniti dall'utente, risolti e verificati uno per uno in browser, poi valutati
+con il vero `evaluate_laptop()` — non simulato a mano):
+
+| id | ASIN | Note |
+|---|---|---|
+| `tulpar-t5-i7-rtx4060` | `B0D2R83MY4` | i7-12700H + RTX 4060. **Segnato "Attualmente non disponibile" su Amazon al momento dell'aggiunta** — aggiunto comunque su richiesta esplicita, ricontrollare periodicamente se è tornato in stock |
+| `aukabrex-16-i7-6500u` | `B0H6WSJSHV` | i7-6500U (2015), **nessuna GPU dedicata** nonostante il nome "Gaming Laptop" — categorizzato `lavoro_ufficio`, non `gaming_ai` |
+| `cyclus-16-ryzen5-vega` | `B0G1FZ5F8N` | Ryzen 5 3500U + Vega 8 integrata, stesso discorso — categorizzato `lavoro_ufficio` |
+| `hp-omen-15-rtx5050` | `B0GQZ5W9D1` | Vero gaming laptop: Intel Core 5-210H + RTX 5050 8GB, 2K 165Hz |
+
+Nessuno dei 4 mostrava un vero prezzo di listino/sconto su Amazon al momento
+dell'aggiunta: **`originalPrice` è stato impostato uguale al prezzo attuale
+(nessuno sconto finto mostrato)**, coerente con quanto promesso in
+`AffiliateDisclaimer.tsx` ("Niente prezzi civetta o sconti finti"). Il resto
+del catalogo (soprattutto le offerte eBay automatiche) continua invece a
+stimare `originalPrice` come `price * 1.35` quando la fonte non ne fornisce uno
+reale — è un'incoerenza nota, non ancora risolta a livello di pipeline.
+
+Durante la valutazione di questi 4 prodotti sono emersi e sono stati corretti
+in `test_db.py` tre problemi reali del parser (non teorici — causavano dati
+sbagliati su questi stessi prodotti):
+- `extract_screen`: il refresh rate non viene più assunto "144Hz" solo perché
+  il titolo contiene la parola "gaming" (causava un falso claim 144Hz su
+  laptop con schermo 60Hz normale)
+- `extract_gpu`: aggiunto riconoscimento "VEGA" (grafica integrata AMD) — prima
+  finiva nel fallback generico "Intel UHD Graphics", sbagliando produttore
+- `extract_gpu`/`evaluate_laptop`: aggiunto riconoscimento RTX serie 50
+  (es. RTX 5050) e ammorbidito il testo pregi hardcoded "serie 40 con DLSS
+  3.5" (falso per una RTX 50) in un testo generico per tier GPU alto
+- `extract_cpu`: aggiunto riconoscimento della nuova nomenclatura Intel
+  "Core 3/5/7" (2024+, senza "i" né "Ultra", es. "Core 5-210H") — prima
+  finiva nel fallback generico "Intel Core i5 Multicore"
+
+Aggiunto anche un 5° prodotto manuale, `dell-precision-7540-i9-quadro`, da
+**MediaWorld.it** (marketplace, venduto da PCrefurb Scandinavia IT) — questo sì
+con uno sconto reale verificato (999€ vs "più basso ultimi 30gg" 1599€ mostrato
+da MediaWorld stessa). **Link diretto senza tracciamento** (store nuovo,
+`wrap_affiliate_link()` non ha ancora un branch MediaWorld — vedi TODO #1):
+aggiunto comunque su richiesta esplicita nonostante l'assenza di commissione,
+stessa logica già applicata a Refurbed prima della rimozione. La card mostra
+"Link non verificato" in `ProductCard.tsx` (stesso trattamento di Amazon).
+
 ## TODO aperti
 
-1. Quando Back Market IT / MediaWorld IT approvano su Awin: recuperare il loro
-   Merchant ID (MID) dalla scheda programma su MyAwin e aggiungere un branch in
-   `wrap_affiliate_link()` analogo a quello rimosso per Refurbed (usare il formato
+1. Quando Back Market IT / MediaWorld IT / Unieuro IT / Euronics IT approvano su
+   Awin: recuperare il loro Merchant ID (MID) dalla scheda programma su MyAwin e
+   aggiungere un branch in `wrap_affiliate_link()` (usare il formato
    `https://www.awin1.com/cread.php?awinmid={MID}&awinaffid={AFFID}&clickref=prezzifurbi&ued={url-encoded-destination}`)
+5. Verificare se `tulpar-t5-i7-rtx4060` (ASIN `B0D2R83MY4`) è tornato disponibile
+   su Amazon — era segnato "Attualmente non disponibile" quando è stato aggiunto
+   al catalogo il 2026-09-21
 2. Amazon Creators API: nessuna azione necessaria, si sblocca da sola raggiunta la
    soglia di 10 vendite/30gg — non generare acquisti artificiali/coordinati con
    amici per raggiungerla apposta, rischia di far segnalare l'account Associates
