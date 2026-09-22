@@ -34,6 +34,19 @@ comprare. Repo GitHub: https://github.com/Matti111/prezzifurbi (privato).
   - Motore di valutazione "la Volpe" (`evaluate_laptop`) che calcola frecce
     benchmark, badge, TOP/FLOP, rating, `useCases` (`derive_use_cases`) — **senza
     mai usare lo sconto dichiarato**, né nel punteggio né nel prezzo di riferimento
+  - **Discovery eBay (Fase 1, 2026-09-22)**: `build_ebay_query_pool()` genera ~32
+    query categorizzate (discovery/spec/ricondizionato, da `EBAY_GPUS`/`EBAY_CPUS`/
+    `EBAY_RAM_SIZES`, combinazioni mirate non cartesiane) invece delle 2-5 frasi
+    fisse di prima. `discover_ebay_deals()` campiona il mercato (fino a 200
+    risultati/pagina, 2 pagine/query, `sort` ruotato per giorno tra i valori
+    supportati dalla Browse API) — non decide più lui cosa è interessante, si
+    limita a raccogliere. Identità dell'offerta = `listingId` (itemId eBay,
+    normalizzato da `_numeric_listing_id()`), **mai più titolo+prezzo**: lo stesso
+    annuncio a un prezzo diverso aggiorna `priceHistory` invece di creare un
+    duplicato. `DAILY_API_BUDGET = 4000` (limite reale eBay: 5000/giorno) conta
+    sia le chiamate di ricerca sia le `get_ebay_item_details()`, e queste ultime
+    vengono saltate per annunci già noti (risparmio budget). Raggruppamento
+    cross-store (stesso notebook su più negozi) resta fuori scope — vedi TODO #6.
   - Integrazioni: Amazon Creators API, eBay Browse API. **Refurbed.it rimosso
     interamente** (2026-09-21): mai stato trovato un programma di affiliazione
     Refurbed attivo su Awin per questo account, quindi niente tracciamento/
@@ -163,6 +176,18 @@ stessa logica già applicata a Refurbed prima della rimozione. La card mostra
    percentile volpe contestuale (15%), soglie semaforo freschezza (10/30 giorni),
    minimo comparabili per prezzo tipico (3) — aggiustarli se in pratica la volpe
    compare troppo/poco spesso o il semaforo sembra troppo aggressivo/permissivo
+8. **Verificare il consumo reale di budget eBay sul primo run notturno vero**
+   (2026-09-22 ha solo verificato la logica con `py_compile`/test locali, senza
+   credenziali eBay in locale): controllare nel log la riga finale
+   "`X/4000 chiamate usate`" e che `get_ebay_item_details()` non esploda il conteggio
+   la prima notte (tantissimi annunci "nuovi" perché il catalogo parte da 19 prodotti)
+9. Fase 2/3/4 della discovery (statistiche/Query Yield per query, rotazione basata
+   sul rendimento invece che deterministica per data, budget diviso dinamicamente
+   tra discovery/high-value/coverage/exploration, generazione di query dai gap di
+   copertura e dai filtri usati dagli utenti) esplicitamente NON implementate ora
+   — richiedono uno stato persistente tra le notti (nuovo file, es.
+   `query_stats.json`) e hanno senso solo quando c'è abbastanza storico/catalogo
+   perché quei segnali siano significativi
 
 ## File locali che NON sono su git (da ricreare se serve lavorare in locale)
 

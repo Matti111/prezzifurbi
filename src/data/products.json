@@ -60,7 +60,8 @@
         "price": 777,
         "date": "2026-09-22"
       }
-    ]
+    ],
+    "listingId": "227306323358"
   },
   {
     "id": "pc-portatile-notebook-ric-289",
@@ -121,7 +122,8 @@
         "price": 289,
         "date": "2026-09-22"
       }
-    ]
+    ],
+    "listingId": "800485587355"
   },
   {
     "id": "notebook-hp-440-g8-i7-116-290",
@@ -182,7 +184,8 @@
         "price": 290,
         "date": "2026-09-22"
       }
-    ]
+    ],
+    "listingId": "257692302649"
   },
   {
     "id": "notebook-hp-840-g8-i7-116-255",
@@ -243,7 +246,8 @@
         "price": 255,
         "date": "2026-09-22"
       }
-    ]
+    ],
+    "listingId": "257364614173"
   },
   {
     "id": "acer-nitro-v-16-anv16-41--976",
@@ -305,7 +309,8 @@
         "price": 976,
         "date": "2026-09-22"
       }
-    ]
+    ],
+    "listingId": "188462020654"
   },
   {
     "id": "hp-victus-notebook-gaming-565",
@@ -365,7 +370,8 @@
         "price": 565,
         "date": "2026-09-22"
       }
-    ]
+    ],
+    "listingId": "820122457575"
   },
   {
     "id": "notebook-hp-zbook-17-g5-1-540",
@@ -425,7 +431,8 @@
         "price": 540,
         "date": "2026-09-22"
       }
-    ]
+    ],
+    "listingId": "257620755974"
   },
   {
     "id": "notebook-fujitsu-celsius--429",
@@ -486,7 +493,8 @@
         "price": 429,
         "date": "2026-09-22"
       }
-    ]
+    ],
+    "listingId": "128085620263"
   },
   {
     "id": "pc-portatile-notebook-ric-269",
@@ -546,7 +554,8 @@
         "price": 269,
         "date": "2026-09-22"
       }
-    ]
+    ],
+    "listingId": "389066472507"
   },
   {
     "id": "notebook-hp-845-g8-ryzen--320",
@@ -607,7 +616,8 @@
         "price": 320,
         "date": "2026-09-22"
       }
-    ]
+    ],
+    "listingId": "257051854779"
   },
   {
     "id": "notebook-pc-computer-dell-429",
@@ -668,7 +678,8 @@
         "price": 429,
         "date": "2026-09-22"
       }
-    ]
+    ],
+    "listingId": "198356783110"
   },
   {
     "id": "notebook-pc-portatile-hp--380",
@@ -730,7 +741,8 @@
         "price": 380,
         "date": "2026-09-22"
       }
-    ]
+    ],
+    "listingId": "327325865661"
   },
   {
     "id": "notebook-pc-12-5-i5-6200u-529",
@@ -791,7 +803,8 @@
         "price": 529,
         "date": "2026-09-22"
       }
-    ]
+    ],
+    "listingId": "227501112648"
   },
   {
     "id": "notebook-12-5-i5-6200u-64-443",
@@ -852,7 +865,8 @@
         "price": 443,
         "date": "2026-09-22"
       }
-    ]
+    ],
+    "listingId": "278331222317"
   },
   {
     "id": "tulpar-t5-i7-rtx4060",
@@ -1223,6 +1237,7 @@
         "price": 399,
         "date": "2026-09-22"
       }
-    ]
+    ],
+    "listingId": "128066653070"
   }
 ]

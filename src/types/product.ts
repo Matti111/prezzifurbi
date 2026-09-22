@@ -23,6 +23,9 @@ export interface SpecItem {
 
 export interface Product {
   id: string;
+  /** Identità stabile dell'offerta (es. itemId eBay), indipendente dal prezzo:
+   * usata dalla pipeline per riconoscere lo stesso annuncio tra un run e l'altro. */
+  listingId?: string;
   title: string;
   brand: string;
   model: string;

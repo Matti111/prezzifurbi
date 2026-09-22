@@ -529,6 +529,86 @@ def wrap_affiliate_link(store: str, raw_url: str) -> str:
 
 _ebay_token_cache: Dict[str, Any] = {"access_token": None, "expires_at": 0}
 
+# Budget di chiamate API eBay per questo singolo run (il workflow gira una volta a
+# notte, quindi "budget giornaliero" = budget di questo processo). Il limite reale
+# dell'account eBay Browse API è 5000 chiamate/giorno: teniamo un margine ampio
+# sotto quella soglia per non rischiare mai di saturarla, anche in caso di bug o
+# di una notte con moltissimi annunci nuovi da valutare in dettaglio.
+DAILY_API_BUDGET = 4000
+_ebay_api_calls_used = 0
+
+
+def _ebay_budget_allows(cost: int = 1) -> bool:
+    """Controlla (e consuma) budget prima di ogni chiamata reale all'API eBay.
+    Ritorna False senza consumare nulla se andremmo oltre DAILY_API_BUDGET."""
+    global _ebay_api_calls_used
+    if _ebay_api_calls_used + cost > DAILY_API_BUDGET:
+        return False
+    _ebay_api_calls_used += cost
+    return True
+
+
+def _numeric_listing_id(raw: str) -> str:
+    """Normalizza un itemId eBay (es. 'v1|227306323358|0') o un itemWebUrl
+    (es. '.../itm/227306323358?...') nello stesso identificativo numerico stabile,
+    usato come identità dell'offerta indipendentemente dal prezzo (mai titolo+prezzo:
+    il prezzo cambia, l'annuncio no)."""
+    if not raw:
+        return ""
+    m = re.search(r'(\d{9,})', raw)
+    return m.group(1) if m else raw
+
+
+# Liste di caratteristiche usate per generare le query "spec" mirate (vedi
+# build_ebay_query_pool): combinazioni scelte a mano (GPU da sola, CPU+RAM), non il
+# prodotto cartesiano completo GPU×RAM×CPU che esploderebbe a decine di query inutili.
+EBAY_GPUS = ["RTX 3050", "RTX 4050", "RTX 4060", "RTX 4070", "RTX 5050", "RTX 5060"]
+EBAY_CPUS = ["i5", "i7", "i9", "Ryzen 5", "Ryzen 7", "Ryzen 9"]
+EBAY_RAM_SIZES = ["16GB", "32GB"]
+
+
+def build_ebay_query_pool() -> List[Dict[str, Any]]:
+    """Costruisce il pool di query categorizzate (discovery/spec/ricondizionato),
+    ognuna con la propria fascia di prezzo massima. Sostituisce la vecchia lista
+    piatta di 2-5 frasi fisse: qui le query sono decine, organizzate per scopo,
+    così il catalogo non dipende solo dalle combinazioni scelte a mano in partenza."""
+    pool: List[Dict[str, Any]] = []
+
+    # Discovery: query generiche, trovano prodotti che le query "spec" sotto non
+    # intercetterebbero mai (non tutti i venditori scrivono GPU/CPU nel titolo)
+    for q in ["notebook", "laptop", "computer portatile", "notebook pc"]:
+        pool.append({"query": q, "category": "discovery", "max_price": 2000})
+
+    # Spec: GPU da sola (copre tutta la gamma, comprese le fasce alte poco frequenti)
+    for gpu in EBAY_GPUS:
+        pool.append({"query": f"notebook {gpu}", "category": "spec", "max_price": 2500})
+    pool.append({"query": "notebook Quadro", "category": "spec", "max_price": 2000})
+
+    # Spec: CPU + RAM (targeted, non tutte le combinazioni con GPU per evitare
+    # l'esplosione cartesiana menzionata nella specifica)
+    for cpu in EBAY_CPUS:
+        for ram in EBAY_RAM_SIZES:
+            pool.append({"query": f"notebook {cpu} {ram}", "category": "spec", "max_price": 1800})
+
+    # Ricondizionato/usato: categoria separata, il motore del valore la tratta
+    # diversamente (confronto con l'equivalente nuovo, non con lo storico dell'usato)
+    for q in [
+        "notebook ricondizionato", "notebook refurbished", "notebook usato",
+        "notebook ricondizionato i7", "notebook ricondizionato 16GB",
+        "notebook ricondizionato 32GB", "notebook ricondizionato 64GB",
+        "notebook ricondizionato RTX", "notebook ricondizionato Ryzen 7",
+    ]:
+        max_p = 2200 if "64GB" in q else 1600
+        pool.append({"query": q, "category": "refurbished", "max_price": max_p})
+
+    return pool
+
+
+# Rotazione degli ordinamenti supportati dalla Browse API (vedi developer.ebay.com):
+# "" = Best Match (default), gli altri sono valori letterali del parametro `sort`.
+# Evita di vedere sempre gli stessi risultati in prima pagina per ogni query.
+EBAY_SORT_ROTATION = ["", "newlyListed", "price", "endingSoonest"]
+
 
 def get_ebay_access_token() -> Optional[str]:
     """Ottiene (e mette in cache) un Application access token OAuth2 per la Browse API."""
@@ -568,8 +648,18 @@ def get_ebay_access_token() -> Optional[str]:
         return None
 
 
-def ebay_browse_search(keywords: str, min_price: int = 150, max_price: int = 2500, limit: int = 10) -> List[Dict[str, Any]]:
-    """Cerca annunci reali su eBay.it (solo Compralo Subito) tramite la Browse API ufficiale."""
+def ebay_browse_search(
+    keywords: str, min_price: int = 150, max_price: int = 2500,
+    limit: int = 200, offset: int = 0, sort: str = "",
+) -> List[Dict[str, Any]]:
+    """Cerca annunci reali su eBay.it (solo Compralo Subito) tramite la Browse API ufficiale.
+    limit=200 (il massimo per chiamata dell'API) per campionare il mercato in poche
+    chiamate; offset/sort permettono paginazione e rotazione degli ordinamenti da
+    parte del chiamante (vedi build_ebay_query_pool / EBAY_SORT_ROTATION)."""
+    if not _ebay_budget_allows():
+        print(" 🛑 [eBay Browse API] Budget chiamate esaurito per questo run, ricerca saltata")
+        return []
+
     token = get_ebay_access_token()
     if not token:
         return []
@@ -577,17 +667,21 @@ def ebay_browse_search(keywords: str, min_price: int = 150, max_price: int = 250
     filters = ["buyingOptions:{FIXED_PRICE}", f"price:[{min_price}..{max_price}]", "priceCurrency:EUR"]
 
     try:
+        params = {
+            "q": keywords,
+            "filter": ",".join(filters),
+            "limit": min(limit, 200),
+            "offset": offset,
+        }
+        if sort:
+            params["sort"] = sort
         resp = requests.get(
             "https://api.ebay.com/buy/browse/v1/item_summary/search",
             headers={
                 "Authorization": f"Bearer {token}",
                 "X-EBAY-C-MARKETPLACE-ID": "EBAY_IT",
             },
-            params={
-                "q": keywords,
-                "filter": ",".join(filters),
-                "limit": min(limit, 50),
-            },
+            params=params,
             timeout=20,
         )
         if resp.status_code != 200:
@@ -608,8 +702,12 @@ def get_ebay_item_details(item_id: str) -> str:
     testo analizzato dai parser (extract_screen, extract_cpu, ecc.) così le sigle tipo
     '13,3 pollici' vengono trovate anche se assenti dal titolo.
     """
+    if not item_id:
+        return ""
+    if not _ebay_budget_allows():
+        return ""
     token = get_ebay_access_token()
-    if not token or not item_id:
+    if not token:
         return ""
     try:
         import urllib.parse
@@ -633,18 +731,49 @@ def get_ebay_item_details(item_id: str) -> str:
         return ""
 
 
-def discover_ebay_deals(query: str = "notebook gaming rtx 4060", max_deals: int = 3, max_price: int = 1200) -> List[Dict[str, Any]]:
-    """Trova nuove occasioni reali su eBay.it tramite la Browse API, pronte per evaluate_laptop()."""
-    print(f"\n🔍 [eBay Browse API] Ricerca '{query}'...")
-    items = ebay_browse_search(query, min_price=150, max_price=max_price)
+def _map_ebay_condition(condition_text: str) -> str:
+    """Il ricondizionato ha un confronto di valore diverso dall'usato generico
+    (vedi valuation.ts): distinguerlo dalla condizione eBay invece di appiattire
+    tutto ciò che non è 'new' su 'Usato'."""
+    if "refurb" in condition_text or "rigenerat" in condition_text:
+        return "Ricondizionato"
+    if "new" in condition_text:
+        return "Nuovo"
+    return "Usato"
 
-    bad_words = ['cover', 'custodia', 'borsa', 'caricatore', 'alimentatore', 'cavo', 'adesivo',
-                 'batteria per', 'schermo per', 'solo per pezzi', 'guasto', 'rotto', 'per ricambi']
+
+BAD_TITLE_WORDS = ['cover', 'custodia', 'borsa', 'caricatore', 'alimentatore', 'cavo', 'adesivo',
+                    'batteria per', 'schermo per', 'solo per pezzi', 'guasto', 'rotto', 'per ricambi']
+
+
+def discover_ebay_deals(
+    query_spec: Dict[str, Any], known_listing_ids: set, pages: int = 2,
+) -> List[Dict[str, Any]]:
+    """Campiona il mercato eBay.it per una query (non 'trova le 2 migliori offerte':
+    quella selezione spetta al motore del valore a valle, vedi CLAUDE.md). Pagina i
+    risultati, ruota l'ordinamento per giorno così le stesse query non mostrano
+    sempre gli stessi primi risultati, e salta il fetch dettagli (che costa una
+    chiamata API) per gli annunci già noti in catalogo — a quelli serve solo
+    aggiornare il prezzo, non rivalutare le specifiche."""
+    query, max_price = query_spec["query"], query_spec.get("max_price", 1800)
+    sort_index = (hash(query) + datetime.now(timezone.utc).toordinal()) % len(EBAY_SORT_ROTATION)
+    sort = EBAY_SORT_ROTATION[sort_index]
+    print(f"\n🔍 [eBay Browse API] '{query}' (sort={sort or 'best match'}, {pages} pagine, max {max_price}€)...")
+
+    all_items: List[Dict[str, Any]] = []
+    for page in range(pages):
+        batch = ebay_browse_search(query, min_price=150, max_price=max_price, limit=200, offset=page * 200, sort=sort)
+        if not batch:
+            break  # niente altre pagine o budget esaurito: ebay_browse_search ha già loggato il motivo
+        all_items.extend(batch)
+        if len(batch) < 200:
+            break  # ultima pagina reale
 
     deals = []
-    for it in items:
+    seen_this_query = set()
+    for it in all_items:
         title = it.get("title", "")
-        if not title or any(bad in title.lower() for bad in bad_words):
+        if not title or any(bad in title.lower() for bad in BAD_TITLE_WORDS):
             continue
 
         price_info = it.get("price") or {}
@@ -659,13 +788,23 @@ def discover_ebay_deals(query: str = "notebook gaming rtx 4060", max_deals: int 
         if not item_web_url:
             continue
 
+        listing_id = _numeric_listing_id(it.get("itemId", "") or item_web_url)
+        if not listing_id or listing_id in seen_this_query:
+            continue  # stesso annuncio ricomparso in più pagine/ordinamenti di questa query
+        seen_this_query.add(listing_id)
+
         condition_text = (it.get("condition") or "").lower()
-        mapped_condition = "Nuovo" if "new" in condition_text else "Usato"
+        mapped_condition = _map_ebay_condition(condition_text)
 
         brand = title.split()[0] if title.split() else "Notebook"
         model = " ".join(title.split()[1:4])
         image_url = (it.get("image") or {}).get("imageUrl", "")
-        item_details = get_ebay_item_details(it.get("itemId", ""))
+
+        # Annuncio già in catalogo: serve solo il prezzo aggiornato (sync_catalog lo
+        # riconosce da listingId), non ha senso spendere una chiamata API per
+        # rivalutare specifiche che non cambiano da un annuncio esistente.
+        already_known = listing_id in known_listing_ids
+        item_details = "" if already_known else get_ebay_item_details(it.get("itemId", ""))
 
         # Mai inventare un prezzo di riferimento: usa il "prezzo originale" reale
         # di eBay solo se il venditore lo ha impostato (marketingPrice), altrimenti
@@ -686,16 +825,15 @@ def discover_ebay_deals(query: str = "notebook gaming rtx 4060", max_deals: int 
             "condition": mapped_condition,
             "store": "eBay.it",
             "raw_url": item_web_url,
+            "listingId": listing_id,
             "imageUrl": image_url or "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=800&q=80",
             "specs_text": f"{title} {item_details}".strip(),
         }
         if real_original:
             deal["originalPrice"] = real_original
         deals.append(deal)
-        if len(deals) >= max_deals:
-            break
 
-    print(f" ✅ Trovate {len(deals)} offerte valide su eBay!")
+    print(f" ✅ Campionati {len(all_items)} annunci, {len(deals)} validi ({sum(1 for d in deals if d['listingId'] in known_listing_ids)} già noti, solo aggiornamento prezzo)")
     return deals
 
 
@@ -941,21 +1079,27 @@ def regenerate_indicators(catalog: List[Dict[str, Any]]) -> int:
 
 
 def sync_catalog(new_items: List[Dict[str, Any]]):
-    """Integra le nuove offerte nel catalogo del sito"""
+    """Integra le nuove offerte nel catalogo del sito. L'identità di un'offerta è
+    `listingId` (stabile, non cambia col prezzo), mai titolo+prezzo: lo stesso
+    annuncio visto una seconda volta a un prezzo diverso aggiorna la entry
+    esistente (con storico prezzi) invece di crearne una nuova."""
     path = CONFIG["products_file"]
-    
+
     if os.path.exists(path):
         with open(path, "r", encoding="utf-8") as f:
             catalog = json.load(f)
     else:
         catalog = []
-        
+
     # Sanifica eventuali vecchi link prima di aggiungere nuove offerte
     sanitize_catalog(catalog)
-    
+
     existing_ids = {p["id"] for p in catalog}
+    listing_index: Dict[str, Dict[str, Any]] = {p["listingId"]: p for p in catalog if p.get("listingId")}
     added_count = 0
+    updated_count = 0
     replaced_count = 0
+    today = _today_iso()
 
     def spec_fingerprint(specs: Dict[str, Any], condition: str):
         # Stesse 5 specifiche + condizione = quasi certamente lo stesso identico
@@ -970,11 +1114,19 @@ def sync_catalog(new_items: List[Dict[str, Any]]):
     }
 
     for item in new_items:
-        # Genera ID univoco
-        clean_name = re.sub(r'[^a-zA-Z0-9]+', '-', item["title"].lower()).strip('-')
-        pid = f"{clean_name[:25]}-{item['price']}"
+        listing_id = item.get("listingId", "")
 
-        if pid in existing_ids:
+        # Stessa offerta già in catalogo: aggiorna prezzo/storico, non ricrea né
+        # rivaluta le specifiche (che per un annuncio esistente non cambiano)
+        existing = listing_index.get(listing_id) if listing_id else None
+        if existing:
+            if existing["price"] != item["price"]:
+                existing.setdefault("priceHistory", []).append({"price": item["price"], "date": today})
+                print(f" 🔄 Prezzo aggiornato: '{existing['title'][:45]}' {existing['price']}€ -> {item['price']}€")
+                existing["price"] = item["price"]
+                updated_count += 1
+            existing["lastUpdated"] = today
+            existing["affiliateUrl"] = wrap_affiliate_link(item["store"], item["raw_url"])
             continue
 
         # Valuta con il motore della Volpe
@@ -988,20 +1140,29 @@ def sync_catalog(new_items: List[Dict[str, Any]]):
             if item["price"] < twin["price"]:
                 catalog.remove(twin)
                 existing_ids.discard(twin["id"])
+                if twin.get("listingId"):
+                    listing_index.pop(twin["listingId"], None)
                 print(f" 🔁 Sostituita offerta duplicata (stesse specifiche): '{twin['title']}' ({twin['price']}€) -> '{item['title']}' ({item['price']}€)")
                 replaced_count += 1
             else:
                 print(f" ⏭️  Scartata offerta duplicata (stesse specifiche, prezzo più alto): '{item['title']}' ({item['price']}€), già presente a {twin['price']}€")
                 continue
 
+        # ID leggibile ma stabile: basato sul listingId (mai sul prezzo, che cambia)
+        clean_name = re.sub(r'[^a-zA-Z0-9]+', '-', item["title"].lower()).strip('-')
+        id_suffix = listing_id[-8:] if listing_id else str(item["price"])
+        pid = f"{clean_name[:30]}-{id_suffix}"
+        if pid in existing_ids:
+            pid = f"{pid}-{len(catalog)}"  # collisione rara di slug: rende comunque unico
+
         # Mai inventare un prezzo di riferimento: originalPrice solo se la fonte
         # ne fornisce davvero uno (es. "più basso ultimi 30gg" mostrato dal
         # negozio stesso), altrimenti il campo resta assente.
         real_original_price = item.get("originalPrice")
-        today = _today_iso()
 
         product_entry = {
             "id": pid,
+            "listingId": listing_id,
             "title": item["title"],
             "brand": item.get("brand", "Notebook"),
             "model": item.get("model", ""),
@@ -1028,9 +1189,11 @@ def sync_catalog(new_items: List[Dict[str, Any]]):
         }
         if real_original_price:
             product_entry["originalPrice"] = real_original_price
-        
+
         catalog.append(product_entry)
         existing_ids.add(pid)
+        if listing_id:
+            listing_index[listing_id] = product_entry
         fingerprint_index[fp] = product_entry
         added_count += 1
         print(f" 🦊 Aggiunta offerta: {product_entry['title']} ({product_entry['price']} €) -> Timbro: {product_entry['stamp']}")
@@ -1039,7 +1202,8 @@ def sync_catalog(new_items: List[Dict[str, Any]]):
         json.dump(catalog, f, ensure_ascii=False, indent=2)
 
     replaced_note = f", {replaced_count} sostituite con un prezzo migliore" if replaced_count else ""
-    print(f"\n🎉 Catalogo sincronizzato con successo! ({len(catalog)} offerte totali presenti sul sito, +{added_count} nuove aggiunte{replaced_note})")
+    updated_note = f", {updated_count} prezzi aggiornati" if updated_count else ""
+    print(f"\n🎉 Catalogo sincronizzato con successo! ({len(catalog)} offerte totali presenti sul sito, +{added_count} nuove aggiunte{replaced_note}{updated_note})")
 
 
 # --- 6. SCREENSHOT & LINK VERIFICATION ENGINE ---
@@ -1157,6 +1321,7 @@ async def main():
     print("=" * 65)
 
     path = CONFIG["products_file"]
+    catalog: List[Dict[str, Any]] = []
     if os.path.exists(path):
         with open(path, "r", encoding="utf-8") as f:
             catalog = json.load(f)
@@ -1176,20 +1341,24 @@ async def main():
 
         print(f"\n✅ {indicators_updated} frecce CPU/GPU ricalcolate, {updated} prodotti Amazon aggiornati con prezzo live dalla Creators API.")
 
-    # 4. Scopri nuove occasioni reali su eBay (Browse API) e aggiungile al catalogo
-    #    (poche query mirate per far crescere il catalogo con calma, non a raffica).
-    #    max_price alzato per le query 32/64GB: un ricondizionato con tanta RAM è
-    #    quasi sempre una workstation e raramente sta sotto i 1200€ di default.
-    ebay_queries = [
-        ("notebook gaming rtx", 1200),
-        ("notebook Quadro", 1200),
-        ("notebook ricondizionato 16gb", 1200),
-        ("notebook ricondizionato 32gb", 1600),
-        ("notebook ricondizionato 64gb", 2200),
-    ]
+    # 4. Campiona il mercato eBay (Browse API) su un pool ampio di query categorizzate
+    #    (discovery/spec/ricondizionato, vedi build_ebay_query_pool) invece delle
+    #    2-5 frasi fisse di prima: qui decidiamo COSA è interessante dopo aver
+    #    raccolto i dati, non chiediamo all'API di scegliere per noi in anticipo.
+    #    known_listing_ids evita di sprecare budget a rivalutare annunci già noti.
+    known_listing_ids = {p["listingId"] for p in catalog if p.get("listingId")}
+    query_pool = build_ebay_query_pool()
+    print(f"\n🌐 [eBay Browse API] Pool di {len(query_pool)} query, budget {DAILY_API_BUDGET} chiamate, {len(known_listing_ids)} annunci già noti in catalogo")
+
     new_ebay_items = []
-    for q, max_price in ebay_queries:
-        new_ebay_items.extend(discover_ebay_deals(q, max_deals=2, max_price=max_price))
+    for query_spec in query_pool:
+        if _ebay_api_calls_used >= DAILY_API_BUDGET:
+            print(f" 🛑 Budget chiamate eBay esaurito ({_ebay_api_calls_used}/{DAILY_API_BUDGET}): query rimanenti saltate")
+            break
+        new_ebay_items.extend(discover_ebay_deals(query_spec, known_listing_ids, pages=2))
+
+    print(f"\n📊 [eBay Browse API] {_ebay_api_calls_used}/{DAILY_API_BUDGET} chiamate usate in questo run")
+
     if new_ebay_items:
         sync_catalog(new_ebay_items)
 
