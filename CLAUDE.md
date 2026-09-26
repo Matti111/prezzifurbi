@@ -68,6 +68,19 @@ comprare. Repo GitHub: https://github.com/Matti111/prezzifurbi (privato).
     mette un tetto alla crescita per notte (non limita gli aggiornamenti di
     prezzo su annunci già noti, solo i prodotti genuinamente nuovi) finché la
     qualità non è verificata su più notti — alzare o rimuovere quando lo è.
+    **Filtro ricambi/accessori** (trovato 2026-09-26 dall'utente su un prodotto
+    live — un alimentatore venduto come se fosse un laptop RTX4060): il tetto
+    di prezzo minimo (150€, uguale per quasi tutte le query) intercetta anche
+    schede madri sciolte, RAM SODIMM e alimentatori compatibili — i parser
+    leggono CPU/GPU/RAM dal titolo del ricambio e lo fanno passare per un
+    notebook intero. Su 289 prodotti, **44 (15%) erano in realtà ricambi**,
+    rimossi. `_is_bad_ebay_title()` ora esclude titoli che iniziano con "Per "
+    (segnale fortissimo: un venditore non apre mai così il titolo se sta
+    vendendo davvero il laptop) più `scheda madre`/`motherboard`/`ricambio`/
+    `sodimm`/`adattatore originale`/`power supply` in `BAD_TITLE_WORDS` — non
+    filtra il generico "adattatore"/"adapter" da solo per non escludere
+    laptop veri venduti con caricabatterie incluso (falso positivo verificato:
+    "DELL Latitude 5480... + adattatore AC")
     **Rate limit — RISOLTO, confermato su 4 notti** (scoperto 2026-09-22, risolto
     e verificato 23→26/09/2026): un run lanciato subito dopo un altro molto
     attivo aveva ricevuto 429 "Too many requests" su OGNI chiamata, fin dalla

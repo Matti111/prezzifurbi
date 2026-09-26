@@ -815,7 +815,23 @@ def _map_ebay_condition(condition_text: str) -> str:
 
 
 BAD_TITLE_WORDS = ['cover', 'custodia', 'borsa', 'caricatore', 'alimentatore', 'cavo', 'adesivo',
-                    'batteria per', 'schermo per', 'solo per pezzi', 'guasto', 'rotto', 'per ricambi']
+                    'batteria per', 'schermo per', 'solo per pezzi', 'guasto', 'rotto', 'per ricambi',
+                    # Ricambi/componenti sciolti (scheda madre, RAM, alimentatori compatibili):
+                    # i parser leggono CPU/GPU/RAM dal titolo del ricambio e li fanno passare
+                    # per un laptop completo (trovato 2026-09-26: 44 su 289 prodotti in catalogo
+                    # erano in realtà schede madri/RAM/alimentatori, non notebook interi)
+                    'scheda madre', 'motherboard', 'motherbroad', 'ricambio', 'sodimm',
+                    'adattatore originale', 'power supply']
+
+def _is_bad_ebay_title(title: str) -> bool:
+    """True se il titolo è quasi certamente un ricambio/accessorio (scheda madre, RAM,
+    alimentatore...) e non un notebook intero. 'Per <marca/modello>' all'inizio del
+    titolo è il segnale più forte: un venditore che vende davvero il laptop non apre
+    mai il titolo dicendo 'compatibile con'."""
+    t = title.lower()
+    if t.startswith('per '):
+        return True
+    return any(bad in t for bad in BAD_TITLE_WORDS)
 
 
 def discover_ebay_deals(
@@ -845,7 +861,7 @@ def discover_ebay_deals(
     seen_this_query = set()
     for it in all_items:
         title = it.get("title", "")
-        if not title or any(bad in title.lower() for bad in BAD_TITLE_WORDS):
+        if not title or _is_bad_ebay_title(title):
             continue
 
         price_info = it.get("price") or {}
