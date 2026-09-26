@@ -81,6 +81,24 @@ comprare. Repo GitHub: https://github.com/Matti111/prezzifurbi (privato).
     filtra il generico "adattatore"/"adapter" da solo per non escludere
     laptop veri venduti con caricabatterie incluso (falso positivo verificato:
     "DELL Latitude 5480... + adattatore AC")
+    **Giro 2 dello stesso filtro** (stesso giorno, segnalato di nuovo
+    dall'utente su prodotti live — un SSD sciolto e un dock eGPU mostrati come
+    notebook): il primo giro non copriva zaini/borse per notebook ("zaino",
+    "tracolla", "backpack"), dock eGPU ("dock", "egpu"), SSD/RAM/batterie
+    sciolte quando il NOME del componente è la prima parola del titolo
+    (`BAD_TITLE_PREFIXES`, nuovo: un venditore che vende il laptop apre il
+    titolo col marchio/modello, non col nome del componente). Trovato anche un
+    problema distinto e più subdolo: **annunci "multi-configurazione"**
+    (titolo tipo "8/16 GB 256/512/1TB/2TB" con più opzioni RAM/storage
+    elencate) dove il prezzo mostrato dalla Browse API è quello della
+    configurazione più economica, ma il parser leggeva sempre il valore più
+    alto della lista — la card mostrava specifiche che non corrispondevano
+    al prezzo (es. "189€" con 16GB/2TB, quando 189€ compra solo la base).
+    `_MULTI_CONFIG_PATTERN` richiede **almeno 3 numeri incatenati da "/"** per
+    escludere l'annuncio, apposta per non confondere una config fissa
+    abbreviata (es. "16/256GB" = 16GB RAM + 256GB SSD, un solo slash, prezzo
+    valido) con vere alternative multiple. Verificato senza falsi positivi su
+    tutto il catalogo (245→226 prodotti, -19: 8 accessori + 11 multi-config).
     **Rate limit — RISOLTO, confermato su 4 notti** (scoperto 2026-09-22, risolto
     e verificato 23→26/09/2026): un run lanciato subito dopo un altro molto
     attivo aveva ricevuto 429 "Too many requests" su OGNI chiamata, fin dalla

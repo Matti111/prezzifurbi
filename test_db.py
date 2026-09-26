@@ -821,15 +821,42 @@ BAD_TITLE_WORDS = ['cover', 'custodia', 'borsa', 'caricatore', 'alimentatore', '
                     # per un laptop completo (trovato 2026-09-26: 44 su 289 prodotti in catalogo
                     # erano in realtà schede madri/RAM/alimentatori, non notebook interi)
                     'scheda madre', 'motherboard', 'motherbroad', 'ricambio', 'sodimm',
-                    'adattatore originale', 'power supply']
+                    'adattatore originale', 'power supply',
+                    # Altre categorie di accessori (segnalate dall'utente lo stesso giorno su
+                    # zaini/dock eGPU/SSD sciolti che il primo giro di filtri non copriva):
+                    # zaini e borse per notebook, dock eGPU, dischi sciolti
+                    'zaino', 'tracolla', 'sleeve', 'dock ', 'egpu', 'rucksack', 'backpack',
+                    'cinghia']
+
+# Prefissi che segnalano un accessorio/componente come SOGGETTO dell'annuncio (non il
+# laptop): un venditore che vende davvero il portatile apre il titolo col marchio/
+# modello del laptop, non col nome del componente sciolto.
+BAD_TITLE_PREFIXES = ['ssd ', 'ram ', 'hdd ', 'disco rigido', 'disco ssd', 'disco a stato',
+                       'dock ', 'egpu', 'scheda madre', 'scheda grafica ', 'alimentatore',
+                       'caricatore', 'caricabatterie', 'adattatore', 'batteria ', 'cover ',
+                       'custodia', 'borsa', 'zaino']
+
+# Annunci "multi-configurazione" (es. "8/16 GB", "256/512/1TB/2TB"): il prezzo mostrato
+# dalla Browse API è quello della configurazione più economica, ma le specifiche estratte
+# dal titolo prendono il valore più alto della lista - la card mostrerebbe specifiche che
+# NON corrispondono al prezzo (trovato 2026-09-26 dall'utente sul sito live, es. "189€"
+# con RAM/SSD mostrati che in realtà costano di più). Richiede almeno 3 numeri incatenati
+# da "/" per distinguerlo da un'abbreviazione RAM/storage legittima di una config fissa
+# (es. "16/256GB" = 16GB RAM + 256GB SSD, un solo slash, NON specifiche alternative).
+_MULTI_CONFIG_PATTERN = re.compile(r'\b\d+(?:\s*/\s*\d+){2,}')
+
 
 def _is_bad_ebay_title(title: str) -> bool:
     """True se il titolo è quasi certamente un ricambio/accessorio (scheda madre, RAM,
-    alimentatore...) e non un notebook intero. 'Per <marca/modello>' all'inizio del
-    titolo è il segnale più forte: un venditore che vende davvero il laptop non apre
-    mai il titolo dicendo 'compatibile con'."""
-    t = title.lower()
-    if t.startswith('per '):
+    alimentatore, zaino, dock eGPU...) e non un notebook intero, oppure un annuncio
+    multi-configurazione il cui prezzo non è attribuibile con certezza alle specifiche
+    lette dal titolo. 'Per <marca/modello>' all'inizio del titolo è il segnale più forte:
+    un venditore che vende davvero il laptop non apre mai il titolo dicendo
+    'compatibile con'."""
+    t = title.lower().strip()
+    if t.startswith('per ') or any(t.startswith(p) for p in BAD_TITLE_PREFIXES):
+        return True
+    if _MULTI_CONFIG_PATTERN.search(title):
         return True
     return any(bad in t for bad in BAD_TITLE_WORDS)
 
