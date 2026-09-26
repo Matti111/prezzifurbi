@@ -68,26 +68,22 @@ comprare. Repo GitHub: https://github.com/Matti111/prezzifurbi (privato).
     mette un tetto alla crescita per notte (non limita gli aggiornamenti di
     prezzo su annunci già noti, solo i prodotti genuinamente nuovi) finché la
     qualità non è verificata su più notti — alzare o rimuovere quando lo è.
-    **Rate limit a breve termine** (2026-09-22): un run lanciato subito dopo un
-    altro molto attivo ha ricevuto 429 "Too many requests" su OGNI chiamata,
-    fin dalla prima — un limite di frequenza diverso e più stringente del tetto
-    giornaliero (5000/giorno), probabilmente query/secondo o una finestra di
-    cooldown, mai documentato esplicitamente da eBay per questo tier. Aggiunto
-    `_ebay_rate_limit_pace()` (min. 1s tra chiamate reali) e un circuit breaker
-    (`_ebay_throttled`, scatta dopo 3 risposte 429 consecutive e salta il resto
-    del run) — **confermato che funzionano correttamente** (run successivo
-    fermato in 3 chiamate invece di martellare tutte le 32 query, run finito in
-    poco più di un minuto), ma **il 429 è persistito anche ~7 minuti dopo**
-    (pausa deliberata + overhead del job), quindi non è un burst a brevissimo
-    termine risolvibile solo rallentando: molto probabilmente il limite
-    giornaliero reale per questo account è **molto più basso dei 5000/giorno**
-    trovati nella documentazione generica eBay, già esaurito dai test di oggi
-    (soprattutto il run da 55 minuti che ha trovato ~270 prodotti, quindi
-    centinaia di chiamate reali). **Non ha senso ritentare oggi** — il prossimo
-    tentativo valido è il run schedulato di stanotte (6:00 UTC) o comunque dopo
-    che sia passato un giorno intero; se il 429 persiste anche allora, il vero
-    limite giornaliero dell'account va richiesto a eBay (Application Growth
-    Check, developer.ebay.com) invece di continuare a indovinare
+    **Rate limit — RISOLTO, confermato su 4 notti** (scoperto 2026-09-22, risolto
+    e verificato 23→26/09/2026): un run lanciato subito dopo un altro molto
+    attivo aveva ricevuto 429 "Too many requests" su OGNI chiamata, fin dalla
+    prima — un limite di frequenza a breve termine, mai documentato
+    esplicitamente da eBay per questo tier, diverso dal tetto giornaliero
+    (5000/giorno). `_ebay_rate_limit_pace()` (pausa minima tra chiamate reali)
+    + un circuit breaker (`_ebay_throttled`, scatta dopo 3 risposte 429
+    consecutive e salta il resto del run) come rete di sicurezza. **A 1
+    chiamata/secondo: 4 notti consecutive (23-26/09), ~4000/4000 chiamate
+    usate ogni volta, zero 429.** Il pool trova ogni notte ben più dei 60
+    prodotti che `MAX_NEW_PRODUCTS_PER_RUN` fa passare (catalogo cresciuto
+    20→234 in 4 notti, +60/notte al tetto). Costo reale: a 1 chiamata/sec con
+    budget pieno la sola fase di ricerca richiede **~67 minuti** (run totali
+    ~70-75 min). Il 2026-09-26 `_EBAY_MIN_CALL_INTERVAL` è stato abbassato a
+    0.35s (~2,9 chiamate/sec) per accorciare i run, protetto dallo stesso
+    circuit breaker — **da verificare che non riporti i 429**, vedi TODO #8
   - Integrazioni: Amazon Creators API, eBay Browse API. **Refurbed.it rimosso
     interamente** (2026-09-21): mai stato trovato un programma di affiliazione
     Refurbed attivo su Awin per questo account, quindi niente tracciamento/
@@ -108,6 +104,19 @@ comprare. Repo GitHub: https://github.com/Matti111/prezzifurbi (privato).
   "Timeout (control socket)" perché il DNS del dominio non punta più a Keliweb da
   tempo — è stato rimosso dal workflow. Se in futuro serve riattivare Keliweb,
   bisogna prima ripuntare i nameserver del dominio.
+
+  **🔴 PROBLEMA APERTO (scoperto 2026-09-26): il deploy automatico si è fermato.**
+  L'ultimo deploy Vercel realmente pubblicato risale al 23/09 (`Last-Modified`
+  dell'HTML servito), il sito mostra ancora 20 prodotti mentre il catalogo reale
+  su GitHub è a 234 (commit automatici del 24, 25 e 26/09 tutti andati a buon
+  fine, dati validi — non è un problema di contenuto). Nessun webhook classico
+  visibile su `repos/.../hooks` (normale se Vercel è collegato come GitHub App,
+  non diagnostico di per sé). **Serve controllare la dashboard Vercel del
+  progetto** (tab Deployments): build fallite dopo il 23? Un "Ignored Build
+  Step" che salta i commit del bot (`prezzifurbi-bot`, messaggio "chore:
+  aggiornamento automatico...")? Un limite del piano (build minutes/mese)
+  raggiunto? Nessuna di queste è verificabile da qui senza accesso alla
+  dashboard o alle API Vercel.
 
 ## Stato attuale dei programmi di affiliazione
 
@@ -217,25 +226,19 @@ stessa logica già applicata a Refurbed prima della rimozione. La card mostra
    percentile volpe contestuale (15%), soglie semaforo freschezza (10/30 giorni),
    minimo comparabili per prezzo tipico (3) — aggiustarli se in pratica la volpe
    compare troppo/poco spesso o il semaforo sembra troppo aggressivo/permissivo
-8. **Verificare il consumo reale di budget eBay sul primo run notturno vero**
-   (2026-09-22 ha solo verificato la logica con `py_compile`/test locali, senza
-   credenziali eBay in locale): controllare nel log la riga finale
-   "`X/4000 chiamate usate`" e che `get_ebay_item_details()` non esploda il conteggio
-   la prima notte (tantissimi annunci "nuovi" perché il catalogo parte da 19 prodotti).
-   **Aggiornamento 2026-09-22**: il primo run reale con la Fase 1 è durato 55 minuti
-   ed è stato cancellato prima del commit (nessun dato salvato) — non per il budget
-   eBay ma per `verify_catalog_links()`, che controllava un prodotto alla volta via
-   Playwright e con un catalogo cresciuto diventava il collo di bottiglia. Parallelizzato
-   (`concurrency=8`, `asyncio.gather`). Nei run successivi (stesso giorno) eBay ha
-   risposto 429 "Too many requests" su ogni chiamata, verosimilmente perché il
-   limite giornaliero reale dell'account è molto più basso dei 5000/giorno della
-   documentazione generica ed è già stato esaurito dai test di oggi. **Prossimo
-   passo**: aspettare il run schedulato di domani (6:00 UTC) o un giorno di
-   distanza dall'ultimo tentativo, controllare che parta senza 429 e che
-   `X/4000 chiamate usate` nel log rifletta finalmente un run reale completo. Se
-   il 429 persiste anche a distanza di un giorno, il limite reale per questo
-   account va chiesto direttamente a eBay (Application Growth Check su
-   developer.ebay.com), `DAILY_API_BUDGET` va abbassato di conseguenza
+8. **RISOLTO 2026-09-26**: il consumo di budget eBay e i 429 sono stati
+   verificati su 4 notti reali consecutive (23-26/09), tutte a budget pieno
+   (~4000/4000 chiamate) e zero 429 con pacing a 1 chiamata/sec. Il
+   2026-09-26 il pacing è stato abbassato a 0.35s (~2,9 chiamate/sec) per
+   accorciare i run da ~70 minuti — **verificare la prossima notte (27/09)
+   che non abbia fatto ricomparire i 429**; se sì, tornare a 1.0s
+   (`_EBAY_MIN_CALL_INTERVAL` in `test_db.py`)
+8b. **🔴 URGENTE (2026-09-26): il deploy automatico Vercel si è fermato al
+   23/09** — vedi sezione Hosting sopra. Il catalogo cresce regolarmente su
+   GitHub (234 prodotti) ma il sito pubblico ne mostra ancora 20. Richiede
+   accesso alla dashboard Vercel per diagnosticare (build fallite? Ignored
+   Build Step che salta i commit del bot? limite del piano?) — non
+   verificabile senza quell'accesso
 9. Fase 2/3/4 della discovery (statistiche/Query Yield per query, rotazione basata
    sul rendimento invece che deterministica per data, budget diviso dinamicamente
    tra discovery/high-value/coverage/exploration, generazione di query dai gap di

@@ -575,7 +575,13 @@ def _ebay_budget_allows(cost: int = 1) -> bool:
 # termine (query/secondo) - scoperto il 2026-09-22 quando un run lanciato subito
 # dopo un altro molto attivo ha ricevuto 429 "Too many requests" su OGNI chiamata,
 # fin dalla prima, sparate tutte a distanza di millisecondi l'una dall'altra.
-_EBAY_MIN_CALL_INTERVAL = 1.0  # secondi
+# 1.0s (1 chiamata/sec) è CONFERMATO sicuro: 3 notti consecutive a budget pieno
+# (4000/4000 chiamate) senza un solo 429 (23-25/09/2026). Ma con budget pieno
+# significa ~67 minuti di sola fase di ricerca. 0.35s (~2,9 chiamate/sec) è un
+# esperimento per accorciare i run: nessun limite eBay documentato per questo
+# tier, ma il circuit breaker sotto lo rende a basso rischio - se è troppo
+# veloce si ferma da solo dopo pochi 429 invece di rompere tutto il run.
+_EBAY_MIN_CALL_INTERVAL = 0.35  # secondi
 _ebay_last_call_at = 0.0
 # Circuit breaker: dopo troppi 429 consecutivi il problema non è "riprova", è che
 # l'endpoint è throttled per questo run - continuare a martellarlo spreca solo
