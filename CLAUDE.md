@@ -81,9 +81,17 @@ comprare. Repo GitHub: https://github.com/Matti111/prezzifurbi (privato).
     prodotti che `MAX_NEW_PRODUCTS_PER_RUN` fa passare (catalogo cresciuto
     20→234 in 4 notti, +60/notte al tetto). Costo reale: a 1 chiamata/sec con
     budget pieno la sola fase di ricerca richiede **~67 minuti** (run totali
-    ~70-75 min). Il 2026-09-26 `_EBAY_MIN_CALL_INTERVAL` è stato abbassato a
-    0.35s (~2,9 chiamate/sec) per accorciare i run, protetto dallo stesso
-    circuit breaker — **da verificare che non riporti i 429**, vedi TODO #8
+    ~70-75 min). **Provato e SCARTATO (2026-09-26)**: `_EBAY_MIN_CALL_INTERVAL`
+    abbassato a 0.35s (~2,9 chiamate/sec) per accorciare i run — il circuit
+    breaker ha protetto i dati come previsto, ma è scattato per davvero dopo
+    ~1000 chiamate (429 reali, non un falso allarme): quel ritmo supera il
+    vero limite eBay. Tornato a 1.0s. **Nota per un'ottimizzazione diversa**:
+    dato che il tetto dei 60 nuovi prodotti/notte viene raggiunto ben prima di
+    esaurire il budget di 4000 chiamate (in questo test, a sole 1003 chiamate
+    erano già stati trovati i 60 prodotti), il vero spreco non è la velocità
+    ma continuare a interrogare tutte le 32 query anche dopo aver già
+    raggiunto il tetto — fermare la scoperta appena il tetto è raggiunto
+    accorcerebbe i run senza bisogno di rischiare un ritmo più veloce
   - Integrazioni: Amazon Creators API, eBay Browse API. **Refurbed.it rimosso
     interamente** (2026-09-21): mai stato trovato un programma di affiliazione
     Refurbed attivo su Awin per questo account, quindi niente tracciamento/
@@ -228,11 +236,15 @@ stessa logica già applicata a Refurbed prima della rimozione. La card mostra
    compare troppo/poco spesso o il semaforo sembra troppo aggressivo/permissivo
 8. **RISOLTO 2026-09-26**: il consumo di budget eBay e i 429 sono stati
    verificati su 4 notti reali consecutive (23-26/09), tutte a budget pieno
-   (~4000/4000 chiamate) e zero 429 con pacing a 1 chiamata/sec. Il
-   2026-09-26 il pacing è stato abbassato a 0.35s (~2,9 chiamate/sec) per
-   accorciare i run da ~70 minuti — **verificare la prossima notte (27/09)
-   che non abbia fatto ricomparire i 429**; se sì, tornare a 1.0s
-   (`_EBAY_MIN_CALL_INTERVAL` in `test_db.py`)
+   (~4000/4000 chiamate) e zero 429 con pacing a 1 chiamata/sec. Provato
+   anche un ritmo più veloce (0.35s, ~2,9 chiamate/sec) lo stesso giorno per
+   accorciare i run da ~70 minuti: il circuit breaker ha protetto i dati ma è
+   scattato per davvero dopo ~1000 chiamate (429 reali) — quel ritmo supera
+   il vero limite eBay, si è tornati a 1.0s (confermato sicuro). Idea per
+   accorciare i run senza rischiare la velocità: fermare la scoperta appena
+   `MAX_NEW_PRODUCTS_PER_RUN` è raggiunto invece di interrogare comunque
+   tutte le 32 query (il tetto di 60 viene raggiunto ben prima di esaurire
+   il budget — in un test, a sole 1003 chiamate su 4000)
 8b. **🔴 URGENTE (2026-09-26): il deploy automatico Vercel si è fermato al
    23/09** — vedi sezione Hosting sopra. Il catalogo cresce regolarmente su
    GitHub (234 prodotti) ma il sito pubblico ne mostra ancora 20. Richiede
