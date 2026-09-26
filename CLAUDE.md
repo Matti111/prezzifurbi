@@ -144,18 +144,22 @@ comprare. Repo GitHub: https://github.com/Matti111/prezzifurbi (privato).
   tempo — è stato rimosso dal workflow. Se in futuro serve riattivare Keliweb,
   bisogna prima ripuntare i nameserver del dominio.
 
-  **🔴 PROBLEMA APERTO (scoperto 2026-09-26): il deploy automatico si è fermato.**
-  L'ultimo deploy Vercel realmente pubblicato risale al 23/09 (`Last-Modified`
-  dell'HTML servito), il sito mostra ancora 20 prodotti mentre il catalogo reale
-  su GitHub è a 234 (commit automatici del 24, 25 e 26/09 tutti andati a buon
-  fine, dati validi — non è un problema di contenuto). Nessun webhook classico
-  visibile su `repos/.../hooks` (normale se Vercel è collegato come GitHub App,
-  non diagnostico di per sé). **Serve controllare la dashboard Vercel del
-  progetto** (tab Deployments): build fallite dopo il 23? Un "Ignored Build
-  Step" che salta i commit del bot (`prezzifurbi-bot`, messaggio "chore:
-  aggiornamento automatico...")? Un limite del piano (build minutes/mese)
-  raggiunto? Nessuna di queste è verificabile da qui senza accesso alla
-  dashboard o alle API Vercel.
+  **🟡 PROBLEMA 2026-09-26, sbloccatosi da solo — da confermare stanotte.** Il
+  deploy Vercel si era fermato al 23/09 per 3 giorni (commit automatici del 24,
+  25, 26/09 tutti riusciti su GitHub, dati validi, ma il sito serviva ancora
+  20 prodotti). Poi, dopo un push manuale (non del bot) il 26/09 sera, il sito
+  è tornato a pubblicare correttamente (226 prodotti, `Last-Modified`
+  aggiornato in tempo reale). Causa non identificata con certezza — non
+  verificato via dashboard/API Vercel, solo osservato che ha ricominciato a
+  funzionare. **Resta un dubbio concreto**: i push che hanno "sbloccato" il
+  deploy erano fatti con l'account umano (`Matti111`), non con l'identità del
+  bot (`prezzifurbi-bot`) usata dal workflow notturno — se il problema era un
+  filtro specifico sull'autore/messaggio dei commit (es. "Ignored Build Step"
+  su Vercel), potrebbe ripresentarsi al prossimo commit automatico del bot.
+  **Da verificare**: controllare dopo il run schedulato delle 6:00 UTC che il
+  sito rifletta il nuovo commit `chore: aggiornamento automatico...` — se
+  torna a bloccarsi, il problema è specifico ai commit del bot e va comunque
+  controllato via dashboard Vercel (tab Deployments / Ignored Build Step).
 
 ## Stato attuale dei programmi di affiliazione
 
@@ -276,12 +280,13 @@ stessa logica già applicata a Refurbed prima della rimozione. La card mostra
    `MAX_NEW_PRODUCTS_PER_RUN` è raggiunto invece di interrogare comunque
    tutte le 32 query (il tetto di 60 viene raggiunto ben prima di esaurire
    il budget — in un test, a sole 1003 chiamate su 4000)
-8b. **🔴 URGENTE (2026-09-26): il deploy automatico Vercel si è fermato al
-   23/09** — vedi sezione Hosting sopra. Il catalogo cresce regolarmente su
-   GitHub (234 prodotti) ma il sito pubblico ne mostra ancora 20. Richiede
-   accesso alla dashboard Vercel per diagnosticare (build fallite? Ignored
-   Build Step che salta i commit del bot? limite del piano?) — non
-   verificabile senza quell'accesso
+8b. **🟡 Deploy Vercel bloccato al 23/09, sbloccatosi da solo il 26/09 sera**
+   dopo un push manuale (non del bot) — vedi sezione Hosting sopra. Causa non
+   confermata. **Verificare dopo il prossimo run schedulato (6:00 UTC)** che
+   anche il commit automatico del bot (`prezzifurbi-bot`) faccia scattare il
+   deploy come i push manuali — se si riblocca solo con quello, il problema è
+   specifico all'autore/messaggio del commit (controllare "Ignored Build
+   Step" nelle impostazioni Vercel del progetto)
 9. Fase 2/3/4 della discovery (statistiche/Query Yield per query, rotazione basata
    sul rendimento invece che deterministica per data, budget diviso dinamicamente
    tra discovery/high-value/coverage/exploration, generazione di query dai gap di
