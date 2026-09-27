@@ -99,6 +99,24 @@ comprare. Repo GitHub: https://github.com/Matti111/prezzifurbi (privato).
     abbreviata (es. "16/256GB" = 16GB RAM + 256GB SSD, un solo slash, prezzo
     valido) con vere alternative multiple. Verificato senza falsi positivi su
     tutto il catalogo (245→226 prodotti, -19: 8 accessori + 11 multi-config).
+    **Giro 3 (2026-09-27)**, ancora segnalato dall'utente su prodotti live —
+    RAM/dischi sciolti (SO-DIMM, SSD SanDisk, HDD Seagate Exos) brandizzati sul
+    **produttore del componente** (SanDisk/Crucial/Seagate/Fujitsu) invece che
+    su un modello di laptop: `BAD_TITLE_PREFIXES` guarda solo la prima parola,
+    quindi non li intercettava. Aggiunte parole segnale indipendenti dalla
+    posizione: `'per notebook'`/`'per portatile'` (RAM/batteria descritta come
+    compatibile con un modello, stesso concetto di "per ricambi" ma per
+    componenti anziché il laptop stesso), `'mem ram'`, `'so-dimm'` (con
+    trattino — `'sodimm'` senza trattino non la intercettava, bug distinto),
+    `'caddy'`, `'seagate exos'`, `'disco rigido interno'`, `'difettoso'`
+    (venditore dichiara l'articolo guasto nel titolo stesso). Anche corretto
+    un caso mancato in `BAD_TITLE_PREFIXES`: "Nuovo disco rigido DELL..." non
+    iniziava per "disco rigido" a causa del prefisso di condizione ("Nuovo ")
+    — nuovo `_CONDITION_PREFIX_PATTERN` rimuove "Nuovo"/"Usato"/"Ricondizionato"/
+    ecc. dall'inizio del titolo prima del controllo prefissi. Trovato anche un
+    **tablet mislabeled da laptop**: "HP ElitePad 900 G2" (tablet Windows senza
+    tastiera/cerniera) — aggiunta la parola `'elitepad'`. Verificato senza falsi
+    positivi su tutto il catalogo (226→215 prodotti, -11).
     **Rate limit — RISOLTO, confermato su 4 notti** (scoperto 2026-09-22, risolto
     e verificato 23→26/09/2026): un run lanciato subito dopo un altro molto
     attivo aveva ricevuto 429 "Too many requests" su OGNI chiamata, fin dalla

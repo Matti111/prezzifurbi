@@ -826,7 +826,20 @@ BAD_TITLE_WORDS = ['cover', 'custodia', 'borsa', 'caricatore', 'alimentatore', '
                     # zaini/dock eGPU/SSD sciolti che il primo giro di filtri non copriva):
                     # zaini e borse per notebook, dock eGPU, dischi sciolti
                     'zaino', 'tracolla', 'sleeve', 'dock ', 'egpu', 'rucksack', 'backpack',
-                    'cinghia']
+                    'cinghia',
+                    # Giro 3 (2026-09-27, segnalato di nuovo dall'utente su prodotti live):
+                    # moduli RAM/dischi sciolti venduti col brand del produttore del
+                    # componente (SanDisk/Crucial/Seagate/...) invece che del laptop, quindi
+                    # non presi da BAD_TITLE_PREFIXES (che guarda solo la prima parola). "per
+                    # notebook"/"per portatile" è lo stesso segnale di "per ricambi" ma per
+                    # RAM/batterie descritte come compatibili con un modello, non come il
+                    # laptop stesso. "so-dimm" con trattino non veniva intercettato da
+                    # 'sodimm' (substring esatta, senza trattino). "difettoso" = articolo
+                    # dichiarato guasto dal venditore stesso, mai un vero laptop funzionante.
+                    'per notebook', 'per portatile', 'mem ram', 'so-dimm', 'caddy',
+                    'seagate exos', 'disco rigido interno', 'difettoso',
+                    # HP ElitePad = tablet Windows, non un notebook (nessuna tastiera/cerniera)
+                    'elitepad']
 
 # Prefissi che segnalano un accessorio/componente come SOGGETTO dell'annuncio (non il
 # laptop): un venditore che vende davvero il portatile apre il titolo col marchio/
@@ -835,6 +848,14 @@ BAD_TITLE_PREFIXES = ['ssd ', 'ram ', 'hdd ', 'disco rigido', 'disco ssd', 'disc
                        'dock ', 'egpu', 'scheda madre', 'scheda grafica ', 'alimentatore',
                        'caricatore', 'caricabatterie', 'adattatore', 'batteria ', 'cover ',
                        'custodia', 'borsa', 'zaino']
+
+# Condizione dichiarata dal venditore prima del vero soggetto dell'annuncio (es. "Nuovo
+# disco rigido DELL..."): va rimossa prima di controllare BAD_TITLE_PREFIXES, altrimenti
+# un accessorio "Nuovo"/"Usato" scampa al controllo perché il prefisso non è la prima parola.
+_CONDITION_PREFIX_PATTERN = re.compile(
+    r'^(nuovo\s+di\s+zecca|nuovissimo|come\s+nuovo|nuovo|usato|ricondizionato)\s+',
+    re.IGNORECASE,
+)
 
 # Annunci "multi-configurazione" (es. "8/16 GB", "256/512/1TB/2TB"): il prezzo mostrato
 # dalla Browse API è quello della configurazione più economica, ma le specifiche estratte
@@ -854,7 +875,8 @@ def _is_bad_ebay_title(title: str) -> bool:
     un venditore che vende davvero il laptop non apre mai il titolo dicendo
     'compatibile con'."""
     t = title.lower().strip()
-    if t.startswith('per ') or any(t.startswith(p) for p in BAD_TITLE_PREFIXES):
+    t_no_condition = _CONDITION_PREFIX_PATTERN.sub('', t, count=1)
+    if t.startswith('per ') or any(t_no_condition.startswith(p) for p in BAD_TITLE_PREFIXES):
         return True
     if _MULTI_CONFIG_PATTERN.search(title):
         return True
