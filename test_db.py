@@ -1037,7 +1037,14 @@ BAD_TITLE_WORDS = ['cover', 'custodia', 'borsa', 'caricatore', 'alimentatore', '
                     # computer portatile" invece di "per notebook"/"per laptop") e due
                     # pannelli schermo sciolti ("Schermo LCD Portatile.../Assemblato",
                     # non "schermo per"/"per laptop")
-                    'per computer portatile', 'larghezza madre', 'schermo lcd']
+                    'per computer portatile', 'larghezza madre', 'schermo lcd',
+                    # Giro 8 (2026-09-28, trovati scorrendo l'elenco delle pagine statiche
+                    # appena generate): due QUADERNI di carta ("Copertina per quaderni...",
+                    # "Notebook Viaggiatore's quaderno da viaggio...") - collisione
+                    # linguistica su "notebook"/"quaderno", mai un notebook computer - più
+                    # un NAS Synology, un tablet rugged Getac, un SSD industriale sciolto
+                    'copertina per', 'quadern', 'diskstation', 'synology',
+                    'rugged tablet', 'industrial']
 
 # Prefissi che segnalano un accessorio/componente come SOGGETTO dell'annuncio (non il
 # laptop): un venditore che vende davvero il portatile apre il titolo col marchio/

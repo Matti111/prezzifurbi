@@ -494,7 +494,16 @@ pipeline di deploy già in uso (push -> Vercel builda `public/` così com'è).
   "Schermo LCD Assemblato", non "schermo per"/"per laptop"). Aggiunte
   `'per computer portatile'`, `'larghezza madre'`, `'schermo lcd'` a
   `BAD_TITLE_WORDS` (giro 7), verificate senza falsi positivi, poi rimossi
-  (295→292) e le pagine rigenerate di conseguenza.
+  (295→292) e le pagine rigenerate di conseguenza. **Giro 8**, stesso giorno,
+  scorrendo stavolta l'elenco COMPLETO dei 292 titoli in ordine alfabetico
+  (non solo i filename delle pagine appena committate): due quaderni di
+  carta ("Copertina per quaderni e libri...", "Notebook Viaggiatore's
+  quaderno da viaggio..." — collisione linguistica "notebook"/"quaderno",
+  mai un vero notebook computer), un NAS Synology DiskStation, un tablet
+  rugged Getac, un SSD industriale sciolto. Aggiunte `'copertina per'`,
+  `'quadern'` (radice, copre sia "quaderno" che "quaderni"), `'diskstation'`,
+  `'synology'`, `'rugged tablet'`, `'industrial'`. -5 prodotti (292→287).
+  **Catalogo finale dopo tutti gli 8 giri: 287 prodotti, 287 pagine statiche.**
 
 ## TODO aperti
 
