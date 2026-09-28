@@ -1020,7 +1020,11 @@ BAD_TITLE_WORDS = ['cover', 'custodia', 'borsa', 'caricatore', 'alimentatore', '
                     'multibrand',  # lotto di notebook DIVERSI venduti come un unico annuncio
                     # Giro 5 (2026-09-28): "SCATOLA di N laptop - MIX di Asus, Acer,
                     # Dell..." - stesso problema del lotto multibrand, wording diverso
-                    'scatola di']
+                    'scatola di',
+                    # Giro 6 (2026-09-28, segnalato dall'utente su un prodotto live): "1 pz
+                    # per display portatile 13,3 pollici LQ133M1JX20" - un pannello LCD di
+                    # ricambio, "per display" non era coperto da 'per laptop'/'schermo per'
+                    'per display']
 
 # Prefissi che segnalano un accessorio/componente come SOGGETTO dell'annuncio (non il
 # laptop): un venditore che vende davvero il portatile apre il titolo col marchio/

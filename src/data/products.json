@@ -2538,68 +2538,6 @@
     ]
   },
   {
-    "id": "1-pz-per-display-portatile-13--46141335",
-    "listingId": "116046141335",
-    "title": "1 pz per display portatile 13,3 pollici LQ133M1JX20",
-    "brand": "1",
-    "model": "pz per display",
-    "category": "lavoro_ufficio",
-    "useCases": [
-      "programmazione",
-      "studio",
-      "lavoro"
-    ],
-    "condition": "Nuovo",
-    "price": 151,
-    "store": "eBay.it",
-    "affiliateUrl": "https://www.ebay.it/itm/116046141335?_skw=computer+portatile&hash=item1b04e39797%3Ag%3AvHgAAOSwey1f4wex&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
-    "imageUrl": "https://i.ebayimg.com/images/g/vHgAAOSwey1f4wex/s-l225.jpg",
-    "rating": 4.5,
-    "stamp": "cheaper_good",
-    "stampRationale": "Prezzo d'attacco minimo di 151€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
-    "specs": {
-      "screen": {
-        "value": "13.3\" FHD (1920x1080) LED",
-        "indicator": "neutral"
-      },
-      "gpu": {
-        "value": "Intel UHD Graphics integrata",
-        "indicator": "neutral"
-      },
-      "cpu": {
-        "value": "Intel Core i5 Multicore",
-        "indicator": "down"
-      },
-      "ram": {
-        "value": "16 GB DDR4",
-        "indicator": "up"
-      },
-      "ssd": {
-        "value": "512 GB SSD NVMe M.2",
-        "indicator": "up"
-      }
-    },
-    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
-    "topHighlights": [
-      "Ottima dotazione di porte USB e ricarica rapida",
-      "Testato e verificato con copertura di garanzia"
-    ],
-    "flopComment": "Webcam integrata con sensore base per videochiamate ordinarie",
-    "flopWarnings": [
-      "Webcam integrata con sensore base per videochiamate ordinarie"
-    ],
-    "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
-    "weight": "2.20 kg",
-    "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-09-24",
-    "priceHistory": [
-      {
-        "price": 151,
-        "date": "2026-09-24"
-      }
-    ]
-  },
-  {
     "id": "notebook-pc-portatile-hp-640-g-01170509",
     "listingId": "226101170509",
     "title": "NOTEBOOK PC PORTATILE HP 640 G2 I5-6200U RAM 8GB 240GB NVME WIN 10 BATT NUOVA",

@@ -10,9 +10,10 @@ comprare. Repo GitHub: https://github.com/Matti111/prezzifurbi (privato).
   timbri ("Scelta Furba" 🦊, "Best Buy" ⚡, "Cheaper" 🏷️), tag di utilizzo (Gaming/
   Creatività/Programmazione/Studio/Lavoro/Home), filtri dinamici per specifica
   tecnica e utilizzo, slider budget, confronto benchmark CPU/GPU. In cima al sito
-  c'è `ConstructionBanner.tsx` ("Sito in fase di aggiornamento..."), aggiunto
-  2026-09-21 e ancora attivo: toglierlo quando prezzi/link saranno considerati
-  stabili (nessuna data/condizione precisa fissata, è una valutazione da fare).
+  confronto benchmark CPU/GPU. `ConstructionBanner.tsx` ("Sito in fase di
+  aggiornamento..."), aggiunto 2026-09-21, **rimosso il 2026-09-28** su
+  richiesta esplicita dell'utente ("tutti i link sono funzionanti") — file e
+  import cancellati, non solo nascosto.
   **RAM/Storage/Dimensione schermo: soglia min/max, non più bottoni a valore
   esatto** (2026-09-28, richiesta utente): `FilterState.ramRange/ssdRange/
   screenRange` (`RangeFilter { min: number|null; max: number|null }` in
@@ -258,6 +259,11 @@ comprare. Repo GitHub: https://github.com/Matti111/prezzifurbi (privato).
     di 7/8 laptop - MIX di Asus, Acer, Dell..." — stesso problema di
     "multibrand"/"ex leasing" (giro 4) con wording diverso. Aggiunta
     `'scatola di'`. -2 prodotti (298→296).
+    **Giro 6 (2026-09-28)**, segnalato dall'utente su un prodotto live: "1 pz
+    per display portatile 13,3 pollici LQ133M1JX20" (pannello LCD di
+    ricambio) — "per display" non era coperto da nessuna parola esistente
+    (`'per laptop'`/`'schermo per'` richiedono un wording diverso). Aggiunta
+    `'per display'`. -1 prodotto (296→295).
     **Rate limit — RISOLTO, confermato su 4 notti** (scoperto 2026-09-22, risolto
     e verificato 23→26/09/2026): un run lanciato subito dopo un altro molto
     attivo aveva ricevuto 429 "Too many requests" su OGNI chiamata, fin dalla
