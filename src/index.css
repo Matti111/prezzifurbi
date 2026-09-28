@@ -18,6 +18,55 @@
   }
 }
 
+/* Slider a doppio cursore (RAM/Storage/Schermo in FiltersBar.tsx): due
+   <input type="range"> sovrapposti sulla stessa traccia invece di due barre
+   separate impilate (richiesto dall'utente 2026-09-28). Il trucco standard:
+   l'input stesso è invisibile e non cliccabile (pointer-events:none) tranne
+   il pallino (thumb), riabilitato con pointer-events:auto - così i due
+   input sovrapposti non si bloccano a vicenda, solo i pallini rispondono
+   al click/drag. Il binario e il tratto evidenziato tra i due pallini sono
+   disegnati a parte in FiltersBar.tsx (semplici div, non parte di questo CSS). */
+.dual-range {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: transparent;
+  pointer-events: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.dual-range::-webkit-slider-runnable-track {
+  -webkit-appearance: none;
+  background: transparent;
+}
+.dual-range::-moz-range-track {
+  background: transparent;
+  border: none;
+}
+.dual-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  pointer-events: auto;
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background: #f97316;
+  border: 2px solid #0f172a;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+.dual-range::-moz-range-thumb {
+  pointer-events: auto;
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background: #f97316;
+  border: 2px solid #0f172a;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
 /* Custom scrollbars */
 ::-webkit-scrollbar {
   width: 6px;

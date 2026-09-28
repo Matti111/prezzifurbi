@@ -47,16 +47,19 @@ interface RangeSliderFieldProps {
   format: (n: number) => string;
 }
 
-/** Slider a doppia soglia (min + max) per una specifica numerica discreta: due
- * <input type="range"> impilati (indice nell'array `values`, non il valore
- * continuo) invece di un vero doppio cursore, più semplice da verificare
- * senza poter far girare Vite in locale su questa macchina. */
+/** Slider a doppia soglia (min + max) per una specifica numerica discreta:
+ * due <input type="range"> sovrapposti sulla STESSA traccia (indice
+ * nell'array `values`, non il valore continuo), non due barre separate
+ * impilate — vedi il CSS `.dual-range` in `index.css` per il trucco
+ * (pointer-events solo sul pallino, il binario è disegnato a parte qui sotto). */
 const RangeSliderField: React.FC<RangeSliderFieldProps> = ({ label, icon, values, value, onChange, format }) => {
   if (values.length < 2) return null; // nessuna variazione reale nel pool attuale
 
   const lastIndex = values.length - 1;
   const minIndex = value.min === null ? 0 : closestIndex(values, value.min);
   const maxIndex = value.max === null ? lastIndex : closestIndex(values, value.max);
+  const minPct = (minIndex / lastIndex) * 100;
+  const maxPct = (maxIndex / lastIndex) * 100;
 
   const handleMinChange = (rawIndex: number) => {
     const idx = Math.min(rawIndex, maxIndex);
@@ -69,7 +72,7 @@ const RangeSliderField: React.FC<RangeSliderFieldProps> = ({ label, icon, values
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-1">
+      <div className="flex justify-between items-center mb-1.5">
         <label className="text-[11px] font-semibold text-slate-400 flex items-center gap-1">
           {icon}
           <span>{label}</span>
@@ -78,7 +81,14 @@ const RangeSliderField: React.FC<RangeSliderFieldProps> = ({ label, icon, values
           {format(values[minIndex])} – {format(values[maxIndex])}
         </span>
       </div>
-      <div className="space-y-1">
+      <div className="relative h-5">
+        {/* Binario */}
+        <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-1.5 rounded-lg bg-slate-950" />
+        {/* Tratto evidenziato tra i due pallini */}
+        <div
+          className="absolute top-1/2 -translate-y-1/2 h-1.5 rounded-lg bg-gradient-to-r from-orange-500 to-amber-400"
+          style={{ left: `${minPct}%`, right: `${100 - maxPct}%` }}
+        />
         <input
           type="range"
           min={0}
@@ -86,7 +96,7 @@ const RangeSliderField: React.FC<RangeSliderFieldProps> = ({ label, icon, values
           step={1}
           value={minIndex}
           onChange={(e) => handleMinChange(Number(e.target.value))}
-          className="w-full accent-orange-500 bg-slate-950 h-1.5 rounded-lg cursor-pointer"
+          className="dual-range"
           aria-label={`${label} - soglia minima`}
         />
         <input
@@ -96,7 +106,7 @@ const RangeSliderField: React.FC<RangeSliderFieldProps> = ({ label, icon, values
           step={1}
           value={maxIndex}
           onChange={(e) => handleMaxChange(Number(e.target.value))}
-          className="w-full accent-orange-500 bg-slate-950 h-1.5 rounded-lg cursor-pointer"
+          className="dual-range"
           aria-label={`${label} - soglia massima`}
         />
       </div>

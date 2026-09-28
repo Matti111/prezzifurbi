@@ -19,10 +19,14 @@ comprare. Repo GitHub: https://github.com/Matti111/prezzifurbi (privato).
   screenRange` (`RangeFilter { min: number|null; max: number|null }` in
   `types/product.ts`) sostituiscono quei tre tag da `SpecTagSelection`
   (CPU/GPU/Peso restano bottoni esatti in `FiltersBar.tsx`, non toccati). UI:
-  `RangeSliderField` in `FiltersBar.tsx`, due `<input type="range">` impilati
-  (soglia min + soglia max) invece di un vero doppio cursore — scelto apposta
-  perché più semplice da verificare senza poter far girare Vite in locale su
-  questa macchina. **Scatta solo su taglie che esistono davvero in catalogo**
+  `RangeSliderField` in `FiltersBar.tsx`: inizialmente due `<input
+  type="range">` impilati su due barre separate, **poi passato a un vero
+  doppio cursore sulla stessa traccia** (2026-09-28, richiesta esplicita
+  dell'utente) — due input sovrapposti con `pointer-events` disabilitato
+  sul corpo e riabilitato solo sul pallino (`.dual-range` in `index.css`,
+  trucco standard per un doppio cursore senza libreria), binario e tratto
+  evidenziato tra i due pallini disegnati a parte come `<div>` assoluti.
+  **Scatta solo su taglie che esistono davvero in catalogo**
   (2026-09-28, richiesta esplicita dopo il primo giro: uno slider continuo
   poteva far scegliere es. "9GB" di RAM, taglia che nessun prodotto ha):
   `distinctSortedValues()` in `specTags.ts` calcola i valori REALMENTE
