@@ -400,6 +400,46 @@ aggiunto comunque su richiesta esplicita nonostante l'assenza di commissione,
 stessa logica già applicata a Refurbed prima della rimozione. La card mostra
 "Link non verificato" in `ProductCard.tsx` (stesso trattamento di Amazon).
 
+## SEO — base (2026-09-28)
+
+Il sito è una **SPA React pura (Vite CSR, senza router)**: un'unica pagina "/"
+per tutto, filtri e navigazione solo lato client, nessun URL individuale per
+prodotto. Questo limite architetturale resta — vedi TODO #12 — ma sono stati
+fatti i fix a basso rischio che non richiedono un router:
+
+- **`public/robots.txt`** (nuovo, prima non esisteva alcun `public/`):
+  `Allow: /` + riferimento alla sitemap.
+- **`public/sitemap.xml`** (nuovo): un solo URL (la home, `changefreq: daily`,
+  coerente con l'aggiornamento notturno del catalogo) — onesto rispetto a
+  quello che il sito offre oggi, non un sitemap con URL finti per pagine che
+  non esistono.
+- **Open Graph / Twitter Card + canonical** in `index.html`: prima assenti
+  del tutto (nessuna anteprima decente se il sito viene condiviso su
+  social/chat). Nessuna `og:image`/`twitter:image` (nessun asset disponibile
+  in questa sessione, un placeholder generico sarebbe stato peggio di niente
+  — meglio aggiungerla quando c'è un'immagine vera, 1200×630).
+- **Alt text descrittivo sulle immagini prodotto** (`ProductCard.tsx`): prima
+  era il titolo grezzo del venditore (spesso TUTTO MAIUSCOLO, keyword-stuffed
+  tipo "NOTEBOOK PC PORTATILE DELL..."), ora `{brand} {model} - {cpu}, {ram},
+  {gpu}` — più pulito per screen reader e crawler.
+- **Dati strutturati JSON-LD `ItemList`** (`src/utils/structuredData.ts`,
+  iniettato da `App.tsx` via un singolo `<script>` creato/aggiornato a mano,
+  nessuna libreria di gestione `<head>` aggiunta): riflette i primi 24
+  prodotti della vista di default al primo caricamento (i filtri successivi
+  dell'utente non cambiano URL, quindi non contano per l'indicizzazione).
+  **Deliberatamente SENZA `aggregateRating`/`review`**: il "rating" mostrato
+  sulle card è un punteggio editoriale interno (la Volpe), non una media di
+  recensioni reali — includerlo come dato strutturato violerebbe le linee
+  guida di Google sui rich result (richiedono recensioni genuine) e
+  rischierebbe un'azione manuale sul dominio. Solo fatti verificabili:
+  nome, immagine, brand, prezzo, disponibilità, URL dell'offerta reale.
+
+**Deliberatamente non fatto in questo giro** (proposto e scartato in favore
+della sola sitemap/meta-tag): una `SearchAction` nello schema `WebSite` —
+richiederebbe una ricerca raggiungibile via URL/query string, che il sito non
+ha (la ricerca è solo client-side, senza sync sull'URL); dichiararla senza
+che funzioni davvero violerebbe la stessa policy sui dati strutturati onesti.
+
 ## TODO aperti
 
 1. Quando Back Market IT / MediaWorld IT / Unieuro IT / Euronics IT approvano su
@@ -474,6 +514,14 @@ stessa logica già applicata a Refurbed prima della rimozione. La card mostra
     ("i5-M560", "i5 540"), "AMD Athlon Silver/Gold" senza prefisso Ryzen (es.
     "AMD 3020E") — il tier resta comunque prudente (non gonfiato) anche senza
     un'etichetta precisa, quindi non urgente
+12. **SEO — il pezzo grande rimandato (2026-09-28)**: pagine prodotto
+    individuali con URL dedicato (richiede un router, es. react-router) e
+    schema `Product` completo per pagina — il salto più efficace per
+    traffico da ricerche long-tail, ma cambia la navigazione dell'app e non
+    verificabile in locale (npm non installato su questa macchina, solo il
+    sito live dopo il deploy Vercel). Proposto esplicitamente all'utente il
+    2026-09-28, che ha scelto di fare prima solo i fix a basso rischio (vedi
+    sezione SEO sopra) — da riprendere se/quando si vuole investire di più
 
 ## File locali che NON sono su git (da ricreare se serve lavorare in locale)
 

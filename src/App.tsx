@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Product, FilterState, StampType, SpecKey, EMPTY_RANGE } from './types/product';
 import rawProducts from './data/products.json';
 import { Navbar } from './components/Navbar';
@@ -10,6 +10,7 @@ import { PerformanceCompareModal } from './components/PerformanceCompareModal';
 import { AffiliateDisclaimer } from './components/AffiliateDisclaimer';
 import { productMatchesSelection, matchesRange, parseRamGB, parseSsdGB, parseScreenInches } from './utils/specTags';
 import { findDominator, getValueFraming, qualifiesForFox } from './utils/valuation';
+import { buildItemListJsonLd } from './utils/structuredData';
 import { Shield, Flame, CheckCircle2, ChevronDown } from 'lucide-react';
 
 const products = rawProducts as Product[];
@@ -203,6 +204,23 @@ export function App() {
   }, [filteredProducts, baseFilteredProducts]);
 
   const displayedProducts = showDominated ? filteredProducts : visibleProducts;
+
+  // Dati strutturati (schema.org ItemList) per i crawler: nessuna libreria di
+  // gestione <head>, basta un singolo <script> creato/aggiornato a mano - lo
+  // stesso identico approccio già usato altrove nel progetto per tenere le
+  // dipendenze al minimo. Riflette la vista di default (nessun filtro attivo
+  // al primo caricamento): le interazioni successive dell'utente non cambiano
+  // URL, quindi non contano ai fini dell'indicizzazione.
+  useEffect(() => {
+    let script = document.getElementById('structured-data-itemlist') as HTMLScriptElement | null;
+    if (!script) {
+      script = document.createElement('script');
+      script.id = 'structured-data-itemlist';
+      script.type = 'application/ld+json';
+      document.head.appendChild(script);
+    }
+    script.textContent = JSON.stringify(buildItemListJsonLd(displayedProducts));
+  }, [displayedProducts]);
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 selection:bg-orange-500 selection:text-white w-full max-w-full overflow-x-hidden">

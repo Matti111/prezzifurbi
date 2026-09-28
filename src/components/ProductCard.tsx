@@ -221,9 +221,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         {/* Thumbnail + Title + Rating */}
         <div className="flex gap-2.5 sm:gap-3 items-center">
           <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden bg-slate-950/10 border border-slate-300/60 flex-shrink-0">
-            <img 
-              src={product.imageUrl} 
-              alt={product.title} 
+            <img
+              src={product.imageUrl}
+              alt={`${product.brand} ${product.model} - ${product.specs.cpu.value}, ${product.specs.ram.value}, ${product.specs.gpu.value}`}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               loading="lazy"
             />
