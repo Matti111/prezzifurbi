@@ -13,6 +13,19 @@ comprare. Repo GitHub: https://github.com/Matti111/prezzifurbi (privato).
   c'è `ConstructionBanner.tsx` ("Sito in fase di aggiornamento..."), aggiunto
   2026-09-21 e ancora attivo: toglierlo quando prezzi/link saranno considerati
   stabili (nessuna data/condizione precisa fissata, è una valutazione da fare).
+  **RAM/Storage/Dimensione schermo: soglia min/max, non più bottoni a valore
+  esatto** (2026-09-28, richiesta utente): `FilterState.ramRange/ssdRange/
+  screenRange` (`RangeFilter { min: number|null; max: number|null }` in
+  `types/product.ts`) sostituiscono quei tre tag da `SpecTagSelection`
+  (CPU/GPU/Peso restano bottoni esatti in `FiltersBar.tsx`, non toccati). UI:
+  `RangeSliderField` in `FiltersBar.tsx`, due `<input type="range">` impilati
+  (soglia min + soglia max) invece di un vero doppio cursore — scelto apposta
+  perché più semplice da verificare senza poter far girare Vite in locale su
+  questa macchina. `numericBounds()`/`matchesRange()` in `specTags.ts`: i
+  bound dello slider sono i min/max REALI nel pool filtrato corrente (come il
+  trattino già esistente sullo slider budget), un valore non riconosciuto dal
+  parser (≤0) non combacia mai con una soglia attiva (stessa cautela già
+  applicata ai tag esatti cpu/gpu).
 - **Motore del valore** (2026-09-22, da specifica utente — vedi `src/utils/valuation.ts`):
   principio centrale "non guardiamo lo sconto, guardiamo il valore". Nessuna
   percentuale di sconto viene mai fabbricata: `originalPrice` esiste solo se una
@@ -26,6 +39,19 @@ comprare. Repo GitHub: https://github.com/Matti111/prezzifurbi (privato).
   Buy. `findDominator` calcola la dominanza (stesso pool contestuale): i
   prodotti dominati non spariscono, restano dietro "Mostra alternative".
   `freshnessLevel` è il semaforo 🟢/🟡/🔴 su `lastUpdated`.
+  **GPU workstation mai più spacciate per GeForce** (2026-09-28, segnalato
+  dall'utente: "confronto prestazioni" mostrava righe fantasma "RTX 3000*/
+  2000*/1000*" che non esistono come GPU GeForce). Causa: `extract_gpu()` in
+  `test_db.py` e `parseGpuTag()` in `specTags.ts` etichettavano "RTX 2000 Ada"/
+  "RTX 1000 Ada" (Nvidia RTX Ada Generation, workstation) e "Quadro RTX 3000"
+  (Turing, workstation) come "NVIDIA GeForce RTX 2000/1000/3000 dedicata" —
+  un numero che non esiste in nessuna GPU GeForce reale, con un punteggio
+  stimato gonfiato di conseguenza. Corretto in entrambi i posti (controllo
+  Ada/Quadro RTX **prima** del fallback RTX generico): ora
+  "NVIDIA RTX {n} Ada Generation (Workstation)"/"NVIDIA Quadro RTX {n}
+  (Workstation)", stima di rank più bassa e onesta (nessun dato reale in
+  `GPU_BENCHMARKS`, resta con l'asterisco "*" come tutte le stime non
+  sourced). 3 prodotti già in catalogo corretti retroattivamente.
 - **Dati**: `src/data/products.json` — il catalogo. Aggiornato in parte a mano, in
   parte automaticamente ogni notte. Ogni prodotto ha `useCases`, `lastUpdated`,
   `priceHistory` (accumulato ad ogni cambio di prezzo reale — nessuna UI dedicata
@@ -38,6 +64,65 @@ comprare. Repo GitHub: https://github.com/Matti111/prezzifurbi (privato).
     la RAM non un modello CPU) che preserva almeno i5/i7/i9/Ryzen invece di
     ricadere sempre su "Intel Core i5 Multicore" (fix 2026-09-22, ha corretto
     7 prodotti già in catalogo con la CPU sbagliata)
+    **Riscrittura estesa di `extract_cpu`/`extract_gpu`/`extract_ram`
+    (2026-09-28)**, partita da un solo caso segnalato dall'utente (un Celeron
+    N4000 mostrato come "Intel Core i5") ma allargata controllando quanti
+    prodotti fossero ancora sul fallback generico i5 — da lì sono emersi molti
+    più bug reali, non ipotetici:
+    - **Manufacturer sbagliato, non solo modello**: `Celeron`/`Pentium`
+      (nessun pattern li intercettava, finivano su "i5"), `AMD A-series`
+      ("Radeon A6-9225" → tier 1, prima "i5"), `AMD Ryzen AI` (numerazione
+      2024+ a 3 cifre tipo "Ryzen AI 5 340", diversa dai Ryzen classici),
+      `Ryzen` abbreviato "R5"/"R7" (alcuni venditori scrivono così invece di
+      "Ryzen 5"/"Ryzen 7" per esteso — trovato sul Cyclus, uno dei 4 prodotti
+      Amazon curati a mano il 2026-09-21, sbagliato da allora), `Apple
+      Silicon M1-M5` (un MacBook mostrava "Intel Core i5" — stesso bug anche
+      in `extract_gpu`, "Intel UHD Graphics" per la GPU integrata Apple) e
+      `Intel Core M` (chip fanless 2015-2017, tier nettamente più debole di
+      un vero i5 ma trattato come tale).
+    - **Modello Intel perso per il conteggio cifre**: i regex per gen
+      10-14 richiedevano un numero a lunghezza fissa (3 o 5 cifre) — le serie
+      U/P/G a basso consumo (4 cifre, es. "1145G7"/"1235U"/"1340P") non
+      combaciavano mai e cadevano sul fallback, pur essendo scritte chiare nel
+      titolo. Esteso a `\d{2,3}` dopo il prefisso di generazione.
+    - **Suffisso "G7" troncato in "G" durante il primo giro di fix sopra**:
+      il suffisso letterale `[a-zA-Z]*` non catturava la cifra finale delle
+      serie G (es. "1145G7" → "1145G"): nessun suffisso Intel reale finisce
+      per lettera nuda senza cifra, quindi diventato `[a-zA-Z]{0,2}\d?`.
+    - **Separatore rigido a un carattere**: "I5 - 13420H" (spazio+trattino+
+      spazio, es. HP Victus) non combaciava con `[- ]` (un solo carattere) —
+      ora `\s*-?\s*`, e valore ricostruito da gruppi separati (famiglia +
+      modello) invece di un `.replace(' ', '-')` sull'intero match, che con
+      un separatore variabile avrebbe lasciato doppi trattini.
+    - **Gen 4a-9a limitata alla sola 8a/9a**: `[89]\d{3}` è diventato
+      `[4-9]\d{3}` — 6a/7a gen (es. "i5-6200U", comunissimo tra i
+      ricondizionati in catalogo) e 4a/5a (es. "i5-4200U") restavano sul
+      fallback pur avendo lo stesso tier 'legacy' già corretto per l'8a/9a.
+    - **`extract_ram` non forzava più solo il fallback, ma anche valori VERI**:
+      un vecchio whitelist `if gb not in [8,16,24,32,64]: gb = 16` sovrascriveva
+      con 16GB qualunque valore realmente estratto ma "non standard" (12GB,
+      4GB, 6GB, 20GB...) — non solo il fallback quando NON si trovava nulla.
+      Trovato perché un titolo diceva chiaramente "RAM 12GB" e la card mostrava
+      16GB. Ora il numero estratto si tiene così com'è, salvo un range di
+      sanità 2-128GB (per non scambiare per errore una taglia di storage letta
+      dal testo come se fosse RAM).
+    Verificato con `evaluate_laptop()` rieseguito su tutti i titoli del
+    catalogo (0 eccezioni) prima e dopo ogni giro di modifiche. Corretti
+    retroattivamente 46 prodotti già in catalogo (CPU/RAM/GPU/SSD), ognuno
+    solo quando il titolo dava un segnale esplicito e verificabile (mai una
+    riscrittura totale delle specifiche) — stesso approccio del fix CPU del
+    2026-09-22.
+  - **`category`/`idealFor` non più legati alla sola condizione dell'annuncio
+    (2026-09-28)**: prima erano `"lavoro_ufficio"` se Ricondizionato,
+    altrimenti **sempre** `"gaming_ai"`/`"Gaming, AI e uso intenso."` — anche
+    su un Celeron Usato senza GPU dedicata (trovato controllando la card
+    dettaglio dello stesso prodotto Celeron segnalato dall'utente: diceva
+    "Ideale per: Gaming, AI e uso intenso.", in contraddizione diretta con le
+    sue specifiche). Nuove `derive_category()`/`derive_ideal_for()` derivano
+    entrambi i campi dagli stessi `useCases` già calcolati da
+    `derive_use_cases()` — mai più dalla condizione. Riapplicato a tutto il
+    catalogo esistente (tutti e 201 i prodotti avevano il vecchio idealFor
+    generico condizione-based, ora sostituito).
   - Motore di valutazione "la Volpe" (`evaluate_laptop`) che calcola frecce
     benchmark, badge, TOP/FLOP, rating, `useCases` (`derive_use_cases`) — **senza
     mai usare lo sconto dichiarato**, né nel punteggio né nel prezzo di riferimento
@@ -117,6 +202,31 @@ comprare. Repo GitHub: https://github.com/Matti111/prezzifurbi (privato).
     **tablet mislabeled da laptop**: "HP ElitePad 900 G2" (tablet Windows senza
     tastiera/cerniera) — aggiunta la parola `'elitepad'`. Verificato senza falsi
     positivi su tutto il catalogo (226→215 prodotti, -11).
+    **Giro 3, aggiunta (2026-09-28)**: stesso giorno del giro 4 sotto, trovato
+    un **iPad Air M3** passato indenne al giro 3 perché il parser CPU
+    riconosceva "M3" come Apple Silicon valido senza controllare che il
+    prodotto fosse davvero un notebook — aggiunta la parola `'ipad'` (stesso
+    trattamento di `'elitepad'`). -1 prodotto (215→214).
+    **Giro 4 (2026-09-28)**: controllando a ritroso quali prodotti fossero
+    ancora sul fallback CPU generico (vedi sopra, riscrittura estesa del
+    parser) per capire se mancassero altre famiglie CPU, ~13 sono risultati
+    in realtà accessori/ricambi/lotti mai notebook interi, semplicemente
+    senza un modello CPU riconoscibile — non trovati chiedendo direttamente
+    ma incrociando dati: dock/port replicator sciolti (`'docking station'`,
+    `'replicatore di porte'`), un tablet Fujitsu Arrows Tab (`'arrows tab'`),
+    ricambi "compatibile per"/"per laptop" (schermi/pannelli LCD sciolti),
+    assemblaggi schermo/tastiera sciolti (`'schermo montaggio'`, `'tastiera
+    palmrest'`), penne USB (`'chiavetta usb'`, `'chiavetta di memoria'`), SSD/
+    HDD sciolti (`'unità a stato solido'`, `'hard disk'`), un lotto di RAM
+    (`'lotto ram'`) e un lotto di notebook DIVERSI venduti come un unico
+    annuncio (`'multibrand'`). Verificato senza falsi positivi su tutto il
+    catalogo prima di rimuovere (214→201 prodotti, -13). Il lavoro di questa
+    sessione (parser + filtro) è stato riapplicato tale e quale dopo aver
+    unito 2 run notturni del bot nel frattempo passati (312 prodotti dopo il
+    merge, mai toccati a mano — script idempotenti basati sul contenuto, non
+    sulla posizione): trovato un accessorio in più tra i nuovi arrivati
+    ("Display di Espansione per Laptop..." catturato da `'per laptop'`),
+    stessa procedura di verifica. **Catalogo finale: 298 prodotti.**
     **Rate limit — RISOLTO, confermato su 4 notti** (scoperto 2026-09-22, risolto
     e verificato 23→26/09/2026): un run lanciato subito dopo un altro molto
     attivo aveva ricevuto 429 "Too many requests" su OGNI chiamata, fin dalla
@@ -312,6 +422,21 @@ stessa logica già applicata a Refurbed prima della rimozione. La card mostra
    — richiedono uno stato persistente tra le notti (nuovo file, es.
    `query_stats.json`) e hanno senso solo quando c'è abbastanza storico/catalogo
    perché quei segnali siano significativi
+10. **Un prodotto (2026-09-28) ha avuto lo storage corretto a mano**: un annuncio
+    eBay "multi-variante" (333€ compra la configurazione 1TB, 2TB costa 343€ a
+    parte) dove l'informazione sulle varianti stava solo nella DESCRIZIONE, non
+    nel titolo — il pattern `_MULTI_CONFIG_PATTERN` (giro 2, numeri incatenati
+    da "/") non può intercettarlo perché il titolo non ha quel formato. Nessuna
+    regex generalizzabile trovata da un solo caso: se ricompare, valutare se
+    vale la pena leggere le "item specifics"/varianti reali della Browse API
+    invece di indovinare dal solo testo (limite noto della pipeline, vedi anche
+    TODO #3/#4)
+11. Famiglie CPU rimaste sul fallback generico "Intel Core i5 Multicore" per
+    scelta, non per bug (rischio/beneficio troppo basso per continuare ad
+    espandere `extract_cpu`): nomenclatura Intel di prima generazione mobile
+    ("i5-M560", "i5 540"), "AMD Athlon Silver/Gold" senza prefisso Ryzen (es.
+    "AMD 3020E") — il tier resta comunque prudente (non gonfiato) anche senza
+    un'etichetta precisa, quindi non urgente
 
 ## File locali che NON sono su git (da ricreare se serve lavorare in locale)
 

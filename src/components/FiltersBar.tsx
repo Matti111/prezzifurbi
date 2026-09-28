@@ -1,7 +1,87 @@
 import React from 'react';
-import { FilterState, StampType, ConditionType, SortOption, Product, SpecTagCategory, UseCase } from '../types/product';
+import { FilterState, StampType, ConditionType, SortOption, Product, SpecTagCategory, UseCase, RangeFilter } from '../types/product';
 import { SlidersHorizontal, ArrowDownAZ, RotateCcw, Cpu, MemoryStick as RamIcon, HardDrive, Gamepad2, BarChart3, Monitor, Weight as WeightIcon, Home, Briefcase, GraduationCap, Palette, Code2 } from 'lucide-react';
-import { collectTagOptions, isTagAvailable, minPriceForSelection } from '../utils/specTags';
+import {
+  collectTagOptions,
+  isTagAvailable,
+  minPriceForSelection,
+  numericBounds,
+  parseRamGB,
+  parseSsdGB,
+  parseScreenInches,
+} from '../utils/specTags';
+
+/** Formattazione capacità storage: TB con un decimale solo se non è un multiplo
+ * esatto (1024 -> "1 TB", 1536 -> "1.5 TB"), stessa convenzione di collectTagOptions. */
+const formatStorage = (gb: number) =>
+  gb >= 1024 ? `${(gb / 1024).toFixed(gb % 1024 === 0 ? 0 : 1)} TB` : `${gb} GB`;
+const formatScreen = (inches: number) => `${Number(inches.toFixed(1))}"`;
+const formatRam = (gb: number) => `${gb} GB`;
+
+interface RangeSliderFieldProps {
+  label: string;
+  icon: React.ReactNode;
+  bounds: { min: number; max: number };
+  step: number;
+  value: RangeFilter;
+  onChange: (next: RangeFilter) => void;
+  format: (n: number) => string;
+}
+
+/** Slider a doppia soglia (min + max) per una specifica numerica continua: due
+ * <input type="range"> impilati invece di un vero doppio cursore, più semplice
+ * da verificare senza poter far girare Vite in locale su questa macchina. */
+const RangeSliderField: React.FC<RangeSliderFieldProps> = ({ label, icon, bounds, step, value, onChange, format }) => {
+  if (bounds.min >= bounds.max) return null; // nessuna variazione reale nel pool attuale
+
+  const min = value.min ?? bounds.min;
+  const max = value.max ?? bounds.max;
+
+  const handleMinChange = (raw: number) => {
+    const next = Math.min(raw, max);
+    onChange({ min: next <= bounds.min ? null : next, max: value.max });
+  };
+  const handleMaxChange = (raw: number) => {
+    const next = Math.max(raw, min);
+    onChange({ min: value.min, max: next >= bounds.max ? null : next });
+  };
+
+  return (
+    <div>
+      <div className="flex justify-between items-center mb-1">
+        <label className="text-[11px] font-semibold text-slate-400 flex items-center gap-1">
+          {icon}
+          <span>{label}</span>
+        </label>
+        <span className="text-[11px] font-bold text-orange-400">
+          {format(min)} – {format(max)}
+        </span>
+      </div>
+      <div className="space-y-1">
+        <input
+          type="range"
+          min={bounds.min}
+          max={bounds.max}
+          step={step}
+          value={min}
+          onChange={(e) => handleMinChange(Number(e.target.value))}
+          className="w-full accent-orange-500 bg-slate-950 h-1.5 rounded-lg cursor-pointer"
+          aria-label={`${label} - soglia minima`}
+        />
+        <input
+          type="range"
+          min={bounds.min}
+          max={bounds.max}
+          step={step}
+          value={max}
+          onChange={(e) => handleMaxChange(Number(e.target.value))}
+          className="w-full accent-orange-500 bg-slate-950 h-1.5 rounded-lg cursor-pointer"
+          aria-label={`${label} - soglia massima`}
+        />
+      </div>
+    </div>
+  );
+};
 
 interface FiltersBarProps {
   filters: FilterState;
@@ -26,12 +106,11 @@ const USE_CASE_OPTIONS: { value: UseCase; label: string; icon: React.ReactNode }
   { value: 'home', label: 'Home', icon: <Home className="w-3.5 h-3.5" /> },
 ];
 
+// RAM/Storage/Schermo sono ora slider a soglia min/max (vedi RangeSliderField sopra),
+// non più bottoni a valore esatto: restano qui solo le specifiche categoriche.
 const TAG_GROUPS: { key: SpecTagCategory; label: string; icon: React.ReactNode }[] = [
   { key: 'cpu', label: 'Processore', icon: <Cpu className="w-3.5 h-3.5 text-orange-400" /> },
-  { key: 'ram', label: 'RAM', icon: <RamIcon className="w-3.5 h-3.5 text-orange-400" /> },
-  { key: 'ssd', label: 'Storage', icon: <HardDrive className="w-3.5 h-3.5 text-orange-400" /> },
   { key: 'gpu', label: 'Scheda Video', icon: <Gamepad2 className="w-3.5 h-3.5 text-orange-400" /> },
-  { key: 'screen', label: 'Dimensione Schermo', icon: <Monitor className="w-3.5 h-3.5 text-orange-400" /> },
   { key: 'weight', label: 'Peso', icon: <WeightIcon className="w-3.5 h-3.5 text-orange-400" /> },
 ];
 
@@ -65,6 +144,14 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
   };
 
   const hasSpecSelection = Object.keys(filters.specTags).length > 0;
+  const hasRangeSelection =
+    filters.ramRange.min !== null || filters.ramRange.max !== null ||
+    filters.ssdRange.min !== null || filters.ssdRange.max !== null ||
+    filters.screenRange.min !== null || filters.screenRange.max !== null;
+
+  const ramBounds = numericBounds(productsForTags, (p) => parseRamGB(p.specs.ram.value));
+  const ssdBounds = numericBounds(productsForTags, (p) => parseSsdGB(p.specs.ssd.value));
+  const screenBounds = numericBounds(productsForTags, (p) => parseScreenInches(p.specs.screen.value));
   // Senza nessun tag selezionato, la selezione vuota combacia con ogni prodotto:
   // il trattino mostra semplicemente il prezzo del prodotto più economico disponibile.
   const rawDashPrice = minPriceForSelection(productsForTags, filters.specTags);
@@ -101,6 +188,7 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
     filters.condition !== 'all' ||
     filters.maxPrice < 1200 ||
     hasSpecSelection ||
+    hasRangeSelection ||
     filters.searchQuery !== '';
 
   return (
@@ -254,7 +342,40 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
 
       </div>
 
-      {/* 2B. Tag di specifica (CPU/RAM/SSD/GPU): mostrano dove si trova il limite di
+      {/* 2C. Soglie min/max su specifiche continue (RAM/Storage/Schermo): a
+          differenza dei tag esatti sotto, qui l'utente sceglie un intervallo invece
+          di un valore singolo (es. "almeno 16GB" senza escludere 32GB/64GB) */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 pt-3 border-t border-slate-800 mt-3">
+        <RangeSliderField
+          label="RAM"
+          icon={<RamIcon className="w-3.5 h-3.5 text-orange-400" />}
+          bounds={ramBounds ?? { min: 0, max: 0 }}
+          step={1}
+          value={filters.ramRange}
+          onChange={(next) => onFilterChange({ ramRange: next })}
+          format={formatRam}
+        />
+        <RangeSliderField
+          label="Storage"
+          icon={<HardDrive className="w-3.5 h-3.5 text-orange-400" />}
+          bounds={ssdBounds ?? { min: 0, max: 0 }}
+          step={64}
+          value={filters.ssdRange}
+          onChange={(next) => onFilterChange({ ssdRange: next })}
+          format={formatStorage}
+        />
+        <RangeSliderField
+          label="Dimensione Schermo"
+          icon={<Monitor className="w-3.5 h-3.5 text-orange-400" />}
+          bounds={screenBounds ?? { min: 0, max: 0 }}
+          step={0.1}
+          value={filters.screenRange}
+          onChange={(next) => onFilterChange({ screenRange: next })}
+          format={formatScreen}
+        />
+      </div>
+
+      {/* 2B. Tag di specifica (CPU/GPU/Peso): mostrano dove si trova il limite di
           budget per avere quella caratteristica, combinabili se compatibili tra loro */}
       <div className="flex items-center justify-between pt-3 border-t border-slate-800 mt-3 mb-2">
         <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Caratteristiche</span>

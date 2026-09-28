@@ -1,4 +1,4 @@
-import { Product, SpecTagCategory, SpecTagSelection } from '../types/product';
+import { Product, SpecTagCategory, SpecTagSelection, RangeFilter } from '../types/product';
 import { CPU_GEN_BENCHMARKS, GPU_BENCHMARKS } from '../data/hardwareBenchmarks';
 
 export interface ParsedTag {
@@ -103,7 +103,18 @@ export function parseCpuTag(value: string): ParsedTag {
 }
 
 export function parseGpuTag(value: string): ParsedTag {
-  let m = value.match(/RTX\s?(\d{3,4})/i);
+  // GPU workstation "RTX Ada Generation"/"Quadro RTX": stesso numero di una RTX
+  // GeForce ma silicio e prestazioni reali diverse (mai la stessa fascia) — vanno
+  // riconosciute PRIMA del match RTX generico sotto, altrimenti "RTX 2000 Ada" o
+  // "Quadro RTX 3000" finiscono etichettate come una fantomatica "RTX 2000"/"RTX 3000"
+  // GeForce che non esiste in nessun listino, con un punteggio stimato gonfiato.
+  let m = value.match(/RTX\s?(\d{3,4})[^,]{0,20}\bAda\b/i);
+  if (m) return withFamilyBenchmark(GPU_BENCHMARKS, `RTX ${m[1]} Ada (Workstation)`, 30 + parseInt(m[1], 10) / 200);
+
+  m = value.match(/Quadro\s+RTX\s?(\d{3,4})/i);
+  if (m) return withFamilyBenchmark(GPU_BENCHMARKS, `Quadro RTX ${m[1]} (Workstation)`, 18);
+
+  m = value.match(/RTX\s?(\d{3,4})/i);
   if (m) return withFamilyBenchmark(GPU_BENCHMARKS, `RTX ${m[1]}`, 40 + parseInt(m[1], 10) / 100);
 
   m = value.match(/GTX\s?(\d{3,4})/i);
@@ -120,6 +131,35 @@ export function parseGpuTag(value: string): ParsedTag {
   if (/UHD Graphics/i.test(value)) return withFamilyBenchmark(GPU_BENCHMARKS, 'UHD Graphics', 6);
 
   return { label: value.split(' ').slice(0, 2).join(' '), rank: 0, sourced: false };
+}
+
+/** Estremi reali (min/max) di una specifica numerica nel pool di prodotti dato, per
+ * dimensionare uno slider di soglia sui valori davvero presenti in catalogo invece
+ * che su un range arbitrario fisso. `null` se nessun prodotto ha un valore leggibile. */
+export function numericBounds(products: Product[], valueOf: (p: Product) => number): { min: number; max: number } | null {
+  let min = Infinity;
+  let max = -Infinity;
+  for (const p of products) {
+    const v = valueOf(p);
+    if (v <= 0) continue;
+    if (v < min) min = v;
+    if (v > max) max = v;
+  }
+  if (!isFinite(min)) return null;
+  return { min, max };
+}
+
+/** Un prodotto soddisfa una soglia min/max se il suo valore rientra nei limiti
+ * impostati (lato non impostato = nessun limite). Un valore non riconosciuto (<= 0,
+ * es. specifica non estratta dal parser) non può essere confermato entro la soglia,
+ * quindi non combacia appena min o max è impostato — stessa cautela già applicata
+ * ai tag esatti cpu/gpu, mai un'inclusione ottimistica su un dato mancante. */
+export function matchesRange(value: number, range: RangeFilter): boolean {
+  if (range.min === null && range.max === null) return true;
+  if (value <= 0) return false;
+  if (range.min !== null && value < range.min) return false;
+  if (range.max !== null && value > range.max) return false;
+  return true;
 }
 
 export function specValueForProduct(p: Product, category: SpecTagCategory): string | number {

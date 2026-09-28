@@ -107,6 +107,14 @@ def extract_screen(text: str) -> Dict[str, Any]:
 def extract_gpu(text: str) -> Dict[str, Any]:
     text_upper = text.upper()
 
+    # Apple Silicon (M1-M5): GPU integrata nel chip, non un'"Intel UHD Graphics"
+    # (stesso bug di branding del CPU sopra, stessa guardia "APPLE"/"MACBOOK").
+    if re.search(r'\b(?:APPLE|MACBOOK)\b', text_upper):
+        m = re.search(r'\bM([1-5])\b', text_upper)
+        if m:
+            tier = 2 if m.group(1) in ('1', '2') else 3
+            return {"value": f"Apple M{m.group(1)} GPU integrata", "tier": tier, "dedicated": False}
+
     # Normalizza "RTX4060" (venditore senza spazio) in "RTX 4060" così i controlli
     # letterali sotto riconoscono il modello a prescindere da come è scritto
     text_upper = re.sub(r'(RTX|GTX)\s*(\d{3,4})', r'\1 \2', text_upper)
@@ -141,6 +149,20 @@ def extract_gpu(text: str) -> Dict[str, Any]:
     if 'QUADRO P620' in text_upper or 'P620' in text_upper:
         return {"value": "NVIDIA Quadro P620 (4GB GDDR5)", "tier": 1, "dedicated": True}
         
+    # NVIDIA RTX Ada Generation / Quadro RTX (workstation): stesso numero di una RTX
+    # GeForce ma silicio e prestazioni reali diverse, MAI la stessa fascia (trovato
+    # 2026-09-27: "RTX 2000 Ada"/"RTX 1000 Ada"/"Quadro RTX 3000" finivano nel
+    # fallback generico sotto, etichettati "NVIDIA GeForce RTX 2000/1000/3000" — una
+    # scheda che non esiste in nessun listino GeForce, con un tier gonfiato e una riga
+    # fantasma nel confronto prestazioni). Va controllato PRIMA del fallback generico.
+    m_ada = re.search(r'RTX\s*(\d{3,4})[^,]{0,20}ADA', text_upper)
+    if m_ada:
+        num = m_ada.group(1)
+        return {"value": f"NVIDIA RTX {num} Ada Generation (Workstation)", "tier": 3 if int(num) >= 2000 else 2, "dedicated": True}
+    m_qrtx = re.search(r'QUADRO\s*RTX\s*(\d{3,4})', text_upper)
+    if m_qrtx:
+        return {"value": f"NVIDIA Quadro RTX {m_qrtx.group(1)} (Workstation)", "tier": 2, "dedicated": True}
+
     # NVIDIA RTX Generica / Nuove serie
     m_rtx = re.search(r'RTX\s*(\d{4})', text_upper)
     if m_rtx:
@@ -179,8 +201,22 @@ _RYZEN_TIER = {
 _CORE_ULTRA_TIER = {'5': 3, '7': 3, '9': 4}
 
 
+_APPLE_SILICON_TIER = {'1': 3, '2': 3, '3': 4, '4': 4, '5': 4}
+
+
 def extract_cpu(text: str) -> Dict[str, Any]:
     text_clean = text.replace("  ", " ")
+
+    # Apple Silicon (M1-M5): stesso bug di branding di AMD A-series/Ryzen AI sotto
+    # - senza questo controllo un MacBook con chip Apple finiva etichettato "Intel
+    # Core i5" (trovato 2026-09-27 su due MacBook Air live nel catalogo). Guardia
+    # "apple"/"macbook" nel testo per non confondersi con "M1"/"M2" in contesti
+    # non Apple; un MacBook Intel pre-2020 (senza token M1-M5) passa comunque ai
+    # controlli Intel sotto, invariato.
+    if re.search(r'\b(?:apple|macbook)\b', text_clean, re.I):
+        m = re.search(r'\bM([1-5])\b', text_clean)
+        if m:
+            return {"value": f"Apple M{m.group(1)}", "tier": _APPLE_SILICON_TIER[m.group(1)]}
 
     # Intel Core Ultra
     m = re.search(r'(Core\s+Ultra\s+([579])\s+\d+[a-zA-Z]*)', text_clean, re.I)
@@ -192,31 +228,108 @@ def extract_cpu(text: str) -> Dict[str, Any]:
     if m:
         return {"value": f"Intel {m.group(1)}", "tier": _INTEL_TIER[('13-14', m.group(2))]}
 
-    # Intel 13a e 14a Gen
-    m = re.search(r'(i([579])[- ]1[34]\d{3}[a-zA-Z]*)', text_clean, re.I)
+    # Intel 13a e 14a Gen. Il numero dopo la generazione può avere 2 O 3 cifre:
+    # le H/HX (es. "13700H") ne hanno 3, le U/P a basso consumo (es. "1340P") solo
+    # 2 - un vecchio "\d{3}" fisso qui intercettava solo le prime, e un i5-1335U/
+    # i5-1340P cadeva nel fallback generico "i5 Multicore" (bug trovato 2026-09-27
+    # controllando perché così tanti prodotti mostravano ancora quel fallback:
+    # la maggioranza aveva in realtà un modello preciso nel titolo, mai riconosciuto).
+    # Il suffisso finale è "[a-zA-Z]{0,2}\d?" e non solo lettere: le serie G
+    # (Iris Xe, es. "1145G7"/"1165G7") hanno una CIFRA dopo la lettera, un vecchio
+    # "[a-zA-Z]*" la tagliava via troncando "1145G7" in "1145G" (bug distinto,
+    # trovato subito dopo aver risolto quello sopra sugli stessi prodotti). Il
+    # separatore è "\s*-?\s*" (non più solo "[- ]" un carattere fisso): alcuni
+    # titoli scrivono "I5 - 13420H" con spazi PIÙ trattino, es. HP Victus 15 -
+    # un vecchio separatore a carattere singolo lo mancava (trovato 2026-09-27).
+    # Famiglia e modello sono due gruppi separati (non più un unico blocco con
+    # ".replace(' ', '-')"): con un separatore ora variabile, quel replace
+    # avrebbe lasciato doppi trattini ("i5---13420H") invece di uno pulito.
+    m = re.search(r'i([579])\s*-?\s*(1[34]\d{2,3}[a-zA-Z]{0,2}\d?)', text_clean, re.I)
     if m:
-        return {"value": f"Intel Core {m.group(1).replace(' ', '-')}", "tier": _INTEL_TIER[('13-14', m.group(2))]}
+        return {"value": f"Intel Core i{m.group(1)}-{m.group(2)}", "tier": _INTEL_TIER[('13-14', m.group(1))]}
 
-    # Intel 12a Gen
-    m = re.search(r'(i([579])[- ]12\d{3}[a-zA-Z]*)', text_clean, re.I)
+    # Intel 12a Gen (stesso 2-o-3-cifre di sopra: "1235U"/"1240P" vs "12700H")
+    m = re.search(r'i([579])\s*-?\s*(12\d{2,3}[a-zA-Z]{0,2}\d?)', text_clean, re.I)
     if m:
-        return {"value": f"Intel Core {m.group(1).replace(' ', '-')}", "tier": _INTEL_TIER[('12', m.group(2))]}
+        return {"value": f"Intel Core i{m.group(1)}-{m.group(2)}", "tier": _INTEL_TIER[('12', m.group(1))]}
 
-    # Intel 10a e 11a Gen
-    m = re.search(r'(i([579])[- ]1[01]\d{3}[a-zA-Z]*)', text_clean, re.I)
+    # Intel 10a e 11a Gen (stesso 2-o-3-cifre: "1145G7"/"1165G7" vs "10510U"/"10750H")
+    m = re.search(r'i([579])\s*-?\s*(1[01]\d{2,3}[a-zA-Z]{0,2}\d?)', text_clean, re.I)
     if m:
-        return {"value": f"Intel Core {m.group(1).replace(' ', '-')}", "tier": _INTEL_TIER[('10-11', m.group(2))]}
+        return {"value": f"Intel Core i{m.group(1)}-{m.group(2)}", "tier": _INTEL_TIER[('10-11', m.group(1))]}
 
-    # Intel 8a/9a Gen (o generazione non riconosciuta)
-    m = re.search(r'(i([579])[- ][89]\d{3}[a-zA-Z]*)', text_clean, re.I)
+    # Intel 4a-9a Gen (Haswell/Broadwell/Skylake/Kaby Lake/Coffee Lake, tutte a 4
+    # cifre: "4200U"/"6200U"/"7300U"/"8250U"/"9750H" - stessa fascia 'legacy' del
+    # fallback sotto quindi il tier non cambiava, ma il modello preciso (es.
+    # "i5-6200U", molto comune nel catalogo tra i ricondizionati) restava nascosto
+    # dietro "Intel Core i5 Multicore" anche quando il titolo lo diceva chiaramente
+    # (trovato 2026-09-27 controllando perché ancora così tante card mostrassero il
+    # fallback generico). Prima era "[89]", limitato alle sole gen 8-9.
+    m = re.search(r'i([579])\s*-?\s*([4-9]\d{3}[a-zA-Z]{0,2}\d?)', text_clean, re.I)
     if m:
-        return {"value": f"Intel Core {m.group(1).replace(' ', '-')}", "tier": _INTEL_TIER[('legacy', m.group(2))]}
+        return {"value": f"Intel Core i{m.group(1)}-{m.group(2)}", "tier": _INTEL_TIER[('legacy', m.group(1))]}
+
+    # Intel Core M (2015-2017, chip fanless a bassissimo consumo tipo "Core M5-6Y54"
+    # o solo "Core M5"): famiglia distinta da Core i3/i5/i7, nessuna delle regex
+    # sopra la intercetta - restava sul fallback generico "i5 Multicore" pur
+    # essendo una CPU nettamente più debole (tier 1, come Celeron/Pentium).
+    m = re.search(r'Core\s*M([357])(?:-(\d[A-Za-z]\d{2}))?', text_clean, re.I)
+    if m:
+        model = f"-{m.group(2).upper()}" if m.group(2) else ""
+        return {"value": f"Intel Core M{m.group(1)}{model}", "tier": 1}
+
+    # AMD Ryzen AI (2024+, la risposta AMD a "Intel Core Ultra": numerazione a 3
+    # cifre completamente diversa dai Ryzen classici sotto, es. "Ryzen AI 5 340" -
+    # nessuna delle due regex Ryzen sotto la riconosceva, finiva addirittura
+    # etichettato come CPU Intel invece che AMD nel fallback generico. \W{0,3}
+    # dopo "Ryzen" salta il simbolo ® che molti titoli mettono tra "Ryzen" e "AI".
+    m = re.search(r'Ryzen\W{0,3}AI\s+(?:PRO\s+)?([3579])(?:\s+(\d{3}))?', text_clean, re.I)
+    if m:
+        fam = m.group(1)
+        model = f" {m.group(2)}" if m.group(2) else ""
+        return {"value": f"AMD Ryzen AI {fam}{model}", "tier": {'3': 2, '5': 3, '7': 3, '9': 4}[fam]}
 
     # AMD Ryzen
     m = re.search(r'(Ryzen\s+([579])\s+([5-8]\d{3})[a-zA-Z]*)', text_clean, re.I)
     if m:
         bracket = '7000' if m.group(3).startswith('7') else 'legacy'
         return {"value": f"AMD {m.group(1)}", "tier": _RYZEN_TIER[(bracket, m.group(2))]}
+
+    # AMD Ryzen abbreviato "R5"/"R7" (alcuni venditori scrivono così invece di
+    # "Ryzen 5"/"Ryzen 7" per esteso, es. "CYCLUS... R5 3500U" - trovato 2026-09-27
+    # su uno dei 4 prodotti Amazon curati a mano il 2026-09-21: mostrava "Intel
+    # Core i5" per un laptop AMD, sbagliando anche il produttore oltre al modello).
+    m = re.search(r'\bR([579])[- ](\d{4}[a-zA-Z]*)', text_clean, re.I)
+    if m:
+        bracket = '7000' if m.group(2).startswith('7') else 'legacy'
+        return {"value": f"AMD Ryzen {m.group(1)} {m.group(2).upper()}", "tier": _RYZEN_TIER[(bracket, m.group(1))]}
+
+    # Intel Celeron/Pentium (fascia budget): nessuno dei pattern iX/Ryzen sopra li
+    # intercetta, quindi senza questo controllo cadevano dritti nel fallback finale
+    # "Intel Core i5 Multicore" — un claim falso (trovato 2026-09-27 dall'utente su
+    # due prodotti live, entrambi con "Celeron" ben leggibile nel titolo). Tier 1:
+    # più debole persino della fascia i3/Ryzen 3 legacy. Il modello viene sempre
+    # riportato in maiuscolo (a differenza del testo libero i3/i5/i7/i9 sopra) perché
+    # molti titoli eBay sono TUTTO MAIUSCOLO e "Intel Celeron n4000" sarebbe stonato.
+    m = re.search(r'Celeron\s*([A-Z]?\d{3,4}[A-Za-z]*)', text_clean, re.I)
+    if m:
+        return {"value": f"Intel Celeron {m.group(1).upper()}", "tier": 1}
+    m = re.search(r'Pentium\s*(Silver|Gold)?\s*([A-Z]?\d{3,4}[A-Za-z]*)', text_clean, re.I)
+    if m:
+        variant = f" {m.group(1).capitalize()}" if m.group(1) else ""
+        return {"value": f"Intel Pentium{variant} {m.group(2).upper()}", "tier": 1}
+    if re.search(r'\bCeleron\b', text_clean, re.I):
+        return {"value": "Intel Celeron", "tier": 1}
+    if re.search(r'\bPentium\b', text_clean, re.I):
+        return {"value": "Intel Pentium", "tier": 1}
+
+    # AMD A-series (vecchie APU budget, es. "AMD Radeon A6-9225" - il venditore
+    # scrive spesso "Radeon" prima del modello perché l'APU ha grafica Radeon
+    # integrata, ma il modello "A6-9225" è comunque la CPU): stesso bug del
+    # Celeron/Pentium sopra, trovato sullo stesso prodotto live il 2026-09-27.
+    m = re.search(r'\bA([4689]|10|12)[- ](\d{3,4}[A-Za-z]*)', text_clean, re.I)
+    if m:
+        return {"value": f"AMD A{m.group(1)}-{m.group(2).upper()}", "tier": 1}
 
     # Famiglia CPU dichiarata ma senza numero di modello riconoscibile (es. un
     # venditore che scrive "i7-16GB", dove "16GB" è la RAM non un modello CPU):
@@ -244,11 +357,18 @@ def extract_ram(text: str) -> Dict[str, Any]:
     if not m:
         # Fallback: GB non seguito da GDDR (memoria video)
         m = re.search(r'(\d+)\s*(?:GB|GIGA)(?!\s*GDDR)', text_upper)
-        
-    gb = int(m.group(1)) if m else 16
-    if gb not in [8, 16, 24, 32, 64]:
+
+    if m:
+        gb = int(m.group(1))
+        # Fuori da un range plausibile per RAM di sistema (probabile lettura errata,
+        # es. una capacità di storage scambiata per RAM): tieni il default prudente.
+        # NON forzare più a 16 valori reali ma "non standard" come 12GB o 6GB (bug
+        # trovato 2026-09-27: "RAM 12GB" dichiarato nel titolo diventava sempre 16GB).
+        if gb < 2 or gb > 128:
+            gb = 16
+    else:
         gb = 16
-        
+
     is_ddr5 = 'DDR5' in text_upper
     val = f"{gb} GB {'DDR5' if is_ddr5 else 'DDR4'}"
     return {"value": val, "gb": gb, "is_ddr5": is_ddr5}
@@ -303,7 +423,7 @@ def derive_use_cases(gpu: Dict[str, Any], cpu: Dict[str, Any], ram: Dict[str, An
     Sostituisce la vecchia categoria singola come contesto per volpe e filtri."""
     tags = []
     gpu_strong = gpu["dedicated"] and gpu["tier"] >= 3
-    gpu_professional = "quadro" in gpu["value"].lower()
+    gpu_professional = "quadro" in gpu["value"].lower() or "workstation" in gpu["value"].lower()
 
     if gpu_strong:
         tags.append("gaming")
@@ -318,6 +438,39 @@ def derive_use_cases(gpu: Dict[str, Any], cpu: Dict[str, Any], ram: Dict[str, An
     if not tags:
         tags.append("home")
     return tags
+
+
+# "category"/"idealFor" prima erano derivati SOLO dalla condizione dell'annuncio
+# (Ricondizionato -> "lavoro_ufficio", altrimenti sempre "gaming_ai"/"Gaming, AI e
+# uso intenso." su OGNI prodotto Usato/Nuovo, budget Celeron compresi) — scollegati
+# dalle specifiche reali (trovato 2026-09-27: un Celeron N4000 senza GPU dedicata
+# mostrava "Ideale per: Gaming, AI e uso intenso." nella scheda dettaglio, in
+# contraddizione diretta con le sue stesse specifiche). Derivati ora dagli stessi
+# useCases già calcolati da derive_use_cases(), mai più dalla sola condizione.
+_IDEAL_FOR_LABELS = {
+    "gaming": "gaming",
+    "creativita": "editing e creatività",
+    "programmazione": "sviluppo e programmazione",
+    "studio": "studio",
+    "lavoro": "lavoro d'ufficio",
+    "home": "uso quotidiano e navigazione",
+}
+
+
+def derive_ideal_for(use_cases: List[str]) -> str:
+    labels = [_IDEAL_FOR_LABELS[uc] for uc in use_cases if uc in _IDEAL_FOR_LABELS]
+    if not labels:
+        return "Uso quotidiano e navigazione."
+    text = labels[0] if len(labels) == 1 else ", ".join(labels[:-1]) + " e " + labels[-1]
+    return text[0].upper() + text[1:] + "."
+
+
+def derive_category(use_cases: List[str]) -> str:
+    if "gaming" in use_cases or "creativita" in use_cases:
+        return "gaming_ai"
+    if set(use_cases) <= {"studio", "home"}:
+        return "budget_studenti"
+    return "lavoro_ufficio"
 
 
 def compute_cpu_indicator(tier: int, price: int) -> str:
@@ -399,14 +552,17 @@ def evaluate_laptop(raw: Dict[str, Any]) -> Dict[str, Any]:
             top_list.append("Scheda grafica NVIDIA RTX dedicata di fascia alta con DLSS e Frame Generation")
     elif gpu["tier"] == 3:
         top_list.append("GPU dedicata ideale per giocare a tutti i titoli moderni in Full HD")
-    elif "quadro" in gpu["value"].lower():
+    elif "quadro" in gpu["value"].lower() or "workstation" in gpu["value"].lower():
         top_list.append("Scheda video professionale con driver certificati per software CAD e 3D")
         
     if ram["gb"] >= 32:
         top_list.append("32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco")
         
     if ssd["gb"] >= 1024:
-        top_list.append("Maxi SSD da 1 TB per salvare decine di giochi e progetti pesanti")
+        # Testo generato dalla capacità reale, non più "1 TB" fisso: un SSD da 2TB
+        # non va comunque descritto come se fosse solo 1TB (trovato 2026-09-27).
+        tb_label = f"{ssd['gb'] // 1024} TB" if ssd['gb'] % 1024 == 0 else f"{ssd['gb'] / 1024:.1f} TB"
+        top_list.append(f"Maxi SSD da {tb_label} per salvare decine di giochi e progetti pesanti")
         
     if "144hz" in screen["refresh"].lower():
         top_list.append("Display ad alto refresh rate da 144Hz: fluidità visiva eccezionale")
@@ -838,8 +994,23 @@ BAD_TITLE_WORDS = ['cover', 'custodia', 'borsa', 'caricatore', 'alimentatore', '
                     # dichiarato guasto dal venditore stesso, mai un vero laptop funzionante.
                     'per notebook', 'per portatile', 'mem ram', 'so-dimm', 'caddy',
                     'seagate exos', 'disco rigido interno', 'difettoso',
-                    # HP ElitePad = tablet Windows, non un notebook (nessuna tastiera/cerniera)
-                    'elitepad']
+                    # HP ElitePad = tablet Windows, non un notebook (nessuna tastiera/cerniera).
+                    # iPad = tablet Apple, stesso discorso (trovato 2026-09-27: un iPad Air M3
+                    # passato indenne perché il parser CPU riconosceva "M3" come Apple Silicon
+                    # valido, senza controllare che il prodotto fosse davvero un notebook).
+                    'elitepad', 'ipad',
+                    # Giro 4 (2026-09-27, trovati controllando a ritroso i prodotti ancora sul
+                    # fallback CPU generico: molti erano in realtà accessori/ricambi/lotti mai
+                    # notebook interi, semplicemente senza un modello CPU riconoscibile).
+                    'docking station', 'replicatore di porte',  # dock/port replicator sciolti
+                    'arrows tab',  # Fujitsu Arrows Tab = tablet Windows, non un notebook
+                    'compatibile per', 'per laptop',  # ricambio "compatibile con"/"per" un modello
+                    'schermo montaggio', 'tastiera palmrest',  # assemblaggio schermo/tastiera sciolto
+                    'chiavetta usb', 'chiavetta di memoria',  # penne USB, non notebook
+                    'unità a stato solido',  # SSD sciolto descritto per esteso
+                    'hard disk',  # disco sciolto (mai un notebook intero lo mette nel titolo così)
+                    'lotto ram',  # lotto di RAM sciolte
+                    'multibrand']  # lotto di notebook DIVERSI venduti come un unico annuncio
 
 # Prefissi che segnalano un accessorio/componente come SOGGETTO dell'annuncio (non il
 # laptop): un venditore che vende davvero il portatile apre il titolo col marchio/
@@ -1308,7 +1479,7 @@ def sync_catalog(new_items: List[Dict[str, Any]]):
             "title": item["title"],
             "brand": item.get("brand", "Notebook"),
             "model": item.get("model", ""),
-            "category": "lavoro_ufficio" if item["condition"] == "Ricondizionato" else "gaming_ai",
+            "category": derive_category(evaluation["useCases"]),
             "useCases": evaluation["useCases"],
             "condition": item["condition"],
             "price": item["price"],
@@ -1323,7 +1494,7 @@ def sync_catalog(new_items: List[Dict[str, Any]]):
             "topHighlights": evaluation["topHighlights"],
             "flopComment": evaluation["flopComment"],
             "flopWarnings": evaluation["flopWarnings"],
-            "idealFor": "Lavoro d'ufficio, studio e produttività affidabile." if item["condition"] == "Ricondizionato" else "Gaming, AI e uso intenso.",
+            "idealFor": derive_ideal_for(evaluation["useCases"]),
             "weight": extract_weight(f"{item['title']} {item.get('specs_text', '')}") or ("1.80 kg" if item["condition"] == "Ricondizionato" else "2.20 kg"),
             "warranty": "12 Mesi di Garanzia Inclusa",
             "lastUpdated": today,

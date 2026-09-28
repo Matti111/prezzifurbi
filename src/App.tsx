@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Product, FilterState, StampType, SpecKey } from './types/product';
+import { Product, FilterState, StampType, SpecKey, EMPTY_RANGE } from './types/product';
 import rawProducts from './data/products.json';
 import { ConstructionBanner } from './components/ConstructionBanner';
 import { Navbar } from './components/Navbar';
@@ -9,7 +9,7 @@ import { ProductDetailModal } from './components/ProductDetailModal';
 import { HowItWorksModal } from './components/HowItWorksModal';
 import { PerformanceCompareModal } from './components/PerformanceCompareModal';
 import { AffiliateDisclaimer } from './components/AffiliateDisclaimer';
-import { productMatchesSelection } from './utils/specTags';
+import { productMatchesSelection, matchesRange, parseRamGB, parseSsdGB, parseScreenInches } from './utils/specTags';
 import { findDominator, getValueFraming, qualifiesForFox } from './utils/valuation';
 import { Shield, Flame, CheckCircle2, ChevronDown } from 'lucide-react';
 
@@ -23,6 +23,9 @@ const initialFilters: FilterState = {
   condition: 'all',
   maxPrice: 1200,
   specTags: {},
+  ramRange: EMPTY_RANGE,
+  ssdRange: EMPTY_RANGE,
+  screenRange: EMPTY_RANGE,
   gpuFilter: 'all',
   sortBy: 'deal_score',
 };
@@ -102,8 +105,19 @@ export function App() {
           return false;
         }
 
-        // Tag di specifica (CPU/RAM/SSD/GPU)
+        // Tag di specifica (CPU/GPU/Peso)
         if (!productMatchesSelection(p, filters.specTags)) {
+          return false;
+        }
+
+        // Soglie min/max su RAM/Storage/Schermo
+        if (!matchesRange(parseRamGB(p.specs.ram.value), filters.ramRange)) {
+          return false;
+        }
+        if (!matchesRange(parseSsdGB(p.specs.ssd.value), filters.ssdRange)) {
+          return false;
+        }
+        if (!matchesRange(parseScreenInches(p.specs.screen.value), filters.screenRange)) {
           return false;
         }
 
@@ -170,7 +184,7 @@ export function App() {
         const scoreB = stampWeight[b.stamp] + b.rating * 10 - (b.price / 80);
         return scoreB - scoreA;
       });
-  }, [baseFilteredProducts, filters.maxPrice, filters.specTags, filters.sortBy]);
+  }, [baseFilteredProducts, filters.maxPrice, filters.specTags, filters.ramRange, filters.ssdRange, filters.screenRange, filters.sortBy]);
 
   // Dominanza: confronto SOLO nel pool contestuale (baseFilteredProducts, mai
   // sul catalogo intero) — i prodotti dominati non spariscono, restano

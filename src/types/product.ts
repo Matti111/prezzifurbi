@@ -63,6 +63,15 @@ export type SortOption = 'price_asc' | 'price_desc' | 'gpu' | 'cpu' | 'ram' | 's
 export type SpecTagCategory = 'cpu' | 'ram' | 'ssd' | 'gpu' | 'screen' | 'weight';
 export type SpecTagSelection = Partial<Record<SpecTagCategory, string | number>>;
 
+/** Soglia minima e/o massima per un filtro numerico continuo (RAM/storage/schermo):
+ * `null` su un lato = nessun limite su quel lato. */
+export interface RangeFilter {
+  min: number | null;
+  max: number | null;
+}
+
+export const EMPTY_RANGE: RangeFilter = { min: null, max: null };
+
 export interface FilterState {
   searchQuery: string;
   stamp: StampType | 'all';
@@ -71,6 +80,9 @@ export interface FilterState {
   condition: 'all' | ConditionType;
   maxPrice: number;
   specTags: SpecTagSelection;
+  ramRange: RangeFilter;
+  ssdRange: RangeFilter;
+  screenRange: RangeFilter;
   gpuFilter: string;
   sortBy: SortOption;
 }
