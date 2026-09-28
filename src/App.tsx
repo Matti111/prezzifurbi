@@ -327,6 +327,7 @@ export function App() {
         product={selectedProduct}
         onClose={() => setSelectedProduct(null)}
         pool={baseFilteredProducts}
+        foxUseCase={selectedProduct ? qualifiesForFox(selectedProduct, products) : null}
       />
 
       {/* How it works Guide Modal */}

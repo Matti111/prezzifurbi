@@ -1,4 +1,4 @@
-import { Product } from '../types/product';
+import { Product, UseCase } from '../types/product';
 import { getValueFraming } from '../utils/valuation';
 import { StampBadge } from './StampBadge';
 import { SpecIndicator } from './SpecIndicator';
@@ -24,12 +24,23 @@ interface ProductDetailModalProps {
   /** Pool contestuale (stesso usato per le card) per calcolare un prezzo
    * tipico onesto quando non c'è un prezzo di listino reale. */
   pool: Product[];
+  /** Risultato di qualifiesForFox() sul catalogo intero (calcolato da App.tsx,
+   * stesso valore già usato per la card): prima il modal usava sempre il timbro
+   * grezzo del backend, mostrando un badge diverso da quello sulla card che
+   * l'utente aveva appena cliccato (trovato 2026-09-28). */
+  foxUseCase: UseCase | null;
 }
 
-export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product, onClose, pool }) => {
+export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product, onClose, pool, foxUseCase }) => {
   if (!product) return null;
 
   const valueFraming = getValueFraming(pool, product);
+  // Stessa logica simmetrica di ProductCard.tsx: vedi il commento lì per il perché.
+  const effectiveStamp = foxUseCase
+    ? 'scelta_furba'
+    : product.stamp === 'scelta_furba'
+    ? 'best_buy'
+    : product.stamp;
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 animate-fadeIn">
@@ -48,7 +59,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({ product,
         {/* Modal Header */}
         <div className="p-6 pb-4 bg-slate-950/70 border-b border-slate-800">
           <div className="flex flex-wrap items-center gap-2 mb-2">
-            <StampBadge stamp={product.stamp} size="lg" />
+            <StampBadge stamp={effectiveStamp} size="lg" />
             <span className="text-xs px-3 py-1 rounded-full bg-slate-800 text-slate-200 border border-slate-700 font-semibold">
               {product.condition}
             </span>

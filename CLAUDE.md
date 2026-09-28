@@ -38,12 +38,23 @@ comprare. Repo GitHub: https://github.com/Matti111/prezzifurbi (privato).
   manca, il "prezzo tipico" è la mediana di prodotti comparabili nello stesso
   pool contestuale (mai il catalogo intero), mostrato solo con ≥3 comparabili.
   La volpe 🦊 è rara per design: il backend assegna un timbro candidato su
-  soglie assolute (`evaluate_laptop`, **mai sullo sconto**), il frontend
-  (`qualifiesForFox`) la mostra solo se il prodotto è anche tra il 15% più
-  conveniente per almeno uno dei suoi `useCases`, altrimenti si vede come Best
-  Buy. `findDominator` calcola la dominanza (stesso pool contestuale): i
-  prodotti dominati non spariscono, restano dietro "Mostra alternative".
-  `freshnessLevel` è il semaforo 🟢/🟡/🔴 su `lastUpdated`.
+  soglie assolute (`evaluate_laptop`, **mai sullo sconto**: `best_buy` per
+  l'hardware al massimo assoluto, `scelta_furba` per un punteggio di valore
+  alto senza essere al vertice), il frontend (`qualifiesForFox`) la mostra
+  solo se il prodotto è anche tra il 15% più conveniente per almeno uno dei
+  suoi `useCases`. **Simmetrica tra i due timbri candidati** (2026-09-28,
+  segnalato dall'utente su un MSI Pulse 17 RTX 4060/i7/64GB/1TB a 823€ — al
+  vertice hardware MA anche il più economico della sua fascia, eppure restava
+  sempre ⚡ Best Buy): prima solo `scelta_furba` poteva diventare 🦊 (o
+  ripiegare su Best Buy se non superava il confronto), un `best_buy` non
+  diventava MAI fox nemmeno superando lo stesso identico confronto — ora
+  `effectiveStamp` in `ProductCard.tsx`/`ProductDetailModal.tsx` (prima
+  quest'ultimo usava il timbro grezzo del backend, badge diverso da quello
+  sulla card appena cliccata) è simmetrica: se `qualifiesForFox` passa, il
+  prodotto è sempre 🦊 a prescindere dal bucket di partenza. `findDominator`
+  calcola la dominanza (stesso pool contestuale): i prodotti dominati non
+  spariscono, restano dietro "Mostra alternative". `freshnessLevel` è il
+  semaforo 🟢/🟡/🔴 su `lastUpdated`.
   **GPU workstation mai più spacciate per GeForce** (2026-09-28, segnalato
   dall'utente: "confronto prestazioni" mostrava righe fantasma "RTX 3000*/
   2000*/1000*" che non esistono come GPU GeForce). Causa: `extract_gpu()` in
@@ -128,6 +139,16 @@ comprare. Repo GitHub: https://github.com/Matti111/prezzifurbi (privato).
     `derive_use_cases()` — mai più dalla condizione. Riapplicato a tutto il
     catalogo esistente (tutti e 201 i prodotti avevano il vecchio idealFor
     generico condizione-based, ora sostituito).
+  - **Testo di `topHighlights`/`stampRationale` con capacità hardcoded invece
+    che reale (2026-09-28)**: lo stesso bug già corretto il 2026-09-27 per
+    "Maxi SSD da 1 TB" (mostrato anche su dischi da 2TB) esisteva ANCORA in
+    due punti non toccati allora — segnalato dall'utente su un MSI Pulse 17
+    con 64GB di RAM la cui scheda "Top" diceva "32 GB di RAM" (la soglia è
+    `ram["gb"] >= 32`, ma il testo generato restava sempre "32 GB" fisso) e
+    trovato per estensione anche nel rationale `cheaper_good` ("monta 16GB di
+    RAM" anche su prodotti da 24/32GB, soglia `ram["gb"] >= 16`). Entrambi ora
+    interpolano `ram['gb']` invece del numero fisso. 12 prodotti già in
+    catalogo corretti (4 + 8).
   - Motore di valutazione "la Volpe" (`evaluate_laptop`) che calcola frecce
     benchmark, badge, TOP/FLOP, rating, `useCases` (`derive_use_cases`) — **senza
     mai usare lo sconto dichiarato**, né nel punteggio né nel prezzo di riferimento
@@ -232,6 +253,11 @@ comprare. Repo GitHub: https://github.com/Matti111/prezzifurbi (privato).
     sulla posizione): trovato un accessorio in più tra i nuovi arrivati
     ("Display di Espansione per Laptop..." catturato da `'per laptop'`),
     stessa procedura di verifica. **Catalogo finale: 298 prodotti.**
+    **Giro 5 (2026-09-28)**: trovati per caso controllando il testo
+    `cheaper_good` con capacità hardcoded (vedi sopra) due lotti bulk "SCATOLA
+    di 7/8 laptop - MIX di Asus, Acer, Dell..." — stesso problema di
+    "multibrand"/"ex leasing" (giro 4) con wording diverso. Aggiunta
+    `'scatola di'`. -2 prodotti (298→296).
     **Rate limit — RISOLTO, confermato su 4 notti** (scoperto 2026-09-22, risolto
     e verificato 23→26/09/2026): un run lanciato subito dopo un altro molto
     attivo aveva ricevuto 429 "Too many requests" su OGNI chiamata, fin dalla

@@ -67,10 +67,20 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   // 3 tabs: 'top' | 'flop' | 'comment'
   const [activeTab, setActiveTab] = useState<'top' | 'flop' | 'comment'>('top');
 
-  // La volpe è rara per design (vedi qualifiesForFox): se il timbro backend è
-  // "scelta_furba" ma il prodotto non supera il confronto contestuale per
-  // utilizzo, si mostra comunque come Best Buy invece di sparire del tutto.
-  const effectiveStamp = product.stamp === 'scelta_furba' && !foxUseCase ? 'best_buy' : product.stamp;
+  // La volpe è rara per design (vedi qualifiesForFox), ma è simmetrica tra i due
+  // timbri candidati del backend: un "best_buy" che supera comunque il confronto
+  // contestuale per utilizzo (top 15% più conveniente, non solo hardware al
+  // massimo) diventa 🦊 come uno "scelta_furba" — prima restava sempre ⚡ Best
+  // Buy anche quando era oggettivamente l'affare migliore (trovato 2026-09-28
+  // dall'utente su un MSI Pulse 17 RTX 4060/i7/64GB/1TB a 823€: hardware al
+  // vertice ma anche il prezzo più basso della sua fascia, eppure mai fox).
+  // Se invece non supera il confronto, uno "scelta_furba" si mostra come Best
+  // Buy invece di sparire del tutto.
+  const effectiveStamp = foxUseCase
+    ? 'scelta_furba'
+    : product.stamp === 'scelta_furba'
+    ? 'best_buy'
+    : product.stamp;
   const freshness = FRESHNESS_META[freshnessLevel(product.lastUpdated)];
 
   // Background style & color scheme according to user rule:

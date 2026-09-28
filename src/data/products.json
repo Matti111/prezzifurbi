@@ -455,7 +455,7 @@
     "imageUrl": "https://i.ebayimg.com/images/g/y5kAAeSwwlhqrQQC/s-l225.jpg",
     "rating": 4.5,
     "stamp": "cheaper_good",
-    "stampRationale": "Prezzo d'attacco minimo di 429€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "stampRationale": "Prezzo d'attacco minimo di 429€ senza fregature: monta 32GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
     "specs": {
       "screen": {
         "value": "15.6\" FHD (1920x1080) LED",
@@ -640,7 +640,7 @@
     "imageUrl": "https://i.ebayimg.com/images/g/Fe0AAeSwxChqBvkg/s-l225.jpg",
     "rating": 4.5,
     "stamp": "cheaper_good",
-    "stampRationale": "Prezzo d'attacco minimo di 429€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "stampRationale": "Prezzo d'attacco minimo di 429€ senza fregature: monta 32GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
     "specs": {
       "screen": {
         "value": "14\" 4K UHD (3840x2160) LED",
@@ -702,7 +702,7 @@
     "imageUrl": "https://i.ebayimg.com/images/g/Qo8AAeSwHbJqGD4V/s-l225.jpg",
     "rating": 4.5,
     "stamp": "cheaper_good",
-    "stampRationale": "Prezzo d'attacco minimo di 380€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "stampRationale": "Prezzo d'attacco minimo di 380€ senza fregature: monta 32GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
     "specs": {
       "screen": {
         "value": "15.6\" FHD (1920x1080) LED",
@@ -788,9 +788,9 @@
         "indicator": "double_up"
       }
     },
-    "topComment": "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+    "topComment": "64 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
     "topHighlights": [
-      "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+      "64 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
       "Maxi SSD da 1 TB per salvare decine di giochi e progetti pesanti"
     ],
     "flopComment": "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering",
@@ -2372,7 +2372,7 @@
     "imageUrl": "https://i.ebayimg.com/images/g/cREAAeSwXMVqnoau/s-l225.jpg",
     "rating": 4.5,
     "stamp": "cheaper_good",
-    "stampRationale": "Prezzo d'attacco minimo di 290€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "stampRationale": "Prezzo d'attacco minimo di 290€ senza fregature: monta 32GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
     "specs": {
       "screen": {
         "value": "14\" 4K UHD (3840x2160) LED",
@@ -7270,9 +7270,9 @@
         "indicator": "double_up"
       }
     },
-    "topComment": "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+    "topComment": "64 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
     "topHighlights": [
-      "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+      "64 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
       "Maxi SSD da 1 TB per salvare decine di giochi e progetti pesanti",
       "Costruzione in alluminio unibody ad altissima resistenza"
     ],
@@ -7332,9 +7332,9 @@
         "indicator": "double_up"
       }
     },
-    "topComment": "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+    "topComment": "64 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
     "topHighlights": [
-      "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+      "64 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
       "Maxi SSD da 1 TB per salvare decine di giochi e progetti pesanti",
       "Costruzione in alluminio unibody ad altissima resistenza"
     ],
@@ -9789,7 +9789,7 @@
     "imageUrl": "https://i.ebayimg.com/images/g/6VQAAeSwqNZqtqiX/s-l225.jpg",
     "rating": 4.5,
     "stamp": "cheaper_good",
-    "stampRationale": "Prezzo d'attacco minimo di 289€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "stampRationale": "Prezzo d'attacco minimo di 289€ senza fregature: monta 32GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
     "specs": {
       "screen": {
         "value": "15.6\" 4K UHD (3840x2160) LED",
@@ -13289,68 +13289,6 @@
     ]
   },
   {
-    "id": "scatola-di-8-laptop-mix-di-asu-67501605",
-    "listingId": "257767501605",
-    "title": "SCATOLA di 8 laptop - MIX di Asus, Acer, Dell, Hp, Lenovo, Samsung, Sony, ecc",
-    "brand": "SCATOLA",
-    "model": "di 8 laptop",
-    "category": "lavoro_ufficio",
-    "useCases": [
-      "programmazione",
-      "studio",
-      "lavoro"
-    ],
-    "condition": "Usato",
-    "price": 186,
-    "store": "eBay.it",
-    "affiliateUrl": "https://www.ebay.it/itm/257767501605?_skw=laptop&hash=item3c0423ef25%3Ag%3AjBQAAeSwaNtquCTw&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
-    "imageUrl": "https://i.ebayimg.com/images/g/jBQAAeSwaNtquCTw/s-l225.jpg",
-    "rating": 4.5,
-    "stamp": "cheaper_good",
-    "stampRationale": "Prezzo d'attacco minimo di 186€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
-    "specs": {
-      "screen": {
-        "value": "15.6\" FHD (1920x1080) LED",
-        "indicator": "neutral"
-      },
-      "gpu": {
-        "value": "Intel UHD Graphics integrata",
-        "indicator": "neutral"
-      },
-      "cpu": {
-        "value": "Intel Core i5 Multicore",
-        "indicator": "down"
-      },
-      "ram": {
-        "value": "32 GB DDR4",
-        "indicator": "double_up"
-      },
-      "ssd": {
-        "value": "512 GB SSD NVMe M.2",
-        "indicator": "up"
-      }
-    },
-    "topComment": "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
-    "topHighlights": [
-      "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
-      "Ottima dotazione di porte USB e ricarica rapida"
-    ],
-    "flopComment": "Webcam integrata con sensore base per videochiamate ordinarie",
-    "flopWarnings": [
-      "Webcam integrata con sensore base per videochiamate ordinarie"
-    ],
-    "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
-    "weight": "2.20 kg",
-    "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-09-27",
-    "priceHistory": [
-      {
-        "price": 186,
-        "date": "2026-09-27"
-      }
-    ]
-  },
-  {
     "id": "lenovo-thinkbook-15-g2-itl-int-09505382",
     "listingId": "298709505382",
     "title": "Lenovo ThinkBook 15 G2 ITL - Intel Core i5 / 8 GB RAM / 512 GB SSD",
@@ -13406,68 +13344,6 @@
     "priceHistory": [
       {
         "price": 219,
-        "date": "2026-09-27"
-      }
-    ]
-  },
-  {
-    "id": "scatola-di-7-laptop-mix-di-asu-67456748",
-    "listingId": "257767456748",
-    "title": "SCATOLA di 7 laptop - MIX di Asus, Acer, Dell, Hp, Lenovo, Samsung, Sony, ecc",
-    "brand": "SCATOLA",
-    "model": "di 7 laptop",
-    "category": "lavoro_ufficio",
-    "useCases": [
-      "programmazione",
-      "studio",
-      "lavoro"
-    ],
-    "condition": "Usato",
-    "price": 162,
-    "store": "eBay.it",
-    "affiliateUrl": "https://www.ebay.it/itm/257767456748?_skw=notebook&hash=item3c04233fec%3Ag%3AIEsAAeSw93hquB5Z&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
-    "imageUrl": "https://i.ebayimg.com/images/g/IEsAAeSw93hquB5Z/s-l225.jpg",
-    "rating": 4.5,
-    "stamp": "cheaper_good",
-    "stampRationale": "Prezzo d'attacco minimo di 162€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
-    "specs": {
-      "screen": {
-        "value": "15.6\" 2K QHD (2560x1440) LED",
-        "indicator": "down"
-      },
-      "gpu": {
-        "value": "Intel UHD Graphics integrata",
-        "indicator": "neutral"
-      },
-      "cpu": {
-        "value": "Intel Core i5 Multicore",
-        "indicator": "down"
-      },
-      "ram": {
-        "value": "16 GB DDR4",
-        "indicator": "up"
-      },
-      "ssd": {
-        "value": "512 GB SSD NVMe M.2",
-        "indicator": "up"
-      }
-    },
-    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
-    "topHighlights": [
-      "Ottima dotazione di porte USB e ricarica rapida",
-      "Testato e verificato con copertura di garanzia"
-    ],
-    "flopComment": "Webcam integrata con sensore base per videochiamate ordinarie",
-    "flopWarnings": [
-      "Webcam integrata con sensore base per videochiamate ordinarie"
-    ],
-    "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
-    "weight": "2.20 kg",
-    "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-09-27",
-    "priceHistory": [
-      {
-        "price": 162,
         "date": "2026-09-27"
       }
     ]
@@ -14014,7 +13890,7 @@
     "topComment": "Scheda grafica NVIDIA RTX serie 40 con DLSS 3.5 e Frame Generation",
     "topHighlights": [
       "Scheda grafica NVIDIA RTX serie 40 con DLSS 3.5 e Frame Generation",
-      "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+      "64 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
       "Maxi SSD da 1 TB per salvare decine di giochi e progetti pesanti"
     ],
     "flopComment": "Peso superiore a 2.3 kg con alimentatore voluminoso",
@@ -16081,7 +15957,7 @@
     "imageUrl": "https://i.ebayimg.com/images/g/zBgAAeSwilNo7eOF/s-l225.jpg",
     "rating": 4.5,
     "stamp": "cheaper_good",
-    "stampRationale": "Prezzo d'attacco minimo di 399€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "stampRationale": "Prezzo d'attacco minimo di 399€ senza fregature: monta 32GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
     "specs": {
       "screen": {
         "value": "14\" FHD (1920x1080) LED",
@@ -16824,7 +16700,7 @@
     "imageUrl": "https://i.ebayimg.com/images/g/ajoAAeSwySho7eQ9/s-l225.jpg",
     "rating": 4.5,
     "stamp": "cheaper_good",
-    "stampRationale": "Prezzo d'attacco minimo di 469€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "stampRationale": "Prezzo d'attacco minimo di 469€ senza fregature: monta 32GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
     "specs": {
       "screen": {
         "value": "14\" FHD (1920x1080) LED",
@@ -17070,7 +16946,7 @@
     "imageUrl": "https://i.ebayimg.com/images/g/b9YAAOSwV81npf9l/s-l225.jpg",
     "rating": 4.5,
     "stamp": "cheaper_good",
-    "stampRationale": "Prezzo d'attacco minimo di 205€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "stampRationale": "Prezzo d'attacco minimo di 205€ senza fregature: monta 24GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
     "specs": {
       "screen": {
         "value": "14\" FHD (1920x1080) LED",

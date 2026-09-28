@@ -556,7 +556,10 @@ def evaluate_laptop(raw: Dict[str, Any]) -> Dict[str, Any]:
         top_list.append("Scheda video professionale con driver certificati per software CAD e 3D")
         
     if ram["gb"] >= 32:
-        top_list.append("32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco")
+        # Testo generato dalla capacità reale, non più "32 GB" fisso: un laptop da
+        # 64GB (es. MSI Pulse 17 segnalato dall'utente 2026-09-28) non va descritto
+        # come se ne avesse solo 32 - stesso bug già corretto sotto per l'SSD.
+        top_list.append(f"{ram['gb']} GB di RAM: multitasking infinito e rendering pesante senza swap su disco")
         
     if ssd["gb"] >= 1024:
         # Testo generato dalla capacità reale, non più "1 TB" fisso: un SSD da 2TB
@@ -631,7 +634,11 @@ def evaluate_laptop(raw: Dict[str, Any]) -> Dict[str, Any]:
     elif stamp == "scelta_furba":
         rationale = f"L'affare d'oro: rapporto prestazioni/prezzo imbattibile a {price}€. Spesa intelligente per chi vuole sostanza senza pagare il prezzo pieno da scaffale."
     elif stamp == "cheaper_good":
-        rationale = f"Prezzo d'attacco minimo di {price}€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti."
+        # RAM reale, non più "16GB" fisso: la soglia cheaper_good richiede solo
+        # ram >= 16, quindi un prodotto con 24/32GB veniva comunque descritto
+        # come se ne avesse solo 16 (stesso bug del testo RAM/SSD sopra,
+        # trovato 2026-09-28 controllando altri usi hardcoded della capacità).
+        rationale = f"Prezzo d'attacco minimo di {price}€ senza fregature: monta {ram['gb']}GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti."
     else:
         rationale = f"Prodotto bilanciato e affidabile a {price}€ con un buon prezzo netto verificato."
 
@@ -1010,7 +1017,10 @@ BAD_TITLE_WORDS = ['cover', 'custodia', 'borsa', 'caricatore', 'alimentatore', '
                     'unità a stato solido',  # SSD sciolto descritto per esteso
                     'hard disk',  # disco sciolto (mai un notebook intero lo mette nel titolo così)
                     'lotto ram',  # lotto di RAM sciolte
-                    'multibrand']  # lotto di notebook DIVERSI venduti come un unico annuncio
+                    'multibrand',  # lotto di notebook DIVERSI venduti come un unico annuncio
+                    # Giro 5 (2026-09-28): "SCATOLA di N laptop - MIX di Asus, Acer,
+                    # Dell..." - stesso problema del lotto multibrand, wording diverso
+                    'scatola di']
 
 # Prefissi che segnalano un accessorio/componente come SOGGETTO dell'annuncio (non il
 # laptop): un venditore che vende davvero il portatile apre il titolo col marchio/
