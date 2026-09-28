@@ -2477,67 +2477,6 @@
     ]
   },
   {
-    "id": "0fhpj8-fhpj8-la-g871p-per-comp-26558252",
-    "listingId": "266226558252",
-    "title": "0FHPJ8 FHPJ8 LA-G871P per computer portatile Dell Latitude 7400 i5-8365U larghezza madre",
-    "brand": "0FHPJ8",
-    "model": "FHPJ8 LA-G871P per",
-    "category": "lavoro_ufficio",
-    "useCases": [
-      "studio",
-      "lavoro"
-    ],
-    "condition": "Usato",
-    "price": 150,
-    "store": "eBay.it",
-    "affiliateUrl": "https://www.ebay.it/itm/266226558252?_skw=computer+portatile&hash=item3dfc56e52c%3Ag%3AM~QAAOSwFxFkQFaR&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
-    "imageUrl": "https://i.ebayimg.com/images/g/M~QAAOSwFxFkQFaR/s-l225.jpg",
-    "rating": 4.5,
-    "stamp": "cheaper_good",
-    "stampRationale": "Prezzo d'attacco minimo di 150€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
-    "specs": {
-      "screen": {
-        "value": "15.6\" FHD (1920x1080) LED",
-        "indicator": "neutral"
-      },
-      "gpu": {
-        "value": "Intel UHD Graphics integrata",
-        "indicator": "neutral"
-      },
-      "cpu": {
-        "value": "Intel Core i5-8365U",
-        "indicator": "down"
-      },
-      "ram": {
-        "value": "16 GB DDR4",
-        "indicator": "up"
-      },
-      "ssd": {
-        "value": "512 GB SSD NVMe M.2",
-        "indicator": "up"
-      }
-    },
-    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
-    "topHighlights": [
-      "Ottima dotazione di porte USB e ricarica rapida",
-      "Testato e verificato con copertura di garanzia"
-    ],
-    "flopComment": "Webcam integrata con sensore base per videochiamate ordinarie",
-    "flopWarnings": [
-      "Webcam integrata con sensore base per videochiamate ordinarie"
-    ],
-    "idealFor": "Studio e lavoro d'ufficio.",
-    "weight": "2.20 kg",
-    "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-09-25",
-    "priceHistory": [
-      {
-        "price": 150,
-        "date": "2026-09-24"
-      }
-    ]
-  },
-  {
     "id": "notebook-pc-portatile-hp-640-g-01170509",
     "listingId": "226101170509",
     "title": "NOTEBOOK PC PORTATILE HP 640 G2 I5-6200U RAM 8GB 240GB NVME WIN 10 BATT NUOVA",
@@ -11934,68 +11873,6 @@
     ]
   },
   {
-    "id": "1pz-schermo-lcd-portatile-17-3-49241329",
-    "listingId": "407249241329",
-    "title": "1PZ Schermo LCD Portatile 17.3\" FHD 1920x1080 120Hz IPS B173HAN01.1 HW1A 40Pin #nm",
-    "brand": "1PZ",
-    "model": "Schermo LCD Portatile",
-    "category": "lavoro_ufficio",
-    "useCases": [
-      "programmazione",
-      "studio",
-      "lavoro"
-    ],
-    "condition": "Usato",
-    "price": 218,
-    "store": "eBay.it",
-    "affiliateUrl": "https://www.ebay.it/itm/407249241329?_skw=laptop&hash=item5ed1f244f1%3Ag%3AEwQAAeSwwWFquOpg&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
-    "imageUrl": "https://i.ebayimg.com/images/g/EwQAAeSwwWFquOpg/s-l225.jpg",
-    "rating": 4.5,
-    "stamp": "cheaper_good",
-    "stampRationale": "Prezzo d'attacco minimo di 218€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
-    "specs": {
-      "screen": {
-        "value": "17.3\" FHD (1920x1080) 120Hz IPS",
-        "indicator": "neutral"
-      },
-      "gpu": {
-        "value": "Intel UHD Graphics integrata",
-        "indicator": "neutral"
-      },
-      "cpu": {
-        "value": "Intel Core i5 Multicore",
-        "indicator": "down"
-      },
-      "ram": {
-        "value": "16 GB DDR4",
-        "indicator": "up"
-      },
-      "ssd": {
-        "value": "512 GB SSD NVMe M.2",
-        "indicator": "up"
-      }
-    },
-    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
-    "topHighlights": [
-      "Ottima dotazione di porte USB e ricarica rapida",
-      "Testato e verificato con copertura di garanzia"
-    ],
-    "flopComment": "Webcam integrata con sensore base per videochiamate ordinarie",
-    "flopWarnings": [
-      "Webcam integrata con sensore base per videochiamate ordinarie"
-    ],
-    "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
-    "weight": "2.20 kg",
-    "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-09-27",
-    "priceHistory": [
-      {
-        "price": 218,
-        "date": "2026-09-27"
-      }
-    ]
-  },
-  {
     "id": "samsung-galaxy-book2-pro-360-1-36529076",
     "listingId": "398436529076",
     "title": "Samsung Galaxy Book2 Pro 360 15,6 pollici I7 16 GB RAM 512 GB SSD Win11",
@@ -12546,68 +12423,6 @@
     "priceHistory": [
       {
         "price": 151,
-        "date": "2026-09-27"
-      }
-    ]
-  },
-  {
-    "id": "notebook-9-np900x3n-bianco-13--23241827",
-    "listingId": "318923241827",
-    "title": "NoteBook 9 NP900X3N Bianco 13,3\" Risoluzione 1920*1080 Schermo LCD Assemblato #iv",
-    "brand": "NoteBook",
-    "model": "9 NP900X3N Bianco",
-    "category": "lavoro_ufficio",
-    "useCases": [
-      "programmazione",
-      "studio",
-      "lavoro"
-    ],
-    "condition": "Usato",
-    "price": 316,
-    "store": "eBay.it",
-    "affiliateUrl": "https://www.ebay.it/itm/318923241827?_skw=notebook&hash=item4a414e7963%3Ag%3ALCQAAeSwqBJquJpl&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
-    "imageUrl": "https://i.ebayimg.com/images/g/LCQAAeSwqBJquJpl/s-l225.jpg",
-    "rating": 4.5,
-    "stamp": "cheaper_good",
-    "stampRationale": "Prezzo d'attacco minimo di 316€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
-    "specs": {
-      "screen": {
-        "value": "13.3\" FHD (1920x1080) IPS",
-        "indicator": "neutral"
-      },
-      "gpu": {
-        "value": "Intel UHD Graphics integrata",
-        "indicator": "neutral"
-      },
-      "cpu": {
-        "value": "Intel Core i5 Multicore",
-        "indicator": "down"
-      },
-      "ram": {
-        "value": "16 GB DDR4",
-        "indicator": "up"
-      },
-      "ssd": {
-        "value": "512 GB SSD NVMe M.2",
-        "indicator": "up"
-      }
-    },
-    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
-    "topHighlights": [
-      "Ottima dotazione di porte USB e ricarica rapida",
-      "Testato e verificato con copertura di garanzia"
-    ],
-    "flopComment": "Webcam integrata con sensore base per videochiamate ordinarie",
-    "flopWarnings": [
-      "Webcam integrata con sensore base per videochiamate ordinarie"
-    ],
-    "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
-    "weight": "2.20 kg",
-    "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-09-27",
-    "priceHistory": [
-      {
-        "price": 316,
         "date": "2026-09-27"
       }
     ]

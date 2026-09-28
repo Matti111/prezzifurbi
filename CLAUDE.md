@@ -400,19 +400,16 @@ aggiunto comunque su richiesta esplicita nonostante l'assenza di commissione,
 stessa logica già applicata a Refurbed prima della rimozione. La card mostra
 "Link non verificato" in `ProductCard.tsx` (stesso trattamento di Amazon).
 
-## SEO — base (2026-09-28)
+## SEO (2026-09-28)
 
 Il sito è una **SPA React pura (Vite CSR, senza router)**: un'unica pagina "/"
-per tutto, filtri e navigazione solo lato client, nessun URL individuale per
-prodotto. Questo limite architetturale resta — vedi TODO #12 — ma sono stati
-fatti i fix a basso rischio che non richiedono un router:
+per tutto, filtri e navigazione solo lato client — di suo, nessun URL
+individuale per prodotto.
+
+### Base
 
 - **`public/robots.txt`** (nuovo, prima non esisteva alcun `public/`):
   `Allow: /` + riferimento alla sitemap.
-- **`public/sitemap.xml`** (nuovo): un solo URL (la home, `changefreq: daily`,
-  coerente con l'aggiornamento notturno del catalogo) — onesto rispetto a
-  quello che il sito offre oggi, non un sitemap con URL finti per pagine che
-  non esistono.
 - **Open Graph / Twitter Card + canonical** in `index.html`: prima assenti
   del tutto (nessuna anteprima decente se il sito viene condiviso su
   social/chat). Nessuna `og:image`/`twitter:image` (nessun asset disponibile
@@ -439,6 +436,65 @@ della sola sitemap/meta-tag): una `SearchAction` nello schema `WebSite` —
 richiederebbe una ricerca raggiungibile via URL/query string, che il sito non
 ha (la ricerca è solo client-side, senza sync sull'URL); dichiararla senza
 che funzioni davvero violerebbe la stessa policy sui dati strutturati onesti.
+
+### Pagine prodotto statiche (2026-09-28)
+
+Tre strade valutate con l'utente per risolvere il limite "nessun URL per
+prodotto" — (A) router client-side (react-router): risolve l'indicizzazione
+Google ma non le anteprime social/altri crawler, che non eseguono JS; (B)
+SSG vera (migrazione a Next.js/Astro): la soluzione "giusta" da manuale ma
+sproporzionata, vicina a una riscrittura del frontend; (C) **pagine HTML
+statiche generate dalla pipeline Python** — scelta dall'utente: stesso
+beneficio SEO principale di A/B per il caso d'uso reale (indicizzazione +
+anteprime social funzionanti), zero dipendenze JS nuove, stessa identica
+pipeline di deploy già in uso (push -> Vercel builda `public/` così com'è).
+
+- **`render_product_page()`/`generate_static_product_pages()`/
+  `generate_sitemap()` in `test_db.py`** (nuova sezione "5. PAGINE STATICHE
+  PER PRODOTTO"): per ogni prodotto scrive `public/notebook/<id>.html` —
+  `<title>`/`<meta description>` unici, canonical, Open Graph/Twitter Card
+  con `og:image` reale (la thumbnail eBay/Amazon del prodotto, che invece
+  manca ancora sulla home), JSON-LD `Product` (stessa regola della home:
+  **mai `aggregateRating`/`review`**, il prezzo di listino nel markup e in
+  pagina compare SOLO se `originalPrice` è dichiarato dalla fonte, mai
+  stimato), tabella specifiche, Top/Flop, bottone "Acquista" con
+  `rel="noopener noreferrer nofollow"` (stesso trattamento dei link in
+  `ProductCard.tsx`) e link "torna al comparatore" verso `/`. Stile con CSS
+  inline minimale (stessa palette dark/arancione del sito), **nessuna
+  dipendenza esterna** (niente Tailwind CDN, sconsigliato in produzione).
+  `generate_sitemap()` sostituisce il sitemap statico con uno che include
+  ogni pagina prodotto (`lastmod` reale da `lastUpdated`, mai una data
+  finta).
+- **Cancellazione delle pagine stantie**: `generate_static_product_pages()`
+  confronta i file già presenti in `public/notebook/` con gli id del
+  catalogo corrente e cancella quelli di prodotti non più in vendita — mai
+  una pagina online per un'offerta rimossa (SEO e onestà verso l'utente).
+- **Chiamata da `main()`** (step 7, ultimo): ricarica il catalogo dal disco
+  invece di riusare la variabile locale di `main()`, perché `sync_catalog()`/
+  `verify_catalog_links()` lavorano sulla loro copia propria del file — la
+  var locale sarebbe stale a quel punto della pipeline.
+- **`.github/workflows/refresh-catalog.yml`** aggiornato: il commit del bot
+  ora include anche `public/notebook` e `public/sitemap.xml`, non solo
+  `src/data/products.json` — altrimenti le pagine si sarebbero rigenerate
+  ogni notte solo in locale/CI senza mai finire online.
+- **Semplificazione nota e accettata**: il badge mostrato sulla pagina
+  statica è il timbro grezzo del backend (`best_buy`/`scelta_furba`/
+  `cheaper_good`), **senza** la logica di upgrade simmetrico verso 🦊 di
+  `qualifiesForFox()` (vedi Motore del valore sopra) — replicarla in Python
+  richiederebbe portare anche le tabelle benchmark CPU/GPU di
+  `hardwareBenchmarks.ts` e il confronto percentile sul catalogo intero,
+  sproporzionato per una pagina SEO di supporto. Può mostrare "Best Buy" dove
+  l'app React mostra 🦊 per lo stesso prodotto — accettato come compromesso
+  finché non vale la pena unificare le due implementazioni.
+- **Batch iniziale generato eseguendo la pipeline "a mano" il 2026-09-28**
+  (292 pagine, non un run notturno): ha fatto emergere **3 ricambi in più**
+  passati indenni ai giri di filtro precedenti — una scheda madre sciolta
+  ("...larghezza madre", "per computer portatile" invece di "per notebook"/
+  "per laptop") e due pannelli LCD sciolti ("Schermo LCD Portatile...",
+  "Schermo LCD Assemblato", non "schermo per"/"per laptop"). Aggiunte
+  `'per computer portatile'`, `'larghezza madre'`, `'schermo lcd'` a
+  `BAD_TITLE_WORDS` (giro 7), verificate senza falsi positivi, poi rimossi
+  (295→292) e le pagine rigenerate di conseguenza.
 
 ## TODO aperti
 
@@ -514,14 +570,15 @@ che funzioni davvero violerebbe la stessa policy sui dati strutturati onesti.
     ("i5-M560", "i5 540"), "AMD Athlon Silver/Gold" senza prefisso Ryzen (es.
     "AMD 3020E") — il tier resta comunque prudente (non gonfiato) anche senza
     un'etichetta precisa, quindi non urgente
-12. **SEO — il pezzo grande rimandato (2026-09-28)**: pagine prodotto
-    individuali con URL dedicato (richiede un router, es. react-router) e
-    schema `Product` completo per pagina — il salto più efficace per
-    traffico da ricerche long-tail, ma cambia la navigazione dell'app e non
-    verificabile in locale (npm non installato su questa macchina, solo il
-    sito live dopo il deploy Vercel). Proposto esplicitamente all'utente il
-    2026-09-28, che ha scelto di fare prima solo i fix a basso rischio (vedi
-    sezione SEO sopra) — da riprendere se/quando si vuole investire di più
+12. **SEO — pagine prodotto: fatta l'opzione C (2026-09-28)**, non A/B. Ogni
+    prodotto ha ora una pagina statica indicizzabile (`public/notebook/
+    <id>.html`, vedi sezione SEO sopra), generata dalla pipeline Python senza
+    toccare l'app React. Restano sul tavolo, se si vuole investire di più:
+    router client-side nell'app (A) per un'esperienza di navigazione vera
+    tra prodotto e comparatore senza reload; oppure SSG vera con un
+    framework (B, Next.js/Astro) — entrambe cambiano la navigazione/il
+    toolchain e non sono verificabili in locale su questa macchina (npm non
+    installato, solo il sito live dopo il deploy Vercel)
 
 ## File locali che NON sono su git (da ricreare se serve lavorare in locale)
 

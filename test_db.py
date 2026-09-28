@@ -9,6 +9,8 @@ import json
 import os
 import time
 import asyncio
+import html
+import glob
 from datetime import datetime, timezone
 from typing import Dict, List, Any, Optional
 from playwright.async_api import async_playwright
@@ -50,6 +52,11 @@ CONFIG = {
     "ebay_campid": "5339209756",           # Campaign ID eBay Partner Network
     "amazon_tag": "prezzifurbi-21",        # Tracking Tag Amazon Associates
     "products_file": os.path.abspath("src/data/products.json"),
+    "site_url": "https://prezzifurbi.it",
+    # public/ viene copiata così com'è nella build Vite -> Vercel: le pagine
+    # statiche per prodotto finiscono nel deploy senza nessun passaggio in più.
+    "static_pages_dir": os.path.abspath("public/notebook"),
+    "sitemap_file": os.path.abspath("public/sitemap.xml"),
 
     # Creators API (successore ufficiale di PA-API 5) - credenziali da variabili d'ambiente,
     # MAI hardcoded nel codice. Vedi .env.example per come configurarle in locale.
@@ -1024,7 +1031,13 @@ BAD_TITLE_WORDS = ['cover', 'custodia', 'borsa', 'caricatore', 'alimentatore', '
                     # Giro 6 (2026-09-28, segnalato dall'utente su un prodotto live): "1 pz
                     # per display portatile 13,3 pollici LQ133M1JX20" - un pannello LCD di
                     # ricambio, "per display" non era coperto da 'per laptop'/'schermo per'
-                    'per display']
+                    'per display',
+                    # Giro 7 (2026-09-28, trovati controllando le pagine statiche appena
+                    # generate): una scheda madre sciolta ("...larghezza madre", "per
+                    # computer portatile" invece di "per notebook"/"per laptop") e due
+                    # pannelli schermo sciolti ("Schermo LCD Portatile.../Assemblato",
+                    # non "schermo per"/"per laptop")
+                    'per computer portatile', 'larghezza madre', 'schermo lcd']
 
 # Prefissi che segnalano un accessorio/componente come SOGGETTO dell'annuncio (non il
 # laptop): un venditore che vende davvero il portatile apre il titolo col marchio/
@@ -1656,6 +1669,203 @@ async def verify_catalog_links(concurrency: int = 8):
         await browser.close()
     return True
 
+
+# --- 5. PAGINE STATICHE PER PRODOTTO (SEO) ---
+#
+# Il sito React è una SPA client-side pura (Vite, senza router): un'unica pagina
+# "/" per tutto, quindi nessun URL indicizzabile per il singolo prodotto - un
+# limite reale per la SEO (ricerche long-tail, anteprime social). La soluzione
+# "giusta" (pagine prodotto dentro l'app React con un router) richiederebbe una
+# nuova dipendenza e un refactor non verificabile in locale su questa macchina
+# (npm non installato). Questa pipeline genera invece una pagina HTML STATICA
+# per prodotto (title/description/canonical/JSON-LD Product dedicati, senza
+# eseguire JS) usando gli stessi dati già calcolati da evaluate_laptop() -
+# zero dipendenze nuove, stessa identica pipeline di deploy già in uso
+# (public/ viene copiato così com'è nella build Vite). Non sostituisce l'app
+# (niente filtri/confronto), è una landing page mirata con link sia
+# all'offerta reale sia al comparatore completo.
+
+_STAMP_META = {
+    "scelta_furba": ("🦊", "Scelta Furba"),
+    "best_buy": ("⚡", "Best Buy"),
+    "cheaper_good": ("🏷️", "Cheaper"),
+    "nessuno": ("", "Netto"),
+}
+
+
+def _esc(value: Any) -> str:
+    return html.escape(str(value), quote=True)
+
+
+def render_product_page(p: Dict[str, Any]) -> str:
+    """Pagina statica per un singolo prodotto: nessuna riga di questo template
+    inventa un dato che non sia già in `p` (stesso principio "mai fabbricare"
+    del motore di valutazione - niente sconti finti, niente aggregateRating
+    fasullo: il rating è un punteggio editoriale interno, non una media di
+    recensioni reali, quindi resta fuori dal JSON-LD)."""
+    pid = p["id"]
+    site_url = CONFIG["site_url"]
+    page_url = f"{site_url}/notebook/{pid}.html"
+    specs = p["specs"]
+    price = p["price"]
+    emoji, stamp_label = _STAMP_META.get(p.get("stamp", "nessuno"), ("", "Netto"))
+
+    seo_title = f"{p['brand']} {p['model']} a {price}€ | Prezzi Furbi"
+    description = (
+        f"{p['condition']} a {price}€: {specs['cpu']['value']}, {specs['ram']['value']}, "
+        f"{specs['ssd']['value']}, {specs['gpu']['value']}. Confronta con altre offerte su Prezzi Furbi."
+    )
+
+    json_ld = {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": p["title"],
+        "image": p["imageUrl"],
+        "brand": p["brand"],
+        "offers": {
+            "@type": "Offer",
+            "price": price,
+            "priceCurrency": "EUR",
+            "availability": "https://schema.org/InStock",
+            "url": p["affiliateUrl"],
+        },
+    }
+
+    spec_rows = "".join(
+        f"<tr><th>{_esc(label)}</th><td>{_esc(specs[key]['value'])}</td></tr>"
+        for key, label in [
+            ("screen", "Schermo"), ("gpu", "Scheda Video"), ("cpu", "Processore"),
+            ("ram", "RAM"), ("ssd", "Storage"),
+        ]
+    )
+    if p.get("weight"):
+        spec_rows += f"<tr><th>Peso</th><td>{_esc(p['weight'])}</td></tr>"
+    if p.get("warranty"):
+        spec_rows += f"<tr><th>Garanzia</th><td>{_esc(p['warranty'])}</td></tr>"
+
+    top_html = "".join(f"<li>✅ {_esc(h)}</li>" for h in p.get("topHighlights", []))
+    flop_html = "".join(f"<li>⚠️ {_esc(h)}</li>" for h in p.get("flopWarnings", []))
+
+    # Prezzo di listino: mostrato SOLO se la fonte lo dichiara davvero (mai stimato
+    # o fabbricato), stessa regola del motore del valore lato React.
+    price_note = ""
+    if p.get("originalPrice") and p["originalPrice"] > price:
+        price_note = f'<div class="was">invece di {_esc(p["originalPrice"])} €</div>'
+
+    return f"""<!doctype html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{_esc(seo_title)}</title>
+<meta name="description" content="{_esc(description)}" />
+<link rel="canonical" href="{page_url}" />
+<meta property="og:type" content="product" />
+<meta property="og:url" content="{page_url}" />
+<meta property="og:site_name" content="Prezzi Furbi" />
+<meta property="og:locale" content="it_IT" />
+<meta property="og:title" content="{_esc(seo_title)}" />
+<meta property="og:description" content="{_esc(description)}" />
+<meta property="og:image" content="{_esc(p['imageUrl'])}" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="{_esc(seo_title)}" />
+<meta name="twitter:description" content="{_esc(description)}" />
+<script type="application/ld+json">{json.dumps(json_ld, ensure_ascii=False).replace('</', '<\\/')}</script>
+<style>
+  :root {{ color-scheme: dark; }}
+  * {{ box-sizing: border-box; }}
+  body {{ margin:0; background:#020617; color:#e2e8f0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; }}
+  main {{ max-width:640px; margin:0 auto; padding:24px 16px 48px; }}
+  a {{ color:#fb923c; }}
+  .back {{ display:inline-block; margin-bottom:16px; font-size:13px; color:#94a3b8; text-decoration:none; }}
+  .back:hover {{ color:#fb923c; }}
+  .kicker {{ font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#94a3b8; }}
+  h1 {{ font-size:22px; line-height:1.3; margin:4px 0 12px; }}
+  .badge {{ display:inline-flex; align-items:center; gap:6px; background:#f97316; color:#fff; font-weight:700; font-size:13px; padding:4px 12px; border-radius:999px; margin-bottom:16px; }}
+  img {{ width:100%; max-width:280px; border-radius:16px; display:block; margin:0 0 16px; border:1px solid #1e293b; background:#fff; }}
+  .price {{ font-size:28px; font-weight:800; color:#fff; margin:8px 0 0; }}
+  .was {{ font-size:13px; color:#64748b; text-decoration:line-through; margin-bottom:4px; }}
+  .condition {{ font-size:13px; color:#94a3b8; margin-bottom:20px; }}
+  table {{ width:100%; border-collapse:collapse; margin-bottom:20px; font-size:14px; }}
+  th, td {{ text-align:left; padding:8px 0; border-bottom:1px solid #1e293b; }}
+  th {{ color:#94a3b8; font-weight:600; width:40%; }}
+  ul {{ list-style:none; padding:0; margin:0 0 20px; font-size:14px; }}
+  li {{ padding:4px 0; }}
+  .cta {{ display:block; text-align:center; background:#f97316; color:#fff; font-weight:800; padding:14px; border-radius:12px; text-decoration:none; font-size:16px; margin-bottom:12px; }}
+  .cta:hover {{ background:#ea580c; }}
+  .disclaimer {{ font-size:11px; color:#64748b; text-align:center; }}
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="/">← Torna al comparatore Prezzi Furbi</a>
+  <div class="kicker">{_esc(p['brand'])} • {_esc(p['model'])}</div>
+  <h1>{_esc(p['title'])}</h1>
+  <div class="badge">{emoji} {_esc(stamp_label)}</div>
+  <img src="{_esc(p['imageUrl'])}" alt="{_esc(p['brand'])} {_esc(p['model'])} - {_esc(specs['cpu']['value'])}, {_esc(specs['ram']['value'])}, {_esc(specs['gpu']['value'])}" loading="lazy" />
+  {price_note}
+  <div class="price">{price} €</div>
+  <div class="condition">{_esc(p['condition'])} · {_esc(p['store'])}</div>
+  <table>{spec_rows}</table>
+  {f"<ul>{top_html}</ul>" if top_html else ""}
+  {f"<ul>{flop_html}</ul>" if flop_html else ""}
+  <a class="cta" href="{_esc(p['affiliateUrl'])}" target="_blank" rel="noopener noreferrer nofollow">Acquista su {_esc(p['store'])}</a>
+  <p class="disclaimer">Quando acquisti tramite questo link, riceviamo una piccola commissione dai negozi partner. Il prezzo per te non cambia mai di un centesimo.</p>
+</main>
+</body>
+</html>
+"""
+
+
+def generate_static_product_pages(catalog: List[Dict[str, Any]]) -> int:
+    """Scrive/aggiorna public/notebook/<id>.html per ogni prodotto e cancella le
+    pagine di prodotti non più in catalogo (mai lasciare online una pagina per
+    un'offerta rimossa). Ritorna il numero di pagine scritte."""
+    out_dir = CONFIG["static_pages_dir"]
+    os.makedirs(out_dir, exist_ok=True)
+
+    current_ids = {p["id"] for p in catalog}
+    existing_files = glob.glob(os.path.join(out_dir, "*.html"))
+    removed = 0
+    for filepath in existing_files:
+        file_id = os.path.splitext(os.path.basename(filepath))[0]
+        if file_id not in current_ids:
+            os.remove(filepath)
+            removed += 1
+
+    for p in catalog:
+        filepath = os.path.join(out_dir, f"{p['id']}.html")
+        with open(filepath, "w", encoding="utf-8") as f:
+            f.write(render_product_page(p))
+
+    if removed:
+        print(f" 🗑️  Rimosse {removed} pagine statiche di prodotti non più in catalogo")
+    return len(catalog)
+
+
+def generate_sitemap(catalog: List[Dict[str, Any]]) -> None:
+    """Home + una entry per pagina prodotto, con lastmod reale da `lastUpdated`
+    (mai una data finta) - sostituisce il sitemap.xml statico con solo la home."""
+    site_url = CONFIG["site_url"]
+    urls = [f"""  <url>
+    <loc>{site_url}/</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>"""]
+    for p in catalog:
+        lastmod = p.get("lastUpdated")
+        lastmod_tag = f"\n    <lastmod>{_esc(lastmod)}</lastmod>" if lastmod else ""
+        urls.append(f"""  <url>
+    <loc>{site_url}/notebook/{_esc(p['id'])}.html</loc>{lastmod_tag}
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>""")
+
+    xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "\n".join(urls) + "\n</urlset>\n"
+    with open(CONFIG["sitemap_file"], "w", encoding="utf-8") as f:
+        f.write(xml)
+
+
 async def main():
     print("=" * 65)
     print("🦊 PREZZI FURBI - AGGIORNAMENTO CATALOGO & VERIFICA")
@@ -1711,6 +1921,16 @@ async def main():
     #    localhost:5173 e un percorso locale, quindi non fanno parte del job automatico.
     if os.environ.get("CAPTURE_SCREENSHOTS") == "1":
         await take_live_screenshots()
+
+    # 7. Pagine statiche per prodotto + sitemap (SEO) - ricarica dal disco perché
+    #    sync_catalog()/verify_catalog_links() lavorano sulla loro copia propria del
+    #    file, non sulla variabile locale `catalog` di main() (che qui è ormai stale).
+    if os.path.exists(path):
+        with open(path, "r", encoding="utf-8") as f:
+            final_catalog = json.load(f)
+        pages_written = generate_static_product_pages(final_catalog)
+        generate_sitemap(final_catalog)
+        print(f"\n🔗 {pages_written} pagine statiche di prodotto + sitemap.xml rigenerate ({CONFIG['static_pages_dir']})")
 
     print("\n" + "=" * 65)
 
