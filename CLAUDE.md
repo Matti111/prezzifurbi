@@ -21,11 +21,16 @@ comprare. Repo GitHub: https://github.com/Matti111/prezzifurbi (privato).
   `RangeSliderField` in `FiltersBar.tsx`, due `<input type="range">` impilati
   (soglia min + soglia max) invece di un vero doppio cursore — scelto apposta
   perché più semplice da verificare senza poter far girare Vite in locale su
-  questa macchina. `numericBounds()`/`matchesRange()` in `specTags.ts`: i
-  bound dello slider sono i min/max REALI nel pool filtrato corrente (come il
-  trattino già esistente sullo slider budget), un valore non riconosciuto dal
-  parser (≤0) non combacia mai con una soglia attiva (stessa cautela già
-  applicata ai tag esatti cpu/gpu).
+  questa macchina. **Scatta solo su taglie che esistono davvero in catalogo**
+  (2026-09-28, richiesta esplicita dopo il primo giro: uno slider continuo
+  poteva far scegliere es. "9GB" di RAM, taglia che nessun prodotto ha):
+  `distinctSortedValues()` in `specTags.ts` calcola i valori REALMENTE
+  presenti nel pool filtrato corrente (es. RAM `[4,8,16,24,32,64]`) e lo
+  slider muove un INDICE su quell'array, non il valore continuo — `min`/`max`
+  dell'`<input>` sono `0`/`lastIndex`, mai il valore in GB/pollici stesso.
+  `matchesRange()` (invariata): un valore non riconosciuto dal parser (≤0)
+  non combacia mai con una soglia attiva (stessa cautela già applicata ai tag
+  esatti cpu/gpu).
 - **Motore del valore** (2026-09-22, da specifica utente — vedi `src/utils/valuation.ts`):
   principio centrale "non guardiamo lo sconto, guardiamo il valore". Nessuna
   percentuale di sconto viene mai fabbricata: `originalPrice` esiste solo se una

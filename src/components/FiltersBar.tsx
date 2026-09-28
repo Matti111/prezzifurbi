@@ -5,7 +5,7 @@ import {
   collectTagOptions,
   isTagAvailable,
   minPriceForSelection,
-  numericBounds,
+  distinctSortedValues,
   parseRamGB,
   parseSsdGB,
   parseScreenInches,
@@ -18,32 +18,53 @@ const formatStorage = (gb: number) =>
 const formatScreen = (inches: number) => `${Number(inches.toFixed(1))}"`;
 const formatRam = (gb: number) => `${gb} GB`;
 
+/** Indice del valore più vicino a `target` dentro `values` (già ordinato
+ * crescente): serve a far combaciare la soglia salvata nel filtro con
+ * l'indice dello slider anche se, cambiando altri filtri, quel valore esatto
+ * non è più tra quelli disponibili nel pool corrente. */
+function closestIndex(values: number[], target: number): number {
+  let best = 0;
+  let bestDiff = Infinity;
+  for (let i = 0; i < values.length; i++) {
+    const diff = Math.abs(values[i] - target);
+    if (diff < bestDiff) {
+      bestDiff = diff;
+      best = i;
+    }
+  }
+  return best;
+}
+
 interface RangeSliderFieldProps {
   label: string;
   icon: React.ReactNode;
-  bounds: { min: number; max: number };
-  step: number;
+  /** Valori REALMENTE presenti in catalogo, ordinati crescenti (es. RAM
+   * [4,8,16,32,64]): lo slider scatta solo su questi, mai su un continuo
+   * arbitrario che potrebbe far scegliere una taglia inesistente (es. 9GB). */
+  values: number[];
   value: RangeFilter;
   onChange: (next: RangeFilter) => void;
   format: (n: number) => string;
 }
 
-/** Slider a doppia soglia (min + max) per una specifica numerica continua: due
- * <input type="range"> impilati invece di un vero doppio cursore, più semplice
- * da verificare senza poter far girare Vite in locale su questa macchina. */
-const RangeSliderField: React.FC<RangeSliderFieldProps> = ({ label, icon, bounds, step, value, onChange, format }) => {
-  if (bounds.min >= bounds.max) return null; // nessuna variazione reale nel pool attuale
+/** Slider a doppia soglia (min + max) per una specifica numerica discreta: due
+ * <input type="range"> impilati (indice nell'array `values`, non il valore
+ * continuo) invece di un vero doppio cursore, più semplice da verificare
+ * senza poter far girare Vite in locale su questa macchina. */
+const RangeSliderField: React.FC<RangeSliderFieldProps> = ({ label, icon, values, value, onChange, format }) => {
+  if (values.length < 2) return null; // nessuna variazione reale nel pool attuale
 
-  const min = value.min ?? bounds.min;
-  const max = value.max ?? bounds.max;
+  const lastIndex = values.length - 1;
+  const minIndex = value.min === null ? 0 : closestIndex(values, value.min);
+  const maxIndex = value.max === null ? lastIndex : closestIndex(values, value.max);
 
-  const handleMinChange = (raw: number) => {
-    const next = Math.min(raw, max);
-    onChange({ min: next <= bounds.min ? null : next, max: value.max });
+  const handleMinChange = (rawIndex: number) => {
+    const idx = Math.min(rawIndex, maxIndex);
+    onChange({ min: idx <= 0 ? null : values[idx], max: value.max });
   };
-  const handleMaxChange = (raw: number) => {
-    const next = Math.max(raw, min);
-    onChange({ min: value.min, max: next >= bounds.max ? null : next });
+  const handleMaxChange = (rawIndex: number) => {
+    const idx = Math.max(rawIndex, minIndex);
+    onChange({ min: value.min, max: idx >= lastIndex ? null : values[idx] });
   };
 
   return (
@@ -54,26 +75,26 @@ const RangeSliderField: React.FC<RangeSliderFieldProps> = ({ label, icon, bounds
           <span>{label}</span>
         </label>
         <span className="text-[11px] font-bold text-orange-400">
-          {format(min)} – {format(max)}
+          {format(values[minIndex])} – {format(values[maxIndex])}
         </span>
       </div>
       <div className="space-y-1">
         <input
           type="range"
-          min={bounds.min}
-          max={bounds.max}
-          step={step}
-          value={min}
+          min={0}
+          max={lastIndex}
+          step={1}
+          value={minIndex}
           onChange={(e) => handleMinChange(Number(e.target.value))}
           className="w-full accent-orange-500 bg-slate-950 h-1.5 rounded-lg cursor-pointer"
           aria-label={`${label} - soglia minima`}
         />
         <input
           type="range"
-          min={bounds.min}
-          max={bounds.max}
-          step={step}
-          value={max}
+          min={0}
+          max={lastIndex}
+          step={1}
+          value={maxIndex}
           onChange={(e) => handleMaxChange(Number(e.target.value))}
           className="w-full accent-orange-500 bg-slate-950 h-1.5 rounded-lg cursor-pointer"
           aria-label={`${label} - soglia massima`}
@@ -149,9 +170,9 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
     filters.ssdRange.min !== null || filters.ssdRange.max !== null ||
     filters.screenRange.min !== null || filters.screenRange.max !== null;
 
-  const ramBounds = numericBounds(productsForTags, (p) => parseRamGB(p.specs.ram.value));
-  const ssdBounds = numericBounds(productsForTags, (p) => parseSsdGB(p.specs.ssd.value));
-  const screenBounds = numericBounds(productsForTags, (p) => parseScreenInches(p.specs.screen.value));
+  const ramValues = distinctSortedValues(productsForTags, (p) => parseRamGB(p.specs.ram.value));
+  const ssdValues = distinctSortedValues(productsForTags, (p) => parseSsdGB(p.specs.ssd.value));
+  const screenValues = distinctSortedValues(productsForTags, (p) => parseScreenInches(p.specs.screen.value));
   // Senza nessun tag selezionato, la selezione vuota combacia con ogni prodotto:
   // il trattino mostra semplicemente il prezzo del prodotto più economico disponibile.
   const rawDashPrice = minPriceForSelection(productsForTags, filters.specTags);
@@ -342,15 +363,16 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
 
       </div>
 
-      {/* 2C. Soglie min/max su specifiche continue (RAM/Storage/Schermo): a
+      {/* 2C. Soglie min/max su specifiche numeriche (RAM/Storage/Schermo): a
           differenza dei tag esatti sotto, qui l'utente sceglie un intervallo invece
-          di un valore singolo (es. "almeno 16GB" senza escludere 32GB/64GB) */}
+          di un valore singolo (es. "almeno 16GB" senza escludere 32GB/64GB), ma lo
+          slider scatta solo sulle taglie davvero presenti in catalogo (mai un
+          continuo arbitrario che farebbe scegliere es. "9GB", che nessuno vende) */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 pt-3 border-t border-slate-800 mt-3">
         <RangeSliderField
           label="RAM"
           icon={<RamIcon className="w-3.5 h-3.5 text-orange-400" />}
-          bounds={ramBounds ?? { min: 0, max: 0 }}
-          step={1}
+          values={ramValues}
           value={filters.ramRange}
           onChange={(next) => onFilterChange({ ramRange: next })}
           format={formatRam}
@@ -358,8 +380,7 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
         <RangeSliderField
           label="Storage"
           icon={<HardDrive className="w-3.5 h-3.5 text-orange-400" />}
-          bounds={ssdBounds ?? { min: 0, max: 0 }}
-          step={64}
+          values={ssdValues}
           value={filters.ssdRange}
           onChange={(next) => onFilterChange({ ssdRange: next })}
           format={formatStorage}
@@ -367,8 +388,7 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
         <RangeSliderField
           label="Dimensione Schermo"
           icon={<Monitor className="w-3.5 h-3.5 text-orange-400" />}
-          bounds={screenBounds ?? { min: 0, max: 0 }}
-          step={0.1}
+          values={screenValues}
           value={filters.screenRange}
           onChange={(next) => onFilterChange({ screenRange: next })}
           format={formatScreen}

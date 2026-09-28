@@ -133,20 +133,18 @@ export function parseGpuTag(value: string): ParsedTag {
   return { label: value.split(' ').slice(0, 2).join(' '), rank: 0, sourced: false };
 }
 
-/** Estremi reali (min/max) di una specifica numerica nel pool di prodotti dato, per
- * dimensionare uno slider di soglia sui valori davvero presenti in catalogo invece
- * che su un range arbitrario fisso. `null` se nessun prodotto ha un valore leggibile. */
-export function numericBounds(products: Product[], valueOf: (p: Product) => number): { min: number; max: number } | null {
-  let min = Infinity;
-  let max = -Infinity;
+/** Valori distinti REALMENTE presenti nel pool di prodotti dato (mai un range
+ * continuo arbitrario): lo slider di soglia scatta solo su taglie che esistono
+ * davvero in catalogo (es. RAM 4/8/16/32GB, mai un generico "9GB" che nessun
+ * prodotto ha). Ordinati crescenti; array vuoto se nessun prodotto ha un
+ * valore leggibile per questa specifica. */
+export function distinctSortedValues(products: Product[], valueOf: (p: Product) => number): number[] {
+  const set = new Set<number>();
   for (const p of products) {
     const v = valueOf(p);
-    if (v <= 0) continue;
-    if (v < min) min = v;
-    if (v > max) max = v;
+    if (v > 0) set.add(v);
   }
-  if (!isFinite(min)) return null;
-  return { min, max };
+  return Array.from(set).sort((a, b) => a - b);
 }
 
 /** Un prodotto soddisfa una soglia min/max se il suo valore rientra nei limiti
