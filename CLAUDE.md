@@ -665,6 +665,42 @@ fascia, più link incrociati tra pagine di giochi con requisiti compatibili.
   committare con `tiers: None` ovunque: tier card, barre, abbinamento
   notebook↔tier e link incrociati funzionano tutti correttamente end-to-end.
 
+### Schede prodotto in stile home su categoria/gioco (2026-09-29)
+
+Richiesta esplicita dell'utente dopo aver visto le prime pagine categoria/
+gioco live: non la semplice riga compatta (thumbnail+titolo+prezzo), ma una
+scheda fedele a `ProductCard.tsx` della home — "solo le specifiche senza
+top-flop-commento ma tutto il resto sì".
+
+- **`_render_product_card()`/`_render_pcard_spec()`** (sezione "5. PAGINE
+  STATICHE PER PRODOTTO", vicino a `_STAMP_META`): sostituisce
+  `_render_category_row()` (rimossa, nessun altro chiamante) in
+  `render_category_page()` e `_render_game_product_list()`. Riproduce timbro,
+  badge condizione (✨ Nuovo/♻️ Ricondizionato/🤝 Usato), sconto reale o
+  "Netto", thumbnail con badge peso, brand/modello, titolo, stelle rating,
+  tag `useCases` (🎮 Gaming/🎨 Creatività/👨‍💻 Programmazione/🎓 Studio/💼
+  Lavoro/🏠 Home), le 5 specifiche con le stesse frecce ⇈/↑/=/↓ già salvate
+  per prodotto da `evaluate_laptop()` (nessun ricalcolo), prezzo + risparmio,
+  pallino di freschezza (`_freshness_level()`, nuovo — stesse soglie
+  10/30 giorni di `freshnessLevel()` in `valuation.ts`, calcolate al momento
+  della generazione), store, avviso "link non verificato" per Amazon/
+  MediaWorld, CTA "Acquista". **Volutamente ESCLUSI** i tab Top/Flop/
+  Commento (richiesta esplicita).
+- **Stessa semplificazione già accettata per le pagine prodotto singole**
+  (vedi sopra): timbro grezzo del backend, mai l'upgrade contestuale verso
+  🦊 di `qualifiesForFox()` (richiederebbe portare le tabelle benchmark
+  CPU/GPU in Python) — sconto mostrato solo se `originalPrice` è dichiarato
+  dalla fonte, mai un "prezzo tipico" calcolato sul pool.
+- **`.card-grid`/`.pcard*`** in `_PAGE_STYLE` (CSS condiviso, quindi anche
+  le pagine prodotto singole lo caricano anche se non lo usano — innocuo).
+  `<main>` di pagine categoria/gioco allargato a 1000px (era 640px, pensato
+  per una singola scheda prodotto) per ospitare la griglia; testo lungo
+  (`h1`/`.intro`/`.disclaimer`/`.tier-card`/`.compat-list`) tenuto a
+  `max-width:640px` per non stirarsi su tutta la larghezza.
+- **La pagina indice `/notebook-per-giochi.html` NON è cambiata**: è un
+  elenco di GIOCHI, non di prodotti — resta lo stile riga compatta
+  (`.list`/`.row`), mai schede prodotto.
+
 ## TODO aperti
 
 1. Quando Back Market IT / MediaWorld IT / Unieuro IT / Euronics IT approvano su
