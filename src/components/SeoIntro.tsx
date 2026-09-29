@@ -46,6 +46,15 @@ export const SeoIntro: React.FC<SeoIntroProps> = ({ onOpenHowItWorks }) => {
           Leggi la guida completa al metodo →
         </button>
       </p>
+      <p>
+        Vuoi sapere se un notebook regge un gioco specifico?{' '}
+        <a
+          href="/notebook-per-giochi.html"
+          className="text-orange-400 hover:text-orange-300 font-semibold underline underline-offset-2"
+        >
+          Confronta i requisiti dei giochi più richiesti con il catalogo →
+        </a>
+      </p>
     </section>
   );
 };

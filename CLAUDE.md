@@ -588,6 +588,64 @@ del documento utente (raw vs normalizzato)**:
   confermato nulla. Da controllare a occhio sull'annuncio eBay live se
   capita di nuovo altrove.
 
+### Pagine "Che PC serve per..." (requisiti di gioco, 2026-09-29)
+
+Richiesta esplicita dell'utente: una pagina per gioco (non un selettore JS su
+un'unica pagina, stesso ragionamento delle pagine categoria — un URL dedicato
+per "che PC serve per Cyberpunk 2077" si indicizza, un dropdown lato client
+no) con i requisiti minimi/consigliati/ultra mostrati a barre (poco testo,
+molta grafica) e i notebook del catalogo che li soddisfano evidenziati per
+fascia, più link incrociati tra pagine di giochi con requisiti compatibili.
+
+- **`GAME_REQUIREMENTS` in `test_db.py`** (sezione "7. PAGINE 'CHE PC SERVE
+  PER...'"): 11 titoli scelti apposta per interesse ampio, non solo tra chi
+  già gioca — richiesta esplicita dell'utente ("titoli che creano curiosità
+  anche in chi normalmente non gioca"). Cyberpunk 2077, Clair Obscur:
+  Expedition 33, GTA V, GTA 6, Baldur's Gate 3, The Sims 4, Elden Ring,
+  Hogwarts Legacy, Fortnite, Minecraft, Valorant.
+- **I requisiti (`tiers`) sono dati editoriali, MAI generati o stimati da
+  qui**: stesso principio "mai inventare specifiche" di tutto il resto della
+  pipeline — un requisito CPU/GPU/RAM/storage sbagliato sarebbe l'esatto
+  contrario di quello che il sito promette. **🟡 Al momento tutti i giochi
+  hanno `tiers: None`** (pagina "requisiti non ancora annunciati" onesta,
+  stesso trattamento pensato in origine solo per GTA 6) — l'utente ha offerto
+  di copiare i requisiti reali da Steam/sito ufficiale di ogni gioco per
+  evitare che si affidasse alla sola memoria approssimativa di chi scrive
+  (specialmente su Expedition 33, titolo troppo recente per essere sicuri).
+  **Da fare appena arrivano i dati**: compilare `tiers` per i 9 giochi con
+  dati disponibili (Fortnite/Minecraft/Valorant non sono su Steam, servono
+  dai rispettivi siti ufficiali) — GTA 6 resta `None` per sempre (nessun
+  requisito ufficiale esiste ancora).
+- **CPU/GPU dei requisiti sulla STESSA scala tier di `extract_cpu()`/
+  `extract_gpu()`** (1-4 CPU, 1-5 GPU) invece di un sistema di punteggio
+  parallelo: un notebook "soddisfa" un tier se il suo tier CPU/GPU e i suoi
+  GB RAM/storage sono tutti `>=` quelli richiesti (`_tier_meets()`). Le barre
+  visive (0-10 segmenti, mai testo lungo) sono una conversione SOLO per la
+  grafica — il confronto vero usa sempre i valori reali sottostanti, mai la
+  barra stessa.
+  - Barre CPU: tier→segmenti `{1:3, 2:5, 3:8, 4:10}`.
+  - Barre GPU: tier→segmenti `{1:2, 2:4, 3:6, 4:8, 5:10}`.
+  - Barre RAM/storage: scala continua (`gb/3.2` e `gb/15`, arrotondata,
+    minimo 1 massimo 10) — non serve una tabella fissa come CPU/GPU perché
+    RAM/storage sono già numeri, non famiglie di modelli da categorizzare.
+- **"Compatibile anche con" tra pagine di giochi** (`_compatible_games()`):
+  per il tier "consigliato" di un gioco, quali ALTRI giochi (tra quelli con
+  requisiti noti) sarebbero soddisfatti da un notebook che raggiunge quel
+  livello — stesso confronto `_tier_meets()` usato per i notebook, riusato
+  tra coppie di giochi. Richiesta esplicita dell'utente ("uno che prende un
+  PC sa che funzionerà anche con altri giochi").
+- **`public/notebook-per-giochi.html`**: pagina indice con link a tutti gli
+  11 giochi, generata insieme alle altre da `generate_game_pages()`. Linkata
+  anche da `SeoIntro.tsx` in home (link interno reale, coerente col resto
+  del lavoro SEO del giorno prima).
+- **Nessuna pulizia automatica delle pagine stantie** (a differenza di
+  prodotti/categorie): `GAME_REQUIREMENTS` è una lista curata a mano, non
+  derivata dal volume del catalogo — rimuovere un gioco dalla lista è una
+  scelta editoriale, va fatta a mano insieme al file `.html` corrispondente.
+- Verificato con un test sintetico (2 giochi finti con tier reali) prima di
+  committare con `tiers: None` ovunque: tier card, barre, abbinamento
+  notebook↔tier e link incrociati funzionano tutti correttamente end-to-end.
+
 ## TODO aperti
 
 1. Quando Back Market IT / MediaWorld IT / Unieuro IT / Euronics IT approvano su
@@ -671,6 +729,15 @@ del documento utente (raw vs normalizzato)**:
     framework (B, Next.js/Astro) — entrambe cambiano la navigazione/il
     toolchain e non sono verificabili in locale su questa macchina (npm non
     installato, solo il sito live dopo il deploy Vercel)
+13. **🟡 Pagine "Che PC serve per..." — mancano i requisiti reali
+    (2026-09-29)**: meccanismo completo e testato (vedi sezione SEO sopra,
+    `GAME_REQUIREMENTS` in `test_db.py`), ma tutti gli 11 giochi hanno
+    `tiers: None` (pagina "non ancora annunciati" per tutti, non solo GTA 6).
+    L'utente ha offerto di copiare i requisiti reali da Steam/sito ufficiale
+    di ogni gioco (mai inventarli da qui) — compilare `tiers` appena
+    arrivano i dati, poi rigenerare le pagine (`generate_game_pages()`,
+    richiamata da `main()` come parte del passo 7, oppure a mano con lo
+    stesso pattern `exec()` già usato nello scratchpad durante la sessione)
 
 ## File locali che NON sono su git (da ricreare se serve lavorare in locale)
 

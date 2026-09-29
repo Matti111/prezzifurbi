@@ -2192,6 +2192,356 @@ def generate_category_pages(catalog: List[Dict[str, Any]]) -> List[str]:
     return written_slugs
 
 
+# --- 7. PAGINE "CHE PC SERVE PER..." (requisiti di gioco, SEO + utilità) ---
+#
+# Selezione di giochi CURATA A MANO (mai "una pagina per ogni gioco possibile"):
+# titoli scelti per interesse ampio, non solo tra chi già gioca abitualmente -
+# nomi che creano curiosità anche in chi normalmente non gioca e potrebbe
+# valutare di cambiare PC apposta (richiesta esplicita utente 2026-09-29).
+#
+# I requisiti (`tiers`) sono dati editoriali forniti dall'utente stesso, copiati
+# dalla pagina Steam/sito ufficiale di ogni gioco - MAI generati o stimati da
+# qui: uno storage/CPU/GPU richiesto sbagliato sarebbe l'esatto contrario di
+# quello che il sito promette (stesso principio "mai inventare specifiche" del
+# resto della pipeline). Un gioco con `tiers` vuoto (es. GTA 6, requisiti non
+# ancora annunciati da Rockstar) prende una pagina "in attesa" onesta invece di
+# un numero inventato - la pagina esiste comunque (query di ricerca reale, "che
+# PC serve per GTA 6" ha volume anche senza una risposta numerica).
+#
+# CPU/GPU dei requisiti sono classificati sulla STESSA scala tier di
+# extract_cpu()/extract_gpu() (1-4 CPU, 1-5 GPU): il confronto con i laptop del
+# catalogo è diretto, non un sistema di punteggio parallelo scollegato.
+GAME_REQUIREMENTS: List[Dict[str, Any]] = [
+    {"slug": "cyberpunk-2077", "title": "Cyberpunk 2077",
+     "blurb": "GDR open world di CD Projekt Red ambientato a Night City.", "tiers": None},
+    {"slug": "expedition-33", "title": "Clair Obscur: Expedition 33",
+     "blurb": "GDR a turni francese diventato un caso a sorpresa nel 2025.", "tiers": None},
+    {"slug": "gta-5", "title": "Grand Theft Auto V",
+     "blurb": "Open world d'azione di Rockstar Games, ancora tra i più giocati.", "tiers": None},
+    {"slug": "gta-6", "title": "GTA 6",
+     "blurb": "Il prossimo capitolo della serie Grand Theft Auto di Rockstar Games.", "tiers": None},
+    {"slug": "baldurs-gate-3", "title": "Baldur's Gate 3",
+     "blurb": "GDR a turni di Larian Studios, Game of the Year 2023.", "tiers": None},
+    {"slug": "sims-4", "title": "The Sims 4",
+     "blurb": "Simulatore di vita di Electronic Arts, popolare ben oltre i giocatori abituali.", "tiers": None},
+    {"slug": "elden-ring", "title": "Elden Ring",
+     "blurb": "Action GDR open world di FromSoftware.", "tiers": None},
+    {"slug": "hogwarts-legacy", "title": "Hogwarts Legacy",
+     "blurb": "GDR open world ambientato nel mondo di Harry Potter.", "tiers": None},
+    {"slug": "fortnite", "title": "Fortnite",
+     "blurb": "Battle royale di Epic Games, tra i giochi più popolari al mondo.", "tiers": None},
+    {"slug": "minecraft", "title": "Minecraft",
+     "blurb": "Sandbox open world di Mojang, il gioco più venduto di sempre.", "tiers": None},
+    {"slug": "valorant", "title": "Valorant",
+     "blurb": "Sparatutto tattico competitivo free-to-play di Riot Games.", "tiers": None},
+]
+
+_TIER_META = {
+    "minimo": ("🟠", "Requisiti Minimi"),
+    "consigliato": ("🟢", "Requisiti Consigliati"),
+    "ultra": ("🟣", "Requisiti Ultra"),
+}
+
+_CPU_TIER_BARS = {1: 3, 2: 5, 3: 8, 4: 10}
+_GPU_TIER_BARS = {1: 2, 2: 4, 3: 6, 4: 8, 5: 10}
+
+_GAME_PAGE_STYLE = """
+  .tier-card { border-radius:14px; padding:14px; margin-bottom:12px; border:1px solid #1e293b; background:#0f172a; }
+  .tier-minimo { border-left:3px solid #f59e0b; }
+  .tier-consigliato { border-left:3px solid #22c55e; }
+  .tier-ultra { border-left:3px solid #8b5cf6; }
+  .tier-title { font-size:13px; font-weight:800; margin-bottom:10px; }
+  .tier-minimo .tier-title { color:#f59e0b; }
+  .tier-consigliato .tier-title { color:#22c55e; }
+  .tier-ultra .tier-title { color:#8b5cf6; }
+  .bar-row { display:flex; align-items:center; gap:8px; margin-bottom:5px; }
+  .bar-name { width:34px; flex-shrink:0; font-size:10px; color:#94a3b8; font-weight:700; }
+  .bar-track { display:flex; gap:2px; flex:1; }
+  .bar-seg { flex:1; height:8px; border-radius:2px; background:#1e293b; }
+  .tier-minimo .bar-seg.filled { background:#f59e0b; }
+  .tier-consigliato .bar-seg.filled { background:#22c55e; }
+  .tier-ultra .bar-seg.filled { background:#8b5cf6; }
+  .tier-spec-text { font-size:11px; color:#64748b; margin-top:10px; line-height:1.5; }
+  .tier-section-title { font-size:14px; font-weight:800; color:#e2e8f0; margin:20px 0 10px; }
+  .compat-list { list-style:none; padding:0; margin:0 0 8px; font-size:13px; }
+  .compat-list li { padding:6px 0; border-bottom:1px solid #1e293b; }
+  .compat-tier { color:#64748b; font-size:11px; }
+"""
+
+
+def _cpu_tier_of_product(p: Dict[str, Any]) -> int:
+    return extract_cpu(p["specs"]["cpu"]["value"])["tier"]
+
+
+def _gpu_tier_of_product(p: Dict[str, Any]) -> int:
+    return extract_gpu(p["specs"]["gpu"]["value"])["tier"]
+
+
+def _stored_ssd_gb(p: Dict[str, Any]) -> int:
+    v = p["specs"]["ssd"]["value"]
+    m = re.search(r'(\d+(?:\.\d+)?)\s*TB', v, re.I)
+    if m:
+        return round(float(m.group(1)) * 1024)
+    m = re.search(r'(\d+)\s*GB', v)
+    return int(m.group(1)) if m else 0
+
+
+def _product_tier_profile(p: Dict[str, Any]) -> Dict[str, int]:
+    return {
+        "cpu_tier": _cpu_tier_of_product(p),
+        "gpu_tier": _gpu_tier_of_product(p),
+        "ram_gb": _ram_gb(p) or 0,
+        "ssd_gb": _stored_ssd_gb(p),
+    }
+
+
+def _tier_meets(a: Dict[str, int], b: Dict[str, int]) -> bool:
+    """True se le specifiche `a` (di un notebook O di un altro gioco) soddisfano
+    anche il requisito `b` - stessa scala 1-4/1-5 di extract_cpu()/extract_gpu(),
+    confronto diretto senza un sistema di punteggio parallelo."""
+    return (a["cpu_tier"] >= b["cpu_tier"] and a["gpu_tier"] >= b["gpu_tier"]
+            and a["ram_gb"] >= b["ram_gb"] and a["ssd_gb"] >= b["ssd_gb"])
+
+
+def _best_tier_for_product(p: Dict[str, Any], game: Dict[str, Any]) -> Optional[str]:
+    profile = _product_tier_profile(p)
+    for tier_name in ("ultra", "consigliato", "minimo"):
+        tier = (game.get("tiers") or {}).get(tier_name)
+        if tier and _tier_meets(profile, tier):
+            return tier_name
+    return None
+
+
+def _compatible_games(game: Dict[str, Any], all_games: List[Dict[str, Any]],
+                       reference_tier_name: str = "consigliato") -> List[Any]:
+    """Per il tier di riferimento di `game`, quali ALTRI giochi (tra quelli con
+    requisiti noti) sono soddisfatti da un notebook che raggiunge quel livello -
+    "un PC che regge X regge anche Y/Z" (richiesta esplicita utente 2026-09-29)."""
+    ref = (game.get("tiers") or {}).get(reference_tier_name)
+    if not ref:
+        return []
+    out = []
+    for other in all_games:
+        if other["slug"] == game["slug"] or not other.get("tiers"):
+            continue
+        for tier_name in ("ultra", "consigliato", "minimo"):
+            other_tier = other["tiers"].get(tier_name)
+            if other_tier and _tier_meets(ref, other_tier):
+                out.append((other, tier_name))
+                break
+    return out
+
+
+def _render_bar(label: str, filled: int) -> str:
+    segs = "".join(f'<div class="bar-seg{" filled" if i < filled else ""}"></div>' for i in range(10))
+    return f'<div class="bar-row"><div class="bar-name">{_esc(label)}</div><div class="bar-track">{segs}</div></div>'
+
+
+def _render_tier_card(tier_name: str, tier: Dict[str, Any]) -> str:
+    emoji, label = _TIER_META[tier_name]
+    bars = (
+        _render_bar("CPU", _CPU_TIER_BARS.get(tier["cpu_tier"], 1))
+        + _render_bar("GPU", _GPU_TIER_BARS.get(tier["gpu_tier"], 1))
+        + _render_bar("RAM", min(10, max(1, round(tier["ram_gb"] / 3.2))))
+        + _render_bar("SSD", min(10, max(1, round(tier["ssd_gb"] / 15))))
+    )
+    spec_text = f"{_esc(tier['cpu_label'])} · {_esc(tier['gpu_label'])} · {tier['ram_gb']} GB RAM · {tier['ssd_gb']} GB storage"
+    return f'<div class="tier-card tier-{tier_name}"><div class="tier-title">{emoji} {_esc(label)}</div>{bars}<div class="tier-spec-text">{spec_text}</div></div>'
+
+
+def _render_game_product_list(game: Dict[str, Any], catalog: List[Dict[str, Any]]) -> str:
+    grouped: Dict[str, List[Dict[str, Any]]] = {"ultra": [], "consigliato": [], "minimo": []}
+    for p in catalog:
+        best = _best_tier_for_product(p, game)
+        if best:
+            grouped[best].append(p)
+
+    sections = []
+    for tier_name in ("ultra", "consigliato", "minimo"):
+        products = grouped[tier_name]
+        if not products:
+            continue
+        products = sorted(products, key=_deal_score, reverse=True)[:20]
+        emoji, label = _TIER_META[tier_name]
+        rows = "".join(_render_category_row(p) for p in products)
+        sections.append(f'<h2 class="tier-section-title">{emoji} Notebook che soddisfano i {label.lower()}</h2><div class="list">{rows}</div>')
+
+    if not sections:
+        return '<p class="intro">Nessun notebook nel catalogo attuale soddisfa nemmeno i requisiti minimi per questo gioco.</p>'
+    return "".join(sections)
+
+
+def render_game_page(game: Dict[str, Any], catalog: List[Dict[str, Any]], all_games: List[Dict[str, Any]]) -> str:
+    site_url = CONFIG["site_url"]
+    slug = game["slug"]
+    title = game["title"]
+    page_url = f"{site_url}/notebook-per-{slug}.html"
+    blurb = game.get("blurb", "")
+    json_ld = None
+
+    if not game.get("tiers"):
+        seo_title = f"Che PC serve per {title}? Requisiti non ancora annunciati | Prezzi Furbi"
+        description = f"{blurb} Lo sviluppatore non ha ancora pubblicato i requisiti di sistema PC ufficiali."
+        body = f"""
+  <p class="intro">{_esc(blurb)}</p>
+  <div class="tier-card">
+    <div class="tier-title">⏳ Requisiti non ancora annunciati</div>
+    <p class="tier-spec-text" style="margin-top:0;">Lo sviluppatore non ha ancora pubblicato i requisiti di sistema PC ufficiali per {_esc(title)}. Questa pagina si aggiornerà non appena saranno disponibili.</p>
+  </div>
+  <a class="back" href="/notebook-gaming.html">Intanto guarda i notebook gaming più potenti del catalogo →</a>
+"""
+    else:
+        tiers = game["tiers"]
+        tier_cards = "".join(_render_tier_card(t, tiers[t]) for t in ("minimo", "consigliato", "ultra") if t in tiers)
+        product_list_html = _render_game_product_list(game, catalog)
+
+        compatible = _compatible_games(game, all_games)
+        compat_html = ""
+        if compatible:
+            items = "".join(
+                f'<li><a href="/notebook-per-{g["slug"]}.html">{_esc(g["title"])}</a> <span class="compat-tier">({_TIER_META[t][1].lower()})</span></li>'
+                for g, t in compatible
+            )
+            compat_html = (
+                f'<h2 class="tier-section-title">🎮 Un notebook così regge anche</h2>'
+                f'<ul class="compat-list">{items}</ul>'
+                f'<p class="tier-spec-text">Se un notebook soddisfa i requisiti consigliati per {_esc(title)}, '
+                f'soddisfa anche questi altri giochi almeno al livello indicato.</p>'
+            )
+
+        seo_title = f"Che PC serve per {title}? Requisiti e Notebook Compatibili | Prezzi Furbi"
+        description = f"Requisiti minimi, consigliati e ultra per giocare a {title} su PC, con i notebook del catalogo Prezzi Furbi che li soddisfano."
+
+        matched = [p for p in catalog if _best_tier_for_product(p, game)]
+        matched = sorted(matched, key=_deal_score, reverse=True)[:24]
+        if matched:
+            json_ld = {
+                "@context": "https://schema.org",
+                "@type": "ItemList",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem", "position": i + 1,
+                        "item": {
+                            "@type": "Product", "name": p["title"], "image": p["imageUrl"], "brand": p["brand"],
+                            "offers": {"@type": "Offer", "price": p["price"], "priceCurrency": "EUR",
+                                       "availability": "https://schema.org/InStock",
+                                       "url": f"{site_url}/notebook/{p['id']}.html"},
+                        },
+                    }
+                    for i, p in enumerate(matched)
+                ],
+            }
+
+        body = f"""
+  <p class="intro">{_esc(blurb)}</p>
+  {tier_cards}
+  <p class="disclaimer" style="text-align:left; margin: 4px 0 20px;">Requisiti dichiarati dallo sviluppatore, possono cambiare con futuri aggiornamenti del gioco: verifica sempre la pagina ufficiale prima dell'acquisto.</p>
+  {product_list_html}
+  {compat_html}
+"""
+
+    json_ld_html = (
+        f'<script type="application/ld+json">{json.dumps(json_ld, ensure_ascii=False).replace(chr(60) + "/", chr(60) + chr(92) + "/")}</script>'
+        if json_ld else ""
+    )
+
+    return f"""<!doctype html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{_esc(seo_title)}</title>
+<meta name="description" content="{_esc(description)}" />
+<link rel="canonical" href="{page_url}" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{page_url}" />
+<meta property="og:site_name" content="Prezzi Furbi" />
+<meta property="og:locale" content="it_IT" />
+<meta property="og:title" content="{_esc(seo_title)}" />
+<meta property="og:description" content="{_esc(description)}" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="{_esc(seo_title)}" />
+<meta name="twitter:description" content="{_esc(description)}" />
+{json_ld_html}
+<style>{_PAGE_STYLE}{_GAME_PAGE_STYLE}</style>
+</head>
+<body>
+<main>
+  <a class="back" href="/notebook-per-giochi.html">← Tutti i giochi</a>
+  <h1>Che PC serve per {_esc(title)}?</h1>
+  {body}
+  <a class="back" href="/">Torna al comparatore Prezzi Furbi →</a>
+</main>
+</body>
+</html>
+"""
+
+
+def render_games_index_page(games: List[Dict[str, Any]]) -> str:
+    site_url = CONFIG["site_url"]
+    page_url = f"{site_url}/notebook-per-giochi.html"
+    seo_title = "Che PC serve per giocare? Notebook per Videogioco | Prezzi Furbi"
+    description = "Requisiti minimi, consigliati e ultra dei giochi più richiesti del momento, a confronto con i notebook del catalogo Prezzi Furbi."
+
+    rows = []
+    for g in games:
+        note = "Requisiti disponibili" if g.get("tiers") else "Requisiti non ancora annunciati"
+        rows.append(
+            f'<a class="row" href="/notebook-per-{g["slug"]}.html">'
+            f'<div class="row-info"><div class="row-title">{_esc(g["title"])}</div>'
+            f'<div class="row-specs">{_esc(note)}</div></div></a>'
+        )
+
+    return f"""<!doctype html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{_esc(seo_title)}</title>
+<meta name="description" content="{_esc(description)}" />
+<link rel="canonical" href="{page_url}" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{page_url}" />
+<meta property="og:site_name" content="Prezzi Furbi" />
+<meta property="og:locale" content="it_IT" />
+<meta property="og:title" content="{_esc(seo_title)}" />
+<meta property="og:description" content="{_esc(description)}" />
+<style>{_PAGE_STYLE}{_GAME_PAGE_STYLE}</style>
+</head>
+<body>
+<main>
+  <a class="back" href="/">← Torna al comparatore Prezzi Furbi</a>
+  <h1>Che PC serve per giocare?</h1>
+  <p class="intro">Scegli un gioco per vedere i requisiti di sistema (minimi, consigliati, ultra) e quali notebook del catalogo li soddisfano davvero.</p>
+  <div class="list">{"".join(rows)}</div>
+</main>
+</body>
+</html>
+"""
+
+
+def generate_game_pages(catalog: List[Dict[str, Any]]) -> List[str]:
+    """Lista di giochi curata a mano (vedi GAME_REQUIREMENTS sopra), non derivata
+    dal catalogo: nessuna pulizia automatica delle pagine stantie qui, una
+    rimozione dalla lista è una scelta editoriale da fare a mano insieme al
+    file .html corrispondente."""
+    out_dir = CONFIG["category_pages_dir"]
+    os.makedirs(out_dir, exist_ok=True)
+
+    slugs = []
+    for game in GAME_REQUIREMENTS:
+        filepath = os.path.join(out_dir, f"notebook-per-{game['slug']}.html")
+        with open(filepath, "w", encoding="utf-8") as f:
+            f.write(render_game_page(game, catalog, GAME_REQUIREMENTS))
+        slugs.append(f"notebook-per-{game['slug']}")
+
+    with open(os.path.join(out_dir, "notebook-per-giochi.html"), "w", encoding="utf-8") as f:
+        f.write(render_games_index_page(GAME_REQUIREMENTS))
+    slugs.append("notebook-per-giochi")
+
+    return slugs
+
+
 async def main():
     print("=" * 65)
     print("🦊 PREZZI FURBI - AGGIORNAMENTO CATALOGO & VERIFICA")
@@ -2257,8 +2607,9 @@ async def main():
             final_catalog = json.load(f)
         pages_written = generate_static_product_pages(final_catalog)
         category_slugs = generate_category_pages(final_catalog)
-        generate_sitemap(final_catalog, category_slugs)
-        print(f"\n🔗 {pages_written} pagine statiche di prodotto, {len(category_slugs)} pagine categoria + sitemap.xml rigenerate ({CONFIG['category_pages_dir']})")
+        game_slugs = generate_game_pages(final_catalog)
+        generate_sitemap(final_catalog, category_slugs + game_slugs)
+        print(f"\n🔗 {pages_written} pagine statiche di prodotto, {len(category_slugs)} pagine categoria, {len(game_slugs)} pagine gioco + sitemap.xml rigenerate ({CONFIG['category_pages_dir']})")
 
     print("\n" + "=" * 65)
 
