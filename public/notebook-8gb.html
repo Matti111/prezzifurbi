@@ -51,41 +51,83 @@
   .row-specs { font-size:11px; color:#94a3b8; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .row-price { font-size:13px; font-weight:800; color:#fff; flex-shrink:0; text-align:right; }
   /* Scheda prodotto in stile home (vedi ProductCard.tsx), senza i tab Top/Flop/
-     Commento - usata nelle pagine categoria e "che PC serve per..." al posto
-     della semplice riga sopra (richiesta esplicita utente 2026-09-29). */
-  .card-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:14px; margin-bottom:20px; }
-  .pcard { display:flex; flex-direction:column; border-radius:16px; border:1px solid #1e293b; background:#0f172a; overflow:hidden; }
-  .pcard-head { display:flex; align-items:center; justify-content:space-between; gap:6px; padding:8px 12px; border-bottom:1px solid #1e293b; background:#020617; }
-  .pcard-stamp { font-size:11px; font-weight:800; color:#e2e8f0; white-space:nowrap; }
+     Commento - usata nelle pagine categoria e "che PC serve per...". Stessa
+     griglia responsive (1/2/3 colonne) e stesso tema chiaro/scuro per
+     condizione della home (2026-09-29, richiesta esplicita: "belle come la
+     home, sia mobile che desktop, con le scritte in grande come la home e lo
+     stesso stile"). */
+  .card-grid { display:grid; grid-template-columns:1fr; gap:16px; margin-bottom:20px; }
+  @media (min-width:768px) { .card-grid { grid-template-columns:repeat(2, 1fr); gap:24px; } }
+  @media (min-width:1024px) { .card-grid { grid-template-columns:repeat(3, 1fr); } }
+  .pcard { position:relative; display:flex; flex-direction:column; border-radius:16px; border:1px solid #1e293b; background:rgba(15,23,42,.95); color:#f1f5f9; box-shadow:0 20px 25px -5px rgba(0,0,0,.4); overflow:hidden; }
+  .pcard.cond-nuovo { background:#fff; color:#0f172a; border-color:#e2e8f0; box-shadow:0 20px 25px -5px rgba(15,23,42,.1); }
+  .pcard.cond-ricondizionato { background:#f1f5f9; color:#0f172a; border-color:#cbd5e1; box-shadow:0 10px 15px -3px rgba(15,23,42,.1); }
+  .pcard-tier-ribbon { position:absolute; top:0; left:0; z-index:2; padding:3px 10px; border-radius:0 0 10px 0; font-size:9px; font-weight:800; color:#fff; text-transform:uppercase; letter-spacing:.03em; }
+  .pcard-head { display:flex; align-items:center; justify-content:space-between; gap:6px; padding:8px 12px; border-bottom:1px solid #1e293b; background:rgba(2,6,23,.4); }
+  .pcard.cond-nuovo .pcard-head, .pcard.cond-ricondizionato .pcard-head { border-bottom-color:rgba(203,213,225,.9); background:rgba(248,250,252,.8); }
+  .pcard-stamp-icon { display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; border-radius:9px; font-size:14px; flex-shrink:0; box-shadow:0 4px 8px rgba(0,0,0,.25); }
   .pcard-condition { font-size:10.5px; font-weight:700; white-space:nowrap; }
-  .pcard-body { display:block; padding:12px; text-decoration:none; color:inherit; }
-  .pcard-top { display:flex; gap:10px; align-items:center; margin-bottom:10px; }
-  .pcard-thumb { position:relative; width:64px; height:64px; flex-shrink:0; border-radius:10px; overflow:hidden; background:#fff; border:1px solid #1e293b; }
+  .pcard-body { display:block; padding:14px; text-decoration:none; color:inherit; }
+  .pcard-top { display:flex; gap:12px; align-items:center; margin-bottom:12px; }
+  .pcard-thumb { position:relative; width:64px; height:64px; flex-shrink:0; border-radius:12px; overflow:hidden; background:#fff; border:1px solid rgba(148,163,184,.3); }
   .pcard-thumb img { width:64px; height:64px; max-width:64px; margin:0; border:none; border-radius:0; object-fit:cover; display:block; }
   .pcard-weight { position:absolute; right:2px; bottom:2px; background:rgba(2,6,23,.8); color:#fff; font-size:8px; font-weight:700; padding:1px 4px; border-radius:4px; }
   .pcard-info { min-width:0; flex:1; }
-  .pcard-brand { font-size:9.5px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; color:#fb923c; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .pcard-title { font-size:13px; font-weight:800; color:#e2e8f0; line-height:1.3; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; margin:2px 0 4px; }
-  .pcard-stars { font-size:11px; }
-  .pcard-rating { font-size:11px; font-weight:800; color:#fbbf24; margin-left:2px; }
-  .pcard-tags { display:flex; flex-wrap:wrap; gap:3px; margin-top:4px; }
-  .pcard-tag { font-size:9px; font-weight:700; background:#1e293b; color:#94a3b8; padding:2px 6px; border-radius:6px; white-space:nowrap; }
-  .pcard-specs { display:flex; flex-direction:column; gap:4px; background:#020617; border:1px solid #1e293b; border-radius:10px; padding:8px; }
-  .pcard-spec-row { display:flex; align-items:center; gap:6px; font-size:11px; }
+  .pcard-brand { font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; color:#ea580c; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .pcard.cond-usato .pcard-brand { color:#fb923c; }
+  .pcard-title { font-size:14px; font-weight:900; line-height:1.3; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; margin:3px 0 5px; }
+  .pcard-stars { font-size:12px; }
+  .pcard-rating { font-size:12px; font-weight:800; color:#f59e0b; margin-left:2px; }
+  .pcard-tags { display:flex; flex-wrap:wrap; gap:4px; margin-top:6px; }
+  .pcard-tag { font-size:9.5px; font-weight:700; background:#1e293b; color:#94a3b8; padding:2px 7px; border-radius:6px; white-space:nowrap; }
+  .pcard.cond-nuovo .pcard-tag, .pcard.cond-ricondizionato .pcard-tag { background:#f1f5f9; color:#475569; }
+  .pcard-specs { display:flex; flex-direction:column; gap:5px; background:rgba(2,6,23,.7); border:1px solid #1e293b; border-radius:12px; padding:9px; }
+  .pcard.cond-nuovo .pcard-specs, .pcard.cond-ricondizionato .pcard-specs { background:#fff; border-color:#e2e8f0; }
+  .pcard-spec-row { display:flex; align-items:center; gap:7px; font-size:12px; }
   .pcard-spec-icon { flex-shrink:0; }
   .pcard-spec-value { flex:1; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#cbd5e1; font-weight:600; }
+  .pcard.cond-nuovo .pcard-spec-value, .pcard.cond-ricondizionato .pcard-spec-value { color:#1e293b; }
   .pcard-spec-arrow { flex-shrink:0; font-weight:900; }
-  .pcard-unverified { font-size:10px; font-weight:700; color:#fbbf24; background:rgba(120,53,15,.2); padding:6px 12px; border-top:1px solid #1e293b; }
-  .pcard-foot { margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:10px 12px; border-top:1px solid #1e293b; background:#020617; }
+  .pcard-unverified { font-size:10px; font-weight:700; color:#fbbf24; background:rgba(120,53,15,.2); padding:6px 14px; border-top:1px solid #1e293b; }
+  .pcard-foot { margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:12px 14px; border-top:1px solid #1e293b; background:rgba(2,6,23,.8); }
+  .pcard.cond-nuovo .pcard-foot, .pcard.cond-ricondizionato .pcard-foot { background:rgba(226,232,240,.8); border-top-color:#cbd5e1; }
   .pcard-price-block { min-width:0; }
-  .pcard-price { font-size:18px; font-weight:800; color:#fff; }
+  .pcard-price { font-size:20px; font-weight:900; color:#fff; }
+  .pcard.cond-nuovo .pcard-price, .pcard.cond-ricondizionato .pcard-price { color:#0f172a; }
   .pcard-was { font-size:11px; font-weight:600; color:#64748b; text-decoration:line-through; margin-left:4px; }
-  .pcard-savings { font-size:10px; font-weight:700; color:#34d399; }
-  .pcard-store { display:flex; align-items:center; gap:5px; font-size:10.5px; color:#94a3b8; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .pcard-savings { font-size:10.5px; font-weight:700; color:#059669; }
+  .pcard.cond-usato .pcard-savings { color:#34d399; }
+  .pcard-store { display:flex; align-items:center; gap:5px; font-size:11px; color:#94a3b8; margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .pcard.cond-nuovo .pcard-store, .pcard.cond-ricondizionato .pcard-store { color:#475569; }
   .pcard-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
-  .pcard-cta { flex-shrink:0; background:linear-gradient(135deg,#f97316,#d97706); color:#fff; font-weight:800; font-size:12px; padding:8px 14px; border-radius:10px; text-decoration:none; white-space:nowrap; }
+  .pcard-cta { flex-shrink:0; background:linear-gradient(135deg,#f97316,#d97706); color:#fff; font-weight:800; font-size:12.5px; padding:9px 16px; border-radius:10px; text-decoration:none; white-space:nowrap; }
   .pcard-cta:hover { background:linear-gradient(135deg,#ea580c,#b45309); }
+  @media (min-width:640px) {
+    .pcard-thumb, .pcard-thumb img { width:80px; height:80px; max-width:80px; }
+    .pcard-title { font-size:16px; }
+    .pcard-brand { font-size:11px; }
+    .pcard-spec-row { font-size:13px; }
+    .pcard-price { font-size:24px; }
+    .pcard-cta { font-size:14px; padding:10px 20px; }
+    .pcard-stamp-icon { width:32px; height:32px; font-size:17px; }
+  }
+  /* Filtri lato client (prezzo, utilizzo, condizione) sulle pagine categoria/
+     gioco - progressive enhancement puro: tutti i prodotti restano nell'HTML
+     (mai nascosti a un crawler che non esegue JS), il filtro nasconde/mostra
+     via classList (vedi public/pcard-filters.js). Nessuna dipendenza esterna,
+     stesso principio "zero JS framework" di tutto il resto delle pagine
+     statiche. */
+  .pcard-filter-bar { background:#0f172a; border:1px solid #1e293b; border-radius:14px; padding:16px; margin-bottom:18px; display:flex; flex-direction:column; gap:12px; }
+  .pcard-filter-price-label { font-size:12.5px; font-weight:800; color:#e2e8f0; display:block; margin-bottom:6px; }
+  .pcard-filter-price-input { width:100%; accent-color:#f97316; }
+  .pcard-filter-tags { display:flex; flex-wrap:wrap; gap:6px; }
+  .pcard-filter-tag { font-size:11.5px; font-weight:700; padding:6px 13px; border-radius:999px; border:1px solid #1e293b; background:#020617; color:#94a3b8; cursor:pointer; transition:all .15s; }
+  .pcard-filter-tag:hover { border-color:#f97316; color:#e2e8f0; }
+  .pcard-filter-tag.active { background:#f97316; border-color:#f97316; color:#fff; }
+  .pcard-filter-count { font-size:11.5px; color:#64748b; font-weight:700; }
+  .pcard-filter-empty { display:none; text-align:center; padding:30px 16px; color:#64748b; font-size:13px; border:1px dashed #1e293b; border-radius:14px; margin-bottom:20px; }
 </style>
+<script src="/pcard-filters.js" defer></script>
 </head>
 <body>
 <main style="max-width:1000px;">
@@ -93,9 +135,11 @@
   <h1>Notebook 8GB RAM</h1>
   <p class="intro">Notebook con 8GB di RAM, prezzi e caratteristiche a confronto. <span class="count">93 offerte</span> disponibili, aggiornate ogni notte.</p>
   <p class="intro">Mostrate le 40 migliori occasioni su 93 offerte totali in questa categoria.</p>
-  <div class="card-grid"><div class="pcard">
+  <div class="pcard-filter-bar"><div class="pcard-filter-price"><label class="pcard-filter-price-label">Fino a 198 €</label><input type="range" class="pcard-filter-price-input" min="150" max="198" value="198" step="10" /></div><div class="pcard-filter-tags"><button type="button" class="pcard-filter-tag" data-filter-type="usecase" data-filter-value="studio">🎓 Studio</button><button type="button" class="pcard-filter-tag" data-filter-type="usecase" data-filter-value="lavoro">💼 Lavoro</button><button type="button" class="pcard-filter-tag" data-filter-type="condition" data-filter-value="Usato">🤝 Usato</button><button type="button" class="pcard-filter-tag" data-filter-type="condition" data-filter-value="Ricondizionato">♻️ Ricondizionato</button></div><div class="pcard-filter-count">40 notebook mostrati</div></div><p class="pcard-filter-empty">Nessun notebook corrisponde ai filtri selezionati.</p>
+  <div class="card-grid"><div class="pcard cond-usato" data-price="150" data-usecases="studio" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -123,9 +167,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/267769563723?_skw=notebook+ricondizionato&amp;hash=item3e584f4a4b%3Ag%3AAQsAAeSwLrNqkUKp&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="150" data-usecases="studio" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -153,9 +198,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/256847254650?_skw=notebook&amp;hash=item3bcd4a147a%3Ag%3AVzwAAOSwUgFnyyC1&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="150" data-usecases="studio" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -183,9 +229,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/366471639440?_skw=notebook+pc&amp;hash=item5553697190%3Ag%3AZs0AAOSwAthkIrpx&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="150" data-usecases="studio" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -213,9 +260,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/327309707743?_skw=notebook&amp;hash=item4c352dc9df%3Ag%3AhBAAAOSwQRFk8Zel&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="150" data-usecases="studio lavoro" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -243,9 +291,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/198669345503?_skw=laptop&amp;hash=item2e419da2df%3Ag%3AbjIAAeSwpPxquDTR&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="150" data-usecases="studio lavoro" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -273,9 +322,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/198669323996?_skw=laptop&amp;hash=item2e419d4edc%3Ag%3AswUAAeSwXGNquC9u&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="150" data-usecases="studio lavoro" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -303,9 +353,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/198669266716?_skw=laptop&amp;hash=item2e419c6f1c%3Ag%3AooQAAeSwQU1quCYa&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="153" data-usecases="studio" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -333,9 +384,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/127942835873?_skw=notebook&amp;hash=item1dc9fcbea1%3Ag%3Am5kAAeSwF0pqPj-Y&amp;amdata=enc%3AAQALAAAA4ACCtXRWQnOEpyOqnQQ8KGbmlaklkvebv9EHAT5SbhTPDNAYv6dwBrzJYBa5iSbu8HRnSvLvC%2BcsTuLPk6%2FfPhhYHGnooVOQNY5qH1OuEccuyf%2FrPYNnqcqwpUNSzzZv7jX0pHWmXaLE1atYAqGzcZVrZ2ValP6rN7eSGBPPros%2FnMAvHFNIO3cEp5S96d75iMUjl%2FYs9UkkP7q3K3OiR%2FNGAy3f%2Bd%2FkTy7OGcnhNbnM2ooNlsxr0CiSd9cxQsu6dcDHRnHjuLViYIGb7dVdmNRM98EhKOJS6hHrznWE%2BKZ2&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="154" data-usecases="studio" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -363,9 +415,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/226101170509?_skw=notebook+pc&amp;hash=item34a4ae114d%3Ag%3ALD8AAOSw29FmIkG3&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="155" data-usecases="studio" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -393,9 +446,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/318916590584?_skw=notebook&amp;hash=item4a40e8fbf8%3Ag%3AGpIAAeSwoLZqtnUr&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="157" data-usecases="studio lavoro" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -423,9 +477,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/398409920611?_skw=notebook&amp;hash=item5cc314f063%3Ag%3APEQAAeSw~oJqY8GS&amp;amdata=enc%3AAQALAAAA8ACCtXRWQnOEpyOqnQQ8KGb3QSG3Gjjf09767cdnwjSKIoc91%2Fe7%2FgRsIWXfBFzMFLXQW%2BPOi6n8Dtek%2FFHbdh5P6AFd%2F1dzM4r6kryc1QAkbuEZezfzjKfH3RdeyJ4TsYz5E9HkO%2Bq8MnuGifiqjIC%2FxzrxhxB2p89e8jkTHrUlkKZk%2Flle03wfKtVa6%2BlqYlkkMZOCq0SijwBx%2BQjIJhg8pX0uoXmUmq5eWL3v79evWqb5ZCSXhhKeLy%2B9Lt2dfqw8xtecY2kxaT8yRQKdWO6SP54k9lbMQOalbSxUgO2ZtQ0QCPtOEZCwWLIFlOdQ1Q%3D%3D&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="158" data-usecases="studio" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -453,9 +508,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/128091019370?_skw=notebook&amp;hash=item1dd2d1d86a%3Ag%3AGmQAAeSwM3JqsQ-l&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="159" data-usecases="studio" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -483,9 +539,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/325745918801?_skw=notebook+pc&amp;hash=item4bd7f84351%3Ag%3Aep4AAOSwY6hkwP1M&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="159" data-usecases="studio lavoro" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -513,9 +570,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/326812675355?_skw=notebook&amp;hash=item4c178dad1b%3Ag%3AyUIAAeSwgEBo6Q8T&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="159" data-usecases="studio lavoro" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -543,9 +601,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/127913893299?_skw=notebook&amp;hash=item1dc8431db3%3Ag%3A6McAAeSw63VqKSa8&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-ricondizionato" data-price="159" data-usecases="studio" data-condition="Ricondizionato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#38bdf8;">♻️ Ricondizionato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -573,9 +632,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/318911841836?_skw=notebook&amp;hash=item4a40a0862c%3Ag%3A6KIAAeSwRzdqtO~m&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="159" data-usecases="studio" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -603,9 +663,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/257378085563?_skw=notebook&amp;hash=item3becedeabb%3Ag%3Af9oAAOSwaxJoLvhP&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="159" data-usecases="studio lavoro" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -633,9 +694,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/128071774444?_skw=notebook&amp;hash=item1dd1ac30ec%3Ag%3A1~QAAeSwNV9qthF9&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="160" data-usecases="studio lavoro" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -663,9 +725,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/178377384790?_skw=notebook+pc&amp;hash=item29881ee356%3Ag%3AgNIAAeSw34pqqC6g&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="160" data-usecases="studio lavoro" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -693,9 +756,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/366691749508?_skw=notebook&amp;hash=item5560880e84%3Ag%3ADIoAAeSwIF5qtpBo&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="160" data-usecases="studio" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -723,9 +787,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/318916585268?_skw=notebook&amp;hash=item4a40e8e734%3Ag%3AziwAAeSwg8FqtnQs&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="160" data-usecases="studio" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -753,9 +818,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/318933198433?_skw=laptop&amp;hash=item4a41e66661%3Ag%3AyBAAAeSwiWpqu5jH&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="165" data-usecases="studio" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -783,9 +849,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/318916576188?_skw=notebook&amp;hash=item4a40e8c3bc%3Ag%3AS6gAAeSwnm9qtnKc&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="169" data-usecases="studio lavoro" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -813,9 +880,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/389473291499?_skw=notebook+pc&amp;hash=item5aae6acceb%3Ag%3AUPQAAeSw9ltqor-n&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="169" data-usecases="studio" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -843,9 +911,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/327371896417?_skw=notebook&amp;hash=item4c38e2b661%3Ag%3AAEoAAeSwfH1o7MN1&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="170" data-usecases="studio" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -873,9 +942,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/407113466340?_skw=notebook+pc&amp;hash=item5ec9da81e4%3Ag%3As3cAAeSwM-Nqq~VW&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="170" data-usecases="studio" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -903,9 +973,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/407204591235?_skw=notebook+pc&amp;hash=item5ecf48f683%3Ag%3AtYMAAeSwlspqqTOs&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="170" data-usecases="studio" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -933,9 +1004,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/407218326855?_skw=notebook+pc&amp;hash=item5ed01a8d47%3Ag%3AoEIAAeSwKxVqqTQ2&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="175" data-usecases="studio lavoro" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -963,9 +1035,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/318916589937?_skw=notebook&amp;hash=item4a40e8f971%3Ag%3AUGMAAeSwZ2BqtnUL&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="175" data-usecases="studio" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -993,9 +1066,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/257174539771?_skw=notebook&amp;hash=item3be0cc0dfb%3Ag%3AE1oAAeSwW21o~HA6&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="178" data-usecases="studio lavoro" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -1023,9 +1097,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/257230323797?_skw=notebook&amp;hash=item3be41f4055%3Ag%3AuYUAAeSwqhJo7eSJ&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="178" data-usecases="studio" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -1053,9 +1128,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/125998594577?_skw=notebook&amp;hash=item1d5619fa11%3Ag%3AWcsAAOSwx~plyL-I&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="179" data-usecases="studio" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -1083,9 +1159,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/127837586437?_skw=notebook&amp;hash=item1dc3b6c405%3Ag%3A9pgAAeSw0Plp8x8P&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="179" data-usecases="studio lavoro" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -1113,9 +1190,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/257386098722?_skw=notebook&amp;hash=item3bed683022%3Ag%3AuYUAAeSwqhJo7eSJ&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="185" data-usecases="studio lavoro" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -1143,9 +1221,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/366403641362?_skw=notebook&amp;hash=item554f5be012%3Ag%3A4HoAAeSwvQ9qAtyU&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="189" data-usecases="studio lavoro" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -1173,9 +1252,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/128098328675?_skw=notebook&amp;hash=item1dd3416063%3Ag%3AfaIAAeSwVrpqtoDK&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="189" data-usecases="studio" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -1203,9 +1283,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/125947901119?_skw=notebook&amp;hash=item1d531474bf%3Ag%3AcM4AAeSwiX1qluM4&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="190" data-usecases="studio" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>
@@ -1233,9 +1314,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/398397522825?_skw=computer+portatile&amp;hash=item5cc257c389%3Ag%3A~mIAAeSwvClqqWK6&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-usato" data-price="198" data-usecases="studio lavoro" data-condition="Usato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
     <span style="font-size:18px; font-weight:800; color:#fb7185;">-10%</span>
   </div>
@@ -1263,9 +1345,10 @@
     </div>
     <a class="pcard-cta" href="https://www.ebay.it/itm/267709347753?_skw=notebook&amp;hash=item3e54b877a9%3Ag%3A~F0AAeSwFONqPRO1&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
-</div><div class="pcard">
+</div><div class="pcard cond-ricondizionato" data-price="198" data-usecases="studio" data-condition="Ricondizionato">
+  
   <div class="pcard-head">
-    <span class="pcard-stamp"> Netto</span>
+    
     <span class="pcard-condition" style="color:#38bdf8;">♻️ Ricondizionato</span>
     <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
   </div>

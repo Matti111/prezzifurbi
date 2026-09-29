@@ -701,6 +701,58 @@ top-flop-commento ma tutto il resto sì".
   elenco di GIOCHI, non di prodotti — resta lo stile riga compatta
   (`.list`/`.row`), mai schede prodotto.
 
+### Parità visiva con la home + bordo colorato per tier + filtri leggeri (2026-09-29)
+
+Feedback dell'utente dopo aver visto le prime schede live: "il testo è meno
+bello rispetto alla home... vorrei che fossero belle come la home, sia
+mobile che desktop, con le scritte in grande come la home e lo stesso
+stile" + "anche la selezione del prezzo e i filtri della home" + "usa il
+colore dei requisiti minimi/consigliati come contorno delle schede in modo
+che sia subito visibile". Chiesto all'utente quanto vicino alla home
+arrivare sui filtri (parità completa con tutti i bottoni CPU/GPU/RAM/SSD
+esatti sarebbe stato un porting molto più grande di FiltersBar.tsx su 27
+pagine) — **scelta l'opzione "slider prezzo + filtri leggeri"**.
+
+- **Parità visiva**: `.card-grid` ora replica esattamente i breakpoint della
+  home (`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3` in `App.tsx`) invece
+  di un generico `auto-fill`. Tema chiaro/scuro per condizione come in
+  `ProductCard.tsx` (`cardTheme`/`innerBoxTheme`/`titleTheme`/`footerTheme`):
+  classi `.pcard.cond-nuovo` (bianco), `.cond-ricondizionato` (grigio
+  chiaro), `.cond-usato` (scuro, default) con le stesse tinte Tailwind
+  tradotte in hex. Timbro sostituito da un'icona colorata a gradiente
+  (`_STAMP_GRADIENTS`, stessi colori di `StampBadge.tsx`: ambra/arancio per
+  🦊, blu/indaco/viola per ⚡, verde smeraldo per 🏷️) invece del testo
+  semplice di prima. Tipografia ingrandita con un `@media (min-width:640px)`
+  che rispecchia i breakpoint `sm:` di Tailwind (titolo 14px→16px, prezzo
+  20px→24px, thumbnail 64px→80px, ecc.).
+- **Bordo colorato per tier** (solo pagine gioco, `_TIER_COLORS` — stessi
+  colori di `.tier-minimo/.tier-consigliato/.tier-ultra`): `_render_product_card()`
+  accetta ora `tier_name`, applicato da `_render_game_product_list()` per
+  ogni sezione — bordo scheda 2px nel colore del tier soddisfatto + un
+  ribbon d'angolo ("🟠 Minimi"/"🟢 Consigliati"/"🟣 Ultra"), visibile a colpo
+  d'occhio senza dover leggere il titolo della sezione sopra. Le pagine
+  categoria non hanno tier, quindi bordo di default (nessun cambiamento lì).
+- **Filtri lato client** (`_render_filter_bar()` + `public/pcard-filters.js`,
+  nuovo file statico generico — non dipende dal catalogo, un solo file
+  condiviso da tutte le pagine invece di duplicare lo script in ognuna):
+  slider prezzo singolo cursore ("Fino a X €", range calcolato sui prodotti
+  REALMENTE mostrati in quella pagina) + bottoni utilizzo (Gaming/Creatività/
+  ecc.) + bottoni condizione (Nuovo/Ricondizionato/Usato), **solo quelli che
+  possono davvero restituire un risultato** nel set dato (stesso principio
+  di `isTagAvailable()` in `specTags.ts`). **Puro progressive enhancement**:
+  tutti i prodotti restano nell'HTML anche senza JS (un crawler che non
+  esegue JS vede comunque il catalogo completo indicizzabile) — il filtro
+  nasconde/mostra via `style.display`, mai un `fetch`/re-render che tolga
+  contenuto dalla sorgente della pagina. **Scope volutamente ridotto rispetto
+  alla home**: niente bottoni CPU/GPU esatti o soglie RAM/SSD/Schermo — quei
+  filtri hanno meno senso su una pagina già ristretta a una categoria/tier
+  specifico, e replicarli avrebbe richiesto portare gran parte di
+  `FiltersBar.tsx`/`specTags.ts` in JS vanilla su 27 pagine diverse.
+- Pagine gioco: `_render_game_product_list()` ora ritorna anche la lista
+  piatta dei prodotti effettivamente mostrati (non il `matched` più ampio
+  usato solo per il JSON-LD), così la barra filtri riflette esattamente cosa
+  c'è davvero in pagina.
+
 ## TODO aperti
 
 1. Quando Back Market IT / MediaWorld IT / Unieuro IT / Euronics IT approvano su

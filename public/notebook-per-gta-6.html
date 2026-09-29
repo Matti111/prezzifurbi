@@ -51,40 +51,81 @@
   .row-specs { font-size:11px; color:#94a3b8; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .row-price { font-size:13px; font-weight:800; color:#fff; flex-shrink:0; text-align:right; }
   /* Scheda prodotto in stile home (vedi ProductCard.tsx), senza i tab Top/Flop/
-     Commento - usata nelle pagine categoria e "che PC serve per..." al posto
-     della semplice riga sopra (richiesta esplicita utente 2026-09-29). */
-  .card-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:14px; margin-bottom:20px; }
-  .pcard { display:flex; flex-direction:column; border-radius:16px; border:1px solid #1e293b; background:#0f172a; overflow:hidden; }
-  .pcard-head { display:flex; align-items:center; justify-content:space-between; gap:6px; padding:8px 12px; border-bottom:1px solid #1e293b; background:#020617; }
-  .pcard-stamp { font-size:11px; font-weight:800; color:#e2e8f0; white-space:nowrap; }
+     Commento - usata nelle pagine categoria e "che PC serve per...". Stessa
+     griglia responsive (1/2/3 colonne) e stesso tema chiaro/scuro per
+     condizione della home (2026-09-29, richiesta esplicita: "belle come la
+     home, sia mobile che desktop, con le scritte in grande come la home e lo
+     stesso stile"). */
+  .card-grid { display:grid; grid-template-columns:1fr; gap:16px; margin-bottom:20px; }
+  @media (min-width:768px) { .card-grid { grid-template-columns:repeat(2, 1fr); gap:24px; } }
+  @media (min-width:1024px) { .card-grid { grid-template-columns:repeat(3, 1fr); } }
+  .pcard { position:relative; display:flex; flex-direction:column; border-radius:16px; border:1px solid #1e293b; background:rgba(15,23,42,.95); color:#f1f5f9; box-shadow:0 20px 25px -5px rgba(0,0,0,.4); overflow:hidden; }
+  .pcard.cond-nuovo { background:#fff; color:#0f172a; border-color:#e2e8f0; box-shadow:0 20px 25px -5px rgba(15,23,42,.1); }
+  .pcard.cond-ricondizionato { background:#f1f5f9; color:#0f172a; border-color:#cbd5e1; box-shadow:0 10px 15px -3px rgba(15,23,42,.1); }
+  .pcard-tier-ribbon { position:absolute; top:0; left:0; z-index:2; padding:3px 10px; border-radius:0 0 10px 0; font-size:9px; font-weight:800; color:#fff; text-transform:uppercase; letter-spacing:.03em; }
+  .pcard-head { display:flex; align-items:center; justify-content:space-between; gap:6px; padding:8px 12px; border-bottom:1px solid #1e293b; background:rgba(2,6,23,.4); }
+  .pcard.cond-nuovo .pcard-head, .pcard.cond-ricondizionato .pcard-head { border-bottom-color:rgba(203,213,225,.9); background:rgba(248,250,252,.8); }
+  .pcard-stamp-icon { display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; border-radius:9px; font-size:14px; flex-shrink:0; box-shadow:0 4px 8px rgba(0,0,0,.25); }
   .pcard-condition { font-size:10.5px; font-weight:700; white-space:nowrap; }
-  .pcard-body { display:block; padding:12px; text-decoration:none; color:inherit; }
-  .pcard-top { display:flex; gap:10px; align-items:center; margin-bottom:10px; }
-  .pcard-thumb { position:relative; width:64px; height:64px; flex-shrink:0; border-radius:10px; overflow:hidden; background:#fff; border:1px solid #1e293b; }
+  .pcard-body { display:block; padding:14px; text-decoration:none; color:inherit; }
+  .pcard-top { display:flex; gap:12px; align-items:center; margin-bottom:12px; }
+  .pcard-thumb { position:relative; width:64px; height:64px; flex-shrink:0; border-radius:12px; overflow:hidden; background:#fff; border:1px solid rgba(148,163,184,.3); }
   .pcard-thumb img { width:64px; height:64px; max-width:64px; margin:0; border:none; border-radius:0; object-fit:cover; display:block; }
   .pcard-weight { position:absolute; right:2px; bottom:2px; background:rgba(2,6,23,.8); color:#fff; font-size:8px; font-weight:700; padding:1px 4px; border-radius:4px; }
   .pcard-info { min-width:0; flex:1; }
-  .pcard-brand { font-size:9.5px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; color:#fb923c; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .pcard-title { font-size:13px; font-weight:800; color:#e2e8f0; line-height:1.3; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; margin:2px 0 4px; }
-  .pcard-stars { font-size:11px; }
-  .pcard-rating { font-size:11px; font-weight:800; color:#fbbf24; margin-left:2px; }
-  .pcard-tags { display:flex; flex-wrap:wrap; gap:3px; margin-top:4px; }
-  .pcard-tag { font-size:9px; font-weight:700; background:#1e293b; color:#94a3b8; padding:2px 6px; border-radius:6px; white-space:nowrap; }
-  .pcard-specs { display:flex; flex-direction:column; gap:4px; background:#020617; border:1px solid #1e293b; border-radius:10px; padding:8px; }
-  .pcard-spec-row { display:flex; align-items:center; gap:6px; font-size:11px; }
+  .pcard-brand { font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; color:#ea580c; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .pcard.cond-usato .pcard-brand { color:#fb923c; }
+  .pcard-title { font-size:14px; font-weight:900; line-height:1.3; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; margin:3px 0 5px; }
+  .pcard-stars { font-size:12px; }
+  .pcard-rating { font-size:12px; font-weight:800; color:#f59e0b; margin-left:2px; }
+  .pcard-tags { display:flex; flex-wrap:wrap; gap:4px; margin-top:6px; }
+  .pcard-tag { font-size:9.5px; font-weight:700; background:#1e293b; color:#94a3b8; padding:2px 7px; border-radius:6px; white-space:nowrap; }
+  .pcard.cond-nuovo .pcard-tag, .pcard.cond-ricondizionato .pcard-tag { background:#f1f5f9; color:#475569; }
+  .pcard-specs { display:flex; flex-direction:column; gap:5px; background:rgba(2,6,23,.7); border:1px solid #1e293b; border-radius:12px; padding:9px; }
+  .pcard.cond-nuovo .pcard-specs, .pcard.cond-ricondizionato .pcard-specs { background:#fff; border-color:#e2e8f0; }
+  .pcard-spec-row { display:flex; align-items:center; gap:7px; font-size:12px; }
   .pcard-spec-icon { flex-shrink:0; }
   .pcard-spec-value { flex:1; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#cbd5e1; font-weight:600; }
+  .pcard.cond-nuovo .pcard-spec-value, .pcard.cond-ricondizionato .pcard-spec-value { color:#1e293b; }
   .pcard-spec-arrow { flex-shrink:0; font-weight:900; }
-  .pcard-unverified { font-size:10px; font-weight:700; color:#fbbf24; background:rgba(120,53,15,.2); padding:6px 12px; border-top:1px solid #1e293b; }
-  .pcard-foot { margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:10px 12px; border-top:1px solid #1e293b; background:#020617; }
+  .pcard-unverified { font-size:10px; font-weight:700; color:#fbbf24; background:rgba(120,53,15,.2); padding:6px 14px; border-top:1px solid #1e293b; }
+  .pcard-foot { margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:12px 14px; border-top:1px solid #1e293b; background:rgba(2,6,23,.8); }
+  .pcard.cond-nuovo .pcard-foot, .pcard.cond-ricondizionato .pcard-foot { background:rgba(226,232,240,.8); border-top-color:#cbd5e1; }
   .pcard-price-block { min-width:0; }
-  .pcard-price { font-size:18px; font-weight:800; color:#fff; }
+  .pcard-price { font-size:20px; font-weight:900; color:#fff; }
+  .pcard.cond-nuovo .pcard-price, .pcard.cond-ricondizionato .pcard-price { color:#0f172a; }
   .pcard-was { font-size:11px; font-weight:600; color:#64748b; text-decoration:line-through; margin-left:4px; }
-  .pcard-savings { font-size:10px; font-weight:700; color:#34d399; }
-  .pcard-store { display:flex; align-items:center; gap:5px; font-size:10.5px; color:#94a3b8; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .pcard-savings { font-size:10.5px; font-weight:700; color:#059669; }
+  .pcard.cond-usato .pcard-savings { color:#34d399; }
+  .pcard-store { display:flex; align-items:center; gap:5px; font-size:11px; color:#94a3b8; margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .pcard.cond-nuovo .pcard-store, .pcard.cond-ricondizionato .pcard-store { color:#475569; }
   .pcard-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
-  .pcard-cta { flex-shrink:0; background:linear-gradient(135deg,#f97316,#d97706); color:#fff; font-weight:800; font-size:12px; padding:8px 14px; border-radius:10px; text-decoration:none; white-space:nowrap; }
+  .pcard-cta { flex-shrink:0; background:linear-gradient(135deg,#f97316,#d97706); color:#fff; font-weight:800; font-size:12.5px; padding:9px 16px; border-radius:10px; text-decoration:none; white-space:nowrap; }
   .pcard-cta:hover { background:linear-gradient(135deg,#ea580c,#b45309); }
+  @media (min-width:640px) {
+    .pcard-thumb, .pcard-thumb img { width:80px; height:80px; max-width:80px; }
+    .pcard-title { font-size:16px; }
+    .pcard-brand { font-size:11px; }
+    .pcard-spec-row { font-size:13px; }
+    .pcard-price { font-size:24px; }
+    .pcard-cta { font-size:14px; padding:10px 20px; }
+    .pcard-stamp-icon { width:32px; height:32px; font-size:17px; }
+  }
+  /* Filtri lato client (prezzo, utilizzo, condizione) sulle pagine categoria/
+     gioco - progressive enhancement puro: tutti i prodotti restano nell'HTML
+     (mai nascosti a un crawler che non esegue JS), il filtro nasconde/mostra
+     via classList (vedi public/pcard-filters.js). Nessuna dipendenza esterna,
+     stesso principio "zero JS framework" di tutto il resto delle pagine
+     statiche. */
+  .pcard-filter-bar { background:#0f172a; border:1px solid #1e293b; border-radius:14px; padding:16px; margin-bottom:18px; display:flex; flex-direction:column; gap:12px; }
+  .pcard-filter-price-label { font-size:12.5px; font-weight:800; color:#e2e8f0; display:block; margin-bottom:6px; }
+  .pcard-filter-price-input { width:100%; accent-color:#f97316; }
+  .pcard-filter-tags { display:flex; flex-wrap:wrap; gap:6px; }
+  .pcard-filter-tag { font-size:11.5px; font-weight:700; padding:6px 13px; border-radius:999px; border:1px solid #1e293b; background:#020617; color:#94a3b8; cursor:pointer; transition:all .15s; }
+  .pcard-filter-tag:hover { border-color:#f97316; color:#e2e8f0; }
+  .pcard-filter-tag.active { background:#f97316; border-color:#f97316; color:#fff; }
+  .pcard-filter-count { font-size:11.5px; color:#64748b; font-weight:700; }
+  .pcard-filter-empty { display:none; text-align:center; padding:30px 16px; color:#64748b; font-size:13px; border:1px dashed #1e293b; border-radius:14px; margin-bottom:20px; }
 
   .tier-card { border-radius:14px; padding:14px; margin-bottom:12px; border:1px solid #1e293b; background:#0f172a; max-width:640px; }
   .tier-minimo { border-left:3px solid #f59e0b; }
@@ -107,6 +148,7 @@
   .compat-list li { padding:6px 0; border-bottom:1px solid #1e293b; }
   .compat-tier { color:#64748b; font-size:11px; }
 </style>
+<script src="/pcard-filters.js" defer></script>
 </head>
 <body>
 <main style="max-width:1000px;">

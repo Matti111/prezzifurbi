@@ -13,7 +13,7 @@ import html
 import glob
 from collections import Counter
 from datetime import datetime, timezone
-from typing import Dict, List, Any, Optional
+from typing import Dict, List, Any, Optional, Tuple
 from playwright.async_api import async_playwright
 import requests
 
@@ -1717,6 +1717,15 @@ _STAMP_META = {
     "nessuno": ("", "Netto"),
 }
 
+# Stessi gradienti di StampBadge.tsx, per l'icona timbro sulla scheda statica.
+_STAMP_GRADIENTS = {
+    "scelta_furba": "linear-gradient(135deg,#f59e0b,#f97316,#d97706)",
+    "best_buy": "linear-gradient(135deg,#2563eb,#4f46e5,#7c3aed)",
+    "cheaper_good": "linear-gradient(135deg,#059669,#0f766e)",
+}
+
+_COND_CLASS = {"Nuovo": "cond-nuovo", "Ricondizionato": "cond-ricondizionato", "Usato": "cond-usato"}
+
 _USE_CASE_META = {
     "gaming": ("🎮", "Gaming"),
     "creativita": ("🎨", "Creatività"),
@@ -1830,40 +1839,81 @@ _PAGE_STYLE = """
   .row-specs { font-size:11px; color:#94a3b8; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .row-price { font-size:13px; font-weight:800; color:#fff; flex-shrink:0; text-align:right; }
   /* Scheda prodotto in stile home (vedi ProductCard.tsx), senza i tab Top/Flop/
-     Commento - usata nelle pagine categoria e "che PC serve per..." al posto
-     della semplice riga sopra (richiesta esplicita utente 2026-09-29). */
-  .card-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:14px; margin-bottom:20px; }
-  .pcard { display:flex; flex-direction:column; border-radius:16px; border:1px solid #1e293b; background:#0f172a; overflow:hidden; }
-  .pcard-head { display:flex; align-items:center; justify-content:space-between; gap:6px; padding:8px 12px; border-bottom:1px solid #1e293b; background:#020617; }
-  .pcard-stamp { font-size:11px; font-weight:800; color:#e2e8f0; white-space:nowrap; }
+     Commento - usata nelle pagine categoria e "che PC serve per...". Stessa
+     griglia responsive (1/2/3 colonne) e stesso tema chiaro/scuro per
+     condizione della home (2026-09-29, richiesta esplicita: "belle come la
+     home, sia mobile che desktop, con le scritte in grande come la home e lo
+     stesso stile"). */
+  .card-grid { display:grid; grid-template-columns:1fr; gap:16px; margin-bottom:20px; }
+  @media (min-width:768px) { .card-grid { grid-template-columns:repeat(2, 1fr); gap:24px; } }
+  @media (min-width:1024px) { .card-grid { grid-template-columns:repeat(3, 1fr); } }
+  .pcard { position:relative; display:flex; flex-direction:column; border-radius:16px; border:1px solid #1e293b; background:rgba(15,23,42,.95); color:#f1f5f9; box-shadow:0 20px 25px -5px rgba(0,0,0,.4); overflow:hidden; }
+  .pcard.cond-nuovo { background:#fff; color:#0f172a; border-color:#e2e8f0; box-shadow:0 20px 25px -5px rgba(15,23,42,.1); }
+  .pcard.cond-ricondizionato { background:#f1f5f9; color:#0f172a; border-color:#cbd5e1; box-shadow:0 10px 15px -3px rgba(15,23,42,.1); }
+  .pcard-tier-ribbon { position:absolute; top:0; left:0; z-index:2; padding:3px 10px; border-radius:0 0 10px 0; font-size:9px; font-weight:800; color:#fff; text-transform:uppercase; letter-spacing:.03em; }
+  .pcard-head { display:flex; align-items:center; justify-content:space-between; gap:6px; padding:8px 12px; border-bottom:1px solid #1e293b; background:rgba(2,6,23,.4); }
+  .pcard.cond-nuovo .pcard-head, .pcard.cond-ricondizionato .pcard-head { border-bottom-color:rgba(203,213,225,.9); background:rgba(248,250,252,.8); }
+  .pcard-stamp-icon { display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; border-radius:9px; font-size:14px; flex-shrink:0; box-shadow:0 4px 8px rgba(0,0,0,.25); }
   .pcard-condition { font-size:10.5px; font-weight:700; white-space:nowrap; }
-  .pcard-body { display:block; padding:12px; text-decoration:none; color:inherit; }
-  .pcard-top { display:flex; gap:10px; align-items:center; margin-bottom:10px; }
-  .pcard-thumb { position:relative; width:64px; height:64px; flex-shrink:0; border-radius:10px; overflow:hidden; background:#fff; border:1px solid #1e293b; }
+  .pcard-body { display:block; padding:14px; text-decoration:none; color:inherit; }
+  .pcard-top { display:flex; gap:12px; align-items:center; margin-bottom:12px; }
+  .pcard-thumb { position:relative; width:64px; height:64px; flex-shrink:0; border-radius:12px; overflow:hidden; background:#fff; border:1px solid rgba(148,163,184,.3); }
   .pcard-thumb img { width:64px; height:64px; max-width:64px; margin:0; border:none; border-radius:0; object-fit:cover; display:block; }
   .pcard-weight { position:absolute; right:2px; bottom:2px; background:rgba(2,6,23,.8); color:#fff; font-size:8px; font-weight:700; padding:1px 4px; border-radius:4px; }
   .pcard-info { min-width:0; flex:1; }
-  .pcard-brand { font-size:9.5px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; color:#fb923c; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .pcard-title { font-size:13px; font-weight:800; color:#e2e8f0; line-height:1.3; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; margin:2px 0 4px; }
-  .pcard-stars { font-size:11px; }
-  .pcard-rating { font-size:11px; font-weight:800; color:#fbbf24; margin-left:2px; }
-  .pcard-tags { display:flex; flex-wrap:wrap; gap:3px; margin-top:4px; }
-  .pcard-tag { font-size:9px; font-weight:700; background:#1e293b; color:#94a3b8; padding:2px 6px; border-radius:6px; white-space:nowrap; }
-  .pcard-specs { display:flex; flex-direction:column; gap:4px; background:#020617; border:1px solid #1e293b; border-radius:10px; padding:8px; }
-  .pcard-spec-row { display:flex; align-items:center; gap:6px; font-size:11px; }
+  .pcard-brand { font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; color:#ea580c; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .pcard.cond-usato .pcard-brand { color:#fb923c; }
+  .pcard-title { font-size:14px; font-weight:900; line-height:1.3; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; margin:3px 0 5px; }
+  .pcard-stars { font-size:12px; }
+  .pcard-rating { font-size:12px; font-weight:800; color:#f59e0b; margin-left:2px; }
+  .pcard-tags { display:flex; flex-wrap:wrap; gap:4px; margin-top:6px; }
+  .pcard-tag { font-size:9.5px; font-weight:700; background:#1e293b; color:#94a3b8; padding:2px 7px; border-radius:6px; white-space:nowrap; }
+  .pcard.cond-nuovo .pcard-tag, .pcard.cond-ricondizionato .pcard-tag { background:#f1f5f9; color:#475569; }
+  .pcard-specs { display:flex; flex-direction:column; gap:5px; background:rgba(2,6,23,.7); border:1px solid #1e293b; border-radius:12px; padding:9px; }
+  .pcard.cond-nuovo .pcard-specs, .pcard.cond-ricondizionato .pcard-specs { background:#fff; border-color:#e2e8f0; }
+  .pcard-spec-row { display:flex; align-items:center; gap:7px; font-size:12px; }
   .pcard-spec-icon { flex-shrink:0; }
   .pcard-spec-value { flex:1; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#cbd5e1; font-weight:600; }
+  .pcard.cond-nuovo .pcard-spec-value, .pcard.cond-ricondizionato .pcard-spec-value { color:#1e293b; }
   .pcard-spec-arrow { flex-shrink:0; font-weight:900; }
-  .pcard-unverified { font-size:10px; font-weight:700; color:#fbbf24; background:rgba(120,53,15,.2); padding:6px 12px; border-top:1px solid #1e293b; }
-  .pcard-foot { margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:10px 12px; border-top:1px solid #1e293b; background:#020617; }
+  .pcard-unverified { font-size:10px; font-weight:700; color:#fbbf24; background:rgba(120,53,15,.2); padding:6px 14px; border-top:1px solid #1e293b; }
+  .pcard-foot { margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:12px 14px; border-top:1px solid #1e293b; background:rgba(2,6,23,.8); }
+  .pcard.cond-nuovo .pcard-foot, .pcard.cond-ricondizionato .pcard-foot { background:rgba(226,232,240,.8); border-top-color:#cbd5e1; }
   .pcard-price-block { min-width:0; }
-  .pcard-price { font-size:18px; font-weight:800; color:#fff; }
+  .pcard-price { font-size:20px; font-weight:900; color:#fff; }
+  .pcard.cond-nuovo .pcard-price, .pcard.cond-ricondizionato .pcard-price { color:#0f172a; }
   .pcard-was { font-size:11px; font-weight:600; color:#64748b; text-decoration:line-through; margin-left:4px; }
-  .pcard-savings { font-size:10px; font-weight:700; color:#34d399; }
-  .pcard-store { display:flex; align-items:center; gap:5px; font-size:10.5px; color:#94a3b8; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .pcard-savings { font-size:10.5px; font-weight:700; color:#059669; }
+  .pcard.cond-usato .pcard-savings { color:#34d399; }
+  .pcard-store { display:flex; align-items:center; gap:5px; font-size:11px; color:#94a3b8; margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .pcard.cond-nuovo .pcard-store, .pcard.cond-ricondizionato .pcard-store { color:#475569; }
   .pcard-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
-  .pcard-cta { flex-shrink:0; background:linear-gradient(135deg,#f97316,#d97706); color:#fff; font-weight:800; font-size:12px; padding:8px 14px; border-radius:10px; text-decoration:none; white-space:nowrap; }
+  .pcard-cta { flex-shrink:0; background:linear-gradient(135deg,#f97316,#d97706); color:#fff; font-weight:800; font-size:12.5px; padding:9px 16px; border-radius:10px; text-decoration:none; white-space:nowrap; }
   .pcard-cta:hover { background:linear-gradient(135deg,#ea580c,#b45309); }
+  @media (min-width:640px) {
+    .pcard-thumb, .pcard-thumb img { width:80px; height:80px; max-width:80px; }
+    .pcard-title { font-size:16px; }
+    .pcard-brand { font-size:11px; }
+    .pcard-spec-row { font-size:13px; }
+    .pcard-price { font-size:24px; }
+    .pcard-cta { font-size:14px; padding:10px 20px; }
+    .pcard-stamp-icon { width:32px; height:32px; font-size:17px; }
+  }
+  /* Filtri lato client (prezzo, utilizzo, condizione) sulle pagine categoria/
+     gioco - progressive enhancement puro: tutti i prodotti restano nell'HTML
+     (mai nascosti a un crawler che non esegue JS), il filtro nasconde/mostra
+     via classList (vedi public/pcard-filters.js). Nessuna dipendenza esterna,
+     stesso principio "zero JS framework" di tutto il resto delle pagine
+     statiche. */
+  .pcard-filter-bar { background:#0f172a; border:1px solid #1e293b; border-radius:14px; padding:16px; margin-bottom:18px; display:flex; flex-direction:column; gap:12px; }
+  .pcard-filter-price-label { font-size:12.5px; font-weight:800; color:#e2e8f0; display:block; margin-bottom:6px; }
+  .pcard-filter-price-input { width:100%; accent-color:#f97316; }
+  .pcard-filter-tags { display:flex; flex-wrap:wrap; gap:6px; }
+  .pcard-filter-tag { font-size:11.5px; font-weight:700; padding:6px 13px; border-radius:999px; border:1px solid #1e293b; background:#020617; color:#94a3b8; cursor:pointer; transition:all .15s; }
+  .pcard-filter-tag:hover { border-color:#f97316; color:#e2e8f0; }
+  .pcard-filter-tag.active { background:#f97316; border-color:#f97316; color:#fff; }
+  .pcard-filter-count { font-size:11.5px; color:#64748b; font-weight:700; }
+  .pcard-filter-empty { display:none; text-align:center; padding:30px 16px; color:#64748b; font-size:13px; border:1px dashed #1e293b; border-radius:14px; margin-bottom:20px; }
 """
 
 
@@ -2157,25 +2207,30 @@ def _render_pcard_spec(icon: str, value: str, indicator: str) -> str:
     )
 
 
-def _render_product_card(p: Dict[str, Any]) -> str:
+def _render_product_card(p: Dict[str, Any], tier_name: Optional[str] = None) -> str:
     """Scheda prodotto in stile home (stessa identità visiva di
-    ProductCard.tsx: timbro, badge condizione, sconto/Netto, thumbnail,
-    titolo, stelle, tag di utilizzo, le 5 specifiche con frecce, prezzo/
-    risparmio, freschezza, store, CTA), SENZA i tab Top/Flop/Commento -
-    richiesta esplicita dell'utente 2026-09-29 ("solo le specifiche, tutto
-    il resto sì"), usata al posto della semplice riga nelle pagine categoria
-    e "che PC serve per...". Stessa semplificazione già accettata per le
-    pagine prodotto singole (vedi CLAUDE.md, sezione SEO): timbro grezzo del
-    backend, mai la logica di upgrade contestuale verso 🦊 di
-    qualifiesForFox() (richiederebbe portare le tabelle benchmark CPU/GPU in
-    Python, sproporzionato per pagine di supporto SEO) - stesso motivo per
-    cui il prezzo di riferimento è mostrato SOLO se dichiarato dalla fonte
+    ProductCard.tsx: timbro come icona colorata, tema chiaro/scuro per
+    condizione, sconto/Netto, thumbnail, titolo, stelle, tag di utilizzo, le
+    5 specifiche con frecce, prezzo/risparmio, freschezza, store, CTA), SENZA
+    i tab Top/Flop/Commento (richiesta esplicita 2026-09-29). `tier_name`
+    (solo pagine gioco) colora il contorno della scheda con lo stesso colore
+    della sezione "Requisiti Minimi/Consigliati/Ultra" a cui appartiene, così
+    il livello è visibile subito senza leggere il titolo della sezione
+    (richiesta esplicita utente). `data-price`/`data-usecases`/
+    `data-condition` alimentano i filtri lato client in pcard-filters.js.
+    Stessa semplificazione già accettata per le pagine prodotto singole
+    (vedi CLAUDE.md, sezione SEO): timbro grezzo del backend, mai la logica
+    di upgrade contestuale verso 🦊 di qualifiesForFox() (richiederebbe
+    portare le tabelle benchmark CPU/GPU in Python) - stesso motivo per cui
+    il prezzo di riferimento è mostrato SOLO se dichiarato dalla fonte
     (`originalPrice`), mai un "prezzo tipico" calcolato sul pool."""
     specs = p["specs"]
     price = p["price"]
-    stamp_emoji, stamp_label = _STAMP_META.get(p.get("stamp", "nessuno"), ("", "Netto"))
+    stamp = p.get("stamp", "nessuno")
+    stamp_emoji, stamp_label = _STAMP_META.get(stamp, ("", "Netto"))
     condition = p.get("condition", "Usato")
     cond_emoji, cond_color = _CONDITION_META.get(condition, ("🤝", "#94a3b8"))
+    cond_class = _COND_CLASS.get(condition, "cond-usato")
 
     has_discount = bool(p.get("originalPrice")) and p["originalPrice"] > price
     if has_discount:
@@ -2183,6 +2238,13 @@ def _render_product_card(p: Dict[str, Any]) -> str:
         discount_html = f'<span style="font-size:18px; font-weight:800; color:#fb7185;">-{pct}%</span>'
     else:
         discount_html = '<span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>'
+
+    stamp_icon_html = ""
+    if stamp in _STAMP_GRADIENTS:
+        stamp_icon_html = (
+            f'<span class="pcard-stamp-icon" style="background:{_STAMP_GRADIENTS[stamp]};" '
+            f'title="{_esc(stamp_label)}">{stamp_emoji}</span>'
+        )
 
     weight_badge = f'<span class="pcard-weight">{_esc(p["weight"])}</span>' if p.get("weight") else ""
 
@@ -2192,9 +2254,10 @@ def _render_product_card(p: Dict[str, Any]) -> str:
         f'<span style="color:{"#f59e0b" if i < full_stars else "#334155"};">★</span>' for i in range(5)
     )
 
+    use_cases = p.get("useCases", [])
     use_cases_html = "".join(
         f'<span class="pcard-tag">{_USE_CASE_META.get(uc, ("", uc))[0]} {_esc(_USE_CASE_META.get(uc, ("", uc))[1])}</span>'
-        for uc in p.get("useCases", [])
+        for uc in use_cases
     )
 
     spec_rows_html = "".join(
@@ -2221,9 +2284,18 @@ def _render_product_card(p: Dict[str, Any]) -> str:
 
     alt_text = f"{p['brand']} {p['model']} - {specs['cpu']['value']}, {specs['ram']['value']}, {specs['gpu']['value']}"
 
-    return f"""<div class="pcard">
+    tier_ribbon_html = ""
+    border_style = ""
+    if tier_name and tier_name in _TIER_COLORS:
+        color = _TIER_COLORS[tier_name]
+        tier_emoji, tier_label = _TIER_META[tier_name]
+        tier_ribbon_html = f'<span class="pcard-tier-ribbon" style="background:{color};">{tier_emoji} {_esc(tier_label.replace("Requisiti ", ""))}</span>'
+        border_style = f' style="border-color:{color}; border-width:2px;"'
+
+    return f"""<div class="pcard {cond_class}"{border_style} data-price="{price}" data-usecases="{_esc(' '.join(use_cases))}" data-condition="{_esc(condition)}">
+  {tier_ribbon_html}
   <div class="pcard-head">
-    <span class="pcard-stamp">{stamp_emoji} {_esc(stamp_label)}</span>
+    {stamp_icon_html}
     <span class="pcard-condition" style="color:{cond_color};">{cond_emoji} {_esc(condition)}</span>
     {discount_html}
   </div>
@@ -2252,6 +2324,67 @@ def _render_product_card(p: Dict[str, Any]) -> str:
     <a class="pcard-cta" href="{_esc(p['affiliateUrl'])}" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
   </div>
 </div>"""
+
+
+def _render_filter_bar(products: List[Dict[str, Any]]) -> str:
+    """Barra filtri lato client (prezzo, utilizzo, condizione) sopra la
+    griglia di schede - richiesta esplicita utente 2026-09-29 ("anche la
+    selezione del prezzo e i filtri della home"). Scope volutamente ridotto
+    rispetto alla home (niente bottoni CPU/GPU esatti o soglie RAM/SSD/
+    Schermo: queste pagine sono già ristrette a una fascia/tier specifica,
+    ripetere gli stessi filtri esatti della home aggiungerebbe poco). Solo
+    bottoni/slider che possono davvero restituire un risultato nel set dato
+    (stesso principio di isTagAvailable() in specTags.ts: mai un filtro che
+    porta a zero risultati per costruzione). Il filtro vero (mostra/nascondi)
+    è puro progressive enhancement in public/pcard-filters.js: senza JS tutti
+    i prodotti restano visibili e indicizzabili."""
+    if not products:
+        return ""
+    prices = [p["price"] for p in products]
+    min_price, max_price = min(prices), max(prices)
+
+    used_use_cases: List[str] = []
+    seen_uc = set()
+    for p in products:
+        for uc in p.get("useCases", []):
+            if uc not in seen_uc and uc in _USE_CASE_META:
+                seen_uc.add(uc)
+                used_use_cases.append(uc)
+
+    used_conditions: List[str] = []
+    seen_cond = set()
+    for p in products:
+        cond = p.get("condition", "Usato")
+        if cond not in seen_cond:
+            seen_cond.add(cond)
+            used_conditions.append(cond)
+
+    usecase_buttons = "".join(
+        f'<button type="button" class="pcard-filter-tag" data-filter-type="usecase" data-filter-value="{_esc(uc)}">'
+        f'{_USE_CASE_META[uc][0]} {_esc(_USE_CASE_META[uc][1])}</button>'
+        for uc in used_use_cases
+    )
+    condition_buttons = "".join(
+        f'<button type="button" class="pcard-filter-tag" data-filter-type="condition" data-filter-value="{_esc(cond)}">'
+        f'{_CONDITION_META.get(cond, ("🤝", "#94a3b8"))[0]} {_esc(cond)}</button>'
+        for cond in used_conditions
+    )
+
+    price_slider = "" if min_price == max_price else (
+        '<div class="pcard-filter-price">'
+        f'<label class="pcard-filter-price-label">Fino a {max_price} €</label>'
+        f'<input type="range" class="pcard-filter-price-input" min="{min_price}" max="{max_price}" value="{max_price}" step="10" />'
+        '</div>'
+    )
+
+    return (
+        '<div class="pcard-filter-bar">'
+        f'{price_slider}'
+        f'<div class="pcard-filter-tags">{usecase_buttons}{condition_buttons}</div>'
+        f'<div class="pcard-filter-count">{len(products)} notebook mostrati</div>'
+        '</div>'
+        '<p class="pcard-filter-empty">Nessun notebook corrisponde ai filtri selezionati.</p>'
+    )
 
 
 def render_category_page(spec: Dict[str, Any], products: List[Dict[str, Any]]) -> str:
@@ -2297,6 +2430,7 @@ def render_category_page(spec: Dict[str, Any], products: List[Dict[str, Any]]) -
     }
 
     rows_html = "".join(_render_product_card(p) for p in shown)
+    filter_bar_html = _render_filter_bar(shown)
     shown_note = (
         f'<p class="intro">Mostrate le {len(shown)} migliori occasioni su {count} offerte totali in questa categoria.</p>'
         if count > len(shown) else ""
@@ -2321,6 +2455,7 @@ def render_category_page(spec: Dict[str, Any], products: List[Dict[str, Any]]) -
 <meta name="twitter:description" content="{_esc(description)}" />
 <script type="application/ld+json">{json.dumps(json_ld, ensure_ascii=False).replace('</', '<\\/')}</script>
 <style>{_PAGE_STYLE}</style>
+<script src="/pcard-filters.js" defer></script>
 </head>
 <body>
 <main style="max-width:1000px;">
@@ -2328,12 +2463,117 @@ def render_category_page(spec: Dict[str, Any], products: List[Dict[str, Any]]) -
   <h1>{_esc(title)}</h1>
   <p class="intro">{_esc(spec['intro'])} <span class="count">{count} offerte</span> disponibili, aggiornate ogni notte.</p>
   {shown_note}
+  {filter_bar_html}
   <div class="card-grid">{rows_html}</div>
   <a class="back" href="/">Vedi tutto il catalogo su Prezzi Furbi →</a>
 </main>
 </body>
 </html>
 """
+
+
+# JS generico e statico (non dipende dal catalogo, un solo file condiviso da
+# tutte le pagine categoria/gioco invece di duplicarlo inline in ognuna).
+# Puro progressive enhancement: legge gli attributi data-price/data-usecases/
+# data-condition già presenti su ogni .pcard e nasconde/mostra via
+# style.display - senza JS (o per un crawler che non lo esegue) tutti i
+# prodotti restano nell'HTML e indicizzabili, il filtro non toglie mai
+# contenuto dalla sorgente della pagina.
+_PCARD_FILTERS_JS = """(function () {
+  function init() {
+    var bar = document.querySelector('.pcard-filter-bar');
+    if (!bar) return;
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.pcard'));
+    if (!cards.length) return;
+
+    var priceInput = bar.querySelector('.pcard-filter-price-input');
+    var priceLabel = bar.querySelector('.pcard-filter-price-label');
+    var tagButtons = Array.prototype.slice.call(bar.querySelectorAll('.pcard-filter-tag'));
+    var countEl = bar.querySelector('.pcard-filter-count');
+    var emptyEl = document.querySelector('.pcard-filter-empty');
+    var grids = Array.prototype.slice.call(document.querySelectorAll('.card-grid'));
+
+    var activeUseCases = {};
+    var activeConditions = {};
+
+    function apply() {
+      var maxPrice = priceInput ? Number(priceInput.value) : Infinity;
+      var hasUseCaseFilter = Object.keys(activeUseCases).length > 0;
+      var hasConditionFilter = Object.keys(activeConditions).length > 0;
+      var visible = 0;
+
+      cards.forEach(function (card) {
+        var price = Number(card.getAttribute('data-price') || '0');
+        var useCases = (card.getAttribute('data-usecases') || '').split(' ').filter(Boolean);
+        var condition = card.getAttribute('data-condition') || '';
+        var okPrice = price <= maxPrice;
+        var okUseCase = !hasUseCaseFilter || useCases.some(function (uc) { return activeUseCases[uc]; });
+        var okCondition = !hasConditionFilter || activeConditions[condition];
+        var show = okPrice && okUseCase && okCondition;
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+
+      if (countEl) {
+        countEl.textContent = visible + (visible === 1 ? ' notebook mostrato' : ' notebook mostrati');
+      }
+
+      grids.forEach(function (grid) {
+        var anyVisible = Array.prototype.some.call(grid.querySelectorAll('.pcard'), function (c) {
+          return c.style.display !== 'none';
+        });
+        grid.style.display = anyVisible ? '' : 'none';
+        var heading = grid.previousElementSibling;
+        if (heading && heading.tagName === 'H2') {
+          heading.style.display = anyVisible ? '' : 'none';
+        }
+      });
+
+      if (emptyEl) emptyEl.style.display = visible === 0 ? 'block' : 'none';
+    }
+
+    if (priceInput) {
+      priceInput.addEventListener('input', function () {
+        if (priceLabel) priceLabel.textContent = 'Fino a ' + priceInput.value + ' \\u20ac';
+        apply();
+      });
+    }
+
+    tagButtons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var type = btn.getAttribute('data-filter-type');
+        var value = btn.getAttribute('data-filter-value');
+        var set = type === 'usecase' ? activeUseCases : activeConditions;
+        if (set[value]) {
+          delete set[value];
+          btn.classList.remove('active');
+        } else {
+          set[value] = true;
+          btn.classList.add('active');
+        }
+        apply();
+      });
+    });
+
+    apply();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+"""
+
+
+def generate_pcard_filters_js() -> None:
+    """Scrive public/pcard-filters.js - file statico e generico (non dipende
+    dal catalogo), un solo file condiviso da tutte le pagine categoria/gioco
+    invece di duplicare lo script in ognuna."""
+    filepath = os.path.join(CONFIG["category_pages_dir"], "pcard-filters.js")
+    with open(filepath, "w", encoding="utf-8") as f:
+        f.write(_PCARD_FILTERS_JS)
 
 
 def generate_category_pages(catalog: List[Dict[str, Any]]) -> List[str]:
@@ -2518,6 +2758,12 @@ _TIER_META = {
     "ultra": ("🟣", "Requisiti Ultra"),
 }
 
+# Stessi colori di .tier-minimo/.tier-consigliato/.tier-ultra in _GAME_PAGE_STYLE:
+# usati anche come contorno delle schede prodotto nelle sezioni per tier, così il
+# livello di requisito soddisfatto è visibile subito senza leggere il titolo della
+# sezione (richiesta esplicita utente 2026-09-29).
+_TIER_COLORS = {"minimo": "#f59e0b", "consigliato": "#22c55e", "ultra": "#8b5cf6"}
+
 _CPU_TIER_BARS = {1: 3, 2: 5, 3: 8, 4: 10}
 _GPU_TIER_BARS = {1: 2, 2: 4, 3: 6, 4: 8, 5: 10}
 
@@ -2625,7 +2871,11 @@ def _render_tier_card(tier_name: str, tier: Dict[str, Any]) -> str:
     return f'<div class="tier-card tier-{tier_name}"><div class="tier-title">{emoji} {_esc(label)}</div>{bars}<div class="tier-spec-text">{spec_text}</div></div>'
 
 
-def _render_game_product_list(game: Dict[str, Any], catalog: List[Dict[str, Any]]) -> str:
+def _render_game_product_list(game: Dict[str, Any], catalog: List[Dict[str, Any]]) -> Tuple[str, List[Dict[str, Any]]]:
+    """Ritorna l'HTML delle sezioni per tier E la lista piatta dei prodotti
+    effettivamente mostrati (serve a `render_game_page` per costruire la
+    barra filtri sugli stessi prodotti realmente in pagina, non sull'intero
+    `matched` usato per il JSON-LD che può includerne di più/meno)."""
     grouped: Dict[str, List[Dict[str, Any]]] = {"ultra": [], "consigliato": [], "minimo": []}
     for p in catalog:
         best = _best_tier_for_product(p, game)
@@ -2633,18 +2883,20 @@ def _render_game_product_list(game: Dict[str, Any], catalog: List[Dict[str, Any]
             grouped[best].append(p)
 
     sections = []
+    rendered: List[Dict[str, Any]] = []
     for tier_name in ("ultra", "consigliato", "minimo"):
         products = grouped[tier_name]
         if not products:
             continue
         products = sorted(products, key=_deal_score, reverse=True)[:20]
+        rendered.extend(products)
         emoji, label = _TIER_META[tier_name]
-        rows = "".join(_render_product_card(p) for p in products)
+        rows = "".join(_render_product_card(p, tier_name=tier_name) for p in products)
         sections.append(f'<h2 class="tier-section-title">{emoji} Notebook che soddisfano i {label.lower()}</h2><div class="card-grid">{rows}</div>')
 
     if not sections:
-        return '<p class="intro">Nessun notebook nel catalogo attuale soddisfa nemmeno i requisiti minimi per questo gioco.</p>'
-    return "".join(sections)
+        return '<p class="intro">Nessun notebook nel catalogo attuale soddisfa nemmeno i requisiti minimi per questo gioco.</p>', []
+    return "".join(sections), rendered
 
 
 def render_game_page(game: Dict[str, Any], catalog: List[Dict[str, Any]], all_games: List[Dict[str, Any]]) -> str:
@@ -2669,7 +2921,8 @@ def render_game_page(game: Dict[str, Any], catalog: List[Dict[str, Any]], all_ga
     else:
         tiers = game["tiers"]
         tier_cards = "".join(_render_tier_card(t, tiers[t]) for t in ("minimo", "consigliato", "ultra") if t in tiers)
-        product_list_html = _render_game_product_list(game, catalog)
+        product_list_html, rendered_products = _render_game_product_list(game, catalog)
+        filter_bar_html = _render_filter_bar(rendered_products)
 
         compatible = _compatible_games(game, all_games)
         compat_html = ""
@@ -2712,6 +2965,7 @@ def render_game_page(game: Dict[str, Any], catalog: List[Dict[str, Any]], all_ga
   <p class="intro">{_esc(blurb)}</p>
   {tier_cards}
   <p class="disclaimer" style="text-align:left; margin: 4px 0 20px;">Requisiti dichiarati dallo sviluppatore, possono cambiare con futuri aggiornamenti del gioco: verifica sempre la pagina ufficiale prima dell'acquisto.</p>
+  {filter_bar_html}
   {product_list_html}
   {compat_html}
 """
@@ -2740,6 +2994,7 @@ def render_game_page(game: Dict[str, Any], catalog: List[Dict[str, Any]], all_ga
 <meta name="twitter:description" content="{_esc(description)}" />
 {json_ld_html}
 <style>{_PAGE_STYLE}{_GAME_PAGE_STYLE}</style>
+<script src="/pcard-filters.js" defer></script>
 </head>
 <body>
 <main style="max-width:1000px;">
@@ -2885,6 +3140,7 @@ async def main():
         category_slugs = generate_category_pages(final_catalog)
         game_slugs = generate_game_pages(final_catalog)
         generate_sitemap(final_catalog, category_slugs + game_slugs)
+        generate_pcard_filters_js()
         print(f"\n🔗 {pages_written} pagine statiche di prodotto, {len(category_slugs)} pagine categoria, {len(game_slugs)} pagine gioco + sitemap.xml rigenerate ({CONFIG['category_pages_dir']})")
 
     print("\n" + "=" * 65)
