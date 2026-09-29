@@ -2211,29 +2211,127 @@ def generate_category_pages(catalog: List[Dict[str, Any]]) -> List[str]:
 # CPU/GPU dei requisiti sono classificati sulla STESSA scala tier di
 # extract_cpu()/extract_gpu() (1-4 CPU, 1-5 GPU): il confronto con i laptop del
 # catalogo è diretto, non un sistema di punteggio parallelo scollegato.
+# Requisiti reali forniti dall'utente il 2026-09-29 (copiati da Steam/siti
+# ufficiali), NON generati qui. `cpu_tier`/`gpu_tier` sono la mia classificazione
+# manuale sulla scala 1-4/1-5 di extract_cpu()/extract_gpu() quando il requisito
+# elenca due opzioni equivalenti (es. "i7-6700 o Ryzen 5 1600"): uso sempre il
+# tier del PIÙ FORTE dei due come soglia, mai il più debole - un confronto troppo
+# permissivo rischierebbe di mostrare "compatibile" un notebook che in pratica
+# non regge bene il gioco, l'esatto contrario di quello che questo sito promette.
+# `cpu_label`/`gpu_label` restano il testo COMPLETO della fonte (entrambe le
+# opzioni), la semplificazione riguarda solo il numero usato per il confronto.
 GAME_REQUIREMENTS: List[Dict[str, Any]] = [
     {"slug": "cyberpunk-2077", "title": "Cyberpunk 2077",
-     "blurb": "GDR open world di CD Projekt Red ambientato a Night City.", "tiers": None},
+     "blurb": "GDR open world di CD Projekt Red ambientato a Night City.",
+     "tiers": {
+         "minimo": {"cpu_tier": 2, "gpu_tier": 2, "ram_gb": 12, "ssd_gb": 70,
+                    "cpu_label": "Core i7-6700 / Ryzen 5 1600",
+                    "gpu_label": "GTX 1060 6GB / RX 580 8GB / Arc A380"},
+         "consigliato": {"cpu_tier": 4, "gpu_tier": 3, "ram_gb": 16, "ssd_gb": 70,
+                          "cpu_label": "Core i7-12700 / Ryzen 7 7800X3D",
+                          "gpu_label": "RTX 2060 SUPER / RX 5700 XT / Arc A770"},
+     }},
     {"slug": "expedition-33", "title": "Clair Obscur: Expedition 33",
-     "blurb": "GDR a turni francese diventato un caso a sorpresa nel 2025.", "tiers": None},
+     "blurb": "GDR a turni francese diventato un caso a sorpresa nel 2025.",
+     "tiers": {
+         "minimo": {"cpu_tier": 3, "gpu_tier": 2, "ram_gb": 8, "ssd_gb": 55,
+                    "cpu_label": "Core i7-8700K / Ryzen 5 1600X",
+                    "gpu_label": "GTX 1060 6GB / RX 5600 XT 6GB / Arc A380 6GB"},
+         "consigliato": {"cpu_tier": 4, "gpu_tier": 4, "ram_gb": 16, "ssd_gb": 55,
+                          "cpu_label": "Core i7-12700K / Ryzen 7 5800X",
+                          "gpu_label": "RTX 3060 Ti 8GB / RX 6800 XT 16GB"},
+     }},
     {"slug": "gta-5", "title": "Grand Theft Auto V",
-     "blurb": "Open world d'azione di Rockstar Games, ancora tra i più giocati.", "tiers": None},
+     "blurb": "Open world d'azione di Rockstar Games, ancora tra i più giocati.",
+     "tiers": {
+         "minimo": {"cpu_tier": 2, "gpu_tier": 2, "ram_gb": 8, "ssd_gb": 105,
+                    "cpu_label": "Core i7-4770 / FX-9590",
+                    "gpu_label": "GTX 1630 4GB / RX 6400 4GB"},
+         "consigliato": {"cpu_tier": 3, "gpu_tier": 3, "ram_gb": 16, "ssd_gb": 105,
+                          "cpu_label": "Core i5-9600K / Ryzen 5 3600",
+                          "gpu_label": "RTX 3060 8GB / RX 6600 XT 8GB"},
+     }},
     {"slug": "gta-6", "title": "GTA 6",
      "blurb": "Il prossimo capitolo della serie Grand Theft Auto di Rockstar Games.", "tiers": None},
     {"slug": "baldurs-gate-3", "title": "Baldur's Gate 3",
-     "blurb": "GDR a turni di Larian Studios, Game of the Year 2023.", "tiers": None},
+     "blurb": "GDR a turni di Larian Studios, Game of the Year 2023.",
+     "tiers": {
+         "minimo": {"cpu_tier": 2, "gpu_tier": 2, "ram_gb": 8, "ssd_gb": 150,
+                    "cpu_label": "Core i5-4690 / FX-8350 / Snapdragon X Elite",
+                    "gpu_label": "GTX 970 / RX 480 / Arc A380 / Adreno X1 (4GB+)"},
+         "consigliato": {"cpu_tier": 3, "gpu_tier": 3, "ram_gb": 16, "ssd_gb": 150,
+                          "cpu_label": "Core i7-8700K / Ryzen 5 3600",
+                          "gpu_label": "RTX 2060 SUPER / RX 5700 XT / Arc A580 (8GB+)"},
+     }},
     {"slug": "sims-4", "title": "The Sims 4",
-     "blurb": "Simulatore di vita di Electronic Arts, popolare ben oltre i giocatori abituali.", "tiers": None},
+     "blurb": "Simulatore di vita di Electronic Arts, popolare ben oltre i giocatori abituali.",
+     "tiers": {
+         "minimo": {"cpu_tier": 1, "gpu_tier": 1, "ram_gb": 4, "ssd_gb": 26,
+                    "cpu_label": "Core i3-3220 / Ryzen 3 1200",
+                    "gpu_label": "GeForce 6600 / Radeon X1300 / Intel GMA X4500"},
+         "consigliato": {"cpu_tier": 2, "gpu_tier": 1, "ram_gb": 8, "ssd_gb": 51,
+                          "cpu_label": "Core i5 (4 core) / Ryzen 5",
+                          "gpu_label": "GTX 650 / Radeon HD 7750 (1GB+)"},
+     }},
     {"slug": "elden-ring", "title": "Elden Ring",
-     "blurb": "Action GDR open world di FromSoftware.", "tiers": None},
+     "blurb": "Action GDR open world di FromSoftware.",
+     "tiers": {
+         "minimo": {"cpu_tier": 2, "gpu_tier": 2, "ram_gb": 12, "ssd_gb": 60,
+                    "cpu_label": "Core i5-8400 / Ryzen 3 3300X",
+                    "gpu_label": "GTX 1060 3GB / RX 580 4GB"},
+         "consigliato": {"cpu_tier": 3, "gpu_tier": 3, "ram_gb": 16, "ssd_gb": 60,
+                          "cpu_label": "Core i7-8700K / Ryzen 5 3600X",
+                          "gpu_label": "GTX 1070 8GB / RX Vega 56 8GB"},
+     }},
     {"slug": "hogwarts-legacy", "title": "Hogwarts Legacy",
-     "blurb": "GDR open world ambientato nel mondo di Harry Potter.", "tiers": None},
+     "blurb": "GDR open world ambientato nel mondo di Harry Potter.",
+     "tiers": {
+         "minimo": {"cpu_tier": 2, "gpu_tier": 2, "ram_gb": 16, "ssd_gb": 85,
+                    "cpu_label": "Core i5-6600 / Ryzen 5 1400",
+                    "gpu_label": "GTX 960 4GB / RX 470 4GB"},
+         "consigliato": {"cpu_tier": 3, "gpu_tier": 3, "ram_gb": 16, "ssd_gb": 85,
+                          "cpu_label": "Core i7-8700 / Ryzen 5 3600",
+                          "gpu_label": "GTX 1080 Ti / RX 5700 XT / Arc A770"},
+     }},
     {"slug": "fortnite", "title": "Fortnite",
-     "blurb": "Battle royale di Epic Games, tra i giochi più popolari al mondo.", "tiers": None},
+     "blurb": "Battle royale di Epic Games, tra i giochi più popolari al mondo.",
+     "tiers": {
+         "minimo": {"cpu_tier": 1, "gpu_tier": 1, "ram_gb": 8, "ssd_gb": 25,
+                    "cpu_label": "Core i3-3225 / Ryzen 3 3300U",
+                    "gpu_label": "Intel HD 4000 / Radeon Vega 8"},
+         "consigliato": {"cpu_tier": 2, "gpu_tier": 2, "ram_gb": 16, "ssd_gb": 25,
+                          "cpu_label": "Core i5-7300U / Ryzen 3 3300U",
+                          "gpu_label": "GTX 960 / Radeon R9 280 (2GB+)"},
+         "ultra": {"cpu_tier": 3, "gpu_tier": 4, "ram_gb": 16, "ssd_gb": 25,
+                   "cpu_label": "Core i7-8700 / Ryzen 7 3700X",
+                   "gpu_label": "RTX 3070 / RX 6700 XT (8GB+)"},
+     }},
     {"slug": "minecraft", "title": "Minecraft",
-     "blurb": "Sandbox open world di Mojang, il gioco più venduto di sempre.", "tiers": None},
+     "blurb": "Sandbox open world di Mojang, il gioco più venduto di sempre.",
+     "tiers": {
+         # Spazio di archiviazione non specificato dalla fonte (Minecraft pesa
+         # pochissimo, mai il vincolo reale rispetto a CPU/GPU/RAM): stima minima
+         # prudente solo per completare la scheda, non un dato dichiarato.
+         "minimo": {"cpu_tier": 1, "gpu_tier": 1, "ram_gb": 4, "ssd_gb": 5,
+                    "cpu_label": "Intel Celeron J4105 / AMD FX-4100",
+                    "gpu_label": "Intel HD Graphics 4000 / AMD Radeon R5"},
+         "consigliato": {"cpu_tier": 2, "gpu_tier": 1, "ram_gb": 8, "ssd_gb": 10,
+                          "cpu_label": "Core i7-6500U / AMD A8-6600K",
+                          "gpu_label": "GeForce 940M / Radeon HD 8570D"},
+     }},
     {"slug": "valorant", "title": "Valorant",
-     "blurb": "Sparatutto tattico competitivo free-to-play di Riot Games.", "tiers": None},
+     "blurb": "Sparatutto tattico competitivo free-to-play di Riot Games.",
+     "tiers": {
+         "minimo": {"cpu_tier": 1, "gpu_tier": 1, "ram_gb": 4, "ssd_gb": 28,
+                    "cpu_label": "Core i3-540 / Athlon 200GE",
+                    "gpu_label": "Intel HD 4000 / Radeon R5 220"},
+         "consigliato": {"cpu_tier": 2, "gpu_tier": 1, "ram_gb": 4, "ssd_gb": 28,
+                          "cpu_label": "Core i3-4150 / Ryzen 3 1200",
+                          "gpu_label": "GT 730 / Radeon R7 240"},
+         "ultra": {"cpu_tier": 2, "gpu_tier": 2, "ram_gb": 4, "ssd_gb": 28,
+                   "cpu_label": "Core i5-9400F / Ryzen 5 2600X",
+                   "gpu_label": "GTX 1050 Ti"},
+     }},
 ]
 
 _TIER_META = {

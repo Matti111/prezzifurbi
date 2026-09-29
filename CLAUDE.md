@@ -606,16 +606,35 @@ fascia, più link incrociati tra pagine di giochi con requisiti compatibili.
 - **I requisiti (`tiers`) sono dati editoriali, MAI generati o stimati da
   qui**: stesso principio "mai inventare specifiche" di tutto il resto della
   pipeline — un requisito CPU/GPU/RAM/storage sbagliato sarebbe l'esatto
-  contrario di quello che il sito promette. **🟡 Al momento tutti i giochi
-  hanno `tiers: None`** (pagina "requisiti non ancora annunciati" onesta,
-  stesso trattamento pensato in origine solo per GTA 6) — l'utente ha offerto
-  di copiare i requisiti reali da Steam/sito ufficiale di ogni gioco per
-  evitare che si affidasse alla sola memoria approssimativa di chi scrive
-  (specialmente su Expedition 33, titolo troppo recente per essere sicuri).
-  **Da fare appena arrivano i dati**: compilare `tiers` per i 9 giochi con
-  dati disponibili (Fortnite/Minecraft/Valorant non sono su Steam, servono
-  dai rispettivi siti ufficiali) — GTA 6 resta `None` per sempre (nessun
-  requisito ufficiale esiste ancora).
+  contrario di quello che il sito promette. **✅ Risolto 2026-09-29**:
+  l'utente ha copiato a mano i requisiti reali da Steam/sito ufficiale per 10
+  dei 11 giochi (Cyberpunk 2077, Expedition 33, GTA V, Baldur's Gate 3, The
+  Sims 4, Elden Ring, Hogwarts Legacy, Fortnite, Minecraft, Valorant), ora
+  compilati in `GAME_REQUIREMENTS`. **`gta-6` resta `tiers: None` per
+  sempre**: il blocco fornito dall'utente per GTA 6 era esplicitamente
+  etichettato "Stime Ufficiose" (rumor di blog terzi, non Rockstar) — usarlo
+  avrebbe violato il principio "mai inventare/stimare specifiche" tanto
+  quanto scriverlo a mano, quindi resta la pagina onesta "requisiti non
+  ancora annunciati".
+  - Quando due opzioni CPU/GPU sono elencate come equivalenti (es. "i7-6700
+    o Ryzen 5 1600"), il `cpu_tier`/`gpu_tier` usato per il confronto è
+    quello del PIÙ FORTE dei due (bias conservativo deliberato: un confronto
+    troppo permissivo rischierebbe di mostrare "compatibile" un notebook che
+    in pratica non regge bene il gioco — il contrario esatto di quanto il
+    sito promette). `cpu_label`/`gpu_label` mostrano invece il testo
+    COMPLETO con entrambe le opzioni, la semplificazione riguarda solo il
+    numero usato per il confronto, non il testo mostrato.
+  - **Eccezione minima al principio "mai stimare"**: i requisiti Minecraft
+    forniti dall'utente (tabella orientata a Windows/Realtà Mista) non
+    includono uno spazio di archiviazione. Usata una stima minima molto
+    bassa (5GB/10GB) solo per completare la scheda — Minecraft pesa
+    pochissimo e lo storage non è mai il vincolo reale per quel gioco,
+    a differenza di CPU/GPU/RAM che restano tutti dati reali dichiarati.
+  - Rigenerate tutte le pagine (`generate_game_pages()`) e verificato senza
+    problemi: Cyberpunk/Baldur's Gate 3/Sims 4/Fortnite mostrano 33-54
+    notebook corrispondenti, i link "Compatibile anche con" tra pagine di
+    giochi producono risultati sensati (es. Cyberpunk → Expedition 33/Sims 4/
+    Elden Ring/Fortnite), GTA 6 continua a mostrare la pagina onesta.
 - **CPU/GPU dei requisiti sulla STESSA scala tier di `extract_cpu()`/
   `extract_gpu()`** (1-4 CPU, 1-5 GPU) invece di un sistema di punteggio
   parallelo: un notebook "soddisfa" un tier se il suo tier CPU/GPU e i suoi
@@ -729,15 +748,10 @@ fascia, più link incrociati tra pagine di giochi con requisiti compatibili.
     framework (B, Next.js/Astro) — entrambe cambiano la navigazione/il
     toolchain e non sono verificabili in locale su questa macchina (npm non
     installato, solo il sito live dopo il deploy Vercel)
-13. **🟡 Pagine "Che PC serve per..." — mancano i requisiti reali
-    (2026-09-29)**: meccanismo completo e testato (vedi sezione SEO sopra,
-    `GAME_REQUIREMENTS` in `test_db.py`), ma tutti gli 11 giochi hanno
-    `tiers: None` (pagina "non ancora annunciati" per tutti, non solo GTA 6).
-    L'utente ha offerto di copiare i requisiti reali da Steam/sito ufficiale
-    di ogni gioco (mai inventarli da qui) — compilare `tiers` appena
-    arrivano i dati, poi rigenerare le pagine (`generate_game_pages()`,
-    richiamata da `main()` come parte del passo 7, oppure a mano con lo
-    stesso pattern `exec()` già usato nello scratchpad durante la sessione)
+13. **✅ Risolto 2026-09-29**: Pagine "Che PC serve per..." ora hanno
+    requisiti reali per 10 giochi su 11 (copiati dall'utente da Steam/sito
+    ufficiale), vedi sezione SEO sopra. `gta-6` resta `tiers: None` per
+    sempre (unico dato disponibile era etichettato "stima non ufficiale").
 
 ## File locali che NON sono su git (da ricreare se serve lavorare in locale)
 
