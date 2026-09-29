@@ -25,7 +25,7 @@
   .back { display:inline-block; margin-bottom:16px; font-size:13px; color:#94a3b8; text-decoration:none; }
   .back:hover { color:#fb923c; }
   .kicker { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#94a3b8; }
-  h1 { font-size:22px; line-height:1.3; margin:4px 0 12px; }
+  h1 { font-size:22px; line-height:1.3; margin:4px 0 12px; max-width:640px; }
   .badge { display:inline-flex; align-items:center; gap:6px; background:#f97316; color:#fff; font-weight:700; font-size:13px; padding:4px 12px; border-radius:999px; margin-bottom:16px; }
   img { width:100%; max-width:280px; border-radius:16px; display:block; margin:0 0 16px; border:1px solid #1e293b; background:#fff; }
   .price { font-size:28px; font-weight:800; color:#fff; margin:8px 0 0; }
@@ -39,8 +39,8 @@
   li { padding:4px 0; }
   .cta { display:block; text-align:center; background:#f97316; color:#fff; font-weight:800; padding:14px; border-radius:12px; text-decoration:none; font-size:16px; margin-bottom:12px; }
   .cta:hover { background:#ea580c; }
-  .disclaimer { font-size:11px; color:#64748b; text-align:center; }
-  .intro { font-size:13px; color:#94a3b8; margin:0 0 20px; line-height:1.5; }
+  .disclaimer { font-size:11px; color:#64748b; text-align:center; max-width:640px; }
+  .intro { font-size:13px; color:#94a3b8; margin:0 0 20px; line-height:1.5; max-width:640px; }
   .count { color:#fb923c; font-weight:700; }
   .list { display:flex; flex-direction:column; gap:2px; margin-bottom:20px; }
   .row { display:flex; align-items:center; gap:10px; padding:10px; border-radius:12px; background:#0f172a; text-decoration:none; border:1px solid #1e293b; }
@@ -50,15 +50,320 @@
   .row-title { font-size:12.5px; color:#e2e8f0; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .row-specs { font-size:11px; color:#94a3b8; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .row-price { font-size:13px; font-weight:800; color:#fff; flex-shrink:0; text-align:right; }
+  /* Scheda prodotto in stile home (vedi ProductCard.tsx), senza i tab Top/Flop/
+     Commento - usata nelle pagine categoria e "che PC serve per..." al posto
+     della semplice riga sopra (richiesta esplicita utente 2026-09-29). */
+  .card-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:14px; margin-bottom:20px; }
+  .pcard { display:flex; flex-direction:column; border-radius:16px; border:1px solid #1e293b; background:#0f172a; overflow:hidden; }
+  .pcard-head { display:flex; align-items:center; justify-content:space-between; gap:6px; padding:8px 12px; border-bottom:1px solid #1e293b; background:#020617; }
+  .pcard-stamp { font-size:11px; font-weight:800; color:#e2e8f0; white-space:nowrap; }
+  .pcard-condition { font-size:10.5px; font-weight:700; white-space:nowrap; }
+  .pcard-body { display:block; padding:12px; text-decoration:none; color:inherit; }
+  .pcard-top { display:flex; gap:10px; align-items:center; margin-bottom:10px; }
+  .pcard-thumb { position:relative; width:64px; height:64px; flex-shrink:0; border-radius:10px; overflow:hidden; background:#fff; border:1px solid #1e293b; }
+  .pcard-thumb img { width:64px; height:64px; max-width:64px; margin:0; border:none; border-radius:0; object-fit:cover; display:block; }
+  .pcard-weight { position:absolute; right:2px; bottom:2px; background:rgba(2,6,23,.8); color:#fff; font-size:8px; font-weight:700; padding:1px 4px; border-radius:4px; }
+  .pcard-info { min-width:0; flex:1; }
+  .pcard-brand { font-size:9.5px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; color:#fb923c; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .pcard-title { font-size:13px; font-weight:800; color:#e2e8f0; line-height:1.3; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; margin:2px 0 4px; }
+  .pcard-stars { font-size:11px; }
+  .pcard-rating { font-size:11px; font-weight:800; color:#fbbf24; margin-left:2px; }
+  .pcard-tags { display:flex; flex-wrap:wrap; gap:3px; margin-top:4px; }
+  .pcard-tag { font-size:9px; font-weight:700; background:#1e293b; color:#94a3b8; padding:2px 6px; border-radius:6px; white-space:nowrap; }
+  .pcard-specs { display:flex; flex-direction:column; gap:4px; background:#020617; border:1px solid #1e293b; border-radius:10px; padding:8px; }
+  .pcard-spec-row { display:flex; align-items:center; gap:6px; font-size:11px; }
+  .pcard-spec-icon { flex-shrink:0; }
+  .pcard-spec-value { flex:1; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#cbd5e1; font-weight:600; }
+  .pcard-spec-arrow { flex-shrink:0; font-weight:900; }
+  .pcard-unverified { font-size:10px; font-weight:700; color:#fbbf24; background:rgba(120,53,15,.2); padding:6px 12px; border-top:1px solid #1e293b; }
+  .pcard-foot { margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:10px 12px; border-top:1px solid #1e293b; background:#020617; }
+  .pcard-price-block { min-width:0; }
+  .pcard-price { font-size:18px; font-weight:800; color:#fff; }
+  .pcard-was { font-size:11px; font-weight:600; color:#64748b; text-decoration:line-through; margin-left:4px; }
+  .pcard-savings { font-size:10px; font-weight:700; color:#34d399; }
+  .pcard-store { display:flex; align-items:center; gap:5px; font-size:10.5px; color:#94a3b8; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .pcard-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+  .pcard-cta { flex-shrink:0; background:linear-gradient(135deg,#f97316,#d97706); color:#fff; font-weight:800; font-size:12px; padding:8px 14px; border-radius:10px; text-decoration:none; white-space:nowrap; }
+  .pcard-cta:hover { background:linear-gradient(135deg,#ea580c,#b45309); }
 </style>
 </head>
 <body>
-<main>
+<main style="max-width:1000px;">
   <a class="back" href="/">← Torna al comparatore Prezzi Furbi</a>
   <h1>Notebook Intel i9</h1>
   <p class="intro">Notebook con processore Intel i9, prezzi e caratteristiche a confronto. <span class="count">9 offerte</span> disponibili, aggiornate ogni notte.</p>
   
-  <div class="list"><a class="row" href="/notebook/erazer-major15x1-15-3-i9-32gb--40163616.html"><img src="https://i.ebayimg.com/images/g/kUYAAeSwnUZqAk1A/s-l225.jpg" alt="ERAZER MAJOR15X1 15,3&quot; I9 32GB 2TB RTX4070 NOTEBOOK GAMING GARANZIA ITALIA" loading="lazy" /><div class="row-info"><div class="row-title">ERAZER MAJOR15X1 15,3&quot; I9 32GB 2TB RTX4070 NOTEBOOK GAMING GARANZIA ITALIA</div><div class="row-specs">Intel Core i9-14900HX · 32 GB DDR4 · NVIDIA GeForce RTX 4070 (8GB GDDR6)</div></div><div class="row-price">🦊 1200 €</div></a><a class="row" href="/notebook/medion-erazer-beast-x40-i9-149-69160369.html"><img src="https://i.ebayimg.com/images/g/dfcAAeSwMCtquBY0/s-l225.jpg" alt="MEDION ERAZER Beast X40 i9-14900HX RTX 4080 32 GB 1 TB 240 Hz" loading="lazy" /><div class="row-info"><div class="row-title">MEDION ERAZER Beast X40 i9-14900HX RTX 4080 32 GB 1 TB 240 Hz</div><div class="row-specs">Intel Core i9-14900HX · 32 GB DDR4 · NVIDIA GeForce RTX 4080 (12GB GDDR6)</div></div><div class="row-price">🦊 1550 €</div></a><a class="row" href="/notebook/lenovo-thinkpad-p1-g4-16-4k-i9-00305762.html"><img src="https://i.ebayimg.com/images/g/GZoAAeSwLGlqr~zJ/s-l225.jpg" alt="Lenovo ThinkPad P1 G4 16&quot; 4K i9-11950H 32 GB 1 TB RTX 3080 vPro IR FPR Adobe RGB" loading="lazy" /><div class="row-info"><div class="row-title">Lenovo ThinkPad P1 G4 16&quot; 4K i9-11950H 32 GB 1 TB RTX 3080 vPro IR FPR Adobe RGB</div><div class="row-specs">Intel Core i9-11950H · 32 GB DDR4 · NVIDIA GeForce RTX 4070 (8GB GDDR6)</div></div><div class="row-price">🦊 2000 €</div></a><a class="row" href="/notebook/macbook-pro-15-pollici-2019-co-22116566.html"><img src="https://i.ebayimg.com/images/g/Ng8AAeSwl2pquMYz/s-l225.jpg" alt="MacBook Pro 15 pollici 2019 Core i9 8 core 16 GB 500 GB SSD Touch Bar" loading="lazy" /><div class="row-info"><div class="row-title">MacBook Pro 15 pollici 2019 Core i9 8 core 16 GB 500 GB SSD Touch Bar</div><div class="row-specs">Intel Core i9 Multicore · 16 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 499 €</div></a><a class="row" href="/notebook/hp-zbook-15-g6-i9-9880h-32gb-r-90901457.html"><img src="https://i.ebayimg.com/images/g/ll4AAeSwj6BqjXi-/s-l225.jpg" alt="HP ZBook 15 G6, i9-9880H, 32GB RAM, 1TB SSD, NVidia Quadro, Linux come nuovo 22.3" loading="lazy" /><div class="row-info"><div class="row-title">HP ZBook 15 G6, i9-9880H, 32GB RAM, 1TB SSD, NVidia Quadro, Linux come nuovo 22.3</div><div class="row-specs">Intel Core i9-9880H · 32 GB DDR4 · NVIDIA Quadro T2000 (4GB GDDR6 ISV)</div></div><div class="row-price"> 599 €</div></a><a class="row" href="/notebook/apple-macbook-pro-16-pollici-s-21662779.html"><img src="https://i.ebayimg.com/images/g/~3QAAeSwfHtqrPkP/s-l225.jpg" alt="Apple MacBook Pro 16 pollici (SSD 1 TB, Intel Core i9 9. Gen, 4,80 GHz, 16 GB) computer portatile" loading="lazy" /><div class="row-info"><div class="row-title">Apple MacBook Pro 16 pollici (SSD 1 TB, Intel Core i9 9. Gen, 4,80 GHz, 16 GB) computer po</div><div class="row-specs">Intel Core i9 Multicore · 16 GB DDR4 · AMD Radeon Graphics integrata</div></div><div class="row-price"> 680 €</div></a><a class="row" href="/notebook/notebook-lenovo-thinkpad-p17-g-65213973.html"><img src="https://i.ebayimg.com/images/g/eN4AAeSwfJNqtpDp/s-l225.jpg" alt="Notebook Lenovo ThinkPad P17 Gen 1 i9-10885H 32GB SSD 1TB Quadro RTX 3000 4K" loading="lazy" /><div class="row-info"><div class="row-title">Notebook Lenovo ThinkPad P17 Gen 1 i9-10885H 32GB SSD 1TB Quadro RTX 3000 4K</div><div class="row-specs">Intel Core i9-10885H · 32 GB DDR4 · NVIDIA Quadro RTX 3000 (Workstation)</div></div><div class="row-price"> 802 €</div></a><a class="row" href="/notebook/asus-zenbook-14x-ux3404v-14-5--20162654.html"><img src="https://i.ebayimg.com/images/g/yjAAAeSwjk9qsm0-/s-l225.jpg" alt="ASUS ZenBook 14X UX3404V 14,5&quot; 2,8K OLED 120Hz i9-13900H 16GB DDR5 1TB IR W11Pro" loading="lazy" /><div class="row-info"><div class="row-title">ASUS ZenBook 14X UX3404V 14,5&quot; 2,8K OLED 120Hz i9-13900H 16GB DDR5 1TB IR W11Pro</div><div class="row-specs">Intel Core i9-13900H · 16 GB DDR5 · Intel Iris Xe Graphics</div></div><div class="row-price"> 900 €</div></a><a class="row" href="/notebook/dell-precision-7540-i9-quadro.html"><img src="https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MP_148831855?x=697&amp;y=523&amp;format=webp&amp;quality=60&amp;sp=yes&amp;strip=yes&amp;trim=yes&amp;ex=697&amp;ey=523&amp;align=center&amp;resizesource&amp;unsharp=0.5x0.5" alt="DELL Precision 7540 Notebook, 15,6&quot;, processore Intel Core i9-9980HK, NVIDIA Quadro T2000, RAM 32 GB, 1 TB SSD, Nero, Windows 10 Pro (64 Bit)" loading="lazy" /><div class="row-info"><div class="row-title">DELL Precision 7540 Notebook, 15,6&quot;, processore Intel Core i9-9980HK, NVIDIA Quadro T2000,</div><div class="row-specs">Intel Core i9-9980HK · 32 GB DDR4 · NVIDIA Quadro T2000 (4GB GDDR6 ISV)</div></div><div class="row-price"> 999 €</div></a></div>
+  <div class="card-grid"><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp">🦊 Scelta Furba</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/erazer-major15x1-15-3-i9-32gb--40163616.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/kUYAAeSwnUZqAk1A/s-l225.jpg" alt="ERAZER MAJOR15X1 15,3&quot; I9 - Intel Core i9-14900HX, 32 GB DDR4, NVIDIA GeForce RTX 4070 (8GB GDDR6)" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">ERAZER • MAJOR15X1 15,3&quot; I9</div>
+        <div class="pcard-title">ERAZER MAJOR15X1 15,3&quot; I9 32GB 2TB RTX4070 NOTEBOOK GAMING GARANZIA ITALIA</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span> <span class="pcard-rating">4.8</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎮 Gaming</span><span class="pcard-tag">🎨 Creatività</span><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.3&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">NVIDIA GeForce RTX 4070 (8GB GDDR6)</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i9-14900HX</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">32 GB DDR4</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">2 TB SSD NVMe PCIe</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">1200 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/227340163616?_skw=notebook+i9+32GB&amp;hash=item34ee879a20%3Ag%3AkUYAAeSwnUZqAk1A&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp">🦊 Scelta Furba</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/medion-erazer-beast-x40-i9-149-69160369.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/dfcAAeSwMCtquBY0/s-l225.jpg" alt="MEDION ERAZER Beast X40 - Intel Core i9-14900HX, 32 GB DDR4, NVIDIA GeForce RTX 4080 (12GB GDDR6)" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">MEDION • ERAZER Beast X40</div>
+        <div class="pcard-title">MEDION ERAZER Beast X40 i9-14900HX RTX 4080 32 GB 1 TB 240 Hz</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span> <span class="pcard-rating">4.8</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎮 Gaming</span><span class="pcard-tag">🎨 Creatività</span><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; 2K QHD (2560x1440) 240Hz LED</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">NVIDIA GeForce RTX 4080 (12GB GDDR6)</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i9-14900HX</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">32 GB DDR4</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">1 TB SSD NVMe PCIe</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">1550 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/198669160369?_skw=notebook+i9+32GB&amp;hash=item2e419acfb1%3Ag%3AdfcAAeSwMCtquBY0&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp">🦊 Scelta Furba</span>
+    <span class="pcard-condition" style="color:#38bdf8;">♻️ Ricondizionato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/lenovo-thinkpad-p1-g4-16-4k-i9-00305762.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/GZoAAeSwLGlqr~zJ/s-l225.jpg" alt="Lenovo ThinkPad P1 G4 - Intel Core i9-11950H, 32 GB DDR4, NVIDIA GeForce RTX 4070 (8GB GDDR6)" loading="lazy" />
+        <span class="pcard-weight">1.81 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Lenovo • ThinkPad P1 G4</div>
+        <div class="pcard-title">Lenovo ThinkPad P1 G4 16&quot; 4K i9-11950H 32 GB 1 TB RTX 3080 vPro IR FPR Adobe RGB</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span> <span class="pcard-rating">4.8</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎮 Gaming</span><span class="pcard-tag">🎨 Creatività</span><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">16&quot; 4K UHD (3840x2160) LED</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">NVIDIA GeForce RTX 4070 (8GB GDDR6)</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i9-11950H</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">32 GB DDR4</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">1 TB SSD NVMe PCIe</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">2000 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/147600305762?_skw=notebook&amp;hash=item225da9ee62%3Ag%3AGZoAAeSwLGlqr~zJ&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/macbook-pro-15-pollici-2019-co-22116566.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/Ng8AAeSwl2pquMYz/s-l225.jpg" alt="MacBook Pro 15 pollici - Intel Core i9 Multicore, 16 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">MacBook • Pro 15 pollici</div>
+        <div class="pcard-title">MacBook Pro 15 pollici 2019 Core i9 8 core 16 GB 500 GB SSD Touch Bar</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i9 Multicore</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">16 GB DDR4</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">499 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/800722116566?_skw=notebook+i9+16GB&amp;hash=itemba6ec1dfd6%3Ag%3ANg8AAeSwl2pquMYz&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/hp-zbook-15-g6-i9-9880h-32gb-r-90901457.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/ll4AAeSwj6BqjXi-/s-l225.jpg" alt="HP ZBook 15 G6, - Intel Core i9-9880H, 32 GB DDR4, NVIDIA Quadro T2000 (4GB GDDR6 ISV)" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">HP • ZBook 15 G6,</div>
+        <div class="pcard-title">HP ZBook 15 G6, i9-9880H, 32GB RAM, 1TB SSD, NVidia Quadro, Linux come nuovo 22.3</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎨 Creatività</span><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">NVIDIA Quadro T2000 (4GB GDDR6 ISV)</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i9-9880H</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">32 GB DDR4</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">1 TB SSD NVMe PCIe</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">599 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/227490901457?_skw=notebook+i9+32GB&amp;hash=item34f783add1%3Ag%3All4AAeSwj6BqjXi-&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/apple-macbook-pro-16-pollici-s-21662779.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/~3QAAeSwfHtqrPkP/s-l225.jpg" alt="Apple MacBook Pro 16 - Intel Core i9 Multicore, 16 GB DDR4, AMD Radeon Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Apple • MacBook Pro 16</div>
+        <div class="pcard-title">Apple MacBook Pro 16 pollici (SSD 1 TB, Intel Core i9 9. Gen, 4,80 GHz, 16 GB) computer po</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">16&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Graphics integrata</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i9 Multicore</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">16 GB DDR4</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">1 TB SSD NVMe PCIe</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">680 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/377521662779?_skw=notebook+i9+16GB&amp;hash=item57e60b6b3b%3Ag%3A~3QAAeSwfHtqrPkP&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-lenovo-thinkpad-p17-g-65213973.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/eN4AAeSwfJNqtpDp/s-l225.jpg" alt="Notebook Lenovo ThinkPad P17 - Intel Core i9-10885H, 32 GB DDR4, NVIDIA Quadro RTX 3000 (Workstation)" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Notebook • Lenovo ThinkPad P17</div>
+        <div class="pcard-title">Notebook Lenovo ThinkPad P17 Gen 1 i9-10885H 32GB SSD 1TB Quadro RTX 3000 4K</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎨 Creatività</span><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">17.3&quot; 4K UHD (3840x2160) LED</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">NVIDIA Quadro RTX 3000 (Workstation)</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i9-10885H</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">32 GB DDR4</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">1 TB SSD NVMe PCIe</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">802 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/257765213973?_skw=notebook+i9+32GB&amp;hash=item3c04010715%3Ag%3AeN4AAeSwfJNqtpDp&amp;amdata=enc%3AAQALAAAA8ACCtXRWQnOEpyOqnQQ8KGZWKQtZQIcpiXmuxkX5yiRUqhm6przq5y0pdHNBTIjTYrgi8VwRgHWtcQXK17Fn5ErZAQKrRyMo4dITfRfEoB4RFpJ3fsQe%2BiXtIHUyEJGsBK%2FzH9b24wfLROq7aaZb%2FEtLeQ0Uj7Mg%2B%2Bu4eNYhV1Ymr%2BjzgrNAr0sWLJHqf%2FAEMSi%2FJ1yObip2Bl75N0aqHMA1u8LfFUSLfpGDSD0iH6Yz5c2YidRy%2FOBKElxGnS5sMwpoEJ8TY0KAi55NzNT2q8NtZq9PrE707yeVuk63zmm6IQ%2BKPP%2BIDQX9gDUMlmxn6A%3D%3D&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#38bdf8;">♻️ Ricondizionato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/asus-zenbook-14x-ux3404v-14-5--20162654.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/yjAAAeSwjk9qsm0-/s-l225.jpg" alt="ASUS ZenBook 14X UX3404V - Intel Core i9-13900H, 16 GB DDR5, Intel Iris Xe Graphics" loading="lazy" />
+        <span class="pcard-weight">1.56 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">ASUS • ZenBook 14X UX3404V</div>
+        <div class="pcard-title">ASUS ZenBook 14X UX3404V 14,5&quot; 2,8K OLED 120Hz i9-13900H 16GB DDR5 1TB IR W11Pro</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14.5&quot; FHD (1920x1080) 120Hz OLED</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel Iris Xe Graphics</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i9-13900H</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">16 GB DDR5</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">1 TB SSD NVMe PCIe</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">900 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/318920162654?_skw=notebook+i9+16GB&amp;hash=item4a411f7d5e%3Ag%3AyjAAAeSwjk9qsm0-&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#38bdf8;">♻️ Ricondizionato</span>
+    <span style="font-size:18px; font-weight:800; color:#fb7185;">-38%</span>
+  </div>
+  <a class="pcard-body" href="/notebook/dell-precision-7540-i9-quadro.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MP_148831855?x=697&amp;y=523&amp;format=webp&amp;quality=60&amp;sp=yes&amp;strip=yes&amp;trim=yes&amp;ex=697&amp;ey=523&amp;align=center&amp;resizesource&amp;unsharp=0.5x0.5" alt="DELL Precision 7540 - Intel Core i9-9980HK, 32 GB DDR4, NVIDIA Quadro T2000 (4GB GDDR6 ISV)" loading="lazy" />
+        <span class="pcard-weight">2.60 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">DELL • Precision 7540</div>
+        <div class="pcard-title">DELL Precision 7540 Notebook, 15,6&quot;, processore Intel Core i9-9980HK, NVIDIA Quadro T2000,</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎨 Creatività</span><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">NVIDIA Quadro T2000 (4GB GDDR6 ISV)</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i9-9980HK</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">32 GB DDR4</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">1 TB SSD NVMe PCIe</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div></div>
+  </a>
+  <div class="pcard-unverified">⚠️ Link non verificato: sito in aggiornamento</div>
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">999 € <span class="pcard-was">1599 €</span></div>
+      <div class="pcard-savings">600 € in meno del prezzo di listino</div>
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>MediaWorld.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.mediaworld.it/it/product/_dell-precision-7540-156-processore-intelr-intel-core-i9-9980hk-240-500-ghz-8-core-16-thread-16-mb-di-cache-32-gb-1-tb-ssd-nero-148846872.html" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div></div>
   <a class="back" href="/">Vedi tutto il catalogo su Prezzi Furbi →</a>
 </main>
 </body>

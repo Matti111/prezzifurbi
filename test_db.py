@@ -1717,6 +1717,57 @@ _STAMP_META = {
     "nessuno": ("", "Netto"),
 }
 
+_USE_CASE_META = {
+    "gaming": ("🎮", "Gaming"),
+    "creativita": ("🎨", "Creatività"),
+    "programmazione": ("👨‍💻", "Programmazione"),
+    "studio": ("🎓", "Studio"),
+    "lavoro": ("💼", "Lavoro"),
+    "home": ("🏠", "Home"),
+}
+
+_CONDITION_META = {
+    "Nuovo": ("✨", "#f59e0b"),
+    "Ricondizionato": ("♻️", "#38bdf8"),
+    "Usato": ("🤝", "#94a3b8"),
+}
+
+# Stesse frecce/colori di SpecIndicator.tsx (livello double_up/up/neutral/down
+# già calcolato da evaluate_laptop() e salvato su ogni prodotto - nessun ricalcolo).
+_INDICATOR_META = {
+    "double_up": ("⇈", "#10b981"),
+    "up": ("↑", "#34d399"),
+    "neutral": ("=", "#64748b"),
+    "down": ("↓", "#f87171"),
+}
+
+_FRESHNESS_COLORS = {"green": "#10b981", "yellow": "#f59e0b", "red": "#f43f5e"}
+_FRESHNESS_TITLES = {
+    "green": "Prezzo verificato di recente",
+    "yellow": "Prezzo verificato da un po': potrebbe essere lievemente cambiato",
+    "red": "Dato non aggiornato da tempo: verifica il prezzo sul negozio prima di acquistare",
+}
+
+
+def _freshness_level(last_updated: Optional[str]) -> str:
+    """Stesse soglie di freshnessLevel() in valuation.ts (10/30 giorni) - qui
+    calcolate al momento della generazione della pagina statica (non a runtime
+    lato client come nella SPA), restano valide fino alla prossima rigenerazione
+    notturna. Mai 'green' quando il dato manca: 'yellow', come nella SPA."""
+    if not last_updated:
+        return "yellow"
+    try:
+        dt = datetime.fromisoformat(last_updated.replace("Z", "+00:00"))
+    except ValueError:
+        return "yellow"
+    now = datetime.now(dt.tzinfo) if dt.tzinfo else datetime.utcnow()
+    days = (now - dt).total_seconds() / 86400
+    if days < 10:
+        return "green"
+    if days < 30:
+        return "yellow"
+    return "red"
+
 
 def _esc(value: Any) -> str:
     return html.escape(str(value), quote=True)
@@ -1753,7 +1804,7 @@ _PAGE_STYLE = """
   .back { display:inline-block; margin-bottom:16px; font-size:13px; color:#94a3b8; text-decoration:none; }
   .back:hover { color:#fb923c; }
   .kicker { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#94a3b8; }
-  h1 { font-size:22px; line-height:1.3; margin:4px 0 12px; }
+  h1 { font-size:22px; line-height:1.3; margin:4px 0 12px; max-width:640px; }
   .badge { display:inline-flex; align-items:center; gap:6px; background:#f97316; color:#fff; font-weight:700; font-size:13px; padding:4px 12px; border-radius:999px; margin-bottom:16px; }
   img { width:100%; max-width:280px; border-radius:16px; display:block; margin:0 0 16px; border:1px solid #1e293b; background:#fff; }
   .price { font-size:28px; font-weight:800; color:#fff; margin:8px 0 0; }
@@ -1767,8 +1818,8 @@ _PAGE_STYLE = """
   li { padding:4px 0; }
   .cta { display:block; text-align:center; background:#f97316; color:#fff; font-weight:800; padding:14px; border-radius:12px; text-decoration:none; font-size:16px; margin-bottom:12px; }
   .cta:hover { background:#ea580c; }
-  .disclaimer { font-size:11px; color:#64748b; text-align:center; }
-  .intro { font-size:13px; color:#94a3b8; margin:0 0 20px; line-height:1.5; }
+  .disclaimer { font-size:11px; color:#64748b; text-align:center; max-width:640px; }
+  .intro { font-size:13px; color:#94a3b8; margin:0 0 20px; line-height:1.5; max-width:640px; }
   .count { color:#fb923c; font-weight:700; }
   .list { display:flex; flex-direction:column; gap:2px; margin-bottom:20px; }
   .row { display:flex; align-items:center; gap:10px; padding:10px; border-radius:12px; background:#0f172a; text-decoration:none; border:1px solid #1e293b; }
@@ -1778,6 +1829,41 @@ _PAGE_STYLE = """
   .row-title { font-size:12.5px; color:#e2e8f0; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .row-specs { font-size:11px; color:#94a3b8; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .row-price { font-size:13px; font-weight:800; color:#fff; flex-shrink:0; text-align:right; }
+  /* Scheda prodotto in stile home (vedi ProductCard.tsx), senza i tab Top/Flop/
+     Commento - usata nelle pagine categoria e "che PC serve per..." al posto
+     della semplice riga sopra (richiesta esplicita utente 2026-09-29). */
+  .card-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:14px; margin-bottom:20px; }
+  .pcard { display:flex; flex-direction:column; border-radius:16px; border:1px solid #1e293b; background:#0f172a; overflow:hidden; }
+  .pcard-head { display:flex; align-items:center; justify-content:space-between; gap:6px; padding:8px 12px; border-bottom:1px solid #1e293b; background:#020617; }
+  .pcard-stamp { font-size:11px; font-weight:800; color:#e2e8f0; white-space:nowrap; }
+  .pcard-condition { font-size:10.5px; font-weight:700; white-space:nowrap; }
+  .pcard-body { display:block; padding:12px; text-decoration:none; color:inherit; }
+  .pcard-top { display:flex; gap:10px; align-items:center; margin-bottom:10px; }
+  .pcard-thumb { position:relative; width:64px; height:64px; flex-shrink:0; border-radius:10px; overflow:hidden; background:#fff; border:1px solid #1e293b; }
+  .pcard-thumb img { width:64px; height:64px; max-width:64px; margin:0; border:none; border-radius:0; object-fit:cover; display:block; }
+  .pcard-weight { position:absolute; right:2px; bottom:2px; background:rgba(2,6,23,.8); color:#fff; font-size:8px; font-weight:700; padding:1px 4px; border-radius:4px; }
+  .pcard-info { min-width:0; flex:1; }
+  .pcard-brand { font-size:9.5px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; color:#fb923c; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .pcard-title { font-size:13px; font-weight:800; color:#e2e8f0; line-height:1.3; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; margin:2px 0 4px; }
+  .pcard-stars { font-size:11px; }
+  .pcard-rating { font-size:11px; font-weight:800; color:#fbbf24; margin-left:2px; }
+  .pcard-tags { display:flex; flex-wrap:wrap; gap:3px; margin-top:4px; }
+  .pcard-tag { font-size:9px; font-weight:700; background:#1e293b; color:#94a3b8; padding:2px 6px; border-radius:6px; white-space:nowrap; }
+  .pcard-specs { display:flex; flex-direction:column; gap:4px; background:#020617; border:1px solid #1e293b; border-radius:10px; padding:8px; }
+  .pcard-spec-row { display:flex; align-items:center; gap:6px; font-size:11px; }
+  .pcard-spec-icon { flex-shrink:0; }
+  .pcard-spec-value { flex:1; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#cbd5e1; font-weight:600; }
+  .pcard-spec-arrow { flex-shrink:0; font-weight:900; }
+  .pcard-unverified { font-size:10px; font-weight:700; color:#fbbf24; background:rgba(120,53,15,.2); padding:6px 12px; border-top:1px solid #1e293b; }
+  .pcard-foot { margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:10px 12px; border-top:1px solid #1e293b; background:#020617; }
+  .pcard-price-block { min-width:0; }
+  .pcard-price { font-size:18px; font-weight:800; color:#fff; }
+  .pcard-was { font-size:11px; font-weight:600; color:#64748b; text-decoration:line-through; margin-left:4px; }
+  .pcard-savings { font-size:10px; font-weight:700; color:#34d399; }
+  .pcard-store { display:flex; align-items:center; gap:5px; font-size:10.5px; color:#94a3b8; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .pcard-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+  .pcard-cta { flex-shrink:0; background:linear-gradient(135deg,#f97316,#d97706); color:#fff; font-weight:800; font-size:12px; padding:8px 14px; border-radius:10px; text-decoration:none; white-space:nowrap; }
+  .pcard-cta:hover { background:linear-gradient(135deg,#ea580c,#b45309); }
 """
 
 
@@ -2060,20 +2146,112 @@ def _build_category_specs(catalog: List[Dict[str, Any]]) -> List[Dict[str, Any]]
     return specs
 
 
-def _render_category_row(p: Dict[str, Any]) -> str:
-    emoji, _ = _STAMP_META.get(p.get("stamp", "nessuno"), ("", ""))
-    specs = p["specs"]
-    spec_line = f"{specs['cpu']['value']} · {specs['ram']['value']} · {specs['gpu']['value']}"
+def _render_pcard_spec(icon: str, value: str, indicator: str) -> str:
+    arrow, color = _INDICATOR_META.get(indicator, ("=", "#64748b"))
     return (
-        f'<a class="row" href="/notebook/{p["id"]}.html">'
-        f'<img src="{_esc(p["imageUrl"])}" alt="{_esc(p["title"])}" loading="lazy" />'
-        f'<div class="row-info">'
-        f'<div class="row-title">{_esc(p["title"][:90])}</div>'
-        f'<div class="row-specs">{_esc(spec_line)}</div>'
+        f'<div class="pcard-spec-row">'
+        f'<span class="pcard-spec-icon">{icon}</span>'
+        f'<span class="pcard-spec-value">{_esc(value)}</span>'
+        f'<span class="pcard-spec-arrow" style="color:{color};">{arrow}</span>'
         f'</div>'
-        f'<div class="row-price">{emoji} {p["price"]} €</div>'
-        f'</a>'
     )
+
+
+def _render_product_card(p: Dict[str, Any]) -> str:
+    """Scheda prodotto in stile home (stessa identità visiva di
+    ProductCard.tsx: timbro, badge condizione, sconto/Netto, thumbnail,
+    titolo, stelle, tag di utilizzo, le 5 specifiche con frecce, prezzo/
+    risparmio, freschezza, store, CTA), SENZA i tab Top/Flop/Commento -
+    richiesta esplicita dell'utente 2026-09-29 ("solo le specifiche, tutto
+    il resto sì"), usata al posto della semplice riga nelle pagine categoria
+    e "che PC serve per...". Stessa semplificazione già accettata per le
+    pagine prodotto singole (vedi CLAUDE.md, sezione SEO): timbro grezzo del
+    backend, mai la logica di upgrade contestuale verso 🦊 di
+    qualifiesForFox() (richiederebbe portare le tabelle benchmark CPU/GPU in
+    Python, sproporzionato per pagine di supporto SEO) - stesso motivo per
+    cui il prezzo di riferimento è mostrato SOLO se dichiarato dalla fonte
+    (`originalPrice`), mai un "prezzo tipico" calcolato sul pool."""
+    specs = p["specs"]
+    price = p["price"]
+    stamp_emoji, stamp_label = _STAMP_META.get(p.get("stamp", "nessuno"), ("", "Netto"))
+    condition = p.get("condition", "Usato")
+    cond_emoji, cond_color = _CONDITION_META.get(condition, ("🤝", "#94a3b8"))
+
+    has_discount = bool(p.get("originalPrice")) and p["originalPrice"] > price
+    if has_discount:
+        pct = round((p["originalPrice"] - price) / p["originalPrice"] * 100)
+        discount_html = f'<span style="font-size:18px; font-weight:800; color:#fb7185;">-{pct}%</span>'
+    else:
+        discount_html = '<span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>'
+
+    weight_badge = f'<span class="pcard-weight">{_esc(p["weight"])}</span>' if p.get("weight") else ""
+
+    rating = p.get("rating") or 0
+    full_stars = int(rating + 0.5)
+    stars_html = "".join(
+        f'<span style="color:{"#f59e0b" if i < full_stars else "#334155"};">★</span>' for i in range(5)
+    )
+
+    use_cases_html = "".join(
+        f'<span class="pcard-tag">{_USE_CASE_META.get(uc, ("", uc))[0]} {_esc(_USE_CASE_META.get(uc, ("", uc))[1])}</span>'
+        for uc in p.get("useCases", [])
+    )
+
+    spec_rows_html = "".join(
+        _render_pcard_spec(icon, specs[key]["value"], specs[key]["indicator"])
+        for key, icon in [("screen", "🖥️"), ("gpu", "🎮"), ("cpu", "🧠"), ("ram", "💾"), ("ssd", "💿")]
+    )
+
+    was_html = f'<span class="pcard-was">{p["originalPrice"]} €</span>' if has_discount else ""
+    savings_html = (
+        f'<div class="pcard-savings">{p["originalPrice"] - price} € in meno del prezzo di listino</div>'
+        if has_discount else ""
+    )
+
+    freshness = _freshness_level(p.get("lastUpdated"))
+    freshness_color = _FRESHNESS_COLORS[freshness]
+    freshness_title = _FRESHNESS_TITLES[freshness]
+
+    # Amazon/MediaWorld: prezzo non ancora sincronizzato in automatico (vedi
+    # CLAUDE.md), stesso avviso già mostrato sulla card React.
+    unverified_html = (
+        '<div class="pcard-unverified">⚠️ Link non verificato: sito in aggiornamento</div>'
+        if re.search(r'amazon|mediaworld', p.get("store", ""), re.I) else ""
+    )
+
+    alt_text = f"{p['brand']} {p['model']} - {specs['cpu']['value']}, {specs['ram']['value']}, {specs['gpu']['value']}"
+
+    return f"""<div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp">{stamp_emoji} {_esc(stamp_label)}</span>
+    <span class="pcard-condition" style="color:{cond_color};">{cond_emoji} {_esc(condition)}</span>
+    {discount_html}
+  </div>
+  <a class="pcard-body" href="/notebook/{p['id']}.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="{_esc(p['imageUrl'])}" alt="{_esc(alt_text)}" loading="lazy" />
+        {weight_badge}
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">{_esc(p['brand'])} • {_esc(p['model'])}</div>
+        <div class="pcard-title">{_esc(p['title'][:90])}</div>
+        <div class="pcard-stars">{stars_html} <span class="pcard-rating">{rating:.1f}</span></div>
+        <div class="pcard-tags">{use_cases_html}</div>
+      </div>
+    </div>
+    <div class="pcard-specs">{spec_rows_html}</div>
+  </a>
+  {unverified_html}
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">{price} € {was_html}</div>
+      {savings_html}
+      <div class="pcard-store"><span class="pcard-dot" style="background:{freshness_color};" title="{_esc(freshness_title)}"></span>{_esc(p.get('store', ''))}</div>
+    </div>
+    <a class="pcard-cta" href="{_esc(p['affiliateUrl'])}" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div>"""
 
 
 def render_category_page(spec: Dict[str, Any], products: List[Dict[str, Any]]) -> str:
@@ -2118,7 +2296,7 @@ def render_category_page(spec: Dict[str, Any], products: List[Dict[str, Any]]) -
         ],
     }
 
-    rows_html = "".join(_render_category_row(p) for p in shown)
+    rows_html = "".join(_render_product_card(p) for p in shown)
     shown_note = (
         f'<p class="intro">Mostrate le {len(shown)} migliori occasioni su {count} offerte totali in questa categoria.</p>'
         if count > len(shown) else ""
@@ -2145,12 +2323,12 @@ def render_category_page(spec: Dict[str, Any], products: List[Dict[str, Any]]) -
 <style>{_PAGE_STYLE}</style>
 </head>
 <body>
-<main>
+<main style="max-width:1000px;">
   <a class="back" href="/">← Torna al comparatore Prezzi Furbi</a>
   <h1>{_esc(title)}</h1>
   <p class="intro">{_esc(spec['intro'])} <span class="count">{count} offerte</span> disponibili, aggiornate ogni notte.</p>
   {shown_note}
-  <div class="list">{rows_html}</div>
+  <div class="card-grid">{rows_html}</div>
   <a class="back" href="/">Vedi tutto il catalogo su Prezzi Furbi →</a>
 </main>
 </body>
@@ -2344,7 +2522,7 @@ _CPU_TIER_BARS = {1: 3, 2: 5, 3: 8, 4: 10}
 _GPU_TIER_BARS = {1: 2, 2: 4, 3: 6, 4: 8, 5: 10}
 
 _GAME_PAGE_STYLE = """
-  .tier-card { border-radius:14px; padding:14px; margin-bottom:12px; border:1px solid #1e293b; background:#0f172a; }
+  .tier-card { border-radius:14px; padding:14px; margin-bottom:12px; border:1px solid #1e293b; background:#0f172a; max-width:640px; }
   .tier-minimo { border-left:3px solid #f59e0b; }
   .tier-consigliato { border-left:3px solid #22c55e; }
   .tier-ultra { border-left:3px solid #8b5cf6; }
@@ -2361,7 +2539,7 @@ _GAME_PAGE_STYLE = """
   .tier-ultra .bar-seg.filled { background:#8b5cf6; }
   .tier-spec-text { font-size:11px; color:#64748b; margin-top:10px; line-height:1.5; }
   .tier-section-title { font-size:14px; font-weight:800; color:#e2e8f0; margin:20px 0 10px; }
-  .compat-list { list-style:none; padding:0; margin:0 0 8px; font-size:13px; }
+  .compat-list { list-style:none; padding:0; margin:0 0 8px; font-size:13px; max-width:640px; }
   .compat-list li { padding:6px 0; border-bottom:1px solid #1e293b; }
   .compat-tier { color:#64748b; font-size:11px; }
 """
@@ -2461,8 +2639,8 @@ def _render_game_product_list(game: Dict[str, Any], catalog: List[Dict[str, Any]
             continue
         products = sorted(products, key=_deal_score, reverse=True)[:20]
         emoji, label = _TIER_META[tier_name]
-        rows = "".join(_render_category_row(p) for p in products)
-        sections.append(f'<h2 class="tier-section-title">{emoji} Notebook che soddisfano i {label.lower()}</h2><div class="list">{rows}</div>')
+        rows = "".join(_render_product_card(p) for p in products)
+        sections.append(f'<h2 class="tier-section-title">{emoji} Notebook che soddisfano i {label.lower()}</h2><div class="card-grid">{rows}</div>')
 
     if not sections:
         return '<p class="intro">Nessun notebook nel catalogo attuale soddisfa nemmeno i requisiti minimi per questo gioco.</p>'
@@ -2564,7 +2742,7 @@ def render_game_page(game: Dict[str, Any], catalog: List[Dict[str, Any]], all_ga
 <style>{_PAGE_STYLE}{_GAME_PAGE_STYLE}</style>
 </head>
 <body>
-<main>
+<main style="max-width:1000px;">
   <a class="back" href="/notebook-per-giochi.html">← Tutti i giochi</a>
   <h1>Che PC serve per {_esc(title)}?</h1>
   {body}

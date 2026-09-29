@@ -25,7 +25,7 @@
   .back { display:inline-block; margin-bottom:16px; font-size:13px; color:#94a3b8; text-decoration:none; }
   .back:hover { color:#fb923c; }
   .kicker { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#94a3b8; }
-  h1 { font-size:22px; line-height:1.3; margin:4px 0 12px; }
+  h1 { font-size:22px; line-height:1.3; margin:4px 0 12px; max-width:640px; }
   .badge { display:inline-flex; align-items:center; gap:6px; background:#f97316; color:#fff; font-weight:700; font-size:13px; padding:4px 12px; border-radius:999px; margin-bottom:16px; }
   img { width:100%; max-width:280px; border-radius:16px; display:block; margin:0 0 16px; border:1px solid #1e293b; background:#fff; }
   .price { font-size:28px; font-weight:800; color:#fff; margin:8px 0 0; }
@@ -39,8 +39,8 @@
   li { padding:4px 0; }
   .cta { display:block; text-align:center; background:#f97316; color:#fff; font-weight:800; padding:14px; border-radius:12px; text-decoration:none; font-size:16px; margin-bottom:12px; }
   .cta:hover { background:#ea580c; }
-  .disclaimer { font-size:11px; color:#64748b; text-align:center; }
-  .intro { font-size:13px; color:#94a3b8; margin:0 0 20px; line-height:1.5; }
+  .disclaimer { font-size:11px; color:#64748b; text-align:center; max-width:640px; }
+  .intro { font-size:13px; color:#94a3b8; margin:0 0 20px; line-height:1.5; max-width:640px; }
   .count { color:#fb923c; font-weight:700; }
   .list { display:flex; flex-direction:column; gap:2px; margin-bottom:20px; }
   .row { display:flex; align-items:center; gap:10px; padding:10px; border-radius:12px; background:#0f172a; text-decoration:none; border:1px solid #1e293b; }
@@ -50,15 +50,1250 @@
   .row-title { font-size:12.5px; color:#e2e8f0; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .row-specs { font-size:11px; color:#94a3b8; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .row-price { font-size:13px; font-weight:800; color:#fff; flex-shrink:0; text-align:right; }
+  /* Scheda prodotto in stile home (vedi ProductCard.tsx), senza i tab Top/Flop/
+     Commento - usata nelle pagine categoria e "che PC serve per..." al posto
+     della semplice riga sopra (richiesta esplicita utente 2026-09-29). */
+  .card-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:14px; margin-bottom:20px; }
+  .pcard { display:flex; flex-direction:column; border-radius:16px; border:1px solid #1e293b; background:#0f172a; overflow:hidden; }
+  .pcard-head { display:flex; align-items:center; justify-content:space-between; gap:6px; padding:8px 12px; border-bottom:1px solid #1e293b; background:#020617; }
+  .pcard-stamp { font-size:11px; font-weight:800; color:#e2e8f0; white-space:nowrap; }
+  .pcard-condition { font-size:10.5px; font-weight:700; white-space:nowrap; }
+  .pcard-body { display:block; padding:12px; text-decoration:none; color:inherit; }
+  .pcard-top { display:flex; gap:10px; align-items:center; margin-bottom:10px; }
+  .pcard-thumb { position:relative; width:64px; height:64px; flex-shrink:0; border-radius:10px; overflow:hidden; background:#fff; border:1px solid #1e293b; }
+  .pcard-thumb img { width:64px; height:64px; max-width:64px; margin:0; border:none; border-radius:0; object-fit:cover; display:block; }
+  .pcard-weight { position:absolute; right:2px; bottom:2px; background:rgba(2,6,23,.8); color:#fff; font-size:8px; font-weight:700; padding:1px 4px; border-radius:4px; }
+  .pcard-info { min-width:0; flex:1; }
+  .pcard-brand { font-size:9.5px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; color:#fb923c; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .pcard-title { font-size:13px; font-weight:800; color:#e2e8f0; line-height:1.3; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; margin:2px 0 4px; }
+  .pcard-stars { font-size:11px; }
+  .pcard-rating { font-size:11px; font-weight:800; color:#fbbf24; margin-left:2px; }
+  .pcard-tags { display:flex; flex-wrap:wrap; gap:3px; margin-top:4px; }
+  .pcard-tag { font-size:9px; font-weight:700; background:#1e293b; color:#94a3b8; padding:2px 6px; border-radius:6px; white-space:nowrap; }
+  .pcard-specs { display:flex; flex-direction:column; gap:4px; background:#020617; border:1px solid #1e293b; border-radius:10px; padding:8px; }
+  .pcard-spec-row { display:flex; align-items:center; gap:6px; font-size:11px; }
+  .pcard-spec-icon { flex-shrink:0; }
+  .pcard-spec-value { flex:1; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#cbd5e1; font-weight:600; }
+  .pcard-spec-arrow { flex-shrink:0; font-weight:900; }
+  .pcard-unverified { font-size:10px; font-weight:700; color:#fbbf24; background:rgba(120,53,15,.2); padding:6px 12px; border-top:1px solid #1e293b; }
+  .pcard-foot { margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:10px 12px; border-top:1px solid #1e293b; background:#020617; }
+  .pcard-price-block { min-width:0; }
+  .pcard-price { font-size:18px; font-weight:800; color:#fff; }
+  .pcard-was { font-size:11px; font-weight:600; color:#64748b; text-decoration:line-through; margin-left:4px; }
+  .pcard-savings { font-size:10px; font-weight:700; color:#34d399; }
+  .pcard-store { display:flex; align-items:center; gap:5px; font-size:10.5px; color:#94a3b8; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .pcard-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+  .pcard-cta { flex-shrink:0; background:linear-gradient(135deg,#f97316,#d97706); color:#fff; font-weight:800; font-size:12px; padding:8px 14px; border-radius:10px; text-decoration:none; white-space:nowrap; }
+  .pcard-cta:hover { background:linear-gradient(135deg,#ea580c,#b45309); }
 </style>
 </head>
 <body>
-<main>
+<main style="max-width:1000px;">
   <a class="back" href="/">← Torna al comparatore Prezzi Furbi</a>
   <h1>Notebook 8GB RAM</h1>
   <p class="intro">Notebook con 8GB di RAM, prezzi e caratteristiche a confronto. <span class="count">73 offerte</span> disponibili, aggiornate ogni notte.</p>
   <p class="intro">Mostrate le 40 migliori occasioni su 73 offerte totali in questa categoria.</p>
-  <div class="list"><a class="row" href="/notebook/notebook-fujitsu-lifebook-e736-69563723.html"><img src="https://i.ebayimg.com/images/g/AQsAAeSwLrNqkUKp/s-l225.jpg" alt="Notebook FUJITSU LifeBook E736 13&quot;  Cpu i5-6300u Ram 8gb SSD 240gb Win11Pro" loading="lazy" /><div class="row-info"><div class="row-title">Notebook FUJITSU LifeBook E736 13&quot;  Cpu i5-6300u Ram 8gb SSD 240gb Win11Pro</div><div class="row-specs">Intel Core i5-6300u · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 150 €</div></a><a class="row" href="/notebook/notebook-dell-7280-i5-6200u-8g-47254650.html"><img src="https://i.ebayimg.com/images/g/VzwAAOSwUgFnyyC1/s-l225.jpg" alt="NOTEBOOK DELL 7280 i5-6200U 8GB RAM 256GB SSD 12.5&quot; INTEL W 10 PRO GAR 1 ANNO" loading="lazy" /><div class="row-info"><div class="row-title">NOTEBOOK DELL 7280 i5-6200U 8GB RAM 256GB SSD 12.5&quot; INTEL W 10 PRO GAR 1 ANNO</div><div class="row-specs">Intel Core i5-6200U · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 150 €</div></a><a class="row" href="/notebook/notebook-pc-portatile-dell-lat-71639440.html"><img src="https://i.ebayimg.com/images/g/Zs0AAOSwAthkIrpx/s-l225.jpg" alt="NOTEBOOK PC PORTATILE DELL LATITUDE 7280 INTEL I5-6300U 8GB SSD 512GB WIN 10 PRO" loading="lazy" /><div class="row-info"><div class="row-title">NOTEBOOK PC PORTATILE DELL LATITUDE 7280 INTEL I5-6300U 8GB SSD 512GB WIN 10 PRO</div><div class="row-specs">Intel Core i5-6300U · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 150 €</div></a><a class="row" href="/notebook/notebook-pc-portatile-hp-840-g-09707743.html"><img src="https://i.ebayimg.com/images/g/hBAAAOSwQRFk8Zel/s-l225.jpg" alt="NOTEBOOK PC PORTATILE HP 840 G3 I5-6200U 2.40GHZ RAM 8GB SSD 512GB WIN10 PROF" loading="lazy" /><div class="row-info"><div class="row-title">NOTEBOOK PC PORTATILE HP 840 G3 I5-6200U 2.40GHZ RAM 8GB SSD 512GB WIN10 PROF</div><div class="row-specs">Intel Core i5-6200U · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 150 €</div></a><a class="row" href="/notebook/notebook-lenovo-thinkpad-l13-c-69345503.html"><img src="https://i.ebayimg.com/images/g/bjIAAeSwpPxquDTR/s-l225.jpg" alt="Notebook Lenovo ThinkPad L13 | Core i5-10210U | 8GB RAM | 256GB SSD | Batteria 89%" loading="lazy" /><div class="row-info"><div class="row-title">Notebook Lenovo ThinkPad L13 | Core i5-10210U | 8GB RAM | 256GB SSD | Batteria 89%</div><div class="row-specs">Intel Core i5-10210U · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 150 €</div></a><a class="row" href="/notebook/notebook-lenovo-thinkpad-l14-c-69323996.html"><img src="https://i.ebayimg.com/images/g/swUAAeSwXGNquC9u/s-l225.jpg" alt="Notebook Lenovo ThinkPad L14 | Core i5-10210U | 8GB RAM | 512GB SSD | Batteria 90%" loading="lazy" /><div class="row-info"><div class="row-title">Notebook Lenovo ThinkPad L14 | Core i5-10210U | 8GB RAM | 512GB SSD | Batteria 90%</div><div class="row-specs">Intel Core i5-10210U · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 150 €</div></a><a class="row" href="/notebook/notebook-lenovo-v15-ryzen-5-35-69266716.html"><img src="https://i.ebayimg.com/images/g/ooQAAeSwQU1quCYa/s-l225.jpg" alt="Notebook Lenovo V15 | Ryzen 5 - 3500U | 8GB RAM | 256GB SSD | Batteria 98%" loading="lazy" /><div class="row-info"><div class="row-title">Notebook Lenovo V15 | Ryzen 5 - 3500U | 8GB RAM | 256GB SSD | Batteria 98%</div><div class="row-specs">AMD Ryzen 5 Multicore · 8 GB DDR4 · AMD Radeon Graphics integrata</div></div><div class="row-price"> 150 €</div></a><a class="row" href="/notebook/notebook-hp-pavilion-15-amd-ra-42835873.html"><img src="https://i.ebayimg.com/images/g/m5kAAeSwF0pqPj-Y/s-l225.jpg" alt="NOTEBOOK HP PAVILION 15 AMD RADEON A6-9225 8GB RAM 128GB SSD WIFI WINDOWS 11" loading="lazy" /><div class="row-info"><div class="row-title">NOTEBOOK HP PAVILION 15 AMD RADEON A6-9225 8GB RAM 128GB SSD WIFI WINDOWS 11</div><div class="row-specs">AMD A6-9225 · 8 GB DDR4 · AMD Radeon Graphics integrata</div></div><div class="row-price"> 153 €</div></a><a class="row" href="/notebook/notebook-pc-portatile-hp-640-g-01170509.html"><img src="https://i.ebayimg.com/images/g/LD8AAOSw29FmIkG3/s-l225.jpg" alt="NOTEBOOK PC PORTATILE HP 640 G2 I5-6200U RAM 8GB 240GB NVME WIN 10 BATT NUOVA" loading="lazy" /><div class="row-info"><div class="row-title">NOTEBOOK PC PORTATILE HP 640 G2 I5-6200U RAM 8GB 240GB NVME WIN 10 BATT NUOVA</div><div class="row-specs">Intel Core i5-6200U · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 154 €</div></a><a class="row" href="/notebook/portatile-dell-latitude-7390-1-16590584.html"><img src="https://i.ebayimg.com/images/g/GpIAAeSwoLZqtnUr/s-l225.jpg" alt="Portatile Dell Latitude 7390 128GB SSD 13.3&#x27;&#x27; FHD i5-8350U 8GB RAM QWERTZ Touch" loading="lazy" /><div class="row-info"><div class="row-title">Portatile Dell Latitude 7390 128GB SSD 13.3&#x27;&#x27; FHD i5-8350U 8GB RAM QWERTZ Touch</div><div class="row-specs">Intel Core i5-8350U · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 155 €</div></a><a class="row" href="/notebook/hp-470-g7-notebook-pc-17-2-i5--09920611.html"><img src="https://i.ebayimg.com/images/g/PEQAAeSw~oJqY8GS/s-l225.jpg" alt="HP 470 G7 Notebook PC 17.2 I5-10510U 8GB RAM NO SSD NO OS" loading="lazy" /><div class="row-info"><div class="row-title">HP 470 G7 Notebook PC 17.2 I5-10510U 8GB RAM NO SSD NO OS</div><div class="row-specs">Intel Core I5-10510U · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 157 €</div></a><a class="row" href="/notebook/notebook-pc-portatile-hp-430-g-45918801.html"><img src="https://i.ebayimg.com/images/g/ep4AAOSwY6hkwP1M/s-l225.jpg" alt="NOTEBOOK PC PORTATILE HP 430 G5 I5-8250U 1.60GHZ RAM 8GB SSD 256GB WIN 10 PRO" loading="lazy" /><div class="row-info"><div class="row-title">NOTEBOOK PC PORTATILE HP 430 G5 I5-8250U 1.60GHZ RAM 8GB SSD 256GB WIN 10 PRO</div><div class="row-specs">Intel Core I5-8250U · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 159 €</div></a><a class="row" href="/notebook/notebook-pc-portatile-lenovo-t-12675355.html"><img src="https://i.ebayimg.com/images/g/yUIAAeSwgEBo6Q8T/s-l225.jpg" alt="NOTEBOOK PC PORTATILE LENOVO THINKPAD A485 RYZEN 5 PRO 8GB SSD 128GB WIN 11 PRO" loading="lazy" /><div class="row-info"><div class="row-title">NOTEBOOK PC PORTATILE LENOVO THINKPAD A485 RYZEN 5 PRO 8GB SSD 128GB WIN 11 PRO</div><div class="row-specs">AMD Ryzen 5 Multicore · 8 GB DDR4 · AMD Radeon Graphics integrata</div></div><div class="row-price"> 159 €</div></a><a class="row" href="/notebook/notebook-toshiba-satellite-pro-13893299.html"><img src="https://i.ebayimg.com/images/g/6McAAeSw63VqKSa8/s-l225.jpg" alt="NOTEBOOK TOSHIBA SATELLITE PRO R50-E INTEL CORE I3-7020U 8GB RAM 256GB SSD WIFI" loading="lazy" /><div class="row-info"><div class="row-title">NOTEBOOK TOSHIBA SATELLITE PRO R50-E INTEL CORE I3-7020U 8GB RAM 256GB SSD WIFI</div><div class="row-specs">Intel Core i5 Multicore · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 159 €</div></a><a class="row" href="/notebook/ultrabook-lenovo-thinkpad-leno-11841836.html"><img src="https://i.ebayimg.com/images/g/6KIAAeSwRzdqtO~m/s-l225.jpg" alt="Ultrabook Lenovo Thinkpad Lenovo x280 i5-8350U 8 GB 256 GB 12,5&quot; FullHD SSD Win 11" loading="lazy" /><div class="row-info"><div class="row-title">Ultrabook Lenovo Thinkpad Lenovo x280 i5-8350U 8 GB 256 GB 12,5&quot; FullHD SSD Win 11</div><div class="row-specs">Intel Core i5-8350U · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 159 €</div></a><a class="row" href="/notebook/pc-portatile-notebook-usato-14-77384790.html"><img src="https://i.ebayimg.com/images/g/gNIAAeSw34pqqC6g/s-l225.jpg" alt="PC Portatile Notebook Usato 14” Lenovo T450s Core i7 8Gb Ram 256Gb SSD Win 11" loading="lazy" /><div class="row-info"><div class="row-title">PC Portatile Notebook Usato 14” Lenovo T450s Core i7 8Gb Ram 256Gb SSD Win 11</div><div class="row-specs">Intel Core i7 Multicore · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 160 €</div></a><a class="row" href="/notebook/hp-probook-650-g8-i5-1135g7-8--91749508.html"><img src="https://i.ebayimg.com/images/g/DIoAAeSwIF5qtpBo/s-l225.jpg" alt="HP Probook 650 G8 i5-1135G7 8 GB 256 GB USB3.0 Webcam USB-C HDMI WIN11" loading="lazy" /><div class="row-info"><div class="row-title">HP Probook 650 G8 i5-1135G7 8 GB 256 GB USB3.0 Webcam USB-C HDMI WIN11</div><div class="row-specs">Intel Core i5-1135G7 · 8 GB DDR4 · Intel Iris Xe Graphics</div></div><div class="row-price"> 160 €</div></a><a class="row" href="/notebook/portatile-dell-latitude-7390-2-16585268.html"><img src="https://i.ebayimg.com/images/g/ziwAAeSwg8FqtnQs/s-l225.jpg" alt="Portatile Dell Latitude 7390 256GB SSD 13.3&#x27;&#x27; FHD i5-8350U 8GB RAM QWERTZ Touch" loading="lazy" /><div class="row-info"><div class="row-title">Portatile Dell Latitude 7390 256GB SSD 13.3&#x27;&#x27; FHD i5-8350U 8GB RAM QWERTZ Touch</div><div class="row-specs">Intel Core i5-8350U · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 160 €</div></a><a class="row" href="/notebook/portatile-dell-latitude-7480-2-16578474.html"><img src="https://i.ebayimg.com/images/g/~Z8AAeSwiQdqtnMR/s-l225.jpg" alt="Portatile Dell Latitude 7480 256GB SSD 14&quot; FHD Intel Core i7-7600U 8GB RAM QWERTZ" loading="lazy" /><div class="row-info"><div class="row-title">Portatile Dell Latitude 7480 256GB SSD 14&quot; FHD Intel Core i7-7600U 8GB RAM QWERTZ</div><div class="row-specs">Intel Core i7 Multicore · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 165 €</div></a><a class="row" href="/notebook/portatile-dell-latitude-5300-2-16576188.html"><img src="https://i.ebayimg.com/images/g/S6gAAeSwnm9qtnKc/s-l225.jpg" alt="Portatile Dell Latitude 5300 256GB 13.3&#x27;&#x27; FHD SSD i5-8365U 8GB RAM QWERTY" loading="lazy" /><div class="row-info"><div class="row-title">Portatile Dell Latitude 5300 256GB 13.3&#x27;&#x27; FHD SSD i5-8365U 8GB RAM QWERTY</div><div class="row-specs">Intel Core i5-8365U · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 165 €</div></a><a class="row" href="/notebook/pc-portatile-notebook-ricondiz-73291499.html"><img src="https://i.ebayimg.com/images/g/UPQAAeSw9ltqor-n/s-l225.jpg" alt="PC PORTATILE NOTEBOOK RICONDIZIONATO HP 255 G8 AMD 3020E RAM 8GB SSD 256GB WIN11" loading="lazy" /><div class="row-info"><div class="row-title">PC PORTATILE NOTEBOOK RICONDIZIONATO HP 255 G8 AMD 3020E RAM 8GB SSD 256GB WIN11</div><div class="row-specs">Intel Core i5 Multicore · 8 GB DDR4 · AMD Radeon Graphics integrata</div></div><div class="row-price"> 169 €</div></a><a class="row" href="/notebook/notebook-pc-portatile-lenovo-t-71896417.html"><img src="https://i.ebayimg.com/images/g/AEoAAeSwfH1o7MN1/s-l225.jpg" alt="NOTEBOOK PC PORTATILE LENOVO THINKPAD L490 I5-8265U 8GB SSD 256GB WIN 11 PRO" loading="lazy" /><div class="row-info"><div class="row-title">NOTEBOOK PC PORTATILE LENOVO THINKPAD L490 I5-8265U 8GB SSD 256GB WIN 11 PRO</div><div class="row-specs">Intel Core I5-8265U · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 169 €</div></a><a class="row" href="/notebook/notebook-fhd-i5-8a-gen-ram-8gb-13466340.html"><img src="https://i.ebayimg.com/images/g/s3cAAeSwM-Nqq~VW/s-l225.jpg" alt="NOTEBOOK FHD i5-8a Gen. RAM 8GB SSD 240GB LENOVO VELOCE PC PORTATILE 14&quot; FULL HD" loading="lazy" /><div class="row-info"><div class="row-title">NOTEBOOK FHD i5-8a Gen. RAM 8GB SSD 240GB LENOVO VELOCE PC PORTATILE 14&quot; FULL HD</div><div class="row-specs">Intel Core I5-8350u · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 170 €</div></a><a class="row" href="/notebook/scontato-notebook-14-full-hd-i-04591235.html"><img src="https://i.ebayimg.com/images/g/tYMAAeSwlspqqTOs/s-l225.jpg" alt="SCONTATO NOTEBOOK 14&quot; FULL HD i5-8350 RAM 8GB SSD 256gb LENOVO L480 PC PORTATILE" loading="lazy" /><div class="row-info"><div class="row-title">SCONTATO NOTEBOOK 14&quot; FULL HD i5-8350 RAM 8GB SSD 256gb LENOVO L480 PC PORTATILE</div><div class="row-specs">Intel Core i5-8350 · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 170 €</div></a><a class="row" href="/notebook/notebook-fhd-i5-8a-gen-ram-8gb-18326855.html"><img src="https://i.ebayimg.com/images/g/oEIAAeSwKxVqqTQ2/s-l225.jpg" alt="NOTEBOOK FHD i5-8a Gen RAM 8GB SSD 240GB LENOVO VELOCE PC PORTATILE 14&quot; FULL HD" loading="lazy" /><div class="row-info"><div class="row-title">NOTEBOOK FHD i5-8a Gen RAM 8GB SSD 240GB LENOVO VELOCE PC PORTATILE 14&quot; FULL HD</div><div class="row-specs">Intel Core I5-8350U · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 170 €</div></a><a class="row" href="/notebook/portatile-acer-aspire-e5-575-1-16589937.html"><img src="https://i.ebayimg.com/images/g/UGMAAeSwZ2BqtnUL/s-l225.jpg" alt="Portatile Acer Aspire E5-575 128GB SSD 1TB HDD 15,6&quot; FHD i7-6500U 8GB RAM QWERTY" loading="lazy" /><div class="row-info"><div class="row-title">Portatile Acer Aspire E5-575 128GB SSD 1TB HDD 15,6&quot; FHD i7-6500U 8GB RAM QWERTY</div><div class="row-specs">Intel Core i7 Multicore · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 175 €</div></a><a class="row" href="/notebook/hp-845-g8-ryzen-7-r7-5850u-8gb-30323797.html"><img src="https://i.ebayimg.com/images/g/uYUAAeSwqhJo7eSJ/s-l225.jpg" alt="HP 845 G8 RYZEN 7 R7-5850U 8GB RAM 256GB SSD 14 FHD (GRADO C) GARANZIA FATTURA" loading="lazy" /><div class="row-info"><div class="row-title">HP 845 G8 RYZEN 7 R7-5850U 8GB RAM 256GB SSD 14 FHD (GRADO C) GARANZIA FATTURA</div><div class="row-specs">AMD Ryzen 7 Multicore · 8 GB DDR4 · AMD Radeon Graphics integrata</div></div><div class="row-price"> 178 €</div></a><a class="row" href="/notebook/notebook-toshiba-z30-intel-cor-37586437.html"><img src="https://i.ebayimg.com/images/g/9pgAAeSw0Plp8x8P/s-l225.jpg" alt="NOTEBOOK TOSHIBA Z30 INTEL CORE I5-6200U 8GB RAM 256GB SD WIFI WINDOWS 11" loading="lazy" /><div class="row-info"><div class="row-title">NOTEBOOK TOSHIBA Z30 INTEL CORE I5-6200U 8GB RAM 256GB SD WIFI WINDOWS 11</div><div class="row-specs">Intel Core i5-6200U · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 179 €</div></a><a class="row" href="/notebook/lenovo-x280-i5-8350u-8-gb-256--28477086.html"><img src="https://i.ebayimg.com/images/g/zQ0AAeSwCONpstIr/s-l225.jpg" alt="Lenovo X280 i5-8350U 8 GB 256 GB NVME 12,5&quot; FHD Windows 11" loading="lazy" /><div class="row-info"><div class="row-title">Lenovo X280 i5-8350U 8 GB 256 GB NVME 12,5&quot; FHD Windows 11</div><div class="row-specs">Intel Core i5-8350U · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 179 €</div></a><a class="row" href="/notebook/notebook-pc-portatile-dell-lat-03641362.html"><img src="https://i.ebayimg.com/images/g/4HoAAeSwvQ9qAtyU/s-l225.jpg" alt="NOTEBOOK PC PORTATILE DELL LATITUDE 3410 I5-10310U 8 GB SSD 256 GB WIN 11 PRO" loading="lazy" /><div class="row-info"><div class="row-title">NOTEBOOK PC PORTATILE DELL LATITUDE 3410 I5-10310U 8 GB SSD 256 GB WIN 11 PRO</div><div class="row-specs">Intel Core I5-10310U · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 185 €</div></a><a class="row" href="/notebook/notebook-dell-latitude-5410-in-98328675.html"><img src="https://i.ebayimg.com/images/g/faIAAeSwVrpqtoDK/s-l225.jpg" alt="NOTEBOOK DELL LATITUDE 5410 INTEL CORE i5-10310U 8GB RAM 128GB SSD WINDOWS 11" loading="lazy" /><div class="row-info"><div class="row-title">NOTEBOOK DELL LATITUDE 5410 INTEL CORE i5-10310U 8GB RAM 128GB SSD WINDOWS 11</div><div class="row-specs">Intel Core i5-10310U · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 189 €</div></a><a class="row" href="/notebook/notebook-portatile-lenovo-t470-47901119.html"><img src="https://i.ebayimg.com/images/g/cM4AAeSwiX1qluM4/s-l225.jpg" alt="NOTEBOOK PORTATILE LENOVO T470 I5-7300U 2.6GHZ 8GB RAM 256GB SSD WINDOWS 11 HDMI" loading="lazy" /><div class="row-info"><div class="row-title">NOTEBOOK PORTATILE LENOVO T470 I5-7300U 2.6GHZ 8GB RAM 256GB SSD WINDOWS 11 HDMI</div><div class="row-specs">Intel Core i5-7300U · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 189 €</div></a><a class="row" href="/notebook/dell-latitude-5490-14-fhd-i5-8-97522825.html"><img src="https://i.ebayimg.com/images/g/~mIAAeSwvClqqWK6/s-l225.jpg" alt="Dell Latitude 5490 14&quot; FHD i5-8250U (Quadcore) 8GB RAM DDR4 128GB SSD Win 11 Pro" loading="lazy" /><div class="row-info"><div class="row-title">Dell Latitude 5490 14&quot; FHD i5-8250U (Quadcore) 8GB RAM DDR4 128GB SSD Win 11 Pro</div><div class="row-specs">Intel Core i5-8250U · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 190 €</div></a><a class="row" href="/notebook/notebook-hp-elitebook-850-g4-c-09347753.html"><img src="https://i.ebayimg.com/images/g/~F0AAeSwFONqPRO1/s-l225.jpg" alt="Notebook Hp EliteBook 850 G4 Cpu i7-7500u Ram 8Gb DDR4 SSD 480Gb Windows 11 Pro" loading="lazy" /><div class="row-info"><div class="row-title">Notebook Hp EliteBook 850 G4 Cpu i7-7500u Ram 8Gb DDR4 SSD 480Gb Windows 11 Pro</div><div class="row-specs">Intel Core i7 Multicore · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 198 €</div></a><a class="row" href="/notebook/notebook-fujitsu-lifebook-e780-39083735.html"><img src="https://i.ebayimg.com/images/g/DyIAAeSwKcBqqs90/s-l225.jpg" alt="Notebook Fujitsu LIFEBOOK E780 Windows 10 configurabile fino a 8 GB DDR3 2 TB SSD" loading="lazy" /><div class="row-info"><div class="row-title">Notebook Fujitsu LIFEBOOK E780 Windows 10 configurabile fino a 8 GB DDR3 2 TB SSD</div><div class="row-specs">Intel Core i5 Multicore · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 198 €</div></a><a class="row" href="/notebook/portatile-lenovo-17-pollici-gr-96899555.html"><img src="https://i.ebayimg.com/images/g/KfkAAeSwZXtqqmsx/s-l225.jpg" alt="Portatile Lenovo 17 pollici grande schermo Windows 11 e Windows 10" loading="lazy" /><div class="row-info"><div class="row-title">Portatile Lenovo 17 pollici grande schermo Windows 11 e Windows 10</div><div class="row-specs">Intel Core i5 Multicore · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 199 €</div></a><a class="row" href="/notebook/computer-notebook-pc-portatile-14045662.html"><img src="https://i.ebayimg.com/images/g/UHsAAeSwKZxpEk34/s-l225.jpg" alt="computer Notebook PC Portatile HP ProBook  i5 Vpro 8gb 256gb Ssd Win 11 Ufficio" loading="lazy" /><div class="row-info"><div class="row-title">computer Notebook PC Portatile HP ProBook  i5 Vpro 8gb 256gb Ssd Win 11 Ufficio</div><div class="row-specs">Intel Core i5 Multicore · 8 GB DDR4 · Intel Iris Xe Graphics</div></div><div class="row-price"> 200 €</div></a><a class="row" href="/notebook/hp-650-g3-15-6-cpu-i5-7-genera-89701793.html"><img src="https://i.ebayimg.com/images/g/qoIAAeSwCxdqrj8F/s-l225.jpg" alt="HP 650 G3 15,6&quot; CPU I5 7° GENERAZIONE RAM 8GB SSD 250GB WIN 11 UFFICIO LAVORO" loading="lazy" /><div class="row-info"><div class="row-title">HP 650 G3 15,6&quot; CPU I5 7° GENERAZIONE RAM 8GB SSD 250GB WIN 11 UFFICIO LAVORO</div><div class="row-specs">Intel Core i5 Multicore · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 207 €</div></a><a class="row" href="/notebook/lenovo-thinkbook-15-g2-itl-int-09505382.html"><img src="https://i.ebayimg.com/images/g/5V0AAeSwxHFquCKx/s-l225.jpg" alt="Lenovo ThinkBook 15 G2 ITL - Intel Core i5 / 8 GB RAM / 512 GB SSD" loading="lazy" /><div class="row-info"><div class="row-title">Lenovo ThinkBook 15 G2 ITL - Intel Core i5 / 8 GB RAM / 512 GB SSD</div><div class="row-specs">Intel Core i5 Multicore · 8 GB DDR4 · Intel Iris Xe Graphics</div></div><div class="row-price"> 219 €</div></a><a class="row" href="/notebook/notebook-pc-portatile-usato-le-44719191.html"><img src="https://i.ebayimg.com/images/g/-IUAAeSwrI1qtmAa/s-l225.jpg" alt="Notebook Pc Portatile Usato Lenovo N4500 15.6&quot; Ram 8Gb SSD 256GB Win 11 Pro" loading="lazy" /><div class="row-info"><div class="row-title">Notebook Pc Portatile Usato Lenovo N4500 15.6&quot; Ram 8Gb SSD 256GB Win 11 Pro</div><div class="row-specs">Intel Core i5 Multicore · 8 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 219 €</div></a></div>
+  <div class="card-grid"><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-fujitsu-lifebook-e736-69563723.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/AQsAAeSwLrNqkUKp/s-l225.jpg" alt="Notebook FUJITSU LifeBook E736 - Intel Core i5-6300u, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Notebook • FUJITSU LifeBook E736</div>
+        <div class="pcard-title">Notebook FUJITSU LifeBook E736 13&quot;  Cpu i5-6300u Ram 8gb SSD 240gb Win11Pro</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">13&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i5-6300u</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">150 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/267769563723?_skw=notebook+ricondizionato&amp;hash=item3e584f4a4b%3Ag%3AAQsAAeSwLrNqkUKp&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-dell-7280-i5-6200u-8g-47254650.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/VzwAAOSwUgFnyyC1/s-l225.jpg" alt="NOTEBOOK DELL 7280 i5-6200U - Intel Core i5-6200U, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">NOTEBOOK • DELL 7280 i5-6200U</div>
+        <div class="pcard-title">NOTEBOOK DELL 7280 i5-6200U 8GB RAM 256GB SSD 12.5&quot; INTEL W 10 PRO GAR 1 ANNO</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i5-6200U</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">150 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/256847254650?_skw=notebook&amp;hash=item3bcd4a147a%3Ag%3AVzwAAOSwUgFnyyC1&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-pc-portatile-dell-lat-71639440.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/Zs0AAOSwAthkIrpx/s-l225.jpg" alt="NOTEBOOK PC PORTATILE DELL - Intel Core i5-6300U, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">NOTEBOOK • PC PORTATILE DELL</div>
+        <div class="pcard-title">NOTEBOOK PC PORTATILE DELL LATITUDE 7280 INTEL I5-6300U 8GB SSD 512GB WIN 10 PRO</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i5-6300U</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">150 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/366471639440?_skw=notebook+pc&amp;hash=item5553697190%3Ag%3AZs0AAOSwAthkIrpx&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-pc-portatile-hp-840-g-09707743.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/hBAAAOSwQRFk8Zel/s-l225.jpg" alt="NOTEBOOK PC PORTATILE HP - Intel Core i5-6200U, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">NOTEBOOK • PC PORTATILE HP</div>
+        <div class="pcard-title">NOTEBOOK PC PORTATILE HP 840 G3 I5-6200U 2.40GHZ RAM 8GB SSD 512GB WIN10 PROF</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i5-6200U</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">150 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/327309707743?_skw=notebook+pc&amp;hash=item4c352dc9df%3Ag%3AhBAAAOSwQRFk8Zel&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-lenovo-thinkpad-l13-c-69345503.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/bjIAAeSwpPxquDTR/s-l225.jpg" alt="Notebook Lenovo ThinkPad L13 - Intel Core i5-10210U, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Notebook • Lenovo ThinkPad L13</div>
+        <div class="pcard-title">Notebook Lenovo ThinkPad L13 | Core i5-10210U | 8GB RAM | 256GB SSD | Batteria 89%</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; 4K UHD (3840x2160) LED</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i5-10210U</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">150 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/198669345503?_skw=laptop&amp;hash=item2e419da2df%3Ag%3AbjIAAeSwpPxquDTR&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-lenovo-thinkpad-l14-c-69323996.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/swUAAeSwXGNquC9u/s-l225.jpg" alt="Notebook Lenovo ThinkPad L14 - Intel Core i5-10210U, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Notebook • Lenovo ThinkPad L14</div>
+        <div class="pcard-title">Notebook Lenovo ThinkPad L14 | Core i5-10210U | 8GB RAM | 512GB SSD | Batteria 90%</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; 4K UHD (3840x2160) LED</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i5-10210U</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">150 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/198669323996?_skw=laptop&amp;hash=item2e419d4edc%3Ag%3AswUAAeSwXGNquC9u&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-lenovo-v15-ryzen-5-35-69266716.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/ooQAAeSwQU1quCYa/s-l225.jpg" alt="Notebook Lenovo V15 | - AMD Ryzen 5 Multicore, 8 GB DDR4, AMD Radeon Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Notebook • Lenovo V15 |</div>
+        <div class="pcard-title">Notebook Lenovo V15 | Ryzen 5 - 3500U | 8GB RAM | 256GB SSD | Batteria 98%</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 5 Multicore</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">150 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/198669266716?_skw=laptop&amp;hash=item2e419c6f1c%3Ag%3AooQAAeSwQU1quCYa&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-hp-pavilion-15-amd-ra-42835873.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/m5kAAeSwF0pqPj-Y/s-l225.jpg" alt="NOTEBOOK HP PAVILION 15 - AMD A6-9225, 8 GB DDR4, AMD Radeon Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">NOTEBOOK • HP PAVILION 15</div>
+        <div class="pcard-title">NOTEBOOK HP PAVILION 15 AMD RADEON A6-9225 8GB RAM 128GB SSD WIFI WINDOWS 11</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD A6-9225</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">153 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/127942835873?_skw=notebook&amp;hash=item1dc9fcbea1%3Ag%3Am5kAAeSwF0pqPj-Y&amp;amdata=enc%3AAQALAAAA4ACCtXRWQnOEpyOqnQQ8KGbmlaklkvebv9EHAT5SbhTPDNAYv6dwBrzJYBa5iSbu8HRnSvLvC%2BcsTuLPk6%2FfPhhYHGnooVOQNY5qH1OuEccuyf%2FrPYNnqcqwpUNSzzZv7jX0pHWmXaLE1atYAqGzcZVrZ2ValP6rN7eSGBPPros%2FnMAvHFNIO3cEp5S96d75iMUjl%2FYs9UkkP7q3K3OiR%2FNGAy3f%2Bd%2FkTy7OGcnhNbnM2ooNlsxr0CiSd9cxQsu6dcDHRnHjuLViYIGb7dVdmNRM98EhKOJS6hHrznWE%2BKZ2&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-pc-portatile-hp-640-g-01170509.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/LD8AAOSw29FmIkG3/s-l225.jpg" alt="NOTEBOOK PC PORTATILE HP - Intel Core i5-6200U, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">NOTEBOOK • PC PORTATILE HP</div>
+        <div class="pcard-title">NOTEBOOK PC PORTATILE HP 640 G2 I5-6200U RAM 8GB 240GB NVME WIN 10 BATT NUOVA</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i5-6200U</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">154 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/226101170509?_skw=notebook+pc&amp;hash=item34a4ae114d%3Ag%3ALD8AAOSw29FmIkG3&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/portatile-dell-latitude-7390-1-16590584.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/GpIAAeSwoLZqtnUr/s-l225.jpg" alt="Portatile Dell Latitude 7390 - Intel Core i5-8350U, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Portatile • Dell Latitude 7390</div>
+        <div class="pcard-title">Portatile Dell Latitude 7390 128GB SSD 13.3&#x27;&#x27; FHD i5-8350U 8GB RAM QWERTZ Touch</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">13.3&quot; 4K UHD (3840x2160) LED</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i5-8350U</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">155 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/318916590584?_skw=notebook&amp;hash=item4a40e8fbf8%3Ag%3AGpIAAeSwoLZqtnUr&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/hp-470-g7-notebook-pc-17-2-i5--09920611.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/PEQAAeSw~oJqY8GS/s-l225.jpg" alt="HP 470 G7 Notebook - Intel Core I5-10510U, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">HP • 470 G7 Notebook</div>
+        <div class="pcard-title">HP 470 G7 Notebook PC 17.2 I5-10510U 8GB RAM NO SSD NO OS</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; 4K UHD (3840x2160) LED</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core I5-10510U</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">157 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/398409920611?_skw=notebook+pc&amp;hash=item5cc314f063%3Ag%3APEQAAeSw~oJqY8GS&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-pc-portatile-hp-430-g-45918801.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/ep4AAOSwY6hkwP1M/s-l225.jpg" alt="NOTEBOOK PC PORTATILE HP - Intel Core I5-8250U, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">NOTEBOOK • PC PORTATILE HP</div>
+        <div class="pcard-title">NOTEBOOK PC PORTATILE HP 430 G5 I5-8250U 1.60GHZ RAM 8GB SSD 256GB WIN 10 PRO</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">13.3&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core I5-8250U</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">159 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/325745918801?_skw=notebook+pc&amp;hash=item4bd7f84351%3Ag%3Aep4AAOSwY6hkwP1M&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-pc-portatile-lenovo-t-12675355.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/yUIAAeSwgEBo6Q8T/s-l225.jpg" alt="NOTEBOOK PC PORTATILE LENOVO - AMD Ryzen 5 Multicore, 8 GB DDR4, AMD Radeon Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">1.85 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">NOTEBOOK • PC PORTATILE LENOVO</div>
+        <div class="pcard-title">NOTEBOOK PC PORTATILE LENOVO THINKPAD A485 RYZEN 5 PRO 8GB SSD 128GB WIN 11 PRO</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 5 Multicore</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">159 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/326812675355?_skw=notebook+pc&amp;hash=item4c178dad1b%3Ag%3AyUIAAeSwgEBo6Q8T&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-toshiba-satellite-pro-13893299.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/6McAAeSw63VqKSa8/s-l225.jpg" alt="NOTEBOOK TOSHIBA SATELLITE PRO - Intel Core i5 Multicore, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">NOTEBOOK • TOSHIBA SATELLITE PRO</div>
+        <div class="pcard-title">NOTEBOOK TOSHIBA SATELLITE PRO R50-E INTEL CORE I3-7020U 8GB RAM 256GB SSD WIFI</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; 4K UHD (3840x2160) LED</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i5 Multicore</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">159 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/127913893299?_skw=notebook&amp;hash=item1dc8431db3%3Ag%3A6McAAeSw63VqKSa8&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#38bdf8;">♻️ Ricondizionato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/ultrabook-lenovo-thinkpad-leno-11841836.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/6KIAAeSwRzdqtO~m/s-l225.jpg" alt="Ultrabook Lenovo Thinkpad Lenovo - Intel Core i5-8350U, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">1.27 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Ultrabook • Lenovo Thinkpad Lenovo</div>
+        <div class="pcard-title">Ultrabook Lenovo Thinkpad Lenovo x280 i5-8350U 8 GB 256 GB 12,5&quot; FullHD SSD Win 11</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; 4K UHD (3840x2160) LED</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i5-8350U</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">159 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/318911841836?_skw=notebook&amp;hash=item4a40a0862c%3Ag%3A6KIAAeSwRzdqtO~m&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/pc-portatile-notebook-usato-14-77384790.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/gNIAAeSw34pqqC6g/s-l225.jpg" alt="PC Portatile Notebook Usato - Intel Core i7 Multicore, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">PC • Portatile Notebook Usato</div>
+        <div class="pcard-title">PC Portatile Notebook Usato 14” Lenovo T450s Core i7 8Gb Ram 256Gb SSD Win 11</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i7 Multicore</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">160 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/178377384790?_skw=notebook+pc&amp;hash=item29881ee356%3Ag%3AgNIAAeSw34pqqC6g&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/hp-probook-650-g8-i5-1135g7-8--91749508.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/DIoAAeSwIF5qtpBo/s-l225.jpg" alt="HP Probook 650 G8 - Intel Core i5-1135G7, 8 GB DDR4, Intel Iris Xe Graphics" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">HP • Probook 650 G8</div>
+        <div class="pcard-title">HP Probook 650 G8 i5-1135G7 8 GB 256 GB USB3.0 Webcam USB-C HDMI WIN11</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel Iris Xe Graphics</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i5-1135G7</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">160 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/366691749508?_skw=notebook&amp;hash=item5560880e84%3Ag%3ADIoAAeSwIF5qtpBo&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/portatile-dell-latitude-7390-2-16585268.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/ziwAAeSwg8FqtnQs/s-l225.jpg" alt="Portatile Dell Latitude 7390 - Intel Core i5-8350U, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Portatile • Dell Latitude 7390</div>
+        <div class="pcard-title">Portatile Dell Latitude 7390 256GB SSD 13.3&#x27;&#x27; FHD i5-8350U 8GB RAM QWERTZ Touch</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">13.3&quot; 4K UHD (3840x2160) LED</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i5-8350U</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">160 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/318916585268?_skw=notebook&amp;hash=item4a40e8e734%3Ag%3AziwAAeSwg8FqtnQs&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/portatile-dell-latitude-7480-2-16578474.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/~Z8AAeSwiQdqtnMR/s-l225.jpg" alt="Portatile Dell Latitude 7480 - Intel Core i7 Multicore, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Portatile • Dell Latitude 7480</div>
+        <div class="pcard-title">Portatile Dell Latitude 7480 256GB SSD 14&quot; FHD Intel Core i7-7600U 8GB RAM QWERTZ</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i7 Multicore</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">165 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/318916578474?_skw=notebook&amp;hash=item4a40e8ccaa%3Ag%3A~Z8AAeSwiQdqtnMR&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/portatile-dell-latitude-5300-2-16576188.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/S6gAAeSwnm9qtnKc/s-l225.jpg" alt="Portatile Dell Latitude 5300 - Intel Core i5-8365U, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Portatile • Dell Latitude 5300</div>
+        <div class="pcard-title">Portatile Dell Latitude 5300 256GB 13.3&#x27;&#x27; FHD SSD i5-8365U 8GB RAM QWERTY</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">13.3&quot; 4K UHD (3840x2160) LED</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i5-8365U</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">165 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/318916576188?_skw=notebook&amp;hash=item4a40e8c3bc%3Ag%3AS6gAAeSwnm9qtnKc&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/pc-portatile-notebook-ricondiz-73291499.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/UPQAAeSw9ltqor-n/s-l225.jpg" alt="PC PORTATILE NOTEBOOK RICONDIZIONATO - Intel Core i5 Multicore, 8 GB DDR4, AMD Radeon Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">PC • PORTATILE NOTEBOOK RICONDIZIONATO</div>
+        <div class="pcard-title">PC PORTATILE NOTEBOOK RICONDIZIONATO HP 255 G8 AMD 3020E RAM 8GB SSD 256GB WIN11</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i5 Multicore</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">169 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/389473291499?_skw=notebook+pc&amp;hash=item5aae6acceb%3Ag%3AUPQAAeSw9ltqor-n&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-pc-portatile-lenovo-t-71896417.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/AEoAAeSwfH1o7MN1/s-l225.jpg" alt="NOTEBOOK PC PORTATILE LENOVO - Intel Core I5-8265U, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">1.68 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">NOTEBOOK • PC PORTATILE LENOVO</div>
+        <div class="pcard-title">NOTEBOOK PC PORTATILE LENOVO THINKPAD L490 I5-8265U 8GB SSD 256GB WIN 11 PRO</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14&quot; 4K UHD (3840x2160) LED</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core I5-8265U</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">169 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/327371896417?_skw=notebook+pc&amp;hash=item4c38e2b661%3Ag%3AAEoAAeSwfH1o7MN1&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-fhd-i5-8a-gen-ram-8gb-13466340.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/s3cAAeSwM-Nqq~VW/s-l225.jpg" alt="NOTEBOOK FHD i5-8a Gen. - Intel Core I5-8350u, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">NOTEBOOK • FHD i5-8a Gen.</div>
+        <div class="pcard-title">NOTEBOOK FHD i5-8a Gen. RAM 8GB SSD 240GB LENOVO VELOCE PC PORTATILE 14&quot; FULL HD</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14&quot; 4K UHD (3840x2160) LED</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core I5-8350u</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">170 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/407113466340?_skw=notebook+pc&amp;hash=item5ec9da81e4%3Ag%3As3cAAeSwM-Nqq~VW&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/scontato-notebook-14-full-hd-i-04591235.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/tYMAAeSwlspqqTOs/s-l225.jpg" alt="SCONTATO NOTEBOOK 14&quot; FULL - Intel Core i5-8350, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">SCONTATO • NOTEBOOK 14&quot; FULL</div>
+        <div class="pcard-title">SCONTATO NOTEBOOK 14&quot; FULL HD i5-8350 RAM 8GB SSD 256gb LENOVO L480 PC PORTATILE</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i5-8350</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">170 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/407204591235?_skw=notebook+pc&amp;hash=item5ecf48f683%3Ag%3AtYMAAeSwlspqqTOs&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-fhd-i5-8a-gen-ram-8gb-18326855.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/oEIAAeSwKxVqqTQ2/s-l225.jpg" alt="NOTEBOOK FHD i5-8a Gen - Intel Core I5-8350U, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">NOTEBOOK • FHD i5-8a Gen</div>
+        <div class="pcard-title">NOTEBOOK FHD i5-8a Gen RAM 8GB SSD 240GB LENOVO VELOCE PC PORTATILE 14&quot; FULL HD</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core I5-8350U</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">170 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/407218326855?_skw=notebook+pc&amp;hash=item5ed01a8d47%3Ag%3AoEIAAeSwKxVqqTQ2&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/portatile-acer-aspire-e5-575-1-16589937.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/UGMAAeSwZ2BqtnUL/s-l225.jpg" alt="Portatile Acer Aspire E5-575 - Intel Core i7 Multicore, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Portatile • Acer Aspire E5-575</div>
+        <div class="pcard-title">Portatile Acer Aspire E5-575 128GB SSD 1TB HDD 15,6&quot; FHD i7-6500U 8GB RAM QWERTY</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i7 Multicore</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">1 TB SSD NVMe PCIe</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">175 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/318916589937?_skw=notebook&amp;hash=item4a40e8f971%3Ag%3AUGMAAeSwZ2BqtnUL&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/hp-845-g8-ryzen-7-r7-5850u-8gb-30323797.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/uYUAAeSwqhJo7eSJ/s-l225.jpg" alt="HP 845 G8 RYZEN - AMD Ryzen 7 Multicore, 8 GB DDR4, AMD Radeon Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">HP • 845 G8 RYZEN</div>
+        <div class="pcard-title">HP 845 G8 RYZEN 7 R7-5850U 8GB RAM 256GB SSD 14 FHD (GRADO C) GARANZIA FATTURA</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 7 Multicore</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">178 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/257230323797?_skw=notebook&amp;hash=item3be41f4055%3Ag%3AuYUAAeSwqhJo7eSJ&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-toshiba-z30-intel-cor-37586437.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/9pgAAeSw0Plp8x8P/s-l225.jpg" alt="NOTEBOOK TOSHIBA Z30 INTEL - Intel Core i5-6200U, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">NOTEBOOK • TOSHIBA Z30 INTEL</div>
+        <div class="pcard-title">NOTEBOOK TOSHIBA Z30 INTEL CORE I5-6200U 8GB RAM 256GB SD WIFI WINDOWS 11</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">13.3&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i5-6200U</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">179 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/127837586437?_skw=notebook&amp;hash=item1dc3b6c405%3Ag%3A9pgAAeSw0Plp8x8P&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/lenovo-x280-i5-8350u-8-gb-256--28477086.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/zQ0AAeSwCONpstIr/s-l225.jpg" alt="Lenovo X280 i5-8350U 8 - Intel Core i5-8350U, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Lenovo • X280 i5-8350U 8</div>
+        <div class="pcard-title">Lenovo X280 i5-8350U 8 GB 256 GB NVME 12,5&quot; FHD Windows 11</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; 4K UHD (3840x2160) LED</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i5-8350U</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">179 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/800728477086?_skw=laptop&amp;hash=itemba6f22ed9e%3Ag%3AzQ0AAeSwCONpstIr&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-pc-portatile-dell-lat-03641362.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/4HoAAeSwvQ9qAtyU/s-l225.jpg" alt="NOTEBOOK PC PORTATILE DELL - Intel Core I5-10310U, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">1.61 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">NOTEBOOK • PC PORTATILE DELL</div>
+        <div class="pcard-title">NOTEBOOK PC PORTATILE DELL LATITUDE 3410 I5-10310U 8 GB SSD 256 GB WIN 11 PRO</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14&quot; 4K UHD (3840x2160) LED</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core I5-10310U</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">185 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/366403641362?_skw=notebook&amp;hash=item554f5be012%3Ag%3A4HoAAeSwvQ9qAtyU&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-dell-latitude-5410-in-98328675.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/faIAAeSwVrpqtoDK/s-l225.jpg" alt="NOTEBOOK DELL LATITUDE 5410 - Intel Core i5-10310U, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">NOTEBOOK • DELL LATITUDE 5410</div>
+        <div class="pcard-title">NOTEBOOK DELL LATITUDE 5410 INTEL CORE i5-10310U 8GB RAM 128GB SSD WINDOWS 11</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14.1&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i5-10310U</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">189 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/128098328675?_skw=notebook&amp;hash=item1dd3416063%3Ag%3AfaIAAeSwVrpqtoDK&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-portatile-lenovo-t470-47901119.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/cM4AAeSwiX1qluM4/s-l225.jpg" alt="NOTEBOOK PORTATILE LENOVO T470 - Intel Core i5-7300U, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">NOTEBOOK • PORTATILE LENOVO T470</div>
+        <div class="pcard-title">NOTEBOOK PORTATILE LENOVO T470 I5-7300U 2.6GHZ 8GB RAM 256GB SSD WINDOWS 11 HDMI</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14.1&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i5-7300U</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">189 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/125947901119?_skw=notebook&amp;hash=item1d531474bf%3Ag%3AcM4AAeSwiX1qluM4&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/dell-latitude-5490-14-fhd-i5-8-97522825.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/~mIAAeSwvClqqWK6/s-l225.jpg" alt="Dell Latitude 5490 14&quot; - Intel Core i5-8250U, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Dell • Latitude 5490 14&quot;</div>
+        <div class="pcard-title">Dell Latitude 5490 14&quot; FHD i5-8250U (Quadcore) 8GB RAM DDR4 128GB SSD Win 11 Pro</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14&quot; 4K UHD (3840x2160) LED</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i5-8250U</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">190 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/398397522825?_skw=computer+portatile&amp;hash=item5cc257c389%3Ag%3A~mIAAeSwvClqqWK6&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:18px; font-weight:800; color:#fb7185;">-10%</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-hp-elitebook-850-g4-c-09347753.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/~F0AAeSwFONqPRO1/s-l225.jpg" alt="Notebook Hp EliteBook 850 - Intel Core i7 Multicore, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Notebook • Hp EliteBook 850</div>
+        <div class="pcard-title">Notebook Hp EliteBook 850 G4 Cpu i7-7500u Ram 8Gb DDR4 SSD 480Gb Windows 11 Pro</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i7 Multicore</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">198 € <span class="pcard-was">220 €</span></div>
+      <div class="pcard-savings">22 € in meno del prezzo di listino</div>
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/267709347753?_skw=notebook&amp;hash=item3e54b877a9%3Ag%3A~F0AAeSwFONqPRO1&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#38bdf8;">♻️ Ricondizionato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-fujitsu-lifebook-e780-39083735.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/DyIAAeSwKcBqqs90/s-l225.jpg" alt="Notebook Fujitsu LIFEBOOK E780 - Intel Core i5 Multicore, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.70 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Notebook • Fujitsu LIFEBOOK E780</div>
+        <div class="pcard-title">Notebook Fujitsu LIFEBOOK E780 Windows 10 configurabile fino a 8 GB DDR3 2 TB SSD</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i5 Multicore</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">2 TB SSD NVMe PCIe</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">198 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/187439083735?_skw=notebook&amp;hash=item2ba43d70d7%3Ag%3ADyIAAeSwKcBqqs90&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/portatile-lenovo-17-pollici-gr-96899555.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/KfkAAeSwZXtqqmsx/s-l225.jpg" alt="Portatile Lenovo 17 pollici - Intel Core i5 Multicore, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Portatile • Lenovo 17 pollici</div>
+        <div class="pcard-title">Portatile Lenovo 17 pollici grande schermo Windows 11 e Windows 10</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">17&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i5 Multicore</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">199 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/267796899555?_skw=laptop&amp;hash=item3e59f066e3%3Ag%3AKfkAAeSwZXtqqmsx&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/computer-notebook-pc-portatile-14045662.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/UHsAAeSwKZxpEk34/s-l225.jpg" alt="computer Notebook PC Portatile - Intel Core i5 Multicore, 8 GB DDR4, Intel Iris Xe Graphics" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">computer • Notebook PC Portatile</div>
+        <div class="pcard-title">computer Notebook PC Portatile HP ProBook  i5 Vpro 8gb 256gb Ssd Win 11 Ufficio</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel Iris Xe Graphics</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i5 Multicore</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">200 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/389214045662?_skw=notebook+pc&amp;hash=item5a9ef705de%3Ag%3AUHsAAeSwKZxpEk34&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/hp-650-g3-15-6-cpu-i5-7-genera-89701793.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/qoIAAeSwCxdqrj8F/s-l225.jpg" alt="HP 650 G3 15,6&quot; - Intel Core i5 Multicore, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">HP • 650 G3 15,6&quot;</div>
+        <div class="pcard-title">HP 650 G3 15,6&quot; CPU I5 7° GENERAZIONE RAM 8GB SSD 250GB WIN 11 UFFICIO LAVORO</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; 4K UHD (3840x2160) LED</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i5 Multicore</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">207 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/267789701793?_skw=notebook&amp;hash=item3e598292a1%3Ag%3AqoIAAeSwCxdqrj8F&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/lenovo-thinkbook-15-g2-itl-int-09505382.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/5V0AAeSwxHFquCKx/s-l225.jpg" alt="Lenovo ThinkBook 15 G2 - Intel Core i5 Multicore, 8 GB DDR4, Intel Iris Xe Graphics" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Lenovo • ThinkBook 15 G2</div>
+        <div class="pcard-title">Lenovo ThinkBook 15 G2 ITL - Intel Core i5 / 8 GB RAM / 512 GB SSD</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel Iris Xe Graphics</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i5 Multicore</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">219 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/298709505382?_skw=laptop&amp;hash=item458c795566%3Ag%3A5V0AAeSwxHFquCKx&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-pc-portatile-usato-le-44719191.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/-IUAAeSwrI1qtmAa/s-l225.jpg" alt="Notebook Pc Portatile Usato - Intel Core i5 Multicore, 8 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">1.70 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Notebook • Pc Portatile Usato</div>
+        <div class="pcard-title">Notebook Pc Portatile Usato Lenovo N4500 15.6&quot; Ram 8Gb SSD 256GB Win 11 Pro</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; 4K UHD (3840x2160) IPS</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">Intel Core i5 Multicore</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">219 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/137244719191?_skw=notebook&amp;hash=item1ff46c3857%3Ag%3A-IUAAeSwrI1qtmAa&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div></div>
   <a class="back" href="/">Vedi tutto il catalogo su Prezzi Furbi →</a>
 </main>
 </body>

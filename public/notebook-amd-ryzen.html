@@ -25,7 +25,7 @@
   .back { display:inline-block; margin-bottom:16px; font-size:13px; color:#94a3b8; text-decoration:none; }
   .back:hover { color:#fb923c; }
   .kicker { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#94a3b8; }
-  h1 { font-size:22px; line-height:1.3; margin:4px 0 12px; }
+  h1 { font-size:22px; line-height:1.3; margin:4px 0 12px; max-width:640px; }
   .badge { display:inline-flex; align-items:center; gap:6px; background:#f97316; color:#fff; font-weight:700; font-size:13px; padding:4px 12px; border-radius:999px; margin-bottom:16px; }
   img { width:100%; max-width:280px; border-radius:16px; display:block; margin:0 0 16px; border:1px solid #1e293b; background:#fff; }
   .price { font-size:28px; font-weight:800; color:#fff; margin:8px 0 0; }
@@ -39,8 +39,8 @@
   li { padding:4px 0; }
   .cta { display:block; text-align:center; background:#f97316; color:#fff; font-weight:800; padding:14px; border-radius:12px; text-decoration:none; font-size:16px; margin-bottom:12px; }
   .cta:hover { background:#ea580c; }
-  .disclaimer { font-size:11px; color:#64748b; text-align:center; }
-  .intro { font-size:13px; color:#94a3b8; margin:0 0 20px; line-height:1.5; }
+  .disclaimer { font-size:11px; color:#64748b; text-align:center; max-width:640px; }
+  .intro { font-size:13px; color:#94a3b8; margin:0 0 20px; line-height:1.5; max-width:640px; }
   .count { color:#fb923c; font-weight:700; }
   .list { display:flex; flex-direction:column; gap:2px; margin-bottom:20px; }
   .row { display:flex; align-items:center; gap:10px; padding:10px; border-radius:12px; background:#0f172a; text-decoration:none; border:1px solid #1e293b; }
@@ -50,15 +50,1190 @@
   .row-title { font-size:12.5px; color:#e2e8f0; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .row-specs { font-size:11px; color:#94a3b8; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .row-price { font-size:13px; font-weight:800; color:#fff; flex-shrink:0; text-align:right; }
+  /* Scheda prodotto in stile home (vedi ProductCard.tsx), senza i tab Top/Flop/
+     Commento - usata nelle pagine categoria e "che PC serve per..." al posto
+     della semplice riga sopra (richiesta esplicita utente 2026-09-29). */
+  .card-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:14px; margin-bottom:20px; }
+  .pcard { display:flex; flex-direction:column; border-radius:16px; border:1px solid #1e293b; background:#0f172a; overflow:hidden; }
+  .pcard-head { display:flex; align-items:center; justify-content:space-between; gap:6px; padding:8px 12px; border-bottom:1px solid #1e293b; background:#020617; }
+  .pcard-stamp { font-size:11px; font-weight:800; color:#e2e8f0; white-space:nowrap; }
+  .pcard-condition { font-size:10.5px; font-weight:700; white-space:nowrap; }
+  .pcard-body { display:block; padding:12px; text-decoration:none; color:inherit; }
+  .pcard-top { display:flex; gap:10px; align-items:center; margin-bottom:10px; }
+  .pcard-thumb { position:relative; width:64px; height:64px; flex-shrink:0; border-radius:10px; overflow:hidden; background:#fff; border:1px solid #1e293b; }
+  .pcard-thumb img { width:64px; height:64px; max-width:64px; margin:0; border:none; border-radius:0; object-fit:cover; display:block; }
+  .pcard-weight { position:absolute; right:2px; bottom:2px; background:rgba(2,6,23,.8); color:#fff; font-size:8px; font-weight:700; padding:1px 4px; border-radius:4px; }
+  .pcard-info { min-width:0; flex:1; }
+  .pcard-brand { font-size:9.5px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; color:#fb923c; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .pcard-title { font-size:13px; font-weight:800; color:#e2e8f0; line-height:1.3; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; margin:2px 0 4px; }
+  .pcard-stars { font-size:11px; }
+  .pcard-rating { font-size:11px; font-weight:800; color:#fbbf24; margin-left:2px; }
+  .pcard-tags { display:flex; flex-wrap:wrap; gap:3px; margin-top:4px; }
+  .pcard-tag { font-size:9px; font-weight:700; background:#1e293b; color:#94a3b8; padding:2px 6px; border-radius:6px; white-space:nowrap; }
+  .pcard-specs { display:flex; flex-direction:column; gap:4px; background:#020617; border:1px solid #1e293b; border-radius:10px; padding:8px; }
+  .pcard-spec-row { display:flex; align-items:center; gap:6px; font-size:11px; }
+  .pcard-spec-icon { flex-shrink:0; }
+  .pcard-spec-value { flex:1; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#cbd5e1; font-weight:600; }
+  .pcard-spec-arrow { flex-shrink:0; font-weight:900; }
+  .pcard-unverified { font-size:10px; font-weight:700; color:#fbbf24; background:rgba(120,53,15,.2); padding:6px 12px; border-top:1px solid #1e293b; }
+  .pcard-foot { margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:8px; padding:10px 12px; border-top:1px solid #1e293b; background:#020617; }
+  .pcard-price-block { min-width:0; }
+  .pcard-price { font-size:18px; font-weight:800; color:#fff; }
+  .pcard-was { font-size:11px; font-weight:600; color:#64748b; text-decoration:line-through; margin-left:4px; }
+  .pcard-savings { font-size:10px; font-weight:700; color:#34d399; }
+  .pcard-store { display:flex; align-items:center; gap:5px; font-size:10.5px; color:#94a3b8; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .pcard-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+  .pcard-cta { flex-shrink:0; background:linear-gradient(135deg,#f97316,#d97706); color:#fff; font-weight:800; font-size:12px; padding:8px 14px; border-radius:10px; text-decoration:none; white-space:nowrap; }
+  .pcard-cta:hover { background:linear-gradient(135deg,#ea580c,#b45309); }
 </style>
 </head>
 <body>
-<main>
+<main style="max-width:1000px;">
   <a class="back" href="/">← Torna al comparatore Prezzi Furbi</a>
   <h1>Notebook AMD Ryzen</h1>
   <p class="intro">Notebook con processore AMD Ryzen, prezzi e caratteristiche a confronto. <span class="count">38 offerte</span> disponibili, aggiornate ogni notte.</p>
   
-  <div class="list"><a class="row" href="/notebook/acer-nitro-14-an14-41-computer-95437228.html"><img src="https://i.ebayimg.com/images/g/kPoAAeSwfstqtnAd/s-l225.jpg" alt="Acer Nitro 14 AN14-41 computer portatile da gioco RTX 4060 Ryzen 5 16 GB 512 GB SSD" loading="lazy" /><div class="row-info"><div class="row-title">Acer Nitro 14 AN14-41 computer portatile da gioco RTX 4060 Ryzen 5 16 GB 512 GB SSD</div><div class="row-specs">AMD Ryzen 5 8645HS · 16 GB DDR4 · NVIDIA GeForce RTX 4060 (8GB GDDR6)</div></div><div class="row-price">🦊 799 €</div></a><a class="row" href="/notebook/laptop-hp-255-g7-15-6-pollici--13700647.html"><img src="https://i.ebayimg.com/images/g/xtEAAeSwfKtqt4PI/s-l225.jpg" alt="Laptop HP 255 G7 15,6&quot; pollici 512 GB SSD 8 GB AMD Ryzen 5 Vega 8 DVD HDMI Win 11" loading="lazy" /><div class="row-info"><div class="row-title">Laptop HP 255 G7 15,6&quot; pollici 512 GB SSD 8 GB AMD Ryzen 5 Vega 8 DVD HDMI Win 11</div><div class="row-specs">AMD Ryzen 5 Multicore · 16 GB DDR4 · AMD Radeon Graphics integrata</div></div><div class="row-price">🏷️ 200 €</div></a><a class="row" href="/notebook/lenovo-thinkpad-l15-gen1-ryzen-06909561.html"><img src="https://i.ebayimg.com/images/g/paUAAeSwS~JqWhdy/s-l225.jpg" alt="Lenovo Thinkpad L15 Gen1 Ryzen 7 Pro 16 GB 256 GB SSD Win11 P QWERTY B-Ware" loading="lazy" /><div class="row-info"><div class="row-title">Lenovo Thinkpad L15 Gen1 Ryzen 7 Pro 16 GB 256 GB SSD Win11 P QWERTY B-Ware</div><div class="row-specs">AMD Ryzen 7 Multicore · 16 GB DDR4 · AMD Radeon Graphics integrata</div></div><div class="row-price">🏷️ 210 €</div></a><a class="row" href="/notebook/lenovo-thinkpad-t14-gen-1-ryze-84045182.html"><img src="https://i.ebayimg.com/images/g/G~sAAeSwLGlqq~DM/s-l225.jpg" alt="Lenovo ThinkPad T14 Gen 1 Ryzen 5 PRO 4650U 16 GB 256 GB SSD 14&quot; Win11 Pro" loading="lazy" /><div class="row-info"><div class="row-title">Lenovo ThinkPad T14 Gen 1 Ryzen 5 PRO 4650U 16 GB 256 GB SSD 14&quot; Win11 Pro</div><div class="row-specs">AMD Ryzen 5 Multicore · 16 GB DDR4 · AMD Radeon Graphics integrata</div></div><div class="row-price">🏷️ 244 €</div></a><a class="row" href="/notebook/lenovo-thinkpad-notebook-lapto-24394080.html"><img src="https://i.ebayimg.com/images/g/tjIAAeSw0S1qt6tp/s-l225.jpg" alt="Lenovo ThinkPad Notebook/Laptop 14&quot; con processore AMD Ryzen 5, colore Nero" loading="lazy" /><div class="row-info"><div class="row-title">Lenovo ThinkPad Notebook/Laptop 14&quot; con processore AMD Ryzen 5, colore Nero</div><div class="row-specs">AMD Ryzen 5 Multicore · 16 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price">🏷️ 253 €</div></a><a class="row" href="/notebook/lenovo-thinkpad-l15-gen1-ryzen-86322894.html"><img src="https://i.ebayimg.com/images/g/fIIAAeSwZAFptYXl/s-l225.jpg" alt="Lenovo Thinkpad L15 Gen1 Ryzen 7 Pro 4750U 16 GB RAM 256 GB SSD Win11 P QWERTY" loading="lazy" /><div class="row-info"><div class="row-title">Lenovo Thinkpad L15 Gen1 Ryzen 7 Pro 4750U 16 GB RAM 256 GB SSD Win11 P QWERTY</div><div class="row-specs">AMD Ryzen 7 Multicore · 16 GB DDR4 · AMD Radeon Graphics integrata</div></div><div class="row-price">🏷️ 265 €</div></a><a class="row" href="/notebook/notebook-hp-845-g8-ryzen-5-pro-70401229.html"><img src="https://i.ebayimg.com/images/g/El4AAeSwcPVo7ePk/s-l225.jpg" alt="NOTEBOOK HP 845 G8 RYZEN 5 PRO R5-5650U 16GB RAM 512GB SSD 14 FHD RICONDIZIONATO" loading="lazy" /><div class="row-info"><div class="row-title">NOTEBOOK HP 845 G8 RYZEN 5 PRO R5-5650U 16GB RAM 512GB SSD 14 FHD RICONDIZIONATO</div><div class="row-specs">AMD Ryzen 5 Multicore · 16 GB DDR4 · AMD Radeon Graphics integrata</div></div><div class="row-price">🏷️ 308 €</div></a><a class="row" href="/notebook/notebook-hp-845-g8-ryzen--320.html"><img src="https://i.ebayimg.com/images/g/wukAAeSwwc1o7P6t/s-l225.jpg" alt="NOTEBOOK HP 845 G8 RYZEN 7 PRO R7-5850U 16GB 256 NVME HDMI 14 FHD RICONDIZIONATO" loading="lazy" /><div class="row-info"><div class="row-title">NOTEBOOK HP 845 G8 RYZEN 7 PRO R7-5850U 16GB 256 NVME HDMI 14 FHD RICONDIZIONATO</div><div class="row-specs">AMD Ryzen 7 Multicore · 16 GB DDR4 · AMD Radeon Graphics integrata</div></div><div class="row-price">🏷️ 320 €</div></a><a class="row" href="/notebook/notebook-hp-845-g8-ryzen-7-pro-65605927.html"><img src="https://i.ebayimg.com/images/g/El4AAeSwcPVo7ePk/s-l225.jpg" alt="NOTEBOOK HP 845 G8 RYZEN 7 PRO R7-5850U 16GB RAM 512GB SSD 14 FHD RICONDIZIONATO" loading="lazy" /><div class="row-info"><div class="row-title">NOTEBOOK HP 845 G8 RYZEN 7 PRO R7-5850U 16GB RAM 512GB SSD 14 FHD RICONDIZIONATO</div><div class="row-specs">AMD Ryzen 7 Multicore · 16 GB DDR4 · AMD Radeon Graphics integrata</div></div><div class="row-price">🏷️ 350 €</div></a><a class="row" href="/notebook/lenovo-thinkpad-l14-gen2-ryzen-43948814.html"><img src="https://i.ebayimg.com/images/g/jvYAAeSwAY9qWmAr/s-l225.jpg" alt="Lenovo ThinkPad L14 Gen2 Ryzen 5 Pro 2,3 GHz 16 GB 256 GB 14&quot; 1920 Win11Pro R5R" loading="lazy" /><div class="row-info"><div class="row-title">Lenovo ThinkPad L14 Gen2 Ryzen 5 Pro 2,3 GHz 16 GB 256 GB 14&quot; 1920 Win11Pro R5R</div><div class="row-specs">AMD Ryzen 5 5650U · 16 GB DDR4 · AMD Radeon Graphics integrata</div></div><div class="row-price">🏷️ 383 €</div></a><a class="row" href="/notebook/notebook-hp-845-g8-ryzen-7-pro-71004647.html"><img src="https://i.ebayimg.com/images/g/zBgAAeSwilNo7eOF/s-l225.jpg" alt="NOTEBOOK HP 845 G8 RYZEN 7 PRO R7-5850U 32GB RAM 256GB SSD 14 FHD RICONDIZIONATO" loading="lazy" /><div class="row-info"><div class="row-title">NOTEBOOK HP 845 G8 RYZEN 7 PRO R7-5850U 32GB RAM 256GB SSD 14 FHD RICONDIZIONATO</div><div class="row-specs">AMD Ryzen 7 Multicore · 32 GB DDR4 · AMD Radeon Graphics integrata</div></div><div class="row-price">🏷️ 399 €</div></a><a class="row" href="/notebook/hp-elitebook-855-g8-ryzen-5-pr-41447609.html"><img src="https://i.ebayimg.com/images/g/eAIAAeSwpRhqPRex/s-l225.jpg" alt="HP EliteBook 855 G8 Ryzen 5 Pro 5650U 16 GB RAM 256 GB SSD 15,6&quot; FHD Windows 11" loading="lazy" /><div class="row-info"><div class="row-title">HP EliteBook 855 G8 Ryzen 5 Pro 5650U 16 GB RAM 256 GB SSD 15,6&quot; FHD Windows 11</div><div class="row-specs">AMD Ryzen 5 Multicore · 16 GB DDR4 · AMD Radeon Graphics integrata</div></div><div class="row-price">🏷️ 415 €</div></a><a class="row" href="/notebook/cyclus-16-ryzen5-vega.html"><img src="https://m.media-amazon.com/images/I/71Y-UHC7M5L._AC_SL1500_.jpg" alt="CYCLUS 16 pollici Computer portatile Gaming Laptop R5 3500U Processore Vega 8 Graphics 16 GB RAM 512 GB SSD tastiera retroilluminata webcam Type-C" loading="lazy" /><div class="row-info"><div class="row-title">CYCLUS 16 pollici Computer portatile Gaming Laptop R5 3500U Processore Vega 8 Graphics 16 </div><div class="row-specs">AMD Ryzen 5 3500U · 16 GB DDR4 · AMD Radeon Vega Graphics integrata</div></div><div class="row-price">🏷️ 429 €</div></a><a class="row" href="/notebook/lx15pro-notebook-15-6-fhd-ryze-28681935.html"><img src="https://i.ebayimg.com/images/g/zr8AAeSwpAVquknd/s-l225.jpg" alt="LX15PRO Notebook 15,6&quot; FHD Ryzen 7 5700U 16GB 512GB SSD Win 11 Pro Grigio" loading="lazy" /><div class="row-info"><div class="row-title">LX15PRO Notebook 15,6&quot; FHD Ryzen 7 5700U 16GB 512GB SSD Win 11 Pro Grigio</div><div class="row-specs">AMD Ryzen 7 5700U · 16 GB DDR4 · AMD Radeon Graphics integrata</div></div><div class="row-price">🏷️ 465 €</div></a><a class="row" href="/notebook/notebook-hp-845-g8-ryzen-7-pro-56593575.html"><img src="https://i.ebayimg.com/images/g/ajoAAeSwySho7eQ9/s-l225.jpg" alt="NOTEBOOK HP 845 G8 RYZEN 7 PRO R7-5850U 32GB RAM 500GB SSD 14 FHD RICONDIZIONATO" loading="lazy" /><div class="row-info"><div class="row-title">NOTEBOOK HP 845 G8 RYZEN 7 PRO R7-5850U 32GB RAM 500GB SSD 14 FHD RICONDIZIONATO</div><div class="row-specs">AMD Ryzen 7 Multicore · 32 GB DDR4 · AMD Radeon Graphics integrata</div></div><div class="row-price">🏷️ 469 €</div></a><a class="row" href="/notebook/hp-845-g8-ryzen-7-r7-5850u-16g-76373577.html"><img src="https://i.ebayimg.com/images/g/uYUAAeSwqhJo7eSJ/s-l225.jpg" alt="HP 845 G8 RYZEN 7 R7-5850U 16GB RAM 1TB SSD 14 FHD RICONDIZIONATO (GRADO A)" loading="lazy" /><div class="row-info"><div class="row-title">HP 845 G8 RYZEN 7 R7-5850U 16GB RAM 1TB SSD 14 FHD RICONDIZIONATO (GRADO A)</div><div class="row-specs">AMD Ryzen 7 Multicore · 16 GB DDR4 · AMD Radeon Graphics integrata</div></div><div class="row-price">🏷️ 469 €</div></a><a class="row" href="/notebook/hp-elitebook-6-g1ah-ryzen-ai-3-50647759.html"><img src="https://i.ebayimg.com/images/g/O9wAAeSwCrJp4Nq1/s-l225.jpg" alt="HP EliteBook 6 G1ah Ryzen AI 3 PRO 14&quot; WUXGA 16 GB RAM 256 GB SSD Windows 11 Pro" loading="lazy" /><div class="row-info"><div class="row-title">HP EliteBook 6 G1ah Ryzen AI 3 PRO 14&quot; WUXGA 16 GB RAM 256 GB SSD Windows 11 Pro</div><div class="row-specs">AMD Ryzen AI 3 · 16 GB DDR4 · AMD Radeon Graphics integrata</div></div><div class="row-price">🏷️ 479 €</div></a><a class="row" href="/notebook/hp-elitebook-845-g9-amd-ryzen--44124567.html"><img src="https://i.ebayimg.com/images/g/OBEAAeSw8EdqueyC/s-l225.jpg" alt="HP EliteBook 845 G9 AMD Ryzen 7 Pro 6850U 16 GB 500 GB M.2 NVMe SSD Webcam Touch" loading="lazy" /><div class="row-info"><div class="row-title">HP EliteBook 845 G9 AMD Ryzen 7 Pro 6850U 16 GB 500 GB M.2 NVMe SSD Webcam Touch</div><div class="row-specs">AMD Ryzen 7 Multicore · 16 GB DDR5 · AMD Radeon 780M RDNA3</div></div><div class="row-price">🏷️ 479 €</div></a><a class="row" href="/notebook/notebook-lenovo-v15-ryzen-5-35-69266716.html"><img src="https://i.ebayimg.com/images/g/ooQAAeSwQU1quCYa/s-l225.jpg" alt="Notebook Lenovo V15 | Ryzen 5 - 3500U | 8GB RAM | 256GB SSD | Batteria 98%" loading="lazy" /><div class="row-info"><div class="row-title">Notebook Lenovo V15 | Ryzen 5 - 3500U | 8GB RAM | 256GB SSD | Batteria 98%</div><div class="row-specs">AMD Ryzen 5 Multicore · 8 GB DDR4 · AMD Radeon Graphics integrata</div></div><div class="row-price"> 150 €</div></a><a class="row" href="/notebook/notebook-pc-portatile-lenovo-t-12675355.html"><img src="https://i.ebayimg.com/images/g/yUIAAeSwgEBo6Q8T/s-l225.jpg" alt="NOTEBOOK PC PORTATILE LENOVO THINKPAD A485 RYZEN 5 PRO 8GB SSD 128GB WIN 11 PRO" loading="lazy" /><div class="row-info"><div class="row-title">NOTEBOOK PC PORTATILE LENOVO THINKPAD A485 RYZEN 5 PRO 8GB SSD 128GB WIN 11 PRO</div><div class="row-specs">AMD Ryzen 5 Multicore · 8 GB DDR4 · AMD Radeon Graphics integrata</div></div><div class="row-price"> 159 €</div></a><a class="row" href="/notebook/hp-845-g8-ryzen-7-r7-5850u-8gb-30323797.html"><img src="https://i.ebayimg.com/images/g/uYUAAeSwqhJo7eSJ/s-l225.jpg" alt="HP 845 G8 RYZEN 7 R7-5850U 8GB RAM 256GB SSD 14 FHD (GRADO C) GARANZIA FATTURA" loading="lazy" /><div class="row-info"><div class="row-title">HP 845 G8 RYZEN 7 R7-5850U 8GB RAM 256GB SSD 14 FHD (GRADO C) GARANZIA FATTURA</div><div class="row-specs">AMD Ryzen 7 Multicore · 8 GB DDR4 · AMD Radeon Graphics integrata</div></div><div class="row-price"> 178 €</div></a><a class="row" href="/notebook/lenovo-thinkpad-e15-gen-2-15-6-06227364.html"><img src="https://i.ebayimg.com/images/g/0PAAAeSwtyZqtni~/s-l225.jpg" alt="Lenovo ThinkPad E15 Gen 2 15,6&quot; FHD IPS | Ryzen 5 4500U | SSD 8 GB 256 GB | Win11P" loading="lazy" /><div class="row-info"><div class="row-title">Lenovo ThinkPad E15 Gen 2 15,6&quot; FHD IPS | Ryzen 5 4500U | SSD 8 GB 256 GB | Win11P</div><div class="row-specs">AMD Ryzen 5 Multicore · 8 GB DDR4 · AMD Radeon Graphics integrata</div></div><div class="row-price"> 279 €</div></a><a class="row" href="/notebook/hp-pavilion-gaming-15-ryzen-5--32063788.html"><img src="https://i.ebayimg.com/images/g/-YcAAeSwj-tqt1jC/s-l225.jpg" alt="HP Pavilion Gaming 15 Ryzen 5-5600H 16 GB 500 GB RTX3050 4 GB FHD 144 Hz computer portatile IPS" loading="lazy" /><div class="row-info"><div class="row-title">HP Pavilion Gaming 15 Ryzen 5-5600H 16 GB 500 GB RTX3050 4 GB FHD 144 Hz computer portatil</div><div class="row-specs">AMD Ryzen 5 5600H · 16 GB DDR4 · NVIDIA GeForce RTX 3050 (4GB GDDR6)</div></div><div class="row-price"> 489 €</div></a><a class="row" href="/notebook/lenovo-thinkpad-e495-14-comput-81838099.html"><img src="https://i.ebayimg.com/images/g/S5YAAeSwJBJqtr6t/s-l225.jpg" alt="Lenovo ThinkPad E495 14&quot; computer portatile AMD Ryzen 7 3500U 2,30 GHz 16 GB 512 GB Win 11 Pro" loading="lazy" /><div class="row-info"><div class="row-title">Lenovo ThinkPad E495 14&quot; computer portatile AMD Ryzen 7 3500U 2,30 GHz 16 GB 512 GB Win 11</div><div class="row-specs">AMD Ryzen 7 Multicore · 16 GB DDR4 · AMD Radeon Graphics integrata</div></div><div class="row-price"> 508 €</div></a><a class="row" href="/notebook/acer-aspire-go-15-notebook-15--99562451.html"><img src="https://i.ebayimg.com/images/g/QL4AAeSwHgdqtyCp/s-l225.jpg" alt="Acer Aspire Go 15 Notebook 15,6&quot; Full HD AMD Ryzen 5 7000 grigio HDMI USB" loading="lazy" /><div class="row-info"><div class="row-title">Acer Aspire Go 15 Notebook 15,6&quot; Full HD AMD Ryzen 5 7000 grigio HDMI USB</div><div class="row-specs">AMD Ryzen 5 7000 · 16 GB DDR4 · AMD Radeon Graphics integrata</div></div><div class="row-price"> 547 €</div></a><a class="row" href="/notebook/hp-victus-notebook-gaming-565.html"><img src="https://i.ebayimg.com/images/g/N9EAAeSwpr5qptaQ/s-l225.jpg" alt="HP Victus Notebook Gaming Ryzen 5 5600H RTX 3050 Laptop GPU Win 11 Nero" loading="lazy" /><div class="row-info"><div class="row-title">HP Victus Notebook Gaming Ryzen 5 5600H RTX 3050 Laptop GPU Win 11 Nero</div><div class="row-specs">AMD Ryzen 5 5600H · 16 GB DDR4 · NVIDIA GeForce RTX 3050 (4GB GDDR6)</div></div><div class="row-price"> 565 €</div></a><a class="row" href="/notebook/acemagic-s16-16-pollici-comput-14594003.html"><img src="https://i.ebayimg.com/images/g/khEAAeSw2RBqdZtP/s-l225.jpg" alt="ACEMAGIC S16 16 pollici computer portatile AMD Ryzen 7 H255 24 GB LPDDR5 512 GB SSD Win11Pro WiFi" loading="lazy" /><div class="row-info"><div class="row-title">ACEMAGIC S16 16 pollici computer portatile AMD Ryzen 7 H255 24 GB LPDDR5 512 GB SSD Win11P</div><div class="row-specs">AMD Ryzen 7 Multicore · 24 GB DDR5 · AMD Radeon Graphics integrata</div></div><div class="row-price"> 614 €</div></a><a class="row" href="/notebook/lenovo-yoga-slim-7-pro-x-14-5--95891715.html"><img src="https://i.ebayimg.com/images/g/Yh4AAeSwHJdqtQDS/s-l225.jpg" alt="Lenovo Yoga Slim 7 Pro X 14,5&quot; Ryzen 7 6800HS RTX 3050 32GB 1TB 3K 120Hz computer portatile" loading="lazy" /><div class="row-info"><div class="row-title">Lenovo Yoga Slim 7 Pro X 14,5&quot; Ryzen 7 6800HS RTX 3050 32GB 1TB 3K 120Hz computer portatil</div><div class="row-specs">AMD Ryzen 7 6800HS · 32 GB DDR4 · NVIDIA GeForce RTX 3050 (4GB GDDR6)</div></div><div class="row-price"> 704 €</div></a><a class="row" href="/notebook/portatile-hp-zbook-firefly-14--16580088.html"><img src="https://i.ebayimg.com/images/g/nP4AAeSwDtpqtnNY/s-l225.jpg" alt="Portatile HP ZBook Firefly 14 G10 512GB SSD WUXGA AMD Ryzen 7 PRO 7840HS 32GB RAM" loading="lazy" /><div class="row-info"><div class="row-title">Portatile HP ZBook Firefly 14 G10 512GB SSD WUXGA AMD Ryzen 7 PRO 7840HS 32GB RAM</div><div class="row-specs">AMD Ryzen 7 Multicore · 32 GB DDR4 · AMD Radeon Graphics integrata</div></div><div class="row-price"> 750 €</div></a><a class="row" href="/notebook/hp-elitebook-845-g11-14-amd-ry-38957926.html"><img src="https://i.ebayimg.com/images/g/MscAAeSwY5Bqtoh7/s-l225.jpg" alt="HP EliteBook 845 G11 14&quot; AMD Ryzen 7 8840U 16 GB RAM 512 GB SSD WUXGA LTE Win11Pro" loading="lazy" /><div class="row-info"><div class="row-title">HP EliteBook 845 G11 14&quot; AMD Ryzen 7 8840U 16 GB RAM 512 GB SSD WUXGA LTE Win11Pro</div><div class="row-specs">AMD Ryzen 7 8840U · 16 GB DDR5 · AMD Radeon 780M RDNA3</div></div><div class="row-price"> 799 €</div></a><a class="row" href="/notebook/asus-tuf-a15-ryzen-7-rtx-3050--98569044.html"><img src="https://i.ebayimg.com/images/g/yY8AAeSwET1qsizx/s-l225.jpg" alt="ASUS TUF A15 RYZEN 7 RTX 3050 - NOTEBOOK GAMING" loading="lazy" /><div class="row-info"><div class="row-title">ASUS TUF A15 RYZEN 7 RTX 3050 - NOTEBOOK GAMING</div><div class="row-specs">AMD Ryzen 7 Multicore · 16 GB DDR4 · NVIDIA GeForce RTX 3050 (4GB GDDR6)</div></div><div class="row-price"> 874 €</div></a><a class="row" href="/notebook/notebook-asus-expertbook-b3-cp-31139564.html"><img src="https://i.ebayimg.com/images/g/n5cAAeSw7RNqa4n-/s-l225.jpg" alt="NOTEBOOK ASUS EXPERTBOOK B3 CPU Ryzen 7 260 16GB RAM 1 TB SSD 14.0 W11 PRO" loading="lazy" /><div class="row-info"><div class="row-title">NOTEBOOK ASUS EXPERTBOOK B3 CPU Ryzen 7 260 16GB RAM 1 TB SSD 14.0 W11 PRO</div><div class="row-specs">AMD Ryzen 7 Multicore · 16 GB DDR4 · Intel UHD Graphics integrata</div></div><div class="row-price"> 899 €</div></a><a class="row" href="/notebook/asus-vivobook-18-m1807ha-s8089-20158518.html"><img src="https://i.ebayimg.com/images/g/u2QAAeSwf9tqsQ~y/s-l225.jpg" alt="ASUS VivoBook 18 M1807HA-S8089W 18&quot; WUXGA 144Hz Ryzen 7 260 16GB 1TB IR 100%sRGB" loading="lazy" /><div class="row-info"><div class="row-title">ASUS VivoBook 18 M1807HA-S8089W 18&quot; WUXGA 144Hz Ryzen 7 260 16GB 1TB IR 100%sRGB</div><div class="row-specs">AMD Ryzen 7 Multicore · 16 GB DDR5 · NVIDIA GeForce RTX 3070 (8GB GDDR6)</div></div><div class="row-price"> 900 €</div></a><a class="row" href="/notebook/portatile-hp-zbook-firefly-14--16579030.html"><img src="https://i.ebayimg.com/images/g/FB0AAeSwRzdqtnM3/s-l225.jpg" alt="Portatile HP ZBook Firefly 14 G11 1TB SSD WUXGA AMD Ryzen 7 PRO 8840HS 32GB di RAM" loading="lazy" /><div class="row-info"><div class="row-title">Portatile HP ZBook Firefly 14 G11 1TB SSD WUXGA AMD Ryzen 7 PRO 8840HS 32GB di RAM</div><div class="row-specs">AMD Ryzen 7 Multicore · 32 GB DDR4 · AMD Radeon Graphics integrata</div></div><div class="row-price"> 930 €</div></a><a class="row" href="/notebook/notebook-msi-venture-a16-ai-a3-57745414.html"><img src="https://i.ebayimg.com/images/g/ljgAAeSw8vVqcFWK/s-l225.jpg" alt="Notebook MSI Venture A16 AI+ A3HMG-036 AMD Ryzen™ AI 5 340 40,7 cm (16&quot;&quot;)" loading="lazy" /><div class="row-info"><div class="row-title">Notebook MSI Venture A16 AI+ A3HMG-036 AMD Ryzen™ AI 5 340 40,7 cm (16&quot;&quot;)</div><div class="row-specs">AMD Ryzen AI 5 340 · 16 GB DDR5 · Intel UHD Graphics integrata</div></div><div class="row-price"> 960 €</div></a><a class="row" href="/notebook/hp-elitebook-845-g10-14-wqxga--75320447.html"><img src="https://i.ebayimg.com/images/g/jgkAAeSwZT5qt5x-/s-l225.jpg" alt="HP EliteBook 845 G10 14&quot; WQXGA IPS, Ryzen 7 7840U, 32 GB RAM, 1 TB SSD B29XWUA" loading="lazy" /><div class="row-info"><div class="row-title">HP EliteBook 845 G10 14&quot; WQXGA IPS, Ryzen 7 7840U, 32 GB RAM, 1 TB SSD B29XWUA</div><div class="row-specs">AMD Ryzen 7 7840U · 32 GB DDR5 · AMD Radeon Graphics integrata</div></div><div class="row-price"> 980 €</div></a><a class="row" href="/notebook/hp-elitebook-845-g11-14-amd-ry-74121057.html"><img src="https://i.ebayimg.com/images/g/OTwAAeSwZMBqtowV/s-l225.jpg" alt="HP EliteBook 845 G11 14&quot; AMD Ryzen 7 8840HS 32 GB RAM 1 TB SSD LTE WQXGA Win11 Pro" loading="lazy" /><div class="row-info"><div class="row-title">HP EliteBook 845 G11 14&quot; AMD Ryzen 7 8840HS 32 GB RAM 1 TB SSD LTE WQXGA Win11 Pro</div><div class="row-specs">AMD Ryzen 7 8840HS · 32 GB DDR4 · AMD Radeon 780M RDNA3</div></div><div class="row-price"> 999 €</div></a><a class="row" href="/notebook/lenovo-thinkpad-e16-g3-ryzen-5-82905740.html"><img src="https://i.ebayimg.com/images/g/MikAAeSw3XxqtndH/s-l225.jpg" alt="Lenovo ThinkPad E16 G3 Ryzen 5 220 Radeon 740M 512 GB 16 GB 1920 x 1200 16,0&quot; pollici" loading="lazy" /><div class="row-info"><div class="row-title">Lenovo ThinkPad E16 G3 Ryzen 5 220 Radeon 740M 512 GB 16 GB 1920 x 1200 16,0&quot; pollici</div><div class="row-specs">AMD Ryzen 5 Multicore · 16 GB DDR4 · AMD Radeon Graphics integrata</div></div><div class="row-price"> 1249 €</div></a></div>
+  <div class="card-grid"><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp">🦊 Scelta Furba</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/acer-nitro-14-an14-41-computer-95437228.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/kPoAAeSwfstqtnAd/s-l225.jpg" alt="Acer Nitro 14 AN14-41 - AMD Ryzen 5 8645HS, 16 GB DDR4, NVIDIA GeForce RTX 4060 (8GB GDDR6)" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Acer • Nitro 14 AN14-41</div>
+        <div class="pcard-title">Acer Nitro 14 AN14-41 computer portatile da gioco RTX 4060 Ryzen 5 16 GB 512 GB SSD</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span> <span class="pcard-rating">4.8</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎮 Gaming</span><span class="pcard-tag">🎨 Creatività</span><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">NVIDIA GeForce RTX 4060 (8GB GDDR6)</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 5 8645HS</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">16 GB DDR4</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">799 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/267795437228?_skw=notebook+Ryzen+5+16GB&amp;hash=item3e59da16ac%3Ag%3AkPoAAeSwfstqtnAd&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp">🏷️ Cheaper</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/laptop-hp-255-g7-15-6-pollici--13700647.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/xtEAAeSwfKtqt4PI/s-l225.jpg" alt="Laptop HP 255 G7 - AMD Ryzen 5 Multicore, 16 GB DDR4, AMD Radeon Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Laptop • HP 255 G7</div>
+        <div class="pcard-title">Laptop HP 255 G7 15,6&quot; pollici 512 GB SSD 8 GB AMD Ryzen 5 Vega 8 DVD HDMI Win 11</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span> <span class="pcard-rating">4.5</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 5 Multicore</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">16 GB DDR4</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">200 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/336813700647?_skw=notebook&amp;hash=item4e6ba93627%3Ag%3AxtEAAeSwfKtqt4PI&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp">🏷️ Cheaper</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/lenovo-thinkpad-l15-gen1-ryzen-06909561.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/paUAAeSwS~JqWhdy/s-l225.jpg" alt="Lenovo Thinkpad L15 Gen1 - AMD Ryzen 7 Multicore, 16 GB DDR4, AMD Radeon Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Lenovo • Thinkpad L15 Gen1</div>
+        <div class="pcard-title">Lenovo Thinkpad L15 Gen1 Ryzen 7 Pro 16 GB 256 GB SSD Win11 P QWERTY B-Ware</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span> <span class="pcard-rating">4.5</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; 4K UHD (3840x2160) LED</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 7 Multicore</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">16 GB DDR4</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">210 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/358806909561?_skw=notebook&amp;hash=item538a8ef279%3Ag%3ApaUAAeSwS~JqWhdy&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp">🏷️ Cheaper</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/lenovo-thinkpad-t14-gen-1-ryze-84045182.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/G~sAAeSwLGlqq~DM/s-l225.jpg" alt="Lenovo ThinkPad T14 Gen - AMD Ryzen 5 Multicore, 16 GB DDR4, AMD Radeon Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Lenovo • ThinkPad T14 Gen</div>
+        <div class="pcard-title">Lenovo ThinkPad T14 Gen 1 Ryzen 5 PRO 4650U 16 GB 256 GB SSD 14&quot; Win11 Pro</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span> <span class="pcard-rating">4.5</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 5 Multicore</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">16 GB DDR4</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">244 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/307184045182?_skw=notebook&amp;hash=item4785988c7e%3Ag%3AG~sAAeSwLGlqq~DM&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp">🏷️ Cheaper</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/lenovo-thinkpad-notebook-lapto-24394080.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/tjIAAeSw0S1qt6tp/s-l225.jpg" alt="Lenovo ThinkPad Notebook/Laptop 14&quot; - AMD Ryzen 5 Multicore, 16 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Lenovo • ThinkPad Notebook/Laptop 14&quot;</div>
+        <div class="pcard-title">Lenovo ThinkPad Notebook/Laptop 14&quot; con processore AMD Ryzen 5, colore Nero</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span> <span class="pcard-rating">4.5</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 5 Multicore</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">16 GB DDR4</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">253 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/377524394080?_skw=notebook&amp;hash=item57e6351860%3Ag%3AtjIAAeSw0S1qt6tp&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp">🏷️ Cheaper</span>
+    <span class="pcard-condition" style="color:#38bdf8;">♻️ Ricondizionato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/lenovo-thinkpad-l15-gen1-ryzen-86322894.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/fIIAAeSwZAFptYXl/s-l225.jpg" alt="Lenovo Thinkpad L15 Gen1 - AMD Ryzen 7 Multicore, 16 GB DDR4, AMD Radeon Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">1.80 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Lenovo • Thinkpad L15 Gen1</div>
+        <div class="pcard-title">Lenovo Thinkpad L15 Gen1 Ryzen 7 Pro 4750U 16 GB RAM 256 GB SSD Win11 P QWERTY</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span> <span class="pcard-rating">4.5</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; 4K UHD (3840x2160) LED</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 7 Multicore</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">16 GB DDR4</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">265 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/358586322894?_skw=computer+portatile&amp;hash=item537d690fce%3Ag%3AfIIAAeSwZAFptYXl&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp">🏷️ Cheaper</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-hp-845-g8-ryzen-5-pro-70401229.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/El4AAeSwcPVo7ePk/s-l225.jpg" alt="NOTEBOOK HP 845 G8 - AMD Ryzen 5 Multicore, 16 GB DDR4, AMD Radeon Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">NOTEBOOK • HP 845 G8</div>
+        <div class="pcard-title">NOTEBOOK HP 845 G8 RYZEN 5 PRO R5-5650U 16GB RAM 512GB SSD 14 FHD RICONDIZIONATO</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span> <span class="pcard-rating">4.5</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 5 Multicore</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">16 GB DDR4</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">308 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/257470401229?_skw=notebook+Ryzen+5+16GB&amp;hash=item3bf26e8acd%3Ag%3AEl4AAeSwcPVo7ePk&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp">🏷️ Cheaper</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-hp-845-g8-ryzen--320.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/wukAAeSwwc1o7P6t/s-l225.jpg" alt="NOTEBOOK HP 845 G8 - AMD Ryzen 7 Multicore, 16 GB DDR4, AMD Radeon Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">NOTEBOOK • HP 845 G8</div>
+        <div class="pcard-title">NOTEBOOK HP 845 G8 RYZEN 7 PRO R7-5850U 16GB 256 NVME HDMI 14 FHD RICONDIZIONATO</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span> <span class="pcard-rating">4.5</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 7 Multicore</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">16 GB DDR4</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">320 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/257051854779?_skw=notebook+Ryzen+7+16GB&amp;hash=item3bd97c07bb%3Ag%3AwukAAeSwwc1o7P6t&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp">🏷️ Cheaper</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-hp-845-g8-ryzen-7-pro-65605927.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/El4AAeSwcPVo7ePk/s-l225.jpg" alt="NOTEBOOK HP 845 G8 - AMD Ryzen 7 Multicore, 16 GB DDR4, AMD Radeon Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">NOTEBOOK • HP 845 G8</div>
+        <div class="pcard-title">NOTEBOOK HP 845 G8 RYZEN 7 PRO R7-5850U 16GB RAM 512GB SSD 14 FHD RICONDIZIONATO</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span> <span class="pcard-rating">4.5</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 7 Multicore</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">16 GB DDR4</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">350 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/257065605927?_skw=notebook&amp;hash=item3bda4ddb27%3Ag%3AEl4AAeSwcPVo7ePk&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp">🏷️ Cheaper</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/lenovo-thinkpad-l14-gen2-ryzen-43948814.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/jvYAAeSwAY9qWmAr/s-l225.jpg" alt="Lenovo ThinkPad L14 Gen2 - AMD Ryzen 5 5650U, 16 GB DDR4, AMD Radeon Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">1.60 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Lenovo • ThinkPad L14 Gen2</div>
+        <div class="pcard-title">Lenovo ThinkPad L14 Gen2 Ryzen 5 Pro 2,3 GHz 16 GB 256 GB 14&quot; 1920 Win11Pro R5R</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span> <span class="pcard-rating">4.5</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Graphics integrata</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 5 5650U</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">16 GB DDR4</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">383 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/117243948814?_skw=notebook+Ryzen+5+16GB&amp;hash=item1b4c48af0e%3Ag%3AjvYAAeSwAY9qWmAr&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp">🏷️ Cheaper</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-hp-845-g8-ryzen-7-pro-71004647.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/zBgAAeSwilNo7eOF/s-l225.jpg" alt="NOTEBOOK HP 845 G8 - AMD Ryzen 7 Multicore, 32 GB DDR4, AMD Radeon Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">NOTEBOOK • HP 845 G8</div>
+        <div class="pcard-title">NOTEBOOK HP 845 G8 RYZEN 7 PRO R7-5850U 32GB RAM 256GB SSD 14 FHD RICONDIZIONATO</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span> <span class="pcard-rating">4.5</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎨 Creatività</span><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Graphics integrata</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 7 Multicore</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">32 GB DDR4</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">399 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/257071004647?_skw=notebook&amp;hash=item3bdaa03be7%3Ag%3AzBgAAeSwilNo7eOF&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp">🏷️ Cheaper</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/hp-elitebook-855-g8-ryzen-5-pr-41447609.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/eAIAAeSwpRhqPRex/s-l225.jpg" alt="HP EliteBook 855 G8 - AMD Ryzen 5 Multicore, 16 GB DDR4, AMD Radeon Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">HP • EliteBook 855 G8</div>
+        <div class="pcard-title">HP EliteBook 855 G8 Ryzen 5 Pro 5650U 16 GB RAM 256 GB SSD 15,6&quot; FHD Windows 11</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span> <span class="pcard-rating">4.5</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Graphics integrata</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 5 Multicore</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">16 GB DDR4</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">415 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/800241447609?_skw=notebook+Ryzen+5+16GB&amp;hash=itemba521b72b9%3Ag%3AeAIAAeSwpRhqPRex&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp">🏷️ Cheaper</span>
+    <span class="pcard-condition" style="color:#f59e0b;">✨ Nuovo</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/cyclus-16-ryzen5-vega.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://m.media-amazon.com/images/I/71Y-UHC7M5L._AC_SL1500_.jpg" alt="CYCLUS T160R - AMD Ryzen 5 3500U, 16 GB DDR4, AMD Radeon Vega Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">CYCLUS • T160R</div>
+        <div class="pcard-title">CYCLUS 16 pollici Computer portatile Gaming Laptop R5 3500U Processore Vega 8 Graphics 16 </div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span> <span class="pcard-rating">4.5</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">16&quot; FHD (1920x1080) IPS</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Vega Graphics integrata</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 5 3500U</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">16 GB DDR4</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div></div>
+  </a>
+  <div class="pcard-unverified">⚠️ Link non verificato: sito in aggiornamento</div>
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">429 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>Amazon.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.amazon.it/dp/B0G1FZ5F8N?tag=prezzifurbi-21" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp">🏷️ Cheaper</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/lx15pro-notebook-15-6-fhd-ryze-28681935.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/zr8AAeSwpAVquknd/s-l225.jpg" alt="LX15PRO Notebook 15,6&quot; FHD - AMD Ryzen 7 5700U, 16 GB DDR4, AMD Radeon Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">1.70 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">LX15PRO • Notebook 15,6&quot; FHD</div>
+        <div class="pcard-title">LX15PRO Notebook 15,6&quot; FHD Ryzen 7 5700U 16GB 512GB SSD Win 11 Pro Grigio</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span> <span class="pcard-rating">4.5</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Graphics integrata</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 7 5700U</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">16 GB DDR4</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">465 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/377528681935?_skw=notebook&amp;hash=item57e67685cf%3Ag%3Azr8AAeSwpAVquknd&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp">🏷️ Cheaper</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-hp-845-g8-ryzen-7-pro-56593575.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/ajoAAeSwySho7eQ9/s-l225.jpg" alt="NOTEBOOK HP 845 G8 - AMD Ryzen 7 Multicore, 32 GB DDR4, AMD Radeon Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">NOTEBOOK • HP 845 G8</div>
+        <div class="pcard-title">NOTEBOOK HP 845 G8 RYZEN 7 PRO R7-5850U 32GB RAM 500GB SSD 14 FHD RICONDIZIONATO</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span> <span class="pcard-rating">4.5</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎨 Creatività</span><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Graphics integrata</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 7 Multicore</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">32 GB DDR4</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">469 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/257056593575?_skw=notebook&amp;hash=item3bd9c456a7%3Ag%3AajoAAeSwySho7eQ9&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp">🏷️ Cheaper</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/hp-845-g8-ryzen-7-r7-5850u-16g-76373577.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/uYUAAeSwqhJo7eSJ/s-l225.jpg" alt="HP 845 G8 RYZEN - AMD Ryzen 7 Multicore, 16 GB DDR4, AMD Radeon Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">HP • 845 G8 RYZEN</div>
+        <div class="pcard-title">HP 845 G8 RYZEN 7 R7-5850U 16GB RAM 1TB SSD 14 FHD RICONDIZIONATO (GRADO A)</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span> <span class="pcard-rating">4.5</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Graphics integrata</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 7 Multicore</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">16 GB DDR4</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">1 TB SSD NVMe PCIe</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">469 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/257076373577?_skw=notebook&amp;hash=item3bdaf22849%3Ag%3AuYUAAeSwqhJo7eSJ&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp">🏷️ Cheaper</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/hp-elitebook-6-g1ah-ryzen-ai-3-50647759.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/O9wAAeSwCrJp4Nq1/s-l225.jpg" alt="HP EliteBook 6 G1ah - AMD Ryzen AI 3, 16 GB DDR4, AMD Radeon Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">HP • EliteBook 6 G1ah</div>
+        <div class="pcard-title">HP EliteBook 6 G1ah Ryzen AI 3 PRO 14&quot; WUXGA 16 GB RAM 256 GB SSD Windows 11 Pro</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span> <span class="pcard-rating">4.5</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Graphics integrata</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen AI 3</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">16 GB DDR4</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">479 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/366350647759?_skw=computer+portatile&amp;hash=item554c3341cf%3Ag%3AO9wAAeSwCrJp4Nq1&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp">🏷️ Cheaper</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/hp-elitebook-845-g9-amd-ryzen--44124567.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/OBEAAeSw8EdqueyC/s-l225.jpg" alt="HP EliteBook 845 G9 - AMD Ryzen 7 Multicore, 16 GB DDR5, AMD Radeon 780M RDNA3" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">HP • EliteBook 845 G9</div>
+        <div class="pcard-title">HP EliteBook 845 G9 AMD Ryzen 7 Pro 6850U 16 GB 500 GB M.2 NVMe SSD Webcam Touch</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span> <span class="pcard-rating">4.5</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon 780M RDNA3</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 7 Multicore</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">16 GB DDR5</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">479 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/237044124567?_skw=notebook&amp;hash=item3730ee4b97%3Ag%3AOBEAAeSw8EdqueyC&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-lenovo-v15-ryzen-5-35-69266716.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/ooQAAeSwQU1quCYa/s-l225.jpg" alt="Notebook Lenovo V15 | - AMD Ryzen 5 Multicore, 8 GB DDR4, AMD Radeon Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Notebook • Lenovo V15 |</div>
+        <div class="pcard-title">Notebook Lenovo V15 | Ryzen 5 - 3500U | 8GB RAM | 256GB SSD | Batteria 98%</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 5 Multicore</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">150 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/198669266716?_skw=laptop&amp;hash=item2e419c6f1c%3Ag%3AooQAAeSwQU1quCYa&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-pc-portatile-lenovo-t-12675355.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/yUIAAeSwgEBo6Q8T/s-l225.jpg" alt="NOTEBOOK PC PORTATILE LENOVO - AMD Ryzen 5 Multicore, 8 GB DDR4, AMD Radeon Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">1.85 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">NOTEBOOK • PC PORTATILE LENOVO</div>
+        <div class="pcard-title">NOTEBOOK PC PORTATILE LENOVO THINKPAD A485 RYZEN 5 PRO 8GB SSD 128GB WIN 11 PRO</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 5 Multicore</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">159 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/326812675355?_skw=notebook+pc&amp;hash=item4c178dad1b%3Ag%3AyUIAAeSwgEBo6Q8T&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/hp-845-g8-ryzen-7-r7-5850u-8gb-30323797.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/uYUAAeSwqhJo7eSJ/s-l225.jpg" alt="HP 845 G8 RYZEN - AMD Ryzen 7 Multicore, 8 GB DDR4, AMD Radeon Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">HP • 845 G8 RYZEN</div>
+        <div class="pcard-title">HP 845 G8 RYZEN 7 R7-5850U 8GB RAM 256GB SSD 14 FHD (GRADO C) GARANZIA FATTURA</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 7 Multicore</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">178 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/257230323797?_skw=notebook&amp;hash=item3be41f4055%3Ag%3AuYUAAeSwqhJo7eSJ&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#38bdf8;">♻️ Ricondizionato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/lenovo-thinkpad-e15-gen-2-15-6-06227364.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/0PAAAeSwtyZqtni~/s-l225.jpg" alt="Lenovo ThinkPad E15 Gen - AMD Ryzen 5 Multicore, 8 GB DDR4, AMD Radeon Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">1.70 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Lenovo • ThinkPad E15 Gen</div>
+        <div class="pcard-title">Lenovo ThinkPad E15 Gen 2 15,6&quot; FHD IPS | Ryzen 5 4500U | SSD 8 GB 256 GB | Win11P</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; FHD (1920x1080) IPS</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Graphics integrata</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 5 Multicore</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">8 GB DDR4</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">256 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">279 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/298706227364?_skw=notebook&amp;hash=item458c4750a4%3Ag%3A0PAAAeSwtyZqtni~&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/hp-pavilion-gaming-15-ryzen-5--32063788.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/-YcAAeSwj-tqt1jC/s-l225.jpg" alt="HP Pavilion Gaming 15 - AMD Ryzen 5 5600H, 16 GB DDR4, NVIDIA GeForce RTX 3050 (4GB GDDR6)" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">HP • Pavilion Gaming 15</div>
+        <div class="pcard-title">HP Pavilion Gaming 15 Ryzen 5-5600H 16 GB 500 GB RTX3050 4 GB FHD 144 Hz computer portatil</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; FHD (1920x1080) 144Hz IPS</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">NVIDIA GeForce RTX 3050 (4GB GDDR6)</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 5 5600H</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">16 GB DDR4</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">489 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/117432063788?_skw=notebook+Ryzen+5+16GB&amp;hash=item1b577f172c%3Ag%3A-YcAAeSwj-tqt1jC&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#38bdf8;">♻️ Ricondizionato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/lenovo-thinkpad-e495-14-comput-81838099.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/S5YAAeSwJBJqtr6t/s-l225.jpg" alt="Lenovo ThinkPad E495 14&quot; - AMD Ryzen 7 Multicore, 16 GB DDR4, AMD Radeon Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">1.80 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Lenovo • ThinkPad E495 14&quot;</div>
+        <div class="pcard-title">Lenovo ThinkPad E495 14&quot; computer portatile AMD Ryzen 7 3500U 2,30 GHz 16 GB 512 GB Win 11</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14&quot; FHD (1920x1080) IPS</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Graphics integrata</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 7 Multicore</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">16 GB DDR4</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">508 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/206581838099?_skw=notebook+Ryzen+7+16GB&amp;hash=item30193cb113%3Ag%3AS5YAAeSwJBJqtr6t&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/acer-aspire-go-15-notebook-15--99562451.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/QL4AAeSwHgdqtyCp/s-l225.jpg" alt="Acer Aspire Go 15 - AMD Ryzen 5 7000, 16 GB DDR4, AMD Radeon Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Acer • Aspire Go 15</div>
+        <div class="pcard-title">Acer Aspire Go 15 Notebook 15,6&quot; Full HD AMD Ryzen 5 7000 grigio HDMI USB</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Graphics integrata</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 5 7000</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">16 GB DDR4</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">547 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/147599562451?_skw=notebook&amp;hash=item225d9e96d3%3Ag%3AQL4AAeSwHgdqtyCp&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/hp-victus-notebook-gaming-565.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/N9EAAeSwpr5qptaQ/s-l225.jpg" alt="HP Victus Notebook Gaming - AMD Ryzen 5 5600H, 16 GB DDR4, NVIDIA GeForce RTX 3050 (4GB GDDR6)" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">HP • Victus Notebook Gaming</div>
+        <div class="pcard-title">HP Victus Notebook Gaming Ryzen 5 5600H RTX 3050 Laptop GPU Win 11 Nero</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14.2&quot; FHD (1920x1080) 144Hz LED</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">NVIDIA GeForce RTX 3050 (4GB GDDR6)</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 5 5600H</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">16 GB DDR4</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">565 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/820122457575?_skw=notebook+RTX+3050&amp;hash=itembef31b95e7%3Ag%3AN9EAAeSwpr5qptaQ&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/acemagic-s16-16-pollici-comput-14594003.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/khEAAeSw2RBqdZtP/s-l225.jpg" alt="ACEMAGIC S16 16 pollici - AMD Ryzen 7 Multicore, 24 GB DDR5, AMD Radeon Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">ACEMAGIC • S16 16 pollici</div>
+        <div class="pcard-title">ACEMAGIC S16 16 pollici computer portatile AMD Ryzen 7 H255 24 GB LPDDR5 512 GB SSD Win11P</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">16&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Graphics integrata</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 7 Multicore</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">24 GB DDR5</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">2 TB SSD NVMe PCIe</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">614 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/358214594003?_skw=notebook&amp;hash=item536740edd3%3Ag%3AkhEAAeSw2RBqdZtP&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/lenovo-yoga-slim-7-pro-x-14-5--95891715.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/Yh4AAeSwHJdqtQDS/s-l225.jpg" alt="Lenovo Yoga Slim 7 - AMD Ryzen 7 6800HS, 32 GB DDR4, NVIDIA GeForce RTX 3050 (4GB GDDR6)" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Lenovo • Yoga Slim 7</div>
+        <div class="pcard-title">Lenovo Yoga Slim 7 Pro X 14,5&quot; Ryzen 7 6800HS RTX 3050 32GB 1TB 3K 120Hz computer portatil</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎨 Creatività</span><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14.5&quot; FHD (1920x1080) 120Hz LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">NVIDIA GeForce RTX 3050 (4GB GDDR6)</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 7 6800HS</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">32 GB DDR4</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">1 TB SSD NVMe PCIe</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">704 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/147595891715?_skw=notebook+RTX+3050&amp;hash=item225d669403%3Ag%3AYh4AAeSwHJdqtQDS&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/portatile-hp-zbook-firefly-14--16580088.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/nP4AAeSwDtpqtnNY/s-l225.jpg" alt="Portatile HP ZBook Firefly - AMD Ryzen 7 Multicore, 32 GB DDR4, AMD Radeon Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Portatile • HP ZBook Firefly</div>
+        <div class="pcard-title">Portatile HP ZBook Firefly 14 G10 512GB SSD WUXGA AMD Ryzen 7 PRO 7840HS 32GB RAM</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎨 Creatività</span><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Graphics integrata</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 7 Multicore</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">32 GB DDR4</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">750 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/318916580088?_skw=notebook+i7+32GB&amp;hash=item4a40e8d2f8%3Ag%3AnP4AAeSwDtpqtnNY&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#38bdf8;">♻️ Ricondizionato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/hp-elitebook-845-g11-14-amd-ry-38957926.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/MscAAeSwY5Bqtoh7/s-l225.jpg" alt="HP EliteBook 845 G11 - AMD Ryzen 7 8840U, 16 GB DDR5, AMD Radeon 780M RDNA3" loading="lazy" />
+        <span class="pcard-weight">1.80 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">HP • EliteBook 845 G11</div>
+        <div class="pcard-title">HP EliteBook 845 G11 14&quot; AMD Ryzen 7 8840U 16 GB RAM 512 GB SSD WUXGA LTE Win11Pro</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon 780M RDNA3</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 7 8840U</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">16 GB DDR5</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">799 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/227538957926?_skw=notebook+Ryzen+7+16GB&amp;hash=item34fa60f666%3Ag%3AMscAAeSwY5Bqtoh7&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/asus-tuf-a15-ryzen-7-rtx-3050--98569044.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/yY8AAeSwET1qsizx/s-l225.jpg" alt="ASUS TUF A15 RYZEN - AMD Ryzen 7 Multicore, 16 GB DDR4, NVIDIA GeForce RTX 3050 (4GB GDDR6)" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">ASUS • TUF A15 RYZEN</div>
+        <div class="pcard-title">ASUS TUF A15 RYZEN 7 RTX 3050 - NOTEBOOK GAMING</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">NVIDIA GeForce RTX 3050 (4GB GDDR6)</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 7 Multicore</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">16 GB DDR4</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">874 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/800698569044?_skw=notebook+RTX+3050&amp;hash=itemba6d5a9154%3Ag%3AyY8AAeSwET1qsizx&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-asus-expertbook-b3-cp-31139564.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/n5cAAeSw7RNqa4n-/s-l225.jpg" alt="NOTEBOOK ASUS EXPERTBOOK B3 - AMD Ryzen 7 Multicore, 16 GB DDR4, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">NOTEBOOK • ASUS EXPERTBOOK B3</div>
+        <div class="pcard-title">NOTEBOOK ASUS EXPERTBOOK B3 CPU Ryzen 7 260 16GB RAM 1 TB SSD 14.0 W11 PRO</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 7 Multicore</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">16 GB DDR4</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">1 TB SSD NVMe PCIe</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">899 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/117331139564?_skw=notebook&amp;hash=item1b517b1bec%3Ag%3An5cAAeSw7RNqa4n-&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#38bdf8;">♻️ Ricondizionato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/asus-vivobook-18-m1807ha-s8089-20158518.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/u2QAAeSwf9tqsQ~y/s-l225.jpg" alt="ASUS VivoBook 18 M1807HA-S8089W - AMD Ryzen 7 Multicore, 16 GB DDR5, NVIDIA GeForce RTX 3070 (8GB GDDR6)" loading="lazy" />
+        <span class="pcard-weight">2.60 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">ASUS • VivoBook 18 M1807HA-S8089W</div>
+        <div class="pcard-title">ASUS VivoBook 18 M1807HA-S8089W 18&quot; WUXGA 144Hz Ryzen 7 260 16GB 1TB IR 100%sRGB</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎮 Gaming</span><span class="pcard-tag">🎨 Creatività</span><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; FHD (1920x1080) 144Hz LED</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">NVIDIA GeForce RTX 3070 (8GB GDDR6)</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 7 Multicore</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">16 GB DDR5</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">1 TB SSD NVMe PCIe</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">900 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/318920158518?_skw=notebook+Ryzen+7+16GB&amp;hash=item4a411f6d36%3Ag%3Au2QAAeSwf9tqsQ~y&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/portatile-hp-zbook-firefly-14--16579030.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/FB0AAeSwRzdqtnM3/s-l225.jpg" alt="Portatile HP ZBook Firefly - AMD Ryzen 7 Multicore, 32 GB DDR4, AMD Radeon Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Portatile • HP ZBook Firefly</div>
+        <div class="pcard-title">Portatile HP ZBook Firefly 14 G11 1TB SSD WUXGA AMD Ryzen 7 PRO 8840HS 32GB di RAM</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎨 Creatività</span><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">15.6&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Graphics integrata</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 7 Multicore</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">32 GB DDR4</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">1 TB SSD NVMe PCIe</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">930 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/318916579030?_skw=notebook+i7+32GB&amp;hash=item4a40e8ced6%3Ag%3AFB0AAeSwRzdqtnM3&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/notebook-msi-venture-a16-ai-a3-57745414.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/ljgAAeSw8vVqcFWK/s-l225.jpg" alt="Notebook MSI Venture A16 - AMD Ryzen AI 5 340, 16 GB DDR5, Intel UHD Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Notebook • MSI Venture A16</div>
+        <div class="pcard-title">Notebook MSI Venture A16 AI+ A3HMG-036 AMD Ryzen™ AI 5 340 40,7 cm (16&quot;&quot;)</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">16&quot; FHD (1920x1080) OLED</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">Intel UHD Graphics integrata</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen AI 5 340</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">16 GB DDR5</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">960 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/136057745414?_skw=notebook&amp;hash=item1fadac7006%3Ag%3AljgAAeSw8vVqcFWK&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/hp-elitebook-845-g10-14-wqxga--75320447.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/jgkAAeSwZT5qt5x-/s-l225.jpg" alt="HP EliteBook 845 G10 - AMD Ryzen 7 7840U, 32 GB DDR5, AMD Radeon Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">2.20 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">HP • EliteBook 845 G10</div>
+        <div class="pcard-title">HP EliteBook 845 G10 14&quot; WQXGA IPS, Ryzen 7 7840U, 32 GB RAM, 1 TB SSD B29XWUA</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎨 Creatività</span><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14&quot; FHD (1920x1080) IPS</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Graphics integrata</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 7 7840U</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">32 GB DDR5</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">1 TB SSD NVMe PCIe</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">980 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/327375320447?_skw=notebook+i7+32GB&amp;hash=item4c3916f57f%3Ag%3AjgkAAeSwZT5qt5x-&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#38bdf8;">♻️ Ricondizionato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/hp-elitebook-845-g11-14-amd-ry-74121057.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/OTwAAeSwZMBqtowV/s-l225.jpg" alt="HP EliteBook 845 G11 - AMD Ryzen 7 8840HS, 32 GB DDR4, AMD Radeon 780M RDNA3" loading="lazy" />
+        <span class="pcard-weight">1.80 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">HP • EliteBook 845 G11</div>
+        <div class="pcard-title">HP EliteBook 845 G11 14&quot; AMD Ryzen 7 8840HS 32 GB RAM 1 TB SSD LTE WQXGA Win11 Pro</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">🎨 Creatività</span><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">14&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon 780M RDNA3</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 7 8840HS</span><span class="pcard-spec-arrow" style="color:#34d399;">↑</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">32 GB DDR4</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">1 TB SSD NVMe PCIe</span><span class="pcard-spec-arrow" style="color:#10b981;">⇈</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">999 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/327374121057?_skw=notebook+i7+32GB&amp;hash=item4c3904a861%3Ag%3AOTwAAeSwZMBqtowV&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div><div class="pcard">
+  <div class="pcard-head">
+    <span class="pcard-stamp"> Netto</span>
+    <span class="pcard-condition" style="color:#94a3b8;">🤝 Usato</span>
+    <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:#94a3b8;">Netto</span>
+  </div>
+  <a class="pcard-body" href="/notebook/lenovo-thinkpad-e16-g3-ryzen-5-82905740.html">
+    <div class="pcard-top">
+      <div class="pcard-thumb">
+        <img src="https://i.ebayimg.com/images/g/MikAAeSw3XxqtndH/s-l225.jpg" alt="Lenovo ThinkPad E16 G3 - AMD Ryzen 5 Multicore, 16 GB DDR4, AMD Radeon Graphics integrata" loading="lazy" />
+        <span class="pcard-weight">1.71 kg</span>
+      </div>
+      <div class="pcard-info">
+        <div class="pcard-brand">Lenovo • ThinkPad E16 G3</div>
+        <div class="pcard-title">Lenovo ThinkPad E16 G3 Ryzen 5 220 Radeon 740M 512 GB 16 GB 1920 x 1200 16,0&quot; pollici</div>
+        <div class="pcard-stars"><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#f59e0b;">★</span><span style="color:#334155;">★</span> <span class="pcard-rating">4.0</span></div>
+        <div class="pcard-tags"><span class="pcard-tag">👨‍💻 Programmazione</span><span class="pcard-tag">🎓 Studio</span><span class="pcard-tag">💼 Lavoro</span></div>
+      </div>
+    </div>
+    <div class="pcard-specs"><div class="pcard-spec-row"><span class="pcard-spec-icon">🖥️</span><span class="pcard-spec-value">16.0&quot; FHD (1920x1080) LED</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🎮</span><span class="pcard-spec-value">AMD Radeon Graphics integrata</span><span class="pcard-spec-arrow" style="color:#f87171;">↓</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">🧠</span><span class="pcard-spec-value">AMD Ryzen 5 Multicore</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💾</span><span class="pcard-spec-value">16 GB DDR4</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div><div class="pcard-spec-row"><span class="pcard-spec-icon">💿</span><span class="pcard-spec-value">512 GB SSD NVMe M.2</span><span class="pcard-spec-arrow" style="color:#64748b;">=</span></div></div>
+  </a>
+  
+  <div class="pcard-foot">
+    <div class="pcard-price-block">
+      <div class="pcard-price">1249 € </div>
+      
+      <div class="pcard-store"><span class="pcard-dot" style="background:#10b981;" title="Prezzo verificato di recente"></span>eBay.it</div>
+    </div>
+    <a class="pcard-cta" href="https://www.ebay.it/itm/188982905740?_skw=notebook+Ryzen+5+16GB&amp;hash=item2c00424b8c%3Ag%3AMikAAeSw3XxqtndH&amp;mkevt=1&amp;mkcid=1&amp;mkrid=724-53478-19255-0&amp;campid=5339209756&amp;toolid=10001" target="_blank" rel="noopener noreferrer nofollow">Acquista</a>
+  </div>
+</div></div>
   <a class="back" href="/">Vedi tutto il catalogo su Prezzi Furbi →</a>
 </main>
 </body>
