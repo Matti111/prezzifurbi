@@ -27,30 +27,11 @@ export function parseScreenInches(value: string): number {
   return m ? parseFloat(m[1].replace(',', '.')) : 0;
 }
 
-export interface WeightBucket {
-  index: number;
-  label: string;
-  maxKg: number;
-}
-
-const WEIGHT_BUCKETS: WeightBucket[] = [
-  { index: 0, label: '< 2 kg', maxKg: 2 },
-  { index: 1, label: '< 2.5 kg', maxKg: 2.5 },
-  { index: 2, label: '< 3 kg', maxKg: 3 },
-  { index: 3, label: '3 kg+', maxKg: Infinity },
-];
-
 /** Peso in kg da una stringa tipo "2.40 kg", o null se assente/non interpretabile. */
 export function parseWeightKg(value?: string): number | null {
   if (!value) return null;
   const m = value.match(/(\d+(?:[.,]\d+)?)\s*kg/i);
   return m ? parseFloat(m[1].replace(',', '.')) : null;
-}
-
-export function weightBucketFor(value?: string): WeightBucket | null {
-  const kg = parseWeightKg(value);
-  if (kg === null) return null;
-  return WEIGHT_BUCKETS.find((b) => kg < b.maxKg) ?? WEIGHT_BUCKETS[WEIGHT_BUCKETS.length - 1];
 }
 
 /** Applica il punteggio reale da benchmark se la famiglia è in tabella, altrimenti
@@ -173,7 +154,7 @@ export function specValueForProduct(p: Product, category: SpecTagCategory): stri
     case 'screen':
       return parseScreenInches(p.specs.screen.value);
     case 'weight':
-      return weightBucketFor(p.weight)?.index ?? -1;
+      return parseWeightKg(p.weight) ?? 0;
   }
 }
 
@@ -267,8 +248,8 @@ export function collectTagOptions(products: Product[], category: SpecTagCategory
       const inches = parseScreenInches(p.specs.screen.value);
       if (inches > 0) map.set(inches, { value: inches, label: `${inches}"`, rank: inches });
     } else if (category === 'weight') {
-      const bucket = weightBucketFor(p.weight);
-      if (bucket) map.set(bucket.index, { value: bucket.index, label: bucket.label, rank: bucket.index });
+      const kg = parseWeightKg(p.weight);
+      if (kg !== null) map.set(kg, { value: kg, label: `${kg} kg`, rank: kg });
     }
   }
   return Array.from(map.values()).sort((a, b) => a.rank - b.rank);

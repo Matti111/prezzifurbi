@@ -9,6 +9,7 @@ import {
   parseRamGB,
   parseSsdGB,
   parseScreenInches,
+  parseWeightKg,
 } from '../utils/specTags';
 
 /** Formattazione capacità storage: TB con un decimale solo se non è un multiplo
@@ -17,6 +18,7 @@ const formatStorage = (gb: number) =>
   gb >= 1024 ? `${(gb / 1024).toFixed(gb % 1024 === 0 ? 0 : 1)} TB` : `${gb} GB`;
 const formatScreen = (inches: number) => `${Number(inches.toFixed(1))}"`;
 const formatRam = (gb: number) => `${gb} GB`;
+const formatWeight = (kg: number) => `${Number(kg.toFixed(2))} kg`;
 
 /** Indice del valore più vicino a `target` dentro `values` (già ordinato
  * crescente): serve a far combaciare la soglia salvata nel filtro con
@@ -114,6 +116,55 @@ const RangeSliderField: React.FC<RangeSliderFieldProps> = ({ label, icon, values
   );
 };
 
+interface MaxThresholdSliderProps {
+  label: string;
+  icon: React.ReactNode;
+  /** Valori REALMENTE presenti in catalogo, ordinati crescenti. */
+  values: number[];
+  value: RangeFilter;
+  onChange: (next: RangeFilter) => void;
+  format: (n: number) => string;
+}
+
+/** Slider a un solo cursore per una soglia massima ("solo PC sotto un certo
+ * peso"): a differenza di RangeSliderField sopra non serve il trucco dei due
+ * <input> sovrapposti, un normale slider nativo basta (stessa resa già usata
+ * per il Budget Massimo). `min` del filtro non viene mai impostato. */
+const MaxThresholdSlider: React.FC<MaxThresholdSliderProps> = ({ label, icon, values, value, onChange, format }) => {
+  if (values.length < 2) return null; // nessuna variazione reale nel pool attuale
+
+  const lastIndex = values.length - 1;
+  const index = value.max === null ? lastIndex : closestIndex(values, value.max);
+
+  const handleChange = (idx: number) => {
+    onChange({ min: null, max: idx >= lastIndex ? null : values[idx] });
+  };
+
+  return (
+    <div>
+      <div className="flex justify-between items-center mb-1.5">
+        <label className="text-[11px] font-semibold text-slate-400 flex items-center gap-1">
+          {icon}
+          <span>{label}</span>
+        </label>
+        <span className="text-[11px] font-bold text-orange-400">
+          Fino a {format(values[index])}
+        </span>
+      </div>
+      <input
+        type="range"
+        min={0}
+        max={lastIndex}
+        step={1}
+        value={index}
+        onChange={(e) => handleChange(Number(e.target.value))}
+        className="w-full accent-orange-500 bg-slate-950 h-1.5 rounded-lg cursor-pointer"
+        aria-label={`${label} - soglia massima`}
+      />
+    </div>
+  );
+};
+
 interface FiltersBarProps {
   filters: FilterState;
   onFilterChange: (newFilters: Partial<FilterState>) => void;
@@ -137,12 +188,12 @@ const USE_CASE_OPTIONS: { value: UseCase; label: string; icon: React.ReactNode }
   { value: 'home', label: 'Home', icon: <Home className="w-3.5 h-3.5" /> },
 ];
 
-// RAM/Storage/Schermo sono ora slider a soglia min/max (vedi RangeSliderField sopra),
-// non più bottoni a valore esatto: restano qui solo le specifiche categoriche.
+// RAM/Storage/Schermo/Peso sono ora slider a soglia (vedi RangeSliderField e
+// MaxThresholdSlider sopra), non più bottoni a valore esatto: restano qui solo
+// le specifiche categoriche.
 const TAG_GROUPS: { key: SpecTagCategory; label: string; icon: React.ReactNode }[] = [
   { key: 'cpu', label: 'Processore', icon: <Cpu className="w-3.5 h-3.5 text-orange-400" /> },
   { key: 'gpu', label: 'Scheda Video', icon: <Gamepad2 className="w-3.5 h-3.5 text-orange-400" /> },
-  { key: 'weight', label: 'Peso', icon: <WeightIcon className="w-3.5 h-3.5 text-orange-400" /> },
 ];
 
 export const FiltersBar: React.FC<FiltersBarProps> = ({
@@ -178,11 +229,13 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
   const hasRangeSelection =
     filters.ramRange.min !== null || filters.ramRange.max !== null ||
     filters.ssdRange.min !== null || filters.ssdRange.max !== null ||
-    filters.screenRange.min !== null || filters.screenRange.max !== null;
+    filters.screenRange.min !== null || filters.screenRange.max !== null ||
+    filters.weightRange.max !== null;
 
   const ramValues = distinctSortedValues(productsForTags, (p) => parseRamGB(p.specs.ram.value));
   const ssdValues = distinctSortedValues(productsForTags, (p) => parseSsdGB(p.specs.ssd.value));
   const screenValues = distinctSortedValues(productsForTags, (p) => parseScreenInches(p.specs.screen.value));
+  const weightValues = distinctSortedValues(productsForTags, (p) => parseWeightKg(p.weight) ?? 0);
   // Senza nessun tag selezionato, la selezione vuota combacia con ogni prodotto:
   // il trattino mostra semplicemente il prezzo del prodotto più economico disponibile.
   const rawDashPrice = minPriceForSelection(productsForTags, filters.specTags);
@@ -373,12 +426,13 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
 
       </div>
 
-      {/* 2C. Soglie min/max su specifiche numeriche (RAM/Storage/Schermo): a
-          differenza dei tag esatti sotto, qui l'utente sceglie un intervallo invece
-          di un valore singolo (es. "almeno 16GB" senza escludere 32GB/64GB), ma lo
-          slider scatta solo sulle taglie davvero presenti in catalogo (mai un
-          continuo arbitrario che farebbe scegliere es. "9GB", che nessuno vende) */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 pt-3 border-t border-slate-800 mt-3">
+      {/* 2C. Soglie su specifiche numeriche: RAM/Storage/Schermo a doppio cursore
+          (min/max, es. "almeno 16GB" senza escludere 32GB/64GB), Peso a un solo
+          cursore (soglia massima, "solo PC sotto un certo peso" - richiesta
+          esplicita dell'utente 2026-09-28). Tutti scattano solo sulle taglie
+          davvero presenti in catalogo (mai un continuo arbitrario che farebbe
+          scegliere es. "9GB", che nessuno vende). */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 pt-3 border-t border-slate-800 mt-3">
         <RangeSliderField
           label="RAM"
           icon={<RamIcon className="w-3.5 h-3.5 text-orange-400" />}
@@ -403,9 +457,17 @@ export const FiltersBar: React.FC<FiltersBarProps> = ({
           onChange={(next) => onFilterChange({ screenRange: next })}
           format={formatScreen}
         />
+        <MaxThresholdSlider
+          label="Peso"
+          icon={<WeightIcon className="w-3.5 h-3.5 text-orange-400" />}
+          values={weightValues}
+          value={filters.weightRange}
+          onChange={(next) => onFilterChange({ weightRange: next })}
+          format={formatWeight}
+        />
       </div>
 
-      {/* 2B. Tag di specifica (CPU/GPU/Peso): mostrano dove si trova il limite di
+      {/* 2B. Tag di specifica (CPU/GPU): mostrano dove si trova il limite di
           budget per avere quella caratteristica, combinabili se compatibili tra loro */}
       <div className="flex items-center justify-between pt-3 border-t border-slate-800 mt-3 mb-2">
         <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Caratteristiche</span>

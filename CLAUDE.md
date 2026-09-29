@@ -14,11 +14,17 @@ comprare. Repo GitHub: https://github.com/Matti111/prezzifurbi (privato).
   aggiornamento..."), aggiunto 2026-09-21, **rimosso il 2026-09-28** su
   richiesta esplicita dell'utente ("tutti i link sono funzionanti") — file e
   import cancellati, non solo nascosto.
-  **RAM/Storage/Dimensione schermo: soglia min/max, non più bottoni a valore
+  **RAM/Storage/Dimensione schermo/Peso: soglie, non più bottoni a valore
   esatto** (2026-09-28, richiesta utente): `FilterState.ramRange/ssdRange/
-  screenRange` (`RangeFilter { min: number|null; max: number|null }` in
-  `types/product.ts`) sostituiscono quei tre tag da `SpecTagSelection`
-  (CPU/GPU/Peso restano bottoni esatti in `FiltersBar.tsx`, non toccati). UI:
+  screenRange/weightRange` (`RangeFilter { min: number|null; max: number|null }`
+  in `types/product.ts`) sostituiscono quei quattro tag da `SpecTagSelection`
+  (CPU/GPU restano bottoni esatti in `FiltersBar.tsx`, non toccati — vecchio
+  `WeightBucket`/`weightBucketFor()`/`WEIGHT_BUCKETS` in `specTags.ts`
+  rimossi, non più usati da nessuno). Peso è **a un solo cursore**
+  (`MaxThresholdSlider` in `FiltersBar.tsx`, `min` non impostato mai — "solo
+  PC sotto un certo peso"): normale `<input type="range">`, non serve il
+  trucco dei due input sovrapposti perché c'è un solo pallino. RAM/Storage/
+  Schermo restano a doppio cursore (`RangeSliderField`). UI:
   `RangeSliderField` in `FiltersBar.tsx`: inizialmente due `<input
   type="range">` impilati su due barre separate, **poi passato a un vero
   doppio cursore sulla stessa traccia** (2026-09-28, richiesta esplicita

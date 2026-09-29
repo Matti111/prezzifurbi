@@ -8,7 +8,7 @@ import { ProductDetailModal } from './components/ProductDetailModal';
 import { HowItWorksModal } from './components/HowItWorksModal';
 import { PerformanceCompareModal } from './components/PerformanceCompareModal';
 import { AffiliateDisclaimer } from './components/AffiliateDisclaimer';
-import { productMatchesSelection, matchesRange, parseRamGB, parseSsdGB, parseScreenInches } from './utils/specTags';
+import { productMatchesSelection, matchesRange, parseRamGB, parseSsdGB, parseScreenInches, parseWeightKg } from './utils/specTags';
 import { findDominator, getValueFraming, qualifiesForFox } from './utils/valuation';
 import { buildItemListJsonLd } from './utils/structuredData';
 import { Shield, Flame, CheckCircle2, ChevronDown } from 'lucide-react';
@@ -26,6 +26,7 @@ const initialFilters: FilterState = {
   ramRange: EMPTY_RANGE,
   ssdRange: EMPTY_RANGE,
   screenRange: EMPTY_RANGE,
+  weightRange: EMPTY_RANGE,
   gpuFilter: 'all',
   sortBy: 'deal_score',
 };
@@ -105,7 +106,7 @@ export function App() {
           return false;
         }
 
-        // Tag di specifica (CPU/GPU/Peso)
+        // Tag di specifica (CPU/GPU)
         if (!productMatchesSelection(p, filters.specTags)) {
           return false;
         }
@@ -118,6 +119,10 @@ export function App() {
           return false;
         }
         if (!matchesRange(parseScreenInches(p.specs.screen.value), filters.screenRange)) {
+          return false;
+        }
+        // Peso: solo soglia massima (slider a un cursore, "solo PC sotto un certo peso")
+        if (!matchesRange(parseWeightKg(p.weight) ?? 0, filters.weightRange)) {
           return false;
         }
 
@@ -184,7 +189,7 @@ export function App() {
         const scoreB = stampWeight[b.stamp] + b.rating * 10 - (b.price / 80);
         return scoreB - scoreA;
       });
-  }, [baseFilteredProducts, filters.maxPrice, filters.specTags, filters.ramRange, filters.ssdRange, filters.screenRange, filters.sortBy]);
+  }, [baseFilteredProducts, filters.maxPrice, filters.specTags, filters.ramRange, filters.ssdRange, filters.screenRange, filters.weightRange, filters.sortBy]);
 
   // Dominanza: confronto SOLO nel pool contestuale (baseFilteredProducts, mai
   // sul catalogo intero) — i prodotti dominati non spariscono, restano

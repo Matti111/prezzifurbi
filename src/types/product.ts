@@ -83,6 +83,10 @@ export interface FilterState {
   ramRange: RangeFilter;
   ssdRange: RangeFilter;
   screenRange: RangeFilter;
+  /** Soglia peso: solo `max` viene mai impostato (slider a un solo cursore,
+   * "solo PC sotto un certo peso"), `min` resta sempre null - stesso tipo
+   * `RangeFilter` degli altri filtri numerici per riusare `matchesRange()`. */
+  weightRange: RangeFilter;
   gpuFilter: string;
   sortBy: SortOption;
 }
