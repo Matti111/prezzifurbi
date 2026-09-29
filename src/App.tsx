@@ -8,6 +8,7 @@ import { ProductDetailModal } from './components/ProductDetailModal';
 import { HowItWorksModal } from './components/HowItWorksModal';
 import { PerformanceCompareModal } from './components/PerformanceCompareModal';
 import { AffiliateDisclaimer } from './components/AffiliateDisclaimer';
+import { SeoIntro } from './components/SeoIntro';
 import { productMatchesSelection, matchesRange, parseRamGB, parseSsdGB, parseScreenInches, parseWeightKg } from './utils/specTags';
 import { findDominator, getValueFraming, qualifiesForFox } from './utils/valuation';
 import { buildItemListJsonLd } from './utils/structuredData';
@@ -338,6 +339,8 @@ export function App() {
             </button>
           </div>
         )}
+
+        <SeoIntro onOpenHowItWorks={() => setIsHowItWorksOpen(true)} />
 
       </main>
 

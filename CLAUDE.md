@@ -515,6 +515,79 @@ pipeline di deploy già in uso (push -> Vercel builda `public/` così com'è).
   `'synology'`, `'rugged tablet'`, `'industrial'`. -5 prodotti (292→287).
   **Catalogo finale dopo tutti gli 8 giri: 287 prodotti, 287 pagine statiche.**
 
+### Blocco "da fare subito" (2026-09-29)
+
+L'utente ha incollato un documento esterno di 20+ punti su miglioramenti SEO
+(pagine categoria, title/description specifici, testo home, raw vs
+normalizzato, link interni, "ultimo aggiornamento", guide editoriali,
+SSR/SSG, Search Console). Valutazione data: alcuni punti erano già coperti
+dal lavoro del giorno prima (pagine prodotto statiche = punto "SEO tecnico
+della SPA"), altri (guide editoriali) rimandati per rapporto costo/beneficio
+incerto con un catalogo di ~287 prodotti. Implementato il blocco a basso
+rischio/alto valore, scelto dall'utente:
+
+- **"Ultimo controllo prezzo" sulle pagine prodotto**: `_format_it_date()`
+  (mapping manuale dei mesi italiani, mai il locale di sistema) + riga
+  `.updated` nel template, da `lastUpdated` già esistente — mai la data
+  odierna se il dato manca.
+- **Link interni veri** (`ProductCard.tsx`): titolo e bottone "Info" prima
+  erano `onClick` JS puri (`<h3>` senza wrapper, `<button>`), ora un vero
+  `<a href="/notebook/<id>.html">` — click normale intercetta comunque e
+  apre il modal in-app (stessa UX), ctrl/cmd/shift-click o click centrale
+  passano al browser senza essere intercettati (nuova scheda su richiesta
+  esplicita dell'utente, mai bloccata).
+- **Testo SEO in home** (`SeoIntro.tsx`, nuovo, sotto la griglia prodotti,
+  prima di `AffiliateDisclaimer`): cosa fa il sito, quali marketplace,
+  perché non si guarda lo sconto dichiarato, cosa significano i 3 timbri
+  (stesso testo già usato in `HowItWorksModal.tsx`, non reinventato).
+  Deliberatamente breve.
+- **Pagine categoria** (`_build_category_specs()`/`generate_category_pages()`/
+  `render_category_page()` in `test_db.py`, sezione "6. PAGINE CATEGORIA"):
+  15 pagine (`notebook-gaming.html`, `migliori-notebook-sotto-500-euro.html`,
+  `notebook-rtx-4060.html`, `notebook-16gb.html`, `notebook-intel-i5.html`...),
+  ognuna con `<title>`/description/JSON-LD `ItemList` propri, elenco
+  ordinato per lo stesso `_deal_score` di default di `App.tsx` (mai lo
+  sconto), max 40 righe mostrate con nota se ce ne sono di più. **Soglia
+  minima `MIN_CATEGORY_PRODUCTS = 6`**, ma con un criterio in PIÙ della sola
+  soglia numerica: le categorie di utilizzo/condizione (gaming, creatività,
+  ricondizionati) esistono solo se rappresentano una fetta ristretta del
+  catalogo — "lavoro"/"studio"/"programmazione" (60-87% del catalogo) e
+  "usato" (77%) sono stati esclusi apposta perché una pagina "quasi tutto il
+  catalogo con un nome diverso" non ha contenuto differenziato dalla home
+  (rischio di contenuto quasi-duplicato); fascia di prezzo/RAM/CPU invece
+  restano ampie di proposito (chi cerca "notebook i5" si aspetta molti
+  risultati, non è un problema). Pagine sotto soglia in un run successivo
+  vengono cancellate, stesso principio delle pagine prodotto stantie.
+  `generate_sitemap()` ora accetta anche gli slug delle categorie.
+- **`.github/workflows/refresh-catalog.yml`**: `git add` esteso da
+  `public/notebook public/sitemap.xml` a tutto `public/` (altrimenti i nuovi
+  file categoria a livello radice non sarebbero mai stati committati).
+
+**Trovati per strada, corretti perché rientravano esattamente nel punto 11
+del documento utente (raw vs normalizzato)**:
+- `extract_cpu()`: "Core" era obbligatorio prima di "Ultra" — un titolo con
+  solo "Ultra 9 185H" (senza "Core", comune) cadeva sul fallback generico
+  "Intel Core i5 Multicore". Reso "Core" opzionale, MA il modello deve
+  essere ESATTAMENTE 3 cifre (135U/185H/225U...): il primo tentativo senza
+  quel vincolo ha prodotto un falso "Intel Core Ultra 5 16" leggendo "16"
+  da "16/512 Gb SSD" (RAM/storage, non un modello CPU) — stesso tipo di bug
+  già visto altrove in sessione con i numeri di configurazione. Aggiunto
+  anche un fallback "famiglia Ultra nota, modello no" (come già esisteva per
+  i3/i5/i7/i9/Ryzen) invece di cadere sull'"i5" finale quando manca un
+  modello a 3 cifre valido. 3 prodotti già in catalogo corretti.
+- **🟡 Aperto, non risolto**: uno scan di idempotenza (ri-derivare
+  `extract_cpu(title)` e confrontare col valore salvato) ha trovato 2
+  prodotti (`notebook-fhd-i5-8a-gen-ram-8gb-*`, con titolo che dice solo
+  "i5-8a Gen" senza modello) il cui valore salvato è comunque un modello
+  specifico ("Intel Core I5-8350u") che il **titolo da solo** non
+  giustifica. Non necessariamente un bug: `evaluate_laptop()` usa
+  `title + specs_text + description`, quindi il modello potrebbe
+  legittimamente venire dalle "item specifics" originali (mai salvate in
+  `products.json`, solo il risultato finale) — non ho modo di verificarlo
+  retroattivamente senza il testo originale, quindi non ho corretto né
+  confermato nulla. Da controllare a occhio sull'annuncio eBay live se
+  capita di nuovo altrove.
+
 ## TODO aperti
 
 1. Quando Back Market IT / MediaWorld IT / Unieuro IT / Euronics IT approvano su

@@ -11,6 +11,7 @@ import time
 import asyncio
 import html
 import glob
+from collections import Counter
 from datetime import datetime, timezone
 from typing import Dict, List, Any, Optional
 from playwright.async_api import async_playwright
@@ -56,6 +57,7 @@ CONFIG = {
     # public/ viene copiata così com'è nella build Vite -> Vercel: le pagine
     # statiche per prodotto finiscono nel deploy senza nessun passaggio in più.
     "static_pages_dir": os.path.abspath("public/notebook"),
+    "category_pages_dir": os.path.abspath("public"),
     "sitemap_file": os.path.abspath("public/sitemap.xml"),
 
     # Creators API (successore ufficiale di PA-API 5) - credenziali da variabili d'ambiente,
@@ -225,10 +227,18 @@ def extract_cpu(text: str) -> Dict[str, Any]:
         if m:
             return {"value": f"Apple M{m.group(1)}", "tier": _APPLE_SILICON_TIER[m.group(1)]}
 
-    # Intel Core Ultra
-    m = re.search(r'(Core\s+Ultra\s+([579])\s+\d+[a-zA-Z]*)', text_clean, re.I)
+    # Intel Core Ultra: "Core" è opzionale nel titolo (molti venditori scrivono solo
+    # "Ultra 9 185H", non "Core Ultra 9 185H" per esteso - trovato 2026-09-29 su un
+    # HP Omen con "Ultra 9 185H" nel titolo che finiva su "Intel Core i5 Multicore"
+    # generico). Il valore salvato è sempre "Intel Core Ultra ..." completo, mai
+    # quello che il venditore ha scritto per esteso (o troncato). Modello a
+    # ESATTAMENTE 3 cifre (135U/155H/185H/225U/236V...), mai "\d+" generico: un
+    # titolo tipo "Ultra 5 16/512 Gb SSD" (16GB RAM, non un modello CPU) veniva
+    # letto come "Ultra 5 16" - stesso bug già visto altrove con i numeri di
+    # configurazione RAM/storage scambiati per specifiche diverse.
+    m = re.search(r'(?:Core\s+)?Ultra\s+([579])\s+(\d{3}[a-zA-Z]*)', text_clean, re.I)
     if m:
-        return {"value": f"Intel {m.group(1)}", "tier": _CORE_ULTRA_TIER[m.group(2)]}
+        return {"value": f"Intel Core Ultra {m.group(1)} {m.group(2)}", "tier": _CORE_ULTRA_TIER[m.group(1)]}
 
     # Intel Core 3/5/7 (nuova nomenclatura 2024+, senza "i" né "Ultra": es. "Core 5-210H")
     m = re.search(r'(Core\s+([357])[- ]?(\d{3})[a-zA-Z]*)', text_clean, re.I)
@@ -351,6 +361,14 @@ def extract_cpu(text: str) -> Dict[str, Any]:
     if m:
         fam = m.group(1)
         return {"value": f"AMD Ryzen {fam} Multicore", "tier": _RYZEN_TIER[('legacy', fam)]}
+
+    # Stesso discorso per "Ultra N" senza un modello a 3 cifre valido (es. "Ultra 5
+    # 16/512 Gb SSD" sopra, dove "16" è la RAM): famiglia Core Ultra corretta, mai
+    # il fallback finale "i5" che sbaglierebbe anche la famiglia, non solo il modello.
+    m = re.search(r'\bUltra\s+([579])\b', text_clean, re.I)
+    if m:
+        fam = m.group(1)
+        return {"value": f"Intel Core Ultra {fam}", "tier": _CORE_ULTRA_TIER[fam]}
 
     return {"value": "Intel Core i5 Multicore", "tier": 2}
 
@@ -1704,6 +1722,65 @@ def _esc(value: Any) -> str:
     return html.escape(str(value), quote=True)
 
 
+_IT_MONTHS = ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno",
+              "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"]
+
+
+def _format_it_date(iso_date: Optional[str]) -> Optional[str]:
+    """'2026-09-28' -> '28 settembre 2026'. Mapping manuale invece del locale di
+    sistema (punto 23 del documento SEO utente: mai la data odierna, solo il
+    dato reale se c'è - None se `iso_date` è assente o non nel formato atteso,
+    mai una data inventata)."""
+    if not iso_date:
+        return None
+    try:
+        y, m, d = iso_date.split("-")
+        return f"{int(d)} {_IT_MONTHS[int(m) - 1]} {y}"
+    except (ValueError, IndexError):
+        return None
+
+
+# CSS condiviso tra pagine prodotto e pagine categoria (stessa identità visiva
+# scura/arancione del sito React, senza dipendenze esterne - niente Tailwind CDN,
+# sconsigliato in produzione). `.list`/`.row` servono solo alle pagine categoria,
+# innocue se non usate nel markup di una pagina prodotto.
+_PAGE_STYLE = """
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:#020617; color:#e2e8f0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; }
+  main { max-width:640px; margin:0 auto; padding:24px 16px 48px; }
+  a { color:#fb923c; }
+  .back { display:inline-block; margin-bottom:16px; font-size:13px; color:#94a3b8; text-decoration:none; }
+  .back:hover { color:#fb923c; }
+  .kicker { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#94a3b8; }
+  h1 { font-size:22px; line-height:1.3; margin:4px 0 12px; }
+  .badge { display:inline-flex; align-items:center; gap:6px; background:#f97316; color:#fff; font-weight:700; font-size:13px; padding:4px 12px; border-radius:999px; margin-bottom:16px; }
+  img { width:100%; max-width:280px; border-radius:16px; display:block; margin:0 0 16px; border:1px solid #1e293b; background:#fff; }
+  .price { font-size:28px; font-weight:800; color:#fff; margin:8px 0 0; }
+  .was { font-size:13px; color:#64748b; text-decoration:line-through; margin-bottom:4px; }
+  .condition { font-size:13px; color:#94a3b8; margin-bottom:8px; }
+  .updated { font-size:11px; color:#64748b; margin-bottom:20px; }
+  table { width:100%; border-collapse:collapse; margin-bottom:20px; font-size:14px; }
+  th, td { text-align:left; padding:8px 0; border-bottom:1px solid #1e293b; }
+  th { color:#94a3b8; font-weight:600; width:40%; }
+  ul { list-style:none; padding:0; margin:0 0 20px; font-size:14px; }
+  li { padding:4px 0; }
+  .cta { display:block; text-align:center; background:#f97316; color:#fff; font-weight:800; padding:14px; border-radius:12px; text-decoration:none; font-size:16px; margin-bottom:12px; }
+  .cta:hover { background:#ea580c; }
+  .disclaimer { font-size:11px; color:#64748b; text-align:center; }
+  .intro { font-size:13px; color:#94a3b8; margin:0 0 20px; line-height:1.5; }
+  .count { color:#fb923c; font-weight:700; }
+  .list { display:flex; flex-direction:column; gap:2px; margin-bottom:20px; }
+  .row { display:flex; align-items:center; gap:10px; padding:10px; border-radius:12px; background:#0f172a; text-decoration:none; border:1px solid #1e293b; }
+  .row:hover { border-color:#f97316; }
+  .row img { width:52px; height:52px; max-width:52px; border-radius:8px; margin:0; flex-shrink:0; object-fit:cover; }
+  .row-info { flex:1; min-width:0; }
+  .row-title { font-size:12.5px; color:#e2e8f0; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .row-specs { font-size:11px; color:#94a3b8; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .row-price { font-size:13px; font-weight:800; color:#fff; flex-shrink:0; text-align:right; }
+"""
+
+
 def render_product_page(p: Dict[str, Any]) -> str:
     """Pagina statica per un singolo prodotto: nessuna riga di questo template
     inventa un dato che non sia già in `p` (stesso principio "mai fabbricare"
@@ -1759,6 +1836,12 @@ def render_product_page(p: Dict[str, Any]) -> str:
     if p.get("originalPrice") and p["originalPrice"] > price:
         price_note = f'<div class="was">invece di {_esc(p["originalPrice"])} €</div>'
 
+    # Data reale dell'ultimo controllo prezzo, mai la data odierna (punto 23 del
+    # documento SEO utente): assente del tutto se `lastUpdated` non c'è, non un
+    # placeholder che finge una precisione che non abbiamo.
+    updated_it = _format_it_date(p.get("lastUpdated"))
+    updated_html = f'<div class="updated">Ultimo controllo prezzo: {updated_it}</div>' if updated_it else ""
+
     return f"""<!doctype html>
 <html lang="it">
 <head>
@@ -1778,30 +1861,7 @@ def render_product_page(p: Dict[str, Any]) -> str:
 <meta name="twitter:title" content="{_esc(seo_title)}" />
 <meta name="twitter:description" content="{_esc(description)}" />
 <script type="application/ld+json">{json.dumps(json_ld, ensure_ascii=False).replace('</', '<\\/')}</script>
-<style>
-  :root {{ color-scheme: dark; }}
-  * {{ box-sizing: border-box; }}
-  body {{ margin:0; background:#020617; color:#e2e8f0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; }}
-  main {{ max-width:640px; margin:0 auto; padding:24px 16px 48px; }}
-  a {{ color:#fb923c; }}
-  .back {{ display:inline-block; margin-bottom:16px; font-size:13px; color:#94a3b8; text-decoration:none; }}
-  .back:hover {{ color:#fb923c; }}
-  .kicker {{ font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:#94a3b8; }}
-  h1 {{ font-size:22px; line-height:1.3; margin:4px 0 12px; }}
-  .badge {{ display:inline-flex; align-items:center; gap:6px; background:#f97316; color:#fff; font-weight:700; font-size:13px; padding:4px 12px; border-radius:999px; margin-bottom:16px; }}
-  img {{ width:100%; max-width:280px; border-radius:16px; display:block; margin:0 0 16px; border:1px solid #1e293b; background:#fff; }}
-  .price {{ font-size:28px; font-weight:800; color:#fff; margin:8px 0 0; }}
-  .was {{ font-size:13px; color:#64748b; text-decoration:line-through; margin-bottom:4px; }}
-  .condition {{ font-size:13px; color:#94a3b8; margin-bottom:20px; }}
-  table {{ width:100%; border-collapse:collapse; margin-bottom:20px; font-size:14px; }}
-  th, td {{ text-align:left; padding:8px 0; border-bottom:1px solid #1e293b; }}
-  th {{ color:#94a3b8; font-weight:600; width:40%; }}
-  ul {{ list-style:none; padding:0; margin:0 0 20px; font-size:14px; }}
-  li {{ padding:4px 0; }}
-  .cta {{ display:block; text-align:center; background:#f97316; color:#fff; font-weight:800; padding:14px; border-radius:12px; text-decoration:none; font-size:16px; margin-bottom:12px; }}
-  .cta:hover {{ background:#ea580c; }}
-  .disclaimer {{ font-size:11px; color:#64748b; text-align:center; }}
-</style>
+<style>{_PAGE_STYLE}</style>
 </head>
 <body>
 <main>
@@ -1813,6 +1873,7 @@ def render_product_page(p: Dict[str, Any]) -> str:
   {price_note}
   <div class="price">{price} €</div>
   <div class="condition">{_esc(p['condition'])} · {_esc(p['store'])}</div>
+  {updated_html}
   <table>{spec_rows}</table>
   {f"<ul>{top_html}</ul>" if top_html else ""}
   {f"<ul>{flop_html}</ul>" if flop_html else ""}
@@ -1850,15 +1911,23 @@ def generate_static_product_pages(catalog: List[Dict[str, Any]]) -> int:
     return len(catalog)
 
 
-def generate_sitemap(catalog: List[Dict[str, Any]]) -> None:
-    """Home + una entry per pagina prodotto, con lastmod reale da `lastUpdated`
-    (mai una data finta) - sostituisce il sitemap.xml statico con solo la home."""
+def generate_sitemap(catalog: List[Dict[str, Any]], category_slugs: Optional[List[str]] = None) -> None:
+    """Home + una entry per pagina prodotto + una per pagina categoria, con lastmod
+    reale da `lastUpdated` sui prodotti (mai una data finta) - le categorie non
+    hanno un `lastUpdated` proprio, restano senza lastmod piuttosto che inventarne
+    uno con la data odierna."""
     site_url = CONFIG["site_url"]
     urls = [f"""  <url>
     <loc>{site_url}/</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>"""]
+    for slug in (category_slugs or []):
+        urls.append(f"""  <url>
+    <loc>{site_url}/{_esc(slug)}.html</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>""")
     for p in catalog:
         lastmod = p.get("lastUpdated")
         lastmod_tag = f"\n    <lastmod>{_esc(lastmod)}</lastmod>" if lastmod else ""
@@ -1871,6 +1940,256 @@ def generate_sitemap(catalog: List[Dict[str, Any]]) -> None:
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "\n".join(urls) + "\n</urlset>\n"
     with open(CONFIG["sitemap_file"], "w", encoding="utf-8") as f:
         f.write(xml)
+
+
+# --- 6. PAGINE CATEGORIA (SEO) ---
+#
+# Solo categorie che rappresentano DAVVERO una fetta ristretta e identificabile
+# del catalogo, non una riformulazione della home. Due criteri diversi a seconda
+# del tipo di categoria:
+# - utilizzo/condizione (gaming, creatività, ricondizionati): una pagina ha senso
+#   solo se è una minoranza chiara del catalogo - "lavoro"/"studio"/"usato" coprono
+#   60-87% dei prodotti, praticamente "tutto il catalogo" con un nome diverso, e
+#   sono stati esclusi apposta (nessun valore differenziante da una pagina così).
+# - fascia di prezzo/RAM/CPU (sotto 500€, 16GB, i5): qui l'ampiezza è normale e
+#   attesa (chi cerca "notebook i5" si aspetta molti risultati, non pochi), quindi
+#   la soglia è solo "abbastanza prodotti per non essere una pagina vuota".
+MIN_CATEGORY_PRODUCTS = 6
+
+
+def _deal_score(p: Dict[str, Any]) -> float:
+    """Stessa formula del sort 'deal_score' di default in App.tsx (mai lo sconto
+    dichiarato): usata per ordinare le pagine categoria dalla migliore occasione."""
+    stamp_weight = {"scelta_furba": 40, "best_buy": 30, "cheaper_good": 25, "nessuno": 0}
+    return stamp_weight.get(p.get("stamp", "nessuno"), 0) + p.get("rating", 0) * 10 - (p["price"] / 80)
+
+
+def _cpu_family_label(cpu_value: str) -> Optional[str]:
+    v = cpu_value.lower()
+    if "ultra" in v:
+        return "Core Ultra"
+    if "ryzen" in v:
+        return "AMD Ryzen"
+    if re.search(r'\bi9\b', v) or 'i9-' in v:
+        return "Intel i9"
+    if re.search(r'\bi7\b', v) or 'i7-' in v:
+        return "Intel i7"
+    if re.search(r'\bi5\b', v) or 'i5-' in v:
+        return "Intel i5"
+    return None  # Celeron/Pentium/Apple Silicon/altro: volumi troppo bassi ora
+
+
+def _gpu_family_label(gpu_value: str) -> Optional[str]:
+    if 'Ada' in gpu_value or 'Workstation' in gpu_value:
+        return None  # GPU professionali: nessun search intent comune da servire
+    m = re.search(r'RTX\s?(\d{3,4})', gpu_value)
+    return f"RTX {m.group(1)}" if m else None
+
+
+def _ram_gb(p: Dict[str, Any]) -> Optional[int]:
+    m = re.search(r'(\d+)\s*GB', p["specs"]["ram"]["value"])
+    return int(m.group(1)) if m else None
+
+
+def _build_category_specs(catalog: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    specs: List[Dict[str, Any]] = []
+
+    # Utilizzo: solo le fette davvero ristrette (gaming/creatività) - lavoro/
+    # studio/programmazione esclusi apposta, vedi commento sopra.
+    for uc, slug, title, intro in [
+        ("gaming", "notebook-gaming", "Notebook Gaming",
+         "Notebook con GPU dedicata abbastanza potente per giocare."),
+        ("creativita", "notebook-creativita", "Notebook per Creatività",
+         "Notebook adatti a editing foto/video e rendering: GPU dedicata o RAM abbondante con CPU di fascia alta."),
+    ]:
+        specs.append({"slug": slug, "title": title, "intro": intro,
+                       "filter": (lambda u: (lambda p: u in p.get("useCases", [])))(uc)})
+
+    # Condizione: solo Ricondizionato - "Usato" da solo è il 77% del catalogo
+    specs.append({
+        "slug": "notebook-ricondizionati", "title": "Notebook Ricondizionati",
+        "intro": "Notebook ricondizionati e certificati, con garanzia inclusa.",
+        "filter": lambda p: p.get("condition") == "Ricondizionato",
+    })
+
+    # Fascia di prezzo: ampiezza attesa per questo tipo di ricerca
+    for cutoff in (500, 800):
+        specs.append({
+            "slug": f"migliori-notebook-sotto-{cutoff}-euro", "title": f"Migliori Notebook sotto {cutoff}€",
+            "intro": f"I notebook a {cutoff}€ o meno con il miglior rapporto qualità/prezzo, ordinati per punteggio di valore Prezzi Furbi (mai per sconto dichiarato dal negozio).",
+            "filter": (lambda c: (lambda p: p["price"] < c))(cutoff),
+        })
+
+    # GPU: solo famiglie con abbastanza volume nel catalogo ATTUALE (calcolato,
+    # non una lista fissa - una RTX poco comune oggi potrebbe avere abbastanza
+    # prodotti tra qualche mese, e viceversa)
+    gpu_counts = Counter(fam for p in catalog if (fam := _gpu_family_label(p["specs"]["gpu"]["value"])))
+    for fam, count in gpu_counts.items():
+        if count < MIN_CATEGORY_PRODUCTS:
+            continue
+        slug = "notebook-" + fam.lower().replace(" ", "-")
+        specs.append({
+            "slug": slug, "title": f"Notebook {fam}",
+            "intro": f"Notebook con scheda video {fam}, prezzi e caratteristiche a confronto.",
+            "filter": (lambda f: (lambda p: _gpu_family_label(p["specs"]["gpu"]["value"]) == f))(fam),
+        })
+
+    # RAM
+    ram_counts = Counter(gb for p in catalog if (gb := _ram_gb(p)) is not None)
+    for gb, count in ram_counts.items():
+        if count < MIN_CATEGORY_PRODUCTS:
+            continue
+        specs.append({
+            "slug": f"notebook-{gb}gb", "title": f"Notebook {gb}GB RAM",
+            "intro": f"Notebook con {gb}GB di RAM, prezzi e caratteristiche a confronto.",
+            "filter": (lambda g: (lambda p: _ram_gb(p) == g))(gb),
+        })
+
+    # CPU
+    cpu_counts = Counter(fam for p in catalog if (fam := _cpu_family_label(p["specs"]["cpu"]["value"])))
+    for fam, count in cpu_counts.items():
+        if count < MIN_CATEGORY_PRODUCTS:
+            continue
+        slug = "notebook-" + fam.lower().replace(" ", "-")
+        specs.append({
+            "slug": slug, "title": f"Notebook {fam}",
+            "intro": f"Notebook con processore {fam}, prezzi e caratteristiche a confronto.",
+            "filter": (lambda f: (lambda p: _cpu_family_label(p["specs"]["cpu"]["value"]) == f))(fam),
+        })
+
+    return specs
+
+
+def _render_category_row(p: Dict[str, Any]) -> str:
+    emoji, _ = _STAMP_META.get(p.get("stamp", "nessuno"), ("", ""))
+    specs = p["specs"]
+    spec_line = f"{specs['cpu']['value']} · {specs['ram']['value']} · {specs['gpu']['value']}"
+    return (
+        f'<a class="row" href="/notebook/{p["id"]}.html">'
+        f'<img src="{_esc(p["imageUrl"])}" alt="{_esc(p["title"])}" loading="lazy" />'
+        f'<div class="row-info">'
+        f'<div class="row-title">{_esc(p["title"][:90])}</div>'
+        f'<div class="row-specs">{_esc(spec_line)}</div>'
+        f'</div>'
+        f'<div class="row-price">{emoji} {p["price"]} €</div>'
+        f'</a>'
+    )
+
+
+def render_category_page(spec: Dict[str, Any], products: List[Dict[str, Any]]) -> str:
+    """Pagina categoria: elenco reale filtrato dal catalogo (mai un 'i migliori'
+    deciso a giudizio, sempre gli stessi criteri oggettivi già usati dal sito -
+    prezzo, timbro, rating - punto 20 del documento SEO utente), max 40 righe per
+    tenere la pagina leggera (le categorie di prezzo/RAM/CPU possono avere
+    centinaia di prodotti: mostriamo le migliori occasioni, non l'elenco completo,
+    con un link alla home per il catalogo intero filtrabile)."""
+    site_url = CONFIG["site_url"]
+    slug = spec["slug"]
+    page_url = f"{site_url}/{slug}.html"
+    title = spec["title"]
+    count = len(products)
+    seo_title = f"{title} — Prezzi e Confronto | Prezzi Furbi"
+    description = f"{spec['intro']} {count} offerte disponibili, aggiornate ogni notte su Prezzi Furbi."
+
+    shown = sorted(products, key=_deal_score, reverse=True)[:40]
+
+    json_ld = {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": i + 1,
+                "item": {
+                    "@type": "Product",
+                    "name": p["title"],
+                    "image": p["imageUrl"],
+                    "brand": p["brand"],
+                    "offers": {
+                        "@type": "Offer",
+                        "price": p["price"],
+                        "priceCurrency": "EUR",
+                        "availability": "https://schema.org/InStock",
+                        "url": f"{site_url}/notebook/{p['id']}.html",
+                    },
+                },
+            }
+            for i, p in enumerate(shown)
+        ],
+    }
+
+    rows_html = "".join(_render_category_row(p) for p in shown)
+    shown_note = (
+        f'<p class="intro">Mostrate le {len(shown)} migliori occasioni su {count} offerte totali in questa categoria.</p>'
+        if count > len(shown) else ""
+    )
+
+    return f"""<!doctype html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{_esc(seo_title)}</title>
+<meta name="description" content="{_esc(description)}" />
+<link rel="canonical" href="{page_url}" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{page_url}" />
+<meta property="og:site_name" content="Prezzi Furbi" />
+<meta property="og:locale" content="it_IT" />
+<meta property="og:title" content="{_esc(seo_title)}" />
+<meta property="og:description" content="{_esc(description)}" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="{_esc(seo_title)}" />
+<meta name="twitter:description" content="{_esc(description)}" />
+<script type="application/ld+json">{json.dumps(json_ld, ensure_ascii=False).replace('</', '<\\/')}</script>
+<style>{_PAGE_STYLE}</style>
+</head>
+<body>
+<main>
+  <a class="back" href="/">← Torna al comparatore Prezzi Furbi</a>
+  <h1>{_esc(title)}</h1>
+  <p class="intro">{_esc(spec['intro'])} <span class="count">{count} offerte</span> disponibili, aggiornate ogni notte.</p>
+  {shown_note}
+  <div class="list">{rows_html}</div>
+  <a class="back" href="/">Vedi tutto il catalogo su Prezzi Furbi →</a>
+</main>
+</body>
+</html>
+"""
+
+
+def generate_category_pages(catalog: List[Dict[str, Any]]) -> List[str]:
+    """Scrive/aggiorna una pagina per categoria che supera la soglia minima e
+    cancella quelle che sono scese sotto soglia o non esistono più nello schema
+    (stesso principio delle pagine prodotto: mai lasciare online una pagina il
+    cui contenuto non è più valido). Ritorna gli slug delle pagine scritte, per
+    la sitemap."""
+    out_dir = CONFIG["category_pages_dir"]
+    os.makedirs(out_dir, exist_ok=True)
+    specs = _build_category_specs(catalog)
+
+    written_slugs = []
+    for spec in specs:
+        matches = [p for p in catalog if spec["filter"](p)]
+        if len(matches) < MIN_CATEGORY_PRODUCTS:
+            continue
+        filepath = os.path.join(out_dir, f"{spec['slug']}.html")
+        with open(filepath, "w", encoding="utf-8") as f:
+            f.write(render_category_page(spec, matches))
+        written_slugs.append(spec["slug"])
+
+    all_possible_slugs = {s["slug"] for s in specs}
+    written_set = set(written_slugs)
+    removed = 0
+    for filepath in glob.glob(os.path.join(out_dir, "*.html")):
+        slug = os.path.splitext(os.path.basename(filepath))[0]
+        if slug in all_possible_slugs and slug not in written_set:
+            os.remove(filepath)
+            removed += 1
+
+    if removed:
+        print(f" 🗑️  Rimosse {removed} pagine categoria scese sotto soglia ({MIN_CATEGORY_PRODUCTS} prodotti)")
+    return written_slugs
 
 
 async def main():
@@ -1929,15 +2248,17 @@ async def main():
     if os.environ.get("CAPTURE_SCREENSHOTS") == "1":
         await take_live_screenshots()
 
-    # 7. Pagine statiche per prodotto + sitemap (SEO) - ricarica dal disco perché
-    #    sync_catalog()/verify_catalog_links() lavorano sulla loro copia propria del
-    #    file, non sulla variabile locale `catalog` di main() (che qui è ormai stale).
+    # 7. Pagine statiche per prodotto + categoria + sitemap (SEO) - ricarica dal
+    #    disco perché sync_catalog()/verify_catalog_links() lavorano sulla loro
+    #    copia propria del file, non sulla variabile locale `catalog` di main()
+    #    (che qui è ormai stale).
     if os.path.exists(path):
         with open(path, "r", encoding="utf-8") as f:
             final_catalog = json.load(f)
         pages_written = generate_static_product_pages(final_catalog)
-        generate_sitemap(final_catalog)
-        print(f"\n🔗 {pages_written} pagine statiche di prodotto + sitemap.xml rigenerate ({CONFIG['static_pages_dir']})")
+        category_slugs = generate_category_pages(final_catalog)
+        generate_sitemap(final_catalog, category_slugs)
+        print(f"\n🔗 {pages_written} pagine statiche di prodotto, {len(category_slugs)} pagine categoria + sitemap.xml rigenerate ({CONFIG['category_pages_dir']})")
 
     print("\n" + "=" * 65)
 

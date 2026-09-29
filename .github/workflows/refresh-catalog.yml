@@ -37,6 +37,6 @@ jobs:
         run: |
           git config user.name "prezzifurbi-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add src/data/products.json public/notebook public/sitemap.xml
+          git add src/data/products.json public/
           git diff --cached --quiet || git commit -m "chore: aggiornamento automatico catalogo (prezzi Amazon + nuove offerte eBay)"
           git push

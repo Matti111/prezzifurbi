@@ -67,6 +67,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   // 3 tabs: 'top' | 'flop' | 'comment'
   const [activeTab, setActiveTab] = useState<'top' | 'flop' | 'comment'>('top');
 
+  // Link vero verso la pagina statica del prodotto (public/notebook/<id>.html,
+  // generata da test_db.py) invece di un semplice onClick JS: un crawler o
+  // chiunque non esegua JS vede comunque un <a href> reale e navigabile.
+  // Il click normale apre comunque il modal in-app (stessa UX di sempre);
+  // ctrl/cmd/shift-click o click centrale passano al browser (nuova scheda),
+  // mai intercettati.
+  const productHref = `/notebook/${product.id}.html`;
+  const handleProductLinkClick = (e: React.MouseEvent) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
+    e.preventDefault();
+    onSelect(product);
+  };
+
   // La volpe è rara per design (vedi qualifiesForFox), ma è simmetrica tra i due
   // timbri candidati del backend: un "best_buy" che supera comunque il confronto
   // contestuale per utilizzo (top 15% più conveniente, non solo hardware al
@@ -238,9 +251,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             <span className="text-[10px] font-extrabold uppercase tracking-wider text-orange-600 block truncate">
               {product.brand} • {product.model}
             </span>
-            <h3 className={`text-xs sm:text-base font-black line-clamp-2 leading-snug transition-colors ${titleTheme}`}>
-              {product.title}
-            </h3>
+            <a href={productHref} onClick={handleProductLinkClick} className="no-underline">
+              <h3 className={`text-xs sm:text-base font-black line-clamp-2 leading-snug transition-colors ${titleTheme}`}>
+                {product.title}
+              </h3>
+            </a>
             <div className="mt-0.5 sm:mt-1">
               {renderStars(product.rating)}
             </div>
@@ -545,9 +560,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         </div>
 
         <div className="flex items-center gap-1.5 flex-shrink-0">
-          <button
-            onClick={() => onSelect(product)}
-            className={`p-2 sm:p-2.5 rounded-xl border transition-colors ${
+          <a
+            href={productHref}
+            onClick={handleProductLinkClick}
+            className={`p-2 sm:p-2.5 rounded-xl border transition-colors inline-flex items-center justify-center ${
               isLightCard
                 ? 'bg-white hover:bg-slate-200 text-slate-700 hover:text-slate-900 border-slate-300'
                 : 'bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700'
@@ -555,7 +571,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             title="Dettagli e Analisi"
           >
             <Info className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-          </button>
+          </a>
 
           <a
             href={product.affiliateUrl}

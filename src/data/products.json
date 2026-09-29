@@ -5575,9 +5575,9 @@
     "store": "eBay.it",
     "affiliateUrl": "https://www.ebay.it/itm/256906247343?_skw=notebook+RTX+4070&hash=item3bd0ce3caf%3Ag%3AFBQAAeSwFwNqtwoP&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/aYYAAeSwsfJqtisu/s-l225.jpg",
-    "rating": 4.0,
-    "stamp": "nessuno",
-    "stampRationale": "Prodotto bilanciato e affidabile a 1961€ con un buon prezzo netto verificato.",
+    "rating": 4.8,
+    "stamp": "scelta_furba",
+    "stampRationale": "L'affare d'oro: rapporto prestazioni/prezzo imbattibile a 1961€. Spesa intelligente per chi vuole sostanza senza pagare il prezzo pieno da scaffale.",
     "specs": {
       "screen": {
         "value": "14\" FHD (1920x1080) 120Hz OLED",
@@ -5588,8 +5588,8 @@
         "indicator": "up"
       },
       "cpu": {
-        "value": "Intel Core i5 Multicore",
-        "indicator": "down"
+        "value": "Intel Core Ultra 9 185H",
+        "indicator": "up"
       },
       "ram": {
         "value": "32 GB DDR4",
@@ -5613,7 +5613,7 @@
     "idealFor": "Gaming, editing e creatività, sviluppo e programmazione e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-09-28",
+    "lastUpdated": "2026-09-29",
     "priceHistory": [
       {
         "price": 1961,
@@ -14119,8 +14119,8 @@
         "indicator": "down"
       },
       "cpu": {
-        "value": "Intel Core i5 Multicore",
-        "indicator": "down"
+        "value": "Intel Core Ultra 5",
+        "indicator": "up"
       },
       "ram": {
         "value": "16 GB DDR4",
@@ -14143,7 +14143,7 @@
     "idealFor": "Sviluppo e programmazione e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-09-27",
+    "lastUpdated": "2026-09-29",
     "priceHistory": [
       {
         "price": 1395,
