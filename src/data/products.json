@@ -6,7 +6,7 @@
     "model": "DEPUP60 NOTEBOOK GAMING",
     "category": "gaming_ai",
     "condition": "Usato",
-    "price": 830,
+    "price": 820,
     "store": "eBay.it",
     "affiliateUrl": "https://www.ebay.it/itm/227306323358?_skw=notebook+RTX+4060&hash=item34ec833d9e%3Ag%3ARRMAAeSwFO1p429e&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/RRMAAeSwFO1p429e/s-l225.jpg",
@@ -20,7 +20,7 @@
       },
       "gpu": {
         "value": "NVIDIA GeForce RTX 4060 dedicata",
-        "indicator": "double_up"
+        "indicator": "up"
       },
       "cpu": {
         "value": "Intel Core i7 Multicore",
@@ -54,7 +54,7 @@
       "programmazione",
       "lavoro"
     ],
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 777,
@@ -67,6 +67,10 @@
       {
         "price": 830,
         "date": "2026-10-05"
+      },
+      {
+        "price": 820,
+        "date": "2026-10-06"
       }
     ],
     "listingId": "227306323358"
@@ -380,7 +384,7 @@
       "programmazione",
       "lavoro"
     ],
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 565,
@@ -441,7 +445,7 @@
       "programmazione",
       "lavoro"
     ],
-    "lastUpdated": "2026-10-04",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 540,
@@ -630,7 +634,7 @@
       "studio",
       "lavoro"
     ],
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 320,
@@ -755,7 +759,7 @@
       "studio",
       "lavoro"
     ],
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 380,
@@ -773,7 +777,7 @@
     "condition": "Usato",
     "price": 529,
     "store": "eBay.it",
-    "affiliateUrl": "https://www.ebay.it/itm/227501112648?_skw=notebook+pc&hash=item34f81f7d48%3Ag%3A2B0AAeSwSWNqw4Gg&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "affiliateUrl": "https://www.ebay.it/itm/227501112648?_skw=notebook+pc&hash=item34f81f7d48%3Ag%3A92UAAeSw8wtqxNJ4&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/MkMAAeSwAetqsV97/s-l225.jpg",
     "rating": 4.0,
     "stamp": "nessuno",
@@ -816,7 +820,7 @@
       "studio",
       "lavoro"
     ],
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 529,
@@ -1189,7 +1193,7 @@
     "idealFor": "Studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 150,
@@ -1309,7 +1313,7 @@
     "idealFor": "Studio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 150,
@@ -1370,7 +1374,7 @@
     "idealFor": "Studio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 150,
@@ -1430,7 +1434,7 @@
     "idealFor": "Studio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 150,
@@ -1490,7 +1494,7 @@
     "idealFor": "Studio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 153,
@@ -1675,7 +1679,7 @@
     "idealFor": "Studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 230,
@@ -1801,7 +1805,7 @@
     "idealFor": "Studio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 200,
@@ -2144,7 +2148,7 @@
       },
       "gpu": {
         "value": "Intel UHD Graphics integrata",
-        "indicator": "neutral"
+        "indicator": "down"
       },
       "cpu": {
         "value": "Intel Core i7-8550U",
@@ -2434,7 +2438,7 @@
     "idealFor": "Studio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 150,
@@ -2625,7 +2629,7 @@
     "idealFor": "Studio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 159,
@@ -2686,7 +2690,7 @@
     "idealFor": "Studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 159,
@@ -2748,7 +2752,7 @@
     "idealFor": "Studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 159,
@@ -2871,7 +2875,7 @@
     "idealFor": "Studio e lavoro d'ufficio.",
     "weight": "1.85 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 159,
@@ -3117,7 +3121,7 @@
     "idealFor": "Studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 169,
@@ -3239,7 +3243,7 @@
     "idealFor": "Studio.",
     "weight": "1.68 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 169,
@@ -3299,7 +3303,7 @@
     "idealFor": "Studio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 170,
@@ -3360,7 +3364,7 @@
     "idealFor": "Studio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 170,
@@ -3421,7 +3425,7 @@
     "idealFor": "Studio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 170,
@@ -3482,7 +3486,7 @@
     "idealFor": "Studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 157,
@@ -3544,7 +3548,7 @@
     "idealFor": "Studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 165,
@@ -3680,7 +3684,7 @@
     "idealFor": "Editing e creatività, sviluppo e programmazione e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 844,
@@ -3741,7 +3745,7 @@
     "idealFor": "Sviluppo e programmazione e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 649,
@@ -3802,7 +3806,7 @@
     "idealFor": "Sviluppo e programmazione e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 874,
@@ -3863,7 +3867,7 @@
     "idealFor": "Sviluppo e programmazione e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 699,
@@ -5551,7 +5555,7 @@
     "condition": "Usato",
     "price": 1961,
     "store": "eBay.it",
-    "affiliateUrl": "https://www.ebay.it/itm/256906247343?_skw=notebook+RTX+4070&hash=item3bd0ce3caf%3Ag%3AJOkAAeSw9HBqw2hr&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "affiliateUrl": "https://www.ebay.it/itm/256906247343?_skw=notebook+RTX+4070&hash=item3bd0ce3caf%3Ag%3As9QAAeSwmZdqxDgi&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/aYYAAeSwsfJqtisu/s-l225.jpg",
     "rating": 4.8,
     "stamp": "scelta_furba",
@@ -5591,7 +5595,7 @@
     "idealFor": "Gaming, editing e creatività, sviluppo e programmazione e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 1961,
@@ -7394,7 +7398,7 @@
     "idealFor": "Gaming, editing e creatività, sviluppo e programmazione e lavoro d'ufficio.",
     "weight": "1.80 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 900,
@@ -7833,7 +7837,7 @@
     "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
     "weight": "1.56 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 900,
@@ -7897,7 +7901,7 @@
     "idealFor": "Gaming, editing e creatività, sviluppo e programmazione e lavoro d'ufficio.",
     "weight": "2.60 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 900,
@@ -8086,67 +8090,6 @@
     "priceHistory": [
       {
         "price": 1499,
-        "date": "2026-09-26"
-      }
-    ]
-  },
-  {
-    "id": "notebook-asus-expertbook-b1402-75167049",
-    "listingId": "327375167049",
-    "title": "NOTEBOOK ASUS EXPERTBOOK B1402CBA-EK01216X",
-    "brand": "NOTEBOOK",
-    "model": "ASUS EXPERTBOOK B1402CBA-EK01216X",
-    "category": "lavoro_ufficio",
-    "useCases": [
-      "studio",
-      "lavoro"
-    ],
-    "condition": "Usato",
-    "price": 302,
-    "store": "eBay.it",
-    "affiliateUrl": "https://www.ebay.it/itm/327375167049?_skw=notebook&hash=item4c39149e49%3Ag%3A7nsAAeSw9tNqt27t&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
-    "imageUrl": "https://i.ebayimg.com/images/g/7nsAAeSw9tNqt27t/s-l225.jpg",
-    "rating": 4.5,
-    "stamp": "cheaper_good",
-    "stampRationale": "Prezzo d'attacco minimo di 302€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
-    "specs": {
-      "screen": {
-        "value": "14\" 4K UHD (3840x2160) LED",
-        "indicator": "double_up"
-      },
-      "gpu": {
-        "value": "Intel UHD Graphics integrata",
-        "indicator": "neutral"
-      },
-      "cpu": {
-        "value": "Intel Core i5 Multicore",
-        "indicator": "down"
-      },
-      "ram": {
-        "value": "16 GB DDR4",
-        "indicator": "up"
-      },
-      "ssd": {
-        "value": "512 GB SSD NVMe M.2",
-        "indicator": "up"
-      }
-    },
-    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
-    "topHighlights": [
-      "Ottima dotazione di porte USB e ricarica rapida",
-      "Testato e verificato con copertura di garanzia"
-    ],
-    "flopComment": "Webcam integrata con sensore base per videochiamate ordinarie",
-    "flopWarnings": [
-      "Webcam integrata con sensore base per videochiamate ordinarie"
-    ],
-    "idealFor": "Studio e lavoro d'ufficio.",
-    "weight": "2.20 kg",
-    "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-09-28",
-    "priceHistory": [
-      {
-        "price": 302,
         "date": "2026-09-26"
       }
     ]
@@ -9755,7 +9698,7 @@
     "idealFor": "Gaming, editing e creatività, sviluppo e programmazione e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-04",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 1300,
@@ -11237,7 +11180,7 @@
     "idealFor": "Editing e creatività, sviluppo e programmazione, studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 490,
@@ -12043,7 +11986,7 @@
     "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 499,
@@ -12164,7 +12107,7 @@
     "idealFor": "Studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 197,
@@ -14089,66 +14032,6 @@
     ]
   },
   {
-    "id": "hp-650-g3-15-6-cpu-i5-7-genera-89701793",
-    "listingId": "267789701793",
-    "title": "HP 650 G3 15,6\" CPU I5 7° GENERAZIONE RAM 8GB SSD 250GB WIN 11 UFFICIO LAVORO",
-    "brand": "HP",
-    "model": "650 G3 15,6\"",
-    "category": "budget_studenti",
-    "useCases": [
-      "studio"
-    ],
-    "condition": "Usato",
-    "price": 207,
-    "store": "eBay.it",
-    "affiliateUrl": "https://www.ebay.it/itm/267789701793?_skw=laptop&hash=item3e598292a1%3Ag%3AqoIAAeSwCxdqrj8F&amdata=enc%3AAQALAAAA4ACCtXRWQnOEpyOqnQQ8KGaK7M8U4P%2F3tNGUz76UrsqeFAfttAgV3Ft%2BNomBua6GHVGGGsTDwmgQhFw9Nw2v3TowwkBgD8ajSe0islB5icqM9ZPHxWFRDDSaA6fpR%2FE6RQWJfKH1JhNAO%2BdKAlpjELYOJOabpOb6vLhoTaaOSLj73myzfC6ATp%2BShxMpx%2BLbIU%2BrC%2BITGxuytHYdin%2BLkFbWQYChK60RxiuR%2FpEwr1AdZsXIzW5ocPA3xnj6OGOXlQcYE1CBxY%2BjqvaAbhPaDGW%2BNAP5bHcYentD6QXIP1Rp&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
-    "imageUrl": "https://i.ebayimg.com/images/g/qoIAAeSwCxdqrj8F/s-l225.jpg",
-    "rating": 4.0,
-    "stamp": "nessuno",
-    "stampRationale": "Prodotto bilanciato e affidabile a 207€ con un buon prezzo netto verificato.",
-    "specs": {
-      "screen": {
-        "value": "15.6\" 4K UHD (3840x2160) LED",
-        "indicator": "double_up"
-      },
-      "gpu": {
-        "value": "Intel UHD Graphics integrata",
-        "indicator": "neutral"
-      },
-      "cpu": {
-        "value": "Intel Core i5 Multicore",
-        "indicator": "down"
-      },
-      "ram": {
-        "value": "8 GB DDR4",
-        "indicator": "down"
-      },
-      "ssd": {
-        "value": "512 GB SSD NVMe M.2",
-        "indicator": "up"
-      }
-    },
-    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
-    "topHighlights": [
-      "Ottima dotazione di porte USB e ricarica rapida",
-      "Testato e verificato con copertura di garanzia"
-    ],
-    "flopComment": "RAM limitata a 8GB: può rallentare con decine di schede aperte",
-    "flopWarnings": [
-      "RAM limitata a 8GB: può rallentare con decine di schede aperte"
-    ],
-    "idealFor": "Studio.",
-    "weight": "2.20 kg",
-    "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-02",
-    "priceHistory": [
-      {
-        "price": 207,
-        "date": "2026-09-28"
-      }
-    ]
-  },
-  {
     "id": "notebook-hp-845-g8-ryzen-5-pro-70401229",
     "listingId": "257470401229",
     "title": "NOTEBOOK HP 845 G8 RYZEN 5 PRO R5-5650U 16GB RAM 512GB SSD 14 FHD RICONDIZIONATO",
@@ -14202,7 +14085,7 @@
     "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 308,
@@ -14225,7 +14108,7 @@
     "condition": "Usato",
     "price": 269,
     "store": "eBay.it",
-    "affiliateUrl": "https://www.ebay.it/itm/366402031721?_skw=notebook+i7+16GB&hash=item554f435069%3Ag%3AP2kAAOSwfidoSTRw&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "affiliateUrl": "https://www.ebay.it/itm/366402031721?_skw=notebook+pc&hash=item554f435069%3Ag%3AP2kAAOSwfidoSTRw&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/P2kAAOSwfidoSTRw/s-l225.jpg",
     "rating": 4.5,
     "stamp": "cheaper_good",
@@ -14264,7 +14147,7 @@
     "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
     "weight": "1.40 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 269,
@@ -14348,7 +14231,7 @@
     "condition": "Usato",
     "price": 245,
     "store": "eBay.it",
-    "affiliateUrl": "https://www.ebay.it/itm/327119478506?_skw=notebook+i7+16GB&hash=item4c29d71eea%3Ag%3A7tAAAOSwFh5oXVBd&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "affiliateUrl": "https://www.ebay.it/itm/327119478506?_skw=notebook+pc&hash=item4c29d71eea%3Ag%3A7tAAAOSwFh5oXVBd&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/7tAAAOSwFh5oXVBd/s-l225.jpg",
     "rating": 4.5,
     "stamp": "cheaper_good",
@@ -14387,7 +14270,7 @@
     "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
     "weight": "1.35 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 245,
@@ -14510,7 +14393,7 @@
     "idealFor": "Studio e lavoro d'ufficio.",
     "weight": "1.50 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 280,
@@ -14573,7 +14456,7 @@
     "idealFor": "Gaming, editing e creatività, sviluppo e programmazione e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 637,
@@ -14784,7 +14667,7 @@
     "idealFor": "Studio e lavoro d'ufficio.",
     "weight": "1.70 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 329,
@@ -15093,7 +14976,7 @@
     "idealFor": "Studio.",
     "weight": "1.70 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 249,
@@ -15157,7 +15040,7 @@
     "idealFor": "Gaming, editing e creatività, sviluppo e programmazione e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 1200,
@@ -15227,7 +15110,7 @@
     "idealFor": "Studio e lavoro d'ufficio.",
     "weight": "1.61 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 185,
@@ -15412,7 +15295,7 @@
     "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 209,
@@ -15906,7 +15789,7 @@
     "idealFor": "Studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 275,
@@ -16274,7 +16157,7 @@
     "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 479,
@@ -16664,7 +16547,7 @@
     "idealFor": "Sviluppo e programmazione e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 899,
@@ -16976,7 +16859,7 @@
     "idealFor": "Gaming, editing e creatività, sviluppo e programmazione e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 890,
@@ -17167,7 +17050,7 @@
     "idealFor": "Studio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 158,
@@ -17189,7 +17072,7 @@
     "condition": "Usato",
     "price": 290,
     "store": "eBay.it",
-    "affiliateUrl": "https://www.ebay.it/itm/125840469770?_skw=notebook+pc&hash=item1d4cad2f0a%3Ag%3AZLUAAeSw271quneL&amdata=enc%3AAQALAAAA4ACCtXRWQnOEpyOqnQQ8KGaJ%2FXnwyQ6jxJ298SUomb%2B23%2BpLkyLK01%2FHIJmMCNCcjyMn45sEN3DH44uBFPouinujiOsZvoxFLiKsWuoMV%2F01QSR6ic1N6wbuxmTIhApin4%2FLUdSe4zVOmyC%2BtbhTB5gBBYoNKtJH%2F4UbAflHUfeqEc6FFW8fQD7RlI2i9D337bBDJTV3m5HrtVH7rTaJfIaD4t%2FOqLJLgTXhK0Y0jnh--Wx1VNsOPc7H85EIa8jAI86VyjZO%2FsMG%2FC4aylo6CaL6xrew3bpH2K0egMnfVGL5&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "affiliateUrl": "https://www.ebay.it/itm/125840469770?_skw=notebook+pc&hash=item1d4cad2f0a%3Ag%3ArYAAAeSwVIxqxKlu&amdata=enc%3AAQALAAAA4ACCtXRWQnOEpyOqnQQ8KGaJ%2FXnwyQ6jxJ298SUomb%2B23%2BpLkyLK01%2FHIJmMCNCcjyMn45sEN3DH44uBFPouinujiOsZvoxFLiKsWuoMV%2F01QSR6ic1N6wbuxmTIhApin4%2FLUdSe4zVOmyC%2BtbhTB5i%2F%2B98WaAI%2Bfn9XA%2Fj41CvSk8aGMxGEYu9mAXFszKPmCzPhnQhZ69oP4GO14PEi7Xq2%2F6ErZLGxkgmLvJCyqyYidchCWh0Q3Ey0nwd2lezQEksjttA2OaEqleSLFN1Unlpnh0jC8%2FLgyUnfdkB%2F5kDF&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/ZLUAAeSw271quneL/s-l225.jpg",
     "rating": 4.5,
     "stamp": "cheaper_good",
@@ -17228,7 +17111,7 @@
     "idealFor": "Studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 290,
@@ -17312,7 +17195,7 @@
     "condition": "Usato",
     "price": 280,
     "store": "eBay.it",
-    "affiliateUrl": "https://www.ebay.it/itm/127042655391?_skw=notebook+Ryzen+5+16GB&hash=item1d9455149f%3Ag%3AyfMAAeSwy8xqu4dD&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "affiliateUrl": "https://www.ebay.it/itm/127042655391?_skw=notebook+Ryzen+7+16GB&hash=item1d9455149f%3Ag%3AyfMAAeSwy8xqu4dD&amdata=enc%3AAQALAAAA8ACCtXRWQnOEpyOqnQQ8KGZBVyirIMwH4wJw4N3B6FpPPsDIM4pyCge9kx5GxePTsxfDIs%2Frg%2FViGuBHNFvUWIAyMyAhDm2LuPWbAl%2F3bRjFVrtBMsfHepI7nhT1b4FmMlrugJ7n6ZGWPYNpy2%2FgJgKegyYrVKRZgLHY3aCSdqn3fgE4zSRN%2BS7WKbakhVgVT%2FHh61pp5Ag%2FzlrpwTvOQffUdVVqAOG35RX0getnfkGfnaiRBg%2BCZTpuyv0Pra%2FttkxyHGfOO7vEnEe%2BtexUnDCjdmj6YBrdRkMWcIFC2Pv9T8Cy70vfFwRQxttGuvuVuw%3D%3D&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/yfMAAeSwy8xqu4dD/s-l225.jpg",
     "rating": 4.5,
     "stamp": "cheaper_good",
@@ -17351,7 +17234,7 @@
     "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 280,
@@ -17493,7 +17376,7 @@
       "lavoro"
     ],
     "condition": "Usato",
-    "price": 499,
+    "price": 444,
     "store": "eBay.it",
     "affiliateUrl": "https://www.ebay.it/itm/287605990639?_skw=notebook+pc&hash=item42f6a724ef%3Ag%3Av-MAAeSw2EJqtVUT&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/v-MAAeSw2EJqtVUT/s-l225.jpg",
@@ -17534,7 +17417,7 @@
     "idealFor": "Sviluppo e programmazione e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 546,
@@ -17543,6 +17426,10 @@
       {
         "price": 499,
         "date": "2026-10-02"
+      },
+      {
+        "price": 444,
+        "date": "2026-10-06"
       }
     ]
   },
@@ -17599,7 +17486,7 @@
     "idealFor": "Studio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 159,
@@ -17864,9 +17751,9 @@
       "studio"
     ],
     "condition": "Usato",
-    "price": 363,
+    "price": 361,
     "store": "eBay.it",
-    "affiliateUrl": "https://www.ebay.it/itm/257147988018?_skw=notebook+pc&hash=item3bdf36e832%3Ag%3Ap80AAeSwTuBo51i4&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "affiliateUrl": "https://www.ebay.it/itm/257147988018?_skw=notebook+pc&hash=item3bdf36e832%3Ag%3Ap80AAeSwTuBo51i4&amdata=enc%3AAQALAAAA4ACCtXRWQnOEpyOqnQQ8KGbQRmGCXeAxxwPkVOWwY61P0ROsvbTrOuA2jDPk0zFjsTQPJPlbRCktnJflnZA1rELzhS4Ig5iwAsEVJnCKVIpG4upUE5TAUL4PIoVptEunRRPZDbJauzetSwQ%2BsSDU%2Fff9vzuZRSxspD%2FfdCUay2jzEgqSOgqvjCDuNFUirc3ZgiK62urkcwljUyg7MFpdD5B1NkDLZbGf92AON1cGHY2c%2B1Ogl2cWkL4pHj1dwIiyTroqGnkB17IWx%2F5bsUim%2BOtsVloAlvmF7OQhgxbLYzml&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/p80AAeSwTuBo51i4/s-l225.jpg",
     "rating": 4.0,
     "stamp": "nessuno",
@@ -17906,7 +17793,7 @@
     "idealFor": "Studio.",
     "weight": "1.70 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 355,
@@ -17919,6 +17806,10 @@
       {
         "price": 363,
         "date": "2026-10-04"
+      },
+      {
+        "price": 361,
+        "date": "2026-10-06"
       }
     ]
   },
@@ -18037,7 +17928,7 @@
     "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 289,
@@ -18909,7 +18800,7 @@
     "idealFor": "Studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 159,
@@ -20345,7 +20236,7 @@
     "idealFor": "Studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 160,
@@ -21274,7 +21165,7 @@
     "idealFor": "Sviluppo e programmazione e lavoro d'ufficio.",
     "weight": "1.80 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 600,
@@ -21460,7 +21351,7 @@
     "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 350,
@@ -22102,7 +21993,7 @@
     "condition": "Usato",
     "price": 800,
     "store": "eBay.it",
-    "affiliateUrl": "https://www.ebay.it/itm/407256915151?_skw=laptop&hash=item5ed2675ccf%3Ag%3AD9wAAeSwj~lqvNoA&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "affiliateUrl": "https://www.ebay.it/itm/407256915151?_skw=notebook+RTX+4060&hash=item5ed2675ccf%3Ag%3AD9wAAeSwj~lqvNoA&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/D9wAAeSwj~lqvNoA/s-l225.jpg",
     "rating": 4.9,
     "stamp": "best_buy",
@@ -22141,7 +22032,7 @@
     "idealFor": "Gaming, editing e creatività, sviluppo e programmazione e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-09-30",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 800,
@@ -23254,7 +23145,7 @@
     "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 405,
@@ -24429,7 +24320,7 @@
     "idealFor": "Sviluppo e programmazione e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 515,
@@ -24490,7 +24381,7 @@
     "idealFor": "Sviluppo e programmazione e lavoro d'ufficio.",
     "weight": "1.80 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 549,
@@ -24800,7 +24691,7 @@
     "idealFor": "Editing e creatività, sviluppo e programmazione e lavoro d'ufficio.",
     "weight": "1.80 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 1149,
@@ -25175,7 +25066,7 @@
     "idealFor": "Gaming, editing e creatività, sviluppo e programmazione e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 1783,
@@ -25246,7 +25137,7 @@
     "idealFor": "Gaming, editing e creatività, sviluppo e programmazione e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 1938,
@@ -26368,7 +26259,7 @@
     "idealFor": "Studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 291,
@@ -26505,69 +26396,6 @@
     ]
   },
   {
-    "id": "hobonichi-notebook-2019-bonus--74303022",
-    "listingId": "298574303022",
-    "title": "Hobonichi Notebook 2019 Bonus Jetstream Penna a Sfera Orso Seduto Fermacarte",
-    "brand": "Hobonichi",
-    "model": "Notebook 2019 Bonus",
-    "category": "lavoro_ufficio",
-    "useCases": [
-      "programmazione",
-      "studio",
-      "lavoro"
-    ],
-    "condition": "Usato",
-    "price": 150,
-    "store": "eBay.it",
-    "affiliateUrl": "https://www.ebay.it/itm/298574303022?_skw=notebook&hash=item45846a4f2e%3Ag%3AwQUAAeSwtH5qeWtu&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
-    "imageUrl": "https://i.ebayimg.com/images/g/wQUAAeSwtH5qeWtu/s-l225.jpg",
-    "rating": 4.5,
-    "stamp": "cheaper_good",
-    "stampRationale": "Prezzo d'attacco minimo di 150€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
-    "specs": {
-      "screen": {
-        "value": "15.6\" FHD (1920x1080) LED",
-        "indicator": "neutral"
-      },
-      "gpu": {
-        "value": "Intel UHD Graphics integrata",
-        "indicator": "neutral"
-      },
-      "cpu": {
-        "value": "Intel Core i5 Multicore",
-        "indicator": "down"
-      },
-      "ram": {
-        "value": "16 GB DDR4",
-        "indicator": "up"
-      },
-      "ssd": {
-        "value": "512 GB SSD NVMe M.2",
-        "indicator": "up"
-      }
-    },
-    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
-    "topHighlights": [
-      "Ottima dotazione di porte USB e ricarica rapida",
-      "Testato e verificato con copertura di garanzia"
-    ],
-    "flopComment": "Webcam integrata con sensore base per videochiamate ordinarie",
-    "flopWarnings": [
-      "Webcam integrata con sensore base per videochiamate ordinarie"
-    ],
-    "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
-    "weight": "2.20 kg",
-    "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
-    "priceHistory": [
-      {
-        "price": 150,
-        "date": "2026-10-02"
-      }
-    ],
-    "originalPrice": 179
-  },
-  {
     "id": "notebook-pc-portatile-dell-e72-17359174",
     "listingId": "325617359174",
     "title": "NOTEBOOK PC PORTATILE DELL E7250 INTEL CORE I5 2.3GHZ RAM 8GB SSD256GB WIN10 PRO",
@@ -26620,76 +26448,11 @@
     "idealFor": "Studio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 150,
         "date": "2026-10-02"
-      }
-    ]
-  },
-  {
-    "id": "notebook-panasonic-cf-sv8rdcvs-59613902",
-    "listingId": "366459613902",
-    "title": "Notebook Panasonic CF-SV8RDCVS Japan Usato Core i5-8365U 8GB 256GB SSD",
-    "brand": "Notebook",
-    "model": "Panasonic CF-SV8RDCVS Japan",
-    "category": "budget_studenti",
-    "useCases": [
-      "studio"
-    ],
-    "condition": "Usato",
-    "price": 152,
-    "store": "eBay.it",
-    "affiliateUrl": "https://www.ebay.it/itm/366459613902?_skw=notebook&hash=item5552b1f2ce%3Ag%3Aw5EAAeSwB89qI9Hf&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
-    "imageUrl": "https://i.ebayimg.com/images/g/w5EAAeSwB89qI9Hf/s-l225.jpg",
-    "rating": 4.0,
-    "stamp": "nessuno",
-    "stampRationale": "Prodotto bilanciato e affidabile a 150€ con un buon prezzo netto verificato.",
-    "specs": {
-      "screen": {
-        "value": "15.6\" FHD (1920x1080) LED",
-        "indicator": "neutral"
-      },
-      "gpu": {
-        "value": "Intel UHD Graphics integrata",
-        "indicator": "neutral"
-      },
-      "cpu": {
-        "value": "Intel Core i5-8365U",
-        "indicator": "down"
-      },
-      "ram": {
-        "value": "8 GB DDR4",
-        "indicator": "down"
-      },
-      "ssd": {
-        "value": "256 GB SSD NVMe M.2",
-        "indicator": "neutral"
-      }
-    },
-    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
-    "topHighlights": [
-      "Ottima dotazione di porte USB e ricarica rapida",
-      "Testato e verificato con copertura di garanzia"
-    ],
-    "flopComment": "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
-    "flopWarnings": [
-      "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
-      "RAM limitata a 8GB: può rallentare con decine di schede aperte"
-    ],
-    "idealFor": "Studio.",
-    "weight": "2.20 kg",
-    "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
-    "priceHistory": [
-      {
-        "price": 150,
-        "date": "2026-10-02"
-      },
-      {
-        "price": 152,
-        "date": "2026-10-05"
       }
     ]
   },
@@ -26745,7 +26508,7 @@
     "idealFor": "Studio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 151,
@@ -26807,7 +26570,7 @@
     "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 151,
@@ -26830,7 +26593,7 @@
     "condition": "Usato",
     "price": 151,
     "store": "eBay.it",
-    "affiliateUrl": "https://www.ebay.it/itm/236757929371?_skw=notebook&hash=item371fdf4d9b%3Ag%3AOskAAeSwhkpp33~4&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "affiliateUrl": "https://www.ebay.it/itm/236757929371?_skw=computer+portatile&hash=item371fdf4d9b%3Ag%3AOskAAeSwhkpp33~4&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/OskAAeSwhkpp33~4/s-l225.jpg",
     "rating": 4.5,
     "stamp": "cheaper_good",
@@ -26869,7 +26632,7 @@
     "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 151,
@@ -26891,7 +26654,7 @@
     "condition": "Usato",
     "price": 151,
     "store": "eBay.it",
-    "affiliateUrl": "https://www.ebay.it/itm/267795318481?_skw=notebook&hash=item3e59d846d1%3Ag%3AJfIAAeSwVg1qw1Gm&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "affiliateUrl": "https://www.ebay.it/itm/267795318481?_skw=notebook&hash=item3e59d846d1%3Ag%3AA1MAAeSwwqpqxHJ0&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/u3EAAeSwJOtqvylz/s-l225.jpg",
     "rating": 4.0,
     "stamp": "nessuno",
@@ -26930,7 +26693,7 @@
     "idealFor": "Studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 151,
@@ -26992,7 +26755,7 @@
     "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 152,
@@ -27056,7 +26819,7 @@
     "idealFor": "Studio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 153,
@@ -27118,7 +26881,7 @@
     "idealFor": "Studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 153,
@@ -28300,68 +28063,6 @@
     ]
   },
   {
-    "id": "hp-elitebook-840-g8-14-i7-1185-13029743",
-    "listingId": "336713029743",
-    "title": "HP EliteBook 840 G8 14\", i7-1185G7, 512 GB SSD, 16 GB, Win 11 Pro 5Z629EA (C)",
-    "brand": "HP",
-    "model": "EliteBook 840 G8",
-    "category": "lavoro_ufficio",
-    "useCases": [
-      "programmazione",
-      "studio",
-      "lavoro"
-    ],
-    "condition": "Usato",
-    "price": 399,
-    "store": "eBay.it",
-    "affiliateUrl": "https://www.ebay.it/itm/336713029743?_skw=laptop&hash=item4e65a9186f%3Ag%3AQLEAAeSw-DtqaKQe&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
-    "imageUrl": "https://i.ebayimg.com/images/g/QLEAAeSw-DtqaKQe/s-l225.jpg",
-    "rating": 4.5,
-    "stamp": "cheaper_good",
-    "stampRationale": "Prezzo d'attacco minimo di 399€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
-    "specs": {
-      "screen": {
-        "value": "14\" FHD (1920x1080) LED",
-        "indicator": "neutral"
-      },
-      "gpu": {
-        "value": "Intel UHD Graphics integrata",
-        "indicator": "down"
-      },
-      "cpu": {
-        "value": "Intel Core i7-1185G7",
-        "indicator": "neutral"
-      },
-      "ram": {
-        "value": "16 GB DDR4",
-        "indicator": "up"
-      },
-      "ssd": {
-        "value": "512 GB SSD NVMe M.2",
-        "indicator": "up"
-      }
-    },
-    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
-    "topHighlights": [
-      "Ottima dotazione di porte USB e ricarica rapida",
-      "Testato e verificato con copertura di garanzia"
-    ],
-    "flopComment": "Webcam integrata con sensore base per videochiamate ordinarie",
-    "flopWarnings": [
-      "Webcam integrata con sensore base per videochiamate ordinarie"
-    ],
-    "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
-    "weight": "2.20 kg",
-    "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
-    "priceHistory": [
-      {
-        "price": 399,
-        "date": "2026-10-02"
-      }
-    ]
-  },
-  {
     "id": "surface-laptop-studio-1-14-4-p-47626448",
     "listingId": "178547626448",
     "title": "Surface Laptop Studio 1  14.4\"  Palmrest Completo originale ITA",
@@ -28477,7 +28178,7 @@
     "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 429,
@@ -29539,7 +29240,7 @@
     "idealFor": "Gaming, editing e creatività, sviluppo e programmazione e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 772,
@@ -29850,7 +29551,7 @@
     "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 299,
@@ -30160,7 +29861,7 @@
     "idealFor": "Studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 151,
@@ -30779,7 +30480,7 @@
     "idealFor": "Sviluppo e programmazione e lavoro d'ufficio.",
     "weight": "2.23 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 721,
@@ -30840,7 +30541,7 @@
     "idealFor": "Studio.",
     "weight": "1.30 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 259,
@@ -31230,9 +30931,9 @@
       "lavoro"
     ],
     "condition": "Usato",
-    "price": 349,
+    "price": 389,
     "store": "eBay.it",
-    "affiliateUrl": "https://www.ebay.it/itm/336685789285?_skw=laptop&hash=item4e64097065%3Ag%3AzAgAAeSwWc5qVKcj&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "affiliateUrl": "https://www.ebay.it/itm/336685789285?_skw=notebook+Quadro&hash=item4e64097065%3Ag%3AzAgAAeSwWc5qVKcj&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/zAgAAeSwWc5qVKcj/s-l225.jpg",
     "rating": 4.0,
     "stamp": "nessuno",
@@ -31271,7 +30972,7 @@
     "idealFor": "Studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 349,
@@ -31284,6 +30985,10 @@
       {
         "price": 349,
         "date": "2026-10-04"
+      },
+      {
+        "price": 389,
+        "date": "2026-10-06"
       }
     ]
   },
@@ -31686,7 +31391,7 @@
       },
       "gpu": {
         "value": "Intel UHD Graphics integrata",
-        "indicator": "neutral"
+        "indicator": "down"
       },
       "cpu": {
         "value": "Intel Core i9-10980HK",
@@ -31713,7 +31418,7 @@
     "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 375,
@@ -31907,7 +31612,7 @@
     "idealFor": "Editing e creatività, sviluppo e programmazione e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 559,
@@ -31973,67 +31678,6 @@
     "priceHistory": [
       {
         "price": 199,
-        "date": "2026-10-03"
-      }
-    ]
-  },
-  {
-    "id": "lenovo-thinkpad-x1-yoga-g4-14--04943431",
-    "listingId": "306804943431",
-    "title": "Lenovo ThinkPad X1 Yoga G4 - 14 pollici computer portatile i5-8365U 8 GB 256 GB SSD Win11 Pro",
-    "brand": "Lenovo",
-    "model": "ThinkPad X1 Yoga",
-    "category": "budget_studenti",
-    "useCases": [
-      "studio"
-    ],
-    "condition": "Usato",
-    "price": 210,
-    "store": "eBay.it",
-    "affiliateUrl": "https://www.ebay.it/itm/306804943431?_skw=laptop&hash=item476effea47%3Ag%3A5d0AAeSwFY5qvnlf&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
-    "imageUrl": "https://i.ebayimg.com/images/g/5d0AAeSwFY5qvnlf/s-l225.jpg",
-    "rating": 4.0,
-    "stamp": "nessuno",
-    "stampRationale": "Prodotto bilanciato e affidabile a 210€ con un buon prezzo netto verificato.",
-    "specs": {
-      "screen": {
-        "value": "14\" 4K UHD (3840x2160) LED",
-        "indicator": "double_up"
-      },
-      "gpu": {
-        "value": "Intel UHD Graphics integrata",
-        "indicator": "neutral"
-      },
-      "cpu": {
-        "value": "Intel Core i5-8365U",
-        "indicator": "down"
-      },
-      "ram": {
-        "value": "8 GB DDR4",
-        "indicator": "down"
-      },
-      "ssd": {
-        "value": "256 GB SSD NVMe M.2",
-        "indicator": "neutral"
-      }
-    },
-    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
-    "topHighlights": [
-      "Ottima dotazione di porte USB e ricarica rapida",
-      "Testato e verificato con copertura di garanzia"
-    ],
-    "flopComment": "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
-    "flopWarnings": [
-      "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
-      "RAM limitata a 8GB: può rallentare con decine di schede aperte"
-    ],
-    "idealFor": "Studio.",
-    "weight": "2.20 kg",
-    "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-03",
-    "priceHistory": [
-      {
-        "price": 210,
         "date": "2026-10-03"
       }
     ]
@@ -32425,7 +32069,7 @@
       "lavoro"
     ],
     "condition": "Ricondizionato",
-    "price": 280,
+    "price": 290,
     "store": "eBay.it",
     "affiliateUrl": "https://www.ebay.it/itm/237086623870?_skw=notebook+Ryzen+5+16GB&hash=item373376c87e%3Ag%3AMYIAAeSw1~NqeHmf&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/MYIAAeSw1~NqeHmf/s-l225.jpg",
@@ -32466,7 +32110,7 @@
     "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
     "weight": "1.80 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 335,
@@ -32491,6 +32135,10 @@
       {
         "price": 280,
         "date": "2026-10-05"
+      },
+      {
+        "price": 290,
+        "date": "2026-10-06"
       }
     ]
   },
@@ -33247,7 +32895,7 @@
     "condition": "Usato",
     "price": 213,
     "store": "eBay.it",
-    "affiliateUrl": "https://www.ebay.it/itm/326681395326?_skw=notebook+pc&hash=item4c0fba807e%3Ag%3AM7oAAeSw87lqw4Ga&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "affiliateUrl": "https://www.ebay.it/itm/326681395326?_skw=notebook+pc&hash=item4c0fba807e%3Ag%3AAy0AAeSwgA5qxNKE&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/Z7YAAeSwihBqwIi6/s-l225.jpg",
     "rating": 4.5,
     "stamp": "cheaper_good",
@@ -33286,7 +32934,7 @@
     "idealFor": "Studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 213,
@@ -33532,7 +33180,7 @@
     "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 350,
@@ -33716,7 +33364,7 @@
     "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 289,
@@ -33799,7 +33447,7 @@
     "condition": "Usato",
     "price": 179,
     "store": "eBay.it",
-    "affiliateUrl": "https://www.ebay.it/itm/326812683741?_skw=notebook+i5+16GB&hash=item4c178dcddd%3Ag%3Agq4AAOSwZexoGbsS&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "affiliateUrl": "https://www.ebay.it/itm/326812683741?_skw=notebook+pc&hash=item4c178dcddd%3Ag%3Agq4AAOSwZexoGbsS&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/gq4AAOSwZexoGbsS/s-l225.jpg",
     "rating": 4.5,
     "stamp": "cheaper_good",
@@ -33838,72 +33486,10 @@
     "idealFor": "Studio e lavoro d'ufficio.",
     "weight": "1.68 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 179,
-        "date": "2026-10-04"
-      }
-    ]
-  },
-  {
-    "id": "notebook-fujitsu-celsius-h5511-66653070",
-    "listingId": "128066653070",
-    "title": "NOTEBOOK FUJITSU CELSIUS H5511 INTEL CORE I7-1185G7 16GB RAM 512B SSD FHD NVIDIA",
-    "brand": "NOTEBOOK",
-    "model": "FUJITSU CELSIUS H5511",
-    "category": "lavoro_ufficio",
-    "useCases": [
-      "programmazione",
-      "studio",
-      "lavoro"
-    ],
-    "condition": "Usato",
-    "price": 399,
-    "store": "eBay.it",
-    "affiliateUrl": "https://www.ebay.it/itm/128066653070?_skw=notebook+Quadro&hash=item1dd15e0b8e%3Ag%3AUQkAAeSwIMRqnlrI&amdata=enc%3AAQALAAAA8ACCtXRWQnOEpyOqnQQ8KGYsmoNBjYWOgNVkcfWBTe8qAC1%2BrXx5WEStIH0FDH8mL9QsxBOiTzZmf%2Fc%2FvV0eKJn%2FcSBl7z9W2JsFAmjFHokaLhD3v%2BntHYublvwA9q6jMsIUnWaDrH%2Btd%2BwvS%2B5sfJNKE3LMRXkI7ig2gxDPsXFFRO9ohBWq7fb3IkUadgPPcdbhC%2FJrPaIo8WLd6a7fYix%2BgSiwi%2Fu%2Fpce%2FI%2BlQ491y03u9AMRZL%2Fd%2BqVtMQRL1b%2FtaFHzfx6yPSGC0kA8FG3badAXuHazeNeoAvgs0bNrubv1afCT%2B9mrLc7ms4LVW3Q%3D%3D&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
-    "imageUrl": "https://i.ebayimg.com/images/g/UQkAAeSwIMRqnlrI/s-l225.jpg",
-    "rating": 4.5,
-    "stamp": "cheaper_good",
-    "stampRationale": "Prezzo d'attacco minimo di 399€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
-    "specs": {
-      "screen": {
-        "value": "15.6\" FHD (1920x1080) LED",
-        "indicator": "neutral"
-      },
-      "gpu": {
-        "value": "Intel UHD Graphics integrata",
-        "indicator": "down"
-      },
-      "cpu": {
-        "value": "Intel Core i7-1185G7",
-        "indicator": "neutral"
-      },
-      "ram": {
-        "value": "16 GB DDR4",
-        "indicator": "up"
-      },
-      "ssd": {
-        "value": "512 GB SSD NVMe M.2",
-        "indicator": "up"
-      }
-    },
-    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
-    "topHighlights": [
-      "Ottima dotazione di porte USB e ricarica rapida",
-      "Testato e verificato con copertura di garanzia"
-    ],
-    "flopComment": "Webcam integrata con sensore base per videochiamate ordinarie",
-    "flopWarnings": [
-      "Webcam integrata con sensore base per videochiamate ordinarie"
-    ],
-    "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
-    "weight": "2.20 kg",
-    "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-04",
-    "priceHistory": [
-      {
-        "price": 399,
         "date": "2026-10-04"
       }
     ]
@@ -34043,7 +33629,7 @@
       "lavoro"
     ],
     "condition": "Usato",
-    "price": 525,
+    "price": 522,
     "store": "eBay.it",
     "affiliateUrl": "https://www.ebay.it/itm/267548234294?_skw=notebook+pc&hash=item3e4b1e1236%3Ag%3AEGAAAeSwB~Vpa0WE&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/EGAAAeSwB~Vpa0WE/s-l225.jpg",
@@ -34085,11 +33671,15 @@
     "idealFor": "Studio e lavoro d'ufficio.",
     "weight": "1.70 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 525,
         "date": "2026-10-04"
+      },
+      {
+        "price": 522,
+        "date": "2026-10-06"
       }
     ]
   },
@@ -34455,7 +34045,7 @@
     "idealFor": "Studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 269,
@@ -36061,7 +35651,7 @@
     "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 359,
@@ -36211,7 +35801,7 @@
       "lavoro"
     ],
     "condition": "Ricondizionato",
-    "price": 270,
+    "price": 300,
     "store": "eBay.it",
     "affiliateUrl": "https://www.ebay.it/itm/256939479085?_skw=notebook+i5+32GB&hash=item3bd2c9502d%3Ag%3ARKIAAOSwprBoLG3Z&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/RKIAAOSwprBoLG3Z/s-l225.jpg",
@@ -36252,11 +35842,15 @@
     "idealFor": "Studio e lavoro d'ufficio.",
     "weight": "1.70 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-04",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 270,
         "date": "2026-10-04"
+      },
+      {
+        "price": 300,
+        "date": "2026-10-06"
       }
     ]
   },
@@ -37128,7 +36722,7 @@
       "lavoro"
     ],
     "condition": "Nuovo",
-    "price": 150,
+    "price": 151,
     "store": "eBay.it",
     "affiliateUrl": "https://www.ebay.it/itm/397681952105?_skw=notebook&hash=item5c97b10569%3Ag%3ArQQAAeSwcxBpqsix&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/rQQAAeSwcxBpqsix/s-l225.jpg",
@@ -37146,7 +36740,7 @@
       },
       "cpu": {
         "value": "Intel Core i5 Multicore",
-        "indicator": "neutral"
+        "indicator": "down"
       },
       "ram": {
         "value": "16 GB DDR4",
@@ -37169,11 +36763,15 @@
     "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 150,
         "date": "2026-10-05"
+      },
+      {
+        "price": 151,
+        "date": "2026-10-06"
       }
     ]
   },
@@ -37376,7 +36974,7 @@
     "condition": "Usato",
     "price": 300,
     "store": "eBay.it",
-    "affiliateUrl": "https://www.ebay.it/itm/195057966527?_skw=notebook+pc&hash=item2d6a5c5dbf%3Ag%3Ak1YAAeSw8KNqZLfc&amdata=enc%3AAQALAAAA8ACCtXRWQnOEpyOqnQQ8KGae6dyQWEELVrzkMM99jWkCACn1WQE5RN74I3DxRmouV%2FbosVU7OS6OK7u98ILZkuZtaN8QJcsgvWAZ4oarD2t6e2F81sqOo7YpuOd0t97sU7ScoQ9ySxfdtfTesU2Bn%2FBt5suBJIhJHYhxgmNbL78yexSceYf77qMOcH6eAeKu4DkKXfcVsMnbx4lK0v4H4futTnNOyir1nswirpXedVsEaDD5jTG85wZcfS0UEuBg3QThsYU8IU4bGg6vt0dgDQkwNSgOJNDGemgBFVYvk%2FPXKl4dnOnG9uTfZAmK8SBQMQ%3D%3D&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "affiliateUrl": "https://www.ebay.it/itm/195057966527?_skw=notebook+pc&hash=item2d6a5c5dbf%3Ag%3Ak1YAAeSw8KNqZLfc&amdata=enc%3AAQALAAAA8ACCtXRWQnOEpyOqnQQ8KGae6dyQWEELVrzkMM99jWkCACn1WQE5RN74I3DxRmouV%2FbosVU7OS6OK7u98ILZkuZtaN8QJcsgvWAZ4oarD2t6e2F81sqOo7YpuOd0t97sU7ScoQ9ySxfdtfTesU2Bn%2FDteB3GNW86kVpu0UepLWlcMG3ymD3tHN%2FLsY7i691%2BomF0mjrujysjjGdfbGoPe8c%2FksdB3NeuED5tw24peLBKdG0SzxH7RC%2FKjzhQrpGF1RyCWHgwsuJtwnnsMl19GPeIhTBtd9hvNl5CBMVEmdV%2Bc9jM7wJqApt7fAgpAQBL3g%3D%3D&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
     "imageUrl": "https://i.ebayimg.com/images/g/k1YAAeSw8KNqZLfc/s-l225.jpg",
     "rating": 4.5,
     "stamp": "cheaper_good",
@@ -37392,7 +36990,7 @@
       },
       "cpu": {
         "value": "Intel Core i5 Multicore",
-        "indicator": "neutral"
+        "indicator": "down"
       },
       "ram": {
         "value": "16 GB DDR4",
@@ -37415,7 +37013,7 @@
     "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 300,
@@ -38777,7 +38375,7 @@
     "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
     "weight": "1.90 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 990,
@@ -39182,7 +38780,7 @@
       },
       "cpu": {
         "value": "Intel Core i5 Multicore",
-        "indicator": "neutral"
+        "indicator": "down"
       },
       "ram": {
         "value": "16 GB DDR4",
@@ -39244,7 +38842,7 @@
       },
       "cpu": {
         "value": "Intel Core i5 Multicore",
-        "indicator": "neutral"
+        "indicator": "down"
       },
       "ram": {
         "value": "16 GB DDR4",
@@ -39267,7 +38865,7 @@
     "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 371,
@@ -39305,7 +38903,7 @@
       },
       "cpu": {
         "value": "Intel Core i5 Multicore",
-        "indicator": "neutral"
+        "indicator": "down"
       },
       "ram": {
         "value": "8 GB DDR4",
@@ -39487,7 +39085,7 @@
       },
       "gpu": {
         "value": "Intel UHD Graphics integrata",
-        "indicator": "down"
+        "indicator": "neutral"
       },
       "cpu": {
         "value": "Intel Core i7-1185G7",
@@ -40684,7 +40282,7 @@
     "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
     "weight": "2.20 kg",
     "warranty": "12 Mesi di Garanzia Inclusa",
-    "lastUpdated": "2026-10-05",
+    "lastUpdated": "2026-10-06",
     "priceHistory": [
       {
         "price": 440,
@@ -40811,6 +40409,3537 @@
       {
         "price": 196,
         "date": "2026-10-05"
+      }
+    ]
+  },
+  {
+    "id": "pc-portatile-notebook-usato-14-57699018",
+    "listingId": "178557699018",
+    "title": "*PC Portatile Notebook Usato 14” Lenovo T470s i5-6200u 8Gb Ram 256Gb SSD Win 11",
+    "brand": "*PC",
+    "model": "Portatile Notebook Usato",
+    "category": "budget_studenti",
+    "useCases": [
+      "studio"
+    ],
+    "condition": "Usato",
+    "price": 150,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/178557699018?_skw=notebook+pc&hash=item2992de43ca%3Ag%3AX-kAAeSwtJFqw8pZ&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/X-kAAeSwtJFqw8pZ/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 150€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "neutral"
+      },
+      "cpu": {
+        "value": "Intel Core i5-6200u",
+        "indicator": "down"
+      },
+      "ram": {
+        "value": "8 GB DDR4",
+        "indicator": "down"
+      },
+      "ssd": {
+        "value": "256 GB SSD NVMe M.2",
+        "indicator": "neutral"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+    "flopWarnings": [
+      "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+      "RAM limitata a 8GB: può rallentare con decine di schede aperte"
+    ],
+    "idealFor": "Studio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 150,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "travelers-notebook-limited-car-49571682",
+    "listingId": "366649571682",
+    "title": "TRAVELERS Notebook Limited Card Size 20th Anniversary Set Marrone JP NUOVO",
+    "brand": "TRAVELERS",
+    "model": "Notebook Limited Card",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "studio",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 150,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/366649571682?_skw=notebook&hash=item555e047962%3Ag%3AQDYAAeSw3EVqm2tp&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/QDYAAeSw3EVqm2tp/s-l225.jpg",
+    "rating": 4.5,
+    "stamp": "cheaper_good",
+    "stampRationale": "Prezzo d'attacco minimo di 150€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "neutral"
+      },
+      "cpu": {
+        "value": "Intel Core i5 Multicore",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "up"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "up"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "Webcam integrata con sensore base per videochiamate ordinarie",
+    "flopWarnings": [
+      "Webcam integrata con sensore base per videochiamate ordinarie"
+    ],
+    "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 150,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "panasonic-cf-sv8tdlvs-notebook-61249438",
+    "listingId": "366461249438",
+    "title": "Panasonic CF-SV8TDLVS Notebook Portatile PC Intel i5 8GB SSD 256GB Giappone",
+    "brand": "Panasonic",
+    "model": "CF-SV8TDLVS Notebook Portatile",
+    "category": "budget_studenti",
+    "useCases": [
+      "studio"
+    ],
+    "condition": "Usato",
+    "price": 151,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/366461249438?_skw=notebook&hash=item5552cae79e%3Ag%3AIuEAAeSwoyNqJQOI&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/IuEAAeSwoyNqJQOI/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 151€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "neutral"
+      },
+      "cpu": {
+        "value": "Intel Core i5-8365U",
+        "indicator": "down"
+      },
+      "ram": {
+        "value": "8 GB DDR4",
+        "indicator": "down"
+      },
+      "ssd": {
+        "value": "256 GB SSD NVMe M.2",
+        "indicator": "neutral"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+    "flopWarnings": [
+      "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+      "RAM limitata a 8GB: può rallentare con decine di schede aperte"
+    ],
+    "idealFor": "Studio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 151,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "microsoft-surface-laptop-3-13--15029648",
+    "listingId": "860015029648",
+    "title": "Microsoft Surface Laptop 3 13,5\" Touch i7-1065G7 16GB RAM 256GB SSD",
+    "brand": "Microsoft",
+    "model": "Surface Laptop 3",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "studio",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 228,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/860015029648?_skw=notebook+i7+16GB&hash=itemc83ce3ed90%3Ag%3APy4AAeSw2VhqxOV5&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/Py4AAeSw2VhqxOV5/s-l225.jpg",
+    "rating": 4.5,
+    "stamp": "cheaper_good",
+    "stampRationale": "Prezzo d'attacco minimo di 228€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "specs": {
+      "screen": {
+        "value": "13.5\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "neutral"
+      },
+      "cpu": {
+        "value": "Intel Core i7-1065G7",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "up"
+      },
+      "ssd": {
+        "value": "256 GB SSD NVMe M.2",
+        "indicator": "neutral"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+    "flopWarnings": [
+      "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB"
+    ],
+    "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 228,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "p410p1tbm28h-4711378431056-p41-18354778",
+    "listingId": "137818354778",
+    "title": "P410P1TBM28H 4711378431056 P410 1 TB (PCIe 4.0 x4, NVMe 1.4, M.2 2280)",
+    "brand": "P410P1TBM28H",
+    "model": "4711378431056 P410 1",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "studio",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 171,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/137818354778?_skw=laptop&hash=item20169d345a%3Ag%3A~0wAAeSwgyBqxOds&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/~0wAAeSwgyBqxOds/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 171€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "neutral"
+      },
+      "cpu": {
+        "value": "Intel Core i5 Multicore",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "5 GB DDR4",
+        "indicator": "down"
+      },
+      "ssd": {
+        "value": "1 TB SSD NVMe PCIe",
+        "indicator": "double_up"
+      }
+    },
+    "topComment": "Maxi SSD da 1 TB per salvare decine di giochi e progetti pesanti",
+    "topHighlights": [
+      "Maxi SSD da 1 TB per salvare decine di giochi e progetti pesanti",
+      "Ottima dotazione di porte USB e ricarica rapida"
+    ],
+    "flopComment": "RAM limitata a 8GB: può rallentare con decine di schede aperte",
+    "flopWarnings": [
+      "RAM limitata a 8GB: può rallentare con decine di schede aperte"
+    ],
+    "idealFor": "Studio e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 171,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "samsung-galaxy-book5-360-15-6--31076203",
+    "listingId": "336831076203",
+    "title": "Samsung Galaxy Book5 360 15,6 pollici Intel Core Ultra 7 256 V 16 GB 512 GB W11 Moonst",
+    "brand": "Samsung",
+    "model": "Galaxy Book5 360",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 1050,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/336831076203?_skw=laptop&hash=item4e6cb2576b%3Ag%3AoKEAAeSwJMNqxOXT&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/oKEAAeSwJMNqxOXT/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 1050€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core Ultra 7 256",
+        "indicator": "up"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "neutral"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "neutral"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering",
+    "flopWarnings": [
+      "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering"
+    ],
+    "idealFor": "Sviluppo e programmazione e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 1050,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "panasonic-toughbook-cf-54-mk3--68312162",
+    "listingId": "168768312162",
+    "title": "Panasonic Toughbook CF 54 Mk3 16 Gb 1TB Ssd computer portatile robusto Win 11 IP51 A grado 4G",
+    "brand": "Panasonic",
+    "model": "Toughbook CF 54",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "studio",
+      "lavoro"
+    ],
+    "condition": "Ricondizionato",
+    "price": 442,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/168768312162?_skw=laptop&hash=item274b601362%3Ag%3AyswAAOSwk~VkZMRv&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/yswAAOSwk~VkZMRv/s-l225.jpg",
+    "rating": 4.5,
+    "stamp": "cheaper_good",
+    "stampRationale": "Prezzo d'attacco minimo di 442€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "specs": {
+      "screen": {
+        "value": "14.9\" HD (1366x768) LED",
+        "indicator": "down"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core i5 Multicore",
+        "indicator": "down"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "up"
+      },
+      "ssd": {
+        "value": "1 TB SSD NVMe PCIe",
+        "indicator": "double_up"
+      }
+    },
+    "topComment": "Maxi SSD da 1 TB per salvare decine di giochi e progetti pesanti",
+    "topHighlights": [
+      "Maxi SSD da 1 TB per salvare decine di giochi e progetti pesanti",
+      "Ottima dotazione di porte USB e ricarica rapida"
+    ],
+    "flopComment": "Peso superiore a 2.3 kg con alimentatore voluminoso",
+    "flopWarnings": [
+      "Peso superiore a 2.3 kg con alimentatore voluminoso"
+    ],
+    "idealFor": "Studio e lavoro d'ufficio.",
+    "weight": "1.80 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 442,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "lenovo-thinkpad-e15-gen-4-15-c-09944739",
+    "listingId": "820209944739",
+    "title": "Lenovo ThinkPad E15 Gen 4 15\" computer portatile Ryzen 5 Pro 5625U 16 GB 256 GB Windows 11 Pro",
+    "brand": "Lenovo",
+    "model": "ThinkPad E15 Gen",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 505,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/820209944739?_skw=laptop&hash=itembef85288a3%3Ag%3AmasAAeSwBWFqxNz5&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/masAAeSwBWFqxNz5/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 505€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "15\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "AMD Radeon Graphics integrata",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "AMD Ryzen 5 5625U",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "neutral"
+      },
+      "ssd": {
+        "value": "256 GB SSD NVMe M.2",
+        "indicator": "down"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+    "flopWarnings": [
+      "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+      "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering"
+    ],
+    "idealFor": "Sviluppo e programmazione e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 505,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "notebook-hp-zbook-fury-15-g8-i-09943932",
+    "listingId": "820209943932",
+    "title": "Notebook HP ZBook Fury 15 G8 i7-11850H 64 GB 1 TB NVMe NVIDIA RTX A3000 Win11 Pro",
+    "brand": "Notebook",
+    "model": "HP ZBook Fury",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "lavoro"
+    ],
+    "condition": "Ricondizionato",
+    "price": 749,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/820209943932?_skw=laptop&hash=itembef852857c%3Ag%3AlU8AAeSw~kFqxOZ9&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/lU8AAeSw~kFqxOZ9/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 749€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core i7-11850H",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "64 GB DDR4",
+        "indicator": "double_up"
+      },
+      "ssd": {
+        "value": "1 TB SSD NVMe PCIe",
+        "indicator": "double_up"
+      }
+    },
+    "topComment": "64 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+    "topHighlights": [
+      "64 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+      "Maxi SSD da 1 TB per salvare decine di giochi e progetti pesanti"
+    ],
+    "flopComment": "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering",
+    "flopWarnings": [
+      "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering"
+    ],
+    "idealFor": "Sviluppo e programmazione e lavoro d'ufficio.",
+    "weight": "1.80 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 749,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "dell-latitude-5420-14-i7-1185g-15012509",
+    "listingId": "860015012509",
+    "title": "Dell Latitude 5420 14\" i7-1185G7 16 GB RAM 512 GB NVMe SSD QWERTZ",
+    "brand": "Dell",
+    "model": "Latitude 5420 14\"",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "studio",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 339,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/860015012509?_skw=notebook+i7+16GB&hash=itemc83ce3aa9d%3Ag%3AoiAAAeSw5XZqxOUo&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/oiAAAeSw5XZqxOUo/s-l225.jpg",
+    "rating": 4.5,
+    "stamp": "cheaper_good",
+    "stampRationale": "Prezzo d'attacco minimo di 339€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "specs": {
+      "screen": {
+        "value": "14\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "neutral"
+      },
+      "cpu": {
+        "value": "Intel Core i7-1185G7",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "up"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "up"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "Webcam integrata con sensore base per videochiamate ordinarie",
+    "flopWarnings": [
+      "Webcam integrata con sensore base per videochiamate ordinarie"
+    ],
+    "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 339,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "panasonic-toughbook-cf-54-mk3--68293694",
+    "listingId": "168768293694",
+    "title": "Panasonic Toughbook CF 54 Mk3 16 Gb 512 Gb computer portatile robusto Win 11 IP51 A grado 4G",
+    "brand": "Panasonic",
+    "model": "Toughbook CF 54",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "studio",
+      "lavoro"
+    ],
+    "condition": "Ricondizionato",
+    "price": 412,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/168768293694?_skw=laptop&hash=item274b5fcb3e%3Ag%3AyswAAOSwk~VkZMRv&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/yswAAOSwk~VkZMRv/s-l225.jpg",
+    "rating": 4.5,
+    "stamp": "cheaper_good",
+    "stampRationale": "Prezzo d'attacco minimo di 412€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "specs": {
+      "screen": {
+        "value": "14.9\" HD (1366x768) LED",
+        "indicator": "down"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core i5 Multicore",
+        "indicator": "down"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "up"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "up"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "Peso superiore a 2.3 kg con alimentatore voluminoso",
+    "flopWarnings": [
+      "Peso superiore a 2.3 kg con alimentatore voluminoso"
+    ],
+    "idealFor": "Studio e lavoro d'ufficio.",
+    "weight": "1.80 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 412,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "hp-zbook-firefly-16-g9-wuxga-c-24578193",
+    "listingId": "960024578193",
+    "title": "HP ZBook Firefly 16 G9 WUXGA | Core i7-1255U | 32 GB | 1 TB | NVIDIA T550 | DE",
+    "brand": "HP",
+    "model": "ZBook Firefly 16",
+    "category": "gaming_ai",
+    "useCases": [
+      "creativita",
+      "programmazione",
+      "studio",
+      "lavoro"
+    ],
+    "condition": "Ricondizionato",
+    "price": 849,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/960024578193?_skw=notebook+i7+32GB&hash=itemdf85ec8891%3Ag%3AK5wAAeSwPnxqxOUv&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/K5wAAeSwPnxqxOUv/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 849€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core i7-1255U",
+        "indicator": "up"
+      },
+      "ram": {
+        "value": "32 GB DDR4",
+        "indicator": "double_up"
+      },
+      "ssd": {
+        "value": "1 TB SSD NVMe PCIe",
+        "indicator": "double_up"
+      }
+    },
+    "topComment": "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+    "topHighlights": [
+      "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+      "Maxi SSD da 1 TB per salvare decine di giochi e progetti pesanti"
+    ],
+    "flopComment": "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering",
+    "flopWarnings": [
+      "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering"
+    ],
+    "idealFor": "Editing e creatività, sviluppo e programmazione, studio e lavoro d'ufficio.",
+    "weight": "1.80 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 849,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "notebook-hp-zbook-fury-15-g7-i-15377498",
+    "listingId": "366715377498",
+    "title": "Notebook HP ZBook Fury 15 G7 i7-10850H 32 GB 512 GB NVMe NVIDIA Quadro T1000",
+    "brand": "Notebook",
+    "model": "HP ZBook Fury",
+    "category": "gaming_ai",
+    "useCases": [
+      "creativita",
+      "programmazione",
+      "lavoro"
+    ],
+    "condition": "Ricondizionato",
+    "price": 519,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/366715377498?_skw=notebook+i7+32GB&hash=item5561f0975a%3Ag%3A23QAAeSwD3ZqxOcM&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/23QAAeSwD3ZqxOcM/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 519€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "NVIDIA Quadro T1000 (4GB GDDR6)",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core i7-10850H",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "32 GB DDR4",
+        "indicator": "double_up"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "up"
+      }
+    },
+    "topComment": "Scheda video professionale con driver certificati per software CAD e 3D",
+    "topHighlights": [
+      "Scheda video professionale con driver certificati per software CAD e 3D",
+      "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco"
+    ],
+    "flopComment": "Webcam integrata con sensore base per videochiamate ordinarie",
+    "flopWarnings": [
+      "Webcam integrata con sensore base per videochiamate ordinarie"
+    ],
+    "idealFor": "Editing e creatività, sviluppo e programmazione e lavoro d'ufficio.",
+    "weight": "1.80 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 519,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "apple-macbook-pro-13-a1989-i7--14948744",
+    "listingId": "860014948744",
+    "title": "Apple MacBook Pro 13 A1989 i7 16 GB 256 GB SSD Retina Touch Bar",
+    "brand": "Apple",
+    "model": "MacBook Pro 13",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "studio",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 304,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/860014948744?_skw=notebook+i7+16GB&hash=itemc83ce2b188%3Ag%3AGY4AAeSwPGRqxOH4&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/GY4AAeSwPGRqxOH4/s-l225.jpg",
+    "rating": 4.5,
+    "stamp": "cheaper_good",
+    "stampRationale": "Prezzo d'attacco minimo di 304€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "specs": {
+      "screen": {
+        "value": "13.3\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "neutral"
+      },
+      "cpu": {
+        "value": "Intel Core i7-8559U",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "up"
+      },
+      "ssd": {
+        "value": "256 GB SSD NVMe M.2",
+        "indicator": "neutral"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+    "flopWarnings": [
+      "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB"
+    ],
+    "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 304,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "lenovo-thinkpad-x1-carbon-gen--68204140",
+    "listingId": "168768204140",
+    "title": "Lenovo ThinkPad x1 Carbon Gen 8 | i7 16GB Touch |QWERTY|GARANZIA & FATTURA",
+    "brand": "Lenovo",
+    "model": "ThinkPad x1 Carbon",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "studio",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 384,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/168768204140?_skw=notebook+i7+16GB&hash=item274b5e6d6c%3Ag%3AE~4AAeSwVXxqxOJ0&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/E~4AAeSwVXxqxOJ0/s-l225.jpg",
+    "rating": 4.5,
+    "stamp": "cheaper_good",
+    "stampRationale": "Prezzo d'attacco minimo di 384€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" 4K UHD (3840x2160) LED",
+        "indicator": "double_up"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core i7-10610U",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "up"
+      },
+      "ssd": {
+        "value": "256 GB SSD NVMe M.2",
+        "indicator": "neutral"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+    "flopWarnings": [
+      "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB"
+    ],
+    "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 384,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "lenovo-yoga-7-16ill10-core-ult-50767140",
+    "listingId": "189050767140",
+    "title": "Lenovo Yoga 7 16ILL10 Core Ultra 5 226V 512GB 16GB 1920x1200 16.0\" pollici touch",
+    "brand": "Lenovo",
+    "model": "Yoga 7 16ILL10",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 1060,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/189050767140?_skw=laptop&hash=item2c044dc724%3Ag%3A31kAAeSwfTxqxOKK&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/31kAAeSwfTxqxOKK/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 1060€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "16.0\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core Ultra 5 226V",
+        "indicator": "up"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "neutral"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "neutral"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering",
+    "flopWarnings": [
+      "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering"
+    ],
+    "idealFor": "Sviluppo e programmazione e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 1060,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "lenovo-thinkpad-t14s-g3-i5-123-15345775",
+    "listingId": "366715345775",
+    "title": "Lenovo ThinkPad T14s G3 i5-1235U 16 GB RAM 512 GB SSD FHD IPS Touch FPR IR (USB-C)",
+    "brand": "Lenovo",
+    "model": "ThinkPad T14s G3",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "studio",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 500,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/366715345775?_skw=notebook+i5+16GB&hash=item5561f01b6f%3Ag%3AIWgAAeSwclBqxOLG&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/IWgAAeSwclBqxOLG/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 500€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" FHD (1920x1080) IPS",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel Iris Xe Graphics",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core i5-1235U",
+        "indicator": "up"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "neutral"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "up"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering",
+    "flopWarnings": [
+      "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering"
+    ],
+    "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
+    "weight": "1.30 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 500,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "microsoft-surface-5-13-5-i5-12-24464870",
+    "listingId": "960024464870",
+    "title": "Microsoft Surface 5 13,5\" i5-1245U 16 GB RAM - argento - grado B tedesco - senza HDD",
+    "brand": "Microsoft",
+    "model": "Surface 5 13,5\"",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "studio",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 245,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/960024464870?_skw=laptop&hash=itemdf85eacde6%3Ag%3AEMIAAeSwoItqxOHM&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/EMIAAeSwoItqxOHM/s-l225.jpg",
+    "rating": 4.5,
+    "stamp": "cheaper_good",
+    "stampRationale": "Prezzo d'attacco minimo di 245€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "specs": {
+      "screen": {
+        "value": "13.5\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel Iris Xe Graphics",
+        "indicator": "neutral"
+      },
+      "cpu": {
+        "value": "Intel Core i5-1245U",
+        "indicator": "up"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "up"
+      },
+      "ssd": {
+        "value": "256 GB SSD NVMe M.2",
+        "indicator": "neutral"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+    "flopWarnings": [
+      "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB"
+    ],
+    "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 245,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "lenovo-thinkbook-16-g8-ial-cor-50761136",
+    "listingId": "189050761136",
+    "title": "Lenovo ThinkBook 16 G8 IAL Core Ultra 5 Series 1 135H grafica ad arco 512 GB 16 GB",
+    "brand": "Lenovo",
+    "model": "ThinkBook 16 G8",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "studio",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 1129,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/189050761136?_skw=laptop&hash=item2c044dafb0%3Ag%3ATgsAAeSw7bpqxOKJ&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/TgsAAeSw7bpqxOKJ/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 1129€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core Ultra 5",
+        "indicator": "up"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "neutral"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "neutral"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering",
+    "flopWarnings": [
+      "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering"
+    ],
+    "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
+    "weight": "1.70 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 1129,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "lenovo-thinkpad-x1-carbon-g12--70252474",
+    "listingId": "407270252474",
+    "title": "Lenovo ThinkPad X1 Carbon G12 // Intel Core Ultra 7 155U, 16 GB RAM, 512 GB SSD",
+    "brand": "Lenovo",
+    "model": "ThinkPad X1 Carbon",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "lavoro"
+    ],
+    "condition": "Ricondizionato",
+    "price": 799,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/407270252474?_skw=laptop&hash=item5ed332dfba%3Ag%3AEd0AAeSwF1xqxOI-&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/Ed0AAeSwF1xqxOI-/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 799€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core Ultra 7 155U",
+        "indicator": "up"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "neutral"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "neutral"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering",
+    "flopWarnings": [
+      "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering"
+    ],
+    "idealFor": "Sviluppo e programmazione e lavoro d'ufficio.",
+    "weight": "1.80 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 799,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "lenovo-thinkpad-x13-g5-core-ul-50759729",
+    "listingId": "189050759729",
+    "title": "Lenovo ThinkPad X13 G5 Core Ultra 5 Intel 125U 262 GB 32 GB 1920 x 1200 WUXGA",
+    "brand": "Lenovo",
+    "model": "ThinkPad X13 G5",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 1334,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/189050759729?_skw=laptop&hash=item2c044daa31%3Ag%3Av6wAAeSwJYJqxOJ2&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/v6wAAeSwJYJqxOJ2/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 1334€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core Ultra 5 125U",
+        "indicator": "up"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "neutral"
+      },
+      "ssd": {
+        "value": "256 GB SSD NVMe M.2",
+        "indicator": "down"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+    "flopWarnings": [
+      "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+      "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering"
+    ],
+    "idealFor": "Sviluppo e programmazione e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 1334,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "lenovo-thinkbook-16-g8-irl-cor-50758983",
+    "listingId": "189050758983",
+    "title": "Lenovo ThinkBook 16 G8 IRL Core 7 240H 1TB 32GB 1920 x 1200 16.0\" Zoll",
+    "brand": "Lenovo",
+    "model": "ThinkBook 16 G8",
+    "category": "gaming_ai",
+    "useCases": [
+      "creativita",
+      "programmazione",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 1442,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/189050758983?_skw=laptop&hash=item2c044da747%3Ag%3AzXYAAeSwbItqxOJz&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/zXYAAeSwbItqxOJz/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 1442€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "16.0\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core 7 240H",
+        "indicator": "up"
+      },
+      "ram": {
+        "value": "32 GB DDR4",
+        "indicator": "double_up"
+      },
+      "ssd": {
+        "value": "1 TB SSD NVMe PCIe",
+        "indicator": "double_up"
+      }
+    },
+    "topComment": "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+    "topHighlights": [
+      "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+      "Maxi SSD da 1 TB per salvare decine di giochi e progetti pesanti"
+    ],
+    "flopComment": "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering",
+    "flopWarnings": [
+      "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering"
+    ],
+    "idealFor": "Editing e creatività, sviluppo e programmazione e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 1442,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "lenovo-ideapad-3-17aba7-ryzen--50758257",
+    "listingId": "189050758257",
+    "title": "Lenovo IdeaPad 3 17ABA7 Ryzen 5 5625U 512 GB 16 GB 1920 x 1080 17,0\" pollici",
+    "brand": "Lenovo",
+    "model": "IdeaPad 3 17ABA7",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 767,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/189050758257?_skw=notebook+Ryzen+5+16GB&hash=item2c044da471%3Ag%3ATyYAAeSwO9VqxOJn&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/TyYAAeSwO9VqxOJn/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 767€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "17.0\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "AMD Ryzen 5 5625U",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "neutral"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "neutral"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering",
+    "flopWarnings": [
+      "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering"
+    ],
+    "idealFor": "Sviluppo e programmazione e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 767,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "dell-latitude-3550-i3-1315u-15-24455361",
+    "listingId": "960024455361",
+    "title": "Dell Latitude 3550 i3-1315U 15,6\" FHD illuminazione tastiera Win 11 Pro IT",
+    "brand": "Dell",
+    "model": "Latitude 3550 i3-1315U",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "studio",
+      "lavoro"
+    ],
+    "condition": "Ricondizionato",
+    "price": 690,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/960024455361?_skw=laptop&hash=itemdf85eaa8c1%3Ag%3AC1UAAeSwG7pqxOH3&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/C1UAAeSwG7pqxOH3/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 690€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" 4K UHD (3840x2160) LED",
+        "indicator": "double_up"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core i5 Multicore",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "8 GB DDR4",
+        "indicator": "down"
+      },
+      "ssd": {
+        "value": "256 GB SSD NVMe M.2",
+        "indicator": "down"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+    "flopWarnings": [
+      "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+      "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering"
+    ],
+    "idealFor": "Studio e lavoro d'ufficio.",
+    "weight": "1.81 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 690,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "dell-inspiron-7386-13-3-laptop-37520477",
+    "listingId": "298737520477",
+    "title": "Dell Inspiron 7386 13,3\" Laptop Coperchio Superiore Display LCD Schermo Assemblato",
+    "brand": "Dell",
+    "model": "Inspiron 7386 13,3\"",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "studio",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 193,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/298737520477?_skw=laptop&hash=item458e24cf5d%3Ag%3AnBgAAeSwu0xqxOFP&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/nBgAAeSwu0xqxOFP/s-l225.jpg",
+    "rating": 4.5,
+    "stamp": "cheaper_good",
+    "stampRationale": "Prezzo d'attacco minimo di 193€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "specs": {
+      "screen": {
+        "value": "13.3\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "neutral"
+      },
+      "cpu": {
+        "value": "Intel Core i5 Multicore",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "up"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "up"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "Webcam integrata con sensore base per videochiamate ordinarie",
+    "flopWarnings": [
+      "Webcam integrata con sensore base per videochiamate ordinarie"
+    ],
+    "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 193,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "lenovo-thinkpad-t490-14-512-gb-15331293",
+    "listingId": "366715331293",
+    "title": "Lenovo ThinkPad T490 14\" (512 GB NVMe, Intel Core i5 8a gen., 1,60 GHz, 16 GB)",
+    "brand": "Lenovo",
+    "model": "ThinkPad T490 14\"",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "studio",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 150,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/366715331293?_skw=notebook+i5+16GB&hash=item5561efe2dd%3Ag%3Acy8AAeSw5Alqw~U9&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/cy8AAeSw5Alqw~U9/s-l225.jpg",
+    "rating": 4.5,
+    "stamp": "cheaper_good",
+    "stampRationale": "Prezzo d'attacco minimo di 150€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "specs": {
+      "screen": {
+        "value": "14\" 4K UHD (3840x2160) LED",
+        "indicator": "double_up"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "neutral"
+      },
+      "cpu": {
+        "value": "Intel Core i5 Multicore",
+        "indicator": "down"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "up"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "up"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "Webcam integrata con sensore base per videochiamate ordinarie",
+    "flopWarnings": [
+      "Webcam integrata con sensore base per videochiamate ordinarie"
+    ],
+    "idealFor": "Studio e lavoro d'ufficio.",
+    "weight": "1.46 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 150,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "lenovo-thinkpad-t16-g3-16-comp-37519424",
+    "listingId": "298737519424",
+    "title": "Lenovo Thinkpad T16 G3 16\" computer portatile coperchio superiore display LCD schermo assemblato - grado C",
+    "brand": "Lenovo",
+    "model": "Thinkpad T16 G3",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "studio",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 420,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/298737519424?_skw=laptop&hash=item458e24cb40%3Ag%3AN-EAAeSw0T5qxOON&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/N-EAAeSw0T5qxOON/s-l225.jpg",
+    "rating": 4.5,
+    "stamp": "cheaper_good",
+    "stampRationale": "Prezzo d'attacco minimo di 420€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "specs": {
+      "screen": {
+        "value": "16\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core i5 Multicore",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "up"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "up"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "Webcam integrata con sensore base per videochiamate ordinarie",
+    "flopWarnings": [
+      "Webcam integrata con sensore base per videochiamate ordinarie"
+    ],
+    "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 420,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "dell-latitude-5330-2-in-1-conv-70234432",
+    "listingId": "407270234432",
+    "title": "Dell Latitude 5330 2-in-1 convertibile // i7-1265U, 32 GB RAM, 1 TB SSD",
+    "brand": "Dell",
+    "model": "Latitude 5330 2-in-1",
+    "category": "gaming_ai",
+    "useCases": [
+      "creativita",
+      "programmazione",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 579,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/407270234432?_skw=notebook+i7+32GB&hash=item5ed3329940%3Ag%3Ap1QAAeSwkixqxOEC&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/p1QAAeSwkixqxOEC/s-l225.jpg",
+    "rating": 4.8,
+    "stamp": "scelta_furba",
+    "stampRationale": "L'affare d'oro: rapporto prestazioni/prezzo imbattibile a 579€. Spesa intelligente per chi vuole sostanza senza pagare il prezzo pieno da scaffale.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel Iris Xe Graphics",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core i7-1265U",
+        "indicator": "double_up"
+      },
+      "ram": {
+        "value": "32 GB DDR4",
+        "indicator": "double_up"
+      },
+      "ssd": {
+        "value": "1 TB SSD NVMe PCIe",
+        "indicator": "double_up"
+      }
+    },
+    "topComment": "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+    "topHighlights": [
+      "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+      "Maxi SSD da 1 TB per salvare decine di giochi e progetti pesanti"
+    ],
+    "flopComment": "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering",
+    "flopWarnings": [
+      "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering"
+    ],
+    "idealFor": "Editing e creatività, sviluppo e programmazione e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 579,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "portatile-hp-elitebook-835-g10-14933464",
+    "listingId": "860014933464",
+    "title": "Portatile HP EliteBook 835 G10 13,3\" WUXGA 256GB SSD AMD Ryzen 5 PRO 7545U 32GB RAM",
+    "brand": "Portatile",
+    "model": "HP EliteBook 835",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 700,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/860014933464?_skw=notebook+Ryzen+5+32GB&hash=itemc83ce275d8%3Ag%3AgJYAAeSwn6dqxN~F&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/gJYAAeSwn6dqxN~F/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 700€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "13.3\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "AMD Radeon Graphics integrata",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "AMD Ryzen 5 Multicore",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "32 GB DDR4",
+        "indicator": "double_up"
+      },
+      "ssd": {
+        "value": "256 GB SSD NVMe M.2",
+        "indicator": "down"
+      }
+    },
+    "topComment": "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+    "topHighlights": [
+      "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+      "Ottima dotazione di porte USB e ricarica rapida"
+    ],
+    "flopComment": "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+    "flopWarnings": [
+      "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+      "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering"
+    ],
+    "idealFor": "Sviluppo e programmazione e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 700,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "microsoft-surface-4-13-5-i5-11-24420022",
+    "listingId": "960024420022",
+    "title": "Microsoft Surface 4 13,5\" i5-1145G7 11a generazione 8 GB RAM - argento grado B Regno Unito senza HDD",
+    "brand": "Microsoft",
+    "model": "Surface 4 13,5\"",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "studio",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 187,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/960024420022?_skw=laptop&hash=itemdf85ea1eb6%3Ag%3A-vUAAeSwRdtqxN~q&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/-vUAAeSwRdtqxN~q/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 187€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "13.5\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel Iris Xe Graphics",
+        "indicator": "neutral"
+      },
+      "cpu": {
+        "value": "Intel Core i5-1145G7",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "8 GB DDR4",
+        "indicator": "down"
+      },
+      "ssd": {
+        "value": "256 GB SSD NVMe M.2",
+        "indicator": "neutral"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+    "flopWarnings": [
+      "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+      "RAM limitata a 8GB: può rallentare con decine di schede aperte"
+    ],
+    "idealFor": "Studio e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 187,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "msi-modern-15-f13mg-16gb-512gb-68146592",
+    "listingId": "168768146592",
+    "title": "MSI Modern 15 F13MG 16GB 512GB i5-1334U 15,6\" QWERTZ-HU ottimo",
+    "brand": "MSI",
+    "model": "Modern 15 F13MG",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "lavoro"
+    ],
+    "condition": "Ricondizionato",
+    "price": 637,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/168768146592?_skw=notebook+i5+16GB&hash=item274b5d8ca0%3Ag%3Anr4AAeSwn2NqxOCq&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/nr4AAeSwn2NqxOCq/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 637€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel Iris Xe Graphics",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core i5-1334U",
+        "indicator": "double_up"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "neutral"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "neutral"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering",
+    "flopWarnings": [
+      "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering"
+    ],
+    "idealFor": "Sviluppo e programmazione e lavoro d'ufficio.",
+    "weight": "1.80 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 637,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "lenovo-thinkbook-15-g4-aba-15--24380127",
+    "listingId": "960024380127",
+    "title": "Lenovo ThinkBook 15 G4 ABA 15\" i5-1135G7 8GB RAM - 256GB NVMe - Grigio Grado B UK",
+    "brand": "Lenovo",
+    "model": "ThinkBook 15 G4",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "studio",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 167,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/960024380127?_skw=laptop&hash=itemdf85e982df%3Ag%3ABJYAAeSw5etqxN-U&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/BJYAAeSw5etqxN-U/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 167€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "15\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel Iris Xe Graphics",
+        "indicator": "neutral"
+      },
+      "cpu": {
+        "value": "Intel Core i5-1135G7",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "8 GB DDR4",
+        "indicator": "down"
+      },
+      "ssd": {
+        "value": "256 GB SSD NVMe M.2",
+        "indicator": "neutral"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+    "flopWarnings": [
+      "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+      "RAM limitata a 8GB: può rallentare con decine di schede aperte"
+    ],
+    "idealFor": "Studio e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 167,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "dell-latitude-5320-i7-1185g7-1-14922102",
+    "listingId": "860014922102",
+    "title": "Dell Latitude 5320 i7-1185G7 16 GB RAM 512 GB NVMe SSD QWERTZ|",
+    "brand": "Dell",
+    "model": "Latitude 5320 i7-1185G7",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "studio",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 339,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/860014922102?_skw=notebook+i7+16GB&hash=itemc83ce24976%3Ag%3AqWkAAeSwtJFqxN3Z&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/qWkAAeSwtJFqxN3Z/s-l225.jpg",
+    "rating": 4.5,
+    "stamp": "cheaper_good",
+    "stampRationale": "Prezzo d'attacco minimo di 339€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "neutral"
+      },
+      "cpu": {
+        "value": "Intel Core i7-1185G7",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "up"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "up"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "Webcam integrata con sensore base per videochiamate ordinarie",
+    "flopWarnings": [
+      "Webcam integrata con sensore base per videochiamate ordinarie"
+    ],
+    "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 339,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "hp-elitebook-840-14-g9-i5-1245-70198036",
+    "listingId": "407270198036",
+    "title": "HP EliteBook 840 14\" G9 // i5-1245U, 16 GB RAM, 512 GB SSD, LTE, Touch",
+    "brand": "HP",
+    "model": "EliteBook 840 14\"",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "studio",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 399,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/407270198036?_skw=notebook+i5+16GB&hash=item5ed3320b14%3Ag%3A9u4AAeSwQ6VqxN6H&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/9u4AAeSwQ6VqxN6H/s-l225.jpg",
+    "rating": 4.5,
+    "stamp": "cheaper_good",
+    "stampRationale": "Prezzo d'attacco minimo di 399€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "specs": {
+      "screen": {
+        "value": "14\" 4K UHD (3840x2160) LED",
+        "indicator": "double_up"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core i5-1245U",
+        "indicator": "up"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "up"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "up"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "Webcam integrata con sensore base per videochiamate ordinarie",
+    "flopWarnings": [
+      "Webcam integrata con sensore base per videochiamate ordinarie"
+    ],
+    "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 399,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "lenovo-legion-5-gaming-laptop--70189425",
+    "listingId": "407270189425",
+    "title": "Lenovo Legion 5 Gaming Laptop // AMD Ryzen 7 250, RTX 5060, 32 GB RAM, 1 TB SSD",
+    "brand": "Lenovo",
+    "model": "Legion 5 Gaming",
+    "category": "gaming_ai",
+    "useCases": [
+      "gaming",
+      "creativita",
+      "programmazione",
+      "lavoro"
+    ],
+    "condition": "Ricondizionato",
+    "price": 1199,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/407270189425?_skw=notebook+Ryzen+5+32GB&hash=item5ed331e971%3Ag%3AlzAAAeSweUNqxN1L&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/lzAAAeSweUNqxN1L/s-l225.jpg",
+    "rating": 4.8,
+    "stamp": "scelta_furba",
+    "stampRationale": "L'affare d'oro: rapporto prestazioni/prezzo imbattibile a 1199€. Spesa intelligente per chi vuole sostanza senza pagare il prezzo pieno da scaffale.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" 2K QHD (2560x1440) LED",
+        "indicator": "down"
+      },
+      "gpu": {
+        "value": "NVIDIA GeForce RTX 5060 dedicata",
+        "indicator": "up"
+      },
+      "cpu": {
+        "value": "AMD Ryzen 7 Multicore",
+        "indicator": "up"
+      },
+      "ram": {
+        "value": "32 GB DDR4",
+        "indicator": "double_up"
+      },
+      "ssd": {
+        "value": "1 TB SSD NVMe PCIe",
+        "indicator": "double_up"
+      }
+    },
+    "topComment": "Scheda grafica NVIDIA RTX dedicata di fascia alta con DLSS e Frame Generation",
+    "topHighlights": [
+      "Scheda grafica NVIDIA RTX dedicata di fascia alta con DLSS e Frame Generation",
+      "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+      "Maxi SSD da 1 TB per salvare decine di giochi e progetti pesanti"
+    ],
+    "flopComment": "Peso superiore a 2.3 kg con alimentatore voluminoso",
+    "flopWarnings": [
+      "Peso superiore a 2.3 kg con alimentatore voluminoso"
+    ],
+    "idealFor": "Gaming, editing e creatività, sviluppo e programmazione e lavoro d'ufficio.",
+    "weight": "1.80 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 1199,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "acer-aspire-go-17-8gb-512gb-in-68031331",
+    "listingId": "168768031331",
+    "title": "Acer Aspire Go 17 8GB 512GB Intel Core 3 N355 17,3\" QWERTZ-HU ottimo",
+    "brand": "Acer",
+    "model": "Aspire Go 17",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "lavoro"
+    ],
+    "condition": "Ricondizionato",
+    "price": 516,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/168768031331?_skw=laptop&hash=item274b5bca63%3Ag%3AX7MAAeSwu9pqxNzw&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/X7MAAeSwu9pqxNzw/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 516€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "17.3\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core i5 Multicore",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "8 GB DDR4",
+        "indicator": "down"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "up"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering",
+    "flopWarnings": [
+      "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering",
+      "RAM limitata a 8GB: può rallentare con decine di schede aperte"
+    ],
+    "idealFor": "Lavoro d'ufficio.",
+    "weight": "1.80 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 516,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "hp-omnibook-5-flip-laptop-14-2-18198343",
+    "listingId": "137818198343",
+    "title": "HP OmniBook 5 Flip Laptop 14\" 2K IPS Touchscreen i5-1334U 16GB RAM 512GB SSD",
+    "brand": "HP",
+    "model": "OmniBook 5 Flip",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 687,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/137818198343?_skw=laptop&hash=item20169ad147%3Ag%3Az9cAAeSwI7ZqxNtg&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/z9cAAeSwI7ZqxNtg/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 687€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "14\" 2K QHD (2560x1440) IPS",
+        "indicator": "down"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core i5-1334U",
+        "indicator": "double_up"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "neutral"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "neutral"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering",
+    "flopWarnings": [
+      "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering"
+    ],
+    "idealFor": "Sviluppo e programmazione e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 687,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "portatile-dell-latitude-5410-1-14875772",
+    "listingId": "860014875772",
+    "title": "Portatile Dell Latitude 5410 14\"\" FHD 128GB SSD Intel i5-10210U 8GB di RAM Touch LTE",
+    "brand": "Portatile",
+    "model": "Dell Latitude 5410",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "studio",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 155,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/860014875772?_skw=laptop&hash=itemc83ce1947c%3Ag%3AT0gAAeSwGcxqxNy8&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/T0gAAeSwGcxqxNy8/s-l225.jpg",
+    "rating": 4.5,
+    "stamp": "cheaper_good",
+    "stampRationale": "Prezzo d'attacco minimo di 155€ senza fregature: monta 128GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "specs": {
+      "screen": {
+        "value": "14\" 4K UHD (3840x2160) LED",
+        "indicator": "double_up"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "neutral"
+      },
+      "cpu": {
+        "value": "Intel Core i5-10210U",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "128 GB DDR4",
+        "indicator": "double_up"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "up"
+      }
+    },
+    "topComment": "128 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+    "topHighlights": [
+      "128 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+      "Ottima dotazione di porte USB e ricarica rapida"
+    ],
+    "flopComment": "Webcam integrata con sensore base per videochiamate ordinarie",
+    "flopWarnings": [
+      "Webcam integrata con sensore base per videochiamate ordinarie"
+    ],
+    "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 155,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "portatile-dell-latitude-5400-1-14875613",
+    "listingId": "860014875613",
+    "title": "Portatile Dell Latitude 5400 14\"\" FHD 256GB SSD i5-8265U 8GB RAM QWERTY Touch LTE",
+    "brand": "Portatile",
+    "model": "Dell Latitude 5400",
+    "category": "budget_studenti",
+    "useCases": [
+      "studio"
+    ],
+    "condition": "Usato",
+    "price": 200,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/860014875613?_skw=laptop&hash=itemc83ce193dd%3Ag%3A1G4AAeSwQZZqxNy0&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/1G4AAeSwQZZqxNy0/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 200€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "14\" 4K UHD (3840x2160) LED",
+        "indicator": "double_up"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "neutral"
+      },
+      "cpu": {
+        "value": "Intel Core i5-8265U",
+        "indicator": "down"
+      },
+      "ram": {
+        "value": "8 GB DDR4",
+        "indicator": "down"
+      },
+      "ssd": {
+        "value": "256 GB SSD NVMe M.2",
+        "indicator": "neutral"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+    "flopWarnings": [
+      "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+      "RAM limitata a 8GB: può rallentare con decine di schede aperte"
+    ],
+    "idealFor": "Studio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 200,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "portatile-dell-latitude-5400-1-14875511",
+    "listingId": "860014875511",
+    "title": "Portatile Dell Latitude 5400 14\"\" FHD 256GB SSD i5-8365U 8GB RAM QWERTY Touch LTE",
+    "brand": "Portatile",
+    "model": "Dell Latitude 5400",
+    "category": "budget_studenti",
+    "useCases": [
+      "studio"
+    ],
+    "condition": "Usato",
+    "price": 190,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/860014875511?_skw=laptop&hash=itemc83ce19377%3Ag%3A0ggAAeSwrV5qxNyw&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/0ggAAeSwrV5qxNyw/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 190€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "14\" 4K UHD (3840x2160) LED",
+        "indicator": "double_up"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "neutral"
+      },
+      "cpu": {
+        "value": "Intel Core i5-8365U",
+        "indicator": "down"
+      },
+      "ram": {
+        "value": "8 GB DDR4",
+        "indicator": "down"
+      },
+      "ssd": {
+        "value": "256 GB SSD NVMe M.2",
+        "indicator": "neutral"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+    "flopWarnings": [
+      "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+      "RAM limitata a 8GB: può rallentare con decine di schede aperte"
+    ],
+    "idealFor": "Studio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 190,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "lenovo-thinkpad-t16-gen-2-i5-1-48326660",
+    "listingId": "377548326660",
+    "title": "Lenovo ThinkPad T16 Gen 2 i5-1335U 16 GB 512 GB SSD WUXGA W11 16\" computer portatile #32",
+    "brand": "Lenovo",
+    "model": "ThinkPad T16 Gen",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 700,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/377548326660?_skw=notebook+i5+16GB&hash=item57e7a24704%3Ag%3AwLcAAeSwYjtqrQYg&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/wLcAAeSwYjtqrQYg/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 700€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "16\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core i5-1335U",
+        "indicator": "double_up"
+      },
+      "ram": {
+        "value": "16 GB DDR5",
+        "indicator": "up"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "neutral"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering",
+    "flopWarnings": [
+      "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering"
+    ],
+    "idealFor": "Sviluppo e programmazione e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 700,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "portatile-macbook-pro-13-a1989-14872822",
+    "listingId": "860014872822",
+    "title": "Portatile Macbook Pro 13 A1989 Retina 13\" Intel Core i7 / 16 GB / 256 GB",
+    "brand": "Portatile",
+    "model": "Macbook Pro 13",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "studio",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 324,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/860014872822?_skw=notebook+i7+16GB&hash=itemc83ce188f6%3Ag%3Aox0AAeSwjnBqxNoJ&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/ox0AAeSwjnBqxNoJ/s-l225.jpg",
+    "rating": 4.5,
+    "stamp": "cheaper_good",
+    "stampRationale": "Prezzo d'attacco minimo di 324€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "specs": {
+      "screen": {
+        "value": "13\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "neutral"
+      },
+      "cpu": {
+        "value": "Intel Core i7-8569U",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "up"
+      },
+      "ssd": {
+        "value": "256 GB SSD NVMe M.2",
+        "indicator": "neutral"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+    "flopWarnings": [
+      "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB"
+    ],
+    "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 324,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "lenovo-thinkpad-x1-carbon-g10--70170196",
+    "listingId": "407270170196",
+    "title": "Lenovo ThinkPad X1 Carbon G10 // Intel Core i7-1255U, 16 GB RAM, 512 GB SSD, 5G",
+    "brand": "Lenovo",
+    "model": "ThinkPad X1 Carbon",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "lavoro"
+    ],
+    "condition": "Ricondizionato",
+    "price": 579,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/407270170196?_skw=notebook+i7+16GB&hash=item5ed3319e54%3Ag%3ATH0AAeSwevlqxNwO&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/TH0AAeSwevlqxNwO/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 579€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel Iris Xe Graphics",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core i7-1255U",
+        "indicator": "double_up"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "neutral"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "up"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering",
+    "flopWarnings": [
+      "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering"
+    ],
+    "idealFor": "Sviluppo e programmazione e lavoro d'ufficio.",
+    "weight": "1.80 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 579,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "lenovo-thinkpad-a485-amd-ryzen-63945133",
+    "listingId": "800763945133",
+    "title": "Lenovo ThinkPad A485 AMD Ryzen 3 PRO 2300U 8 GB RAM 256 GB SSD 14\" FHD",
+    "brand": "Lenovo",
+    "model": "ThinkPad A485 AMD",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "studio",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 179,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/800763945133?_skw=laptop&hash=itemba714020ad%3Ag%3AbsgAAeSw4dRqxNuS&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/bsgAAeSw4dRqxNuS/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 179€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "14\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "AMD Radeon Graphics integrata",
+        "indicator": "neutral"
+      },
+      "cpu": {
+        "value": "Intel Core i5 Multicore",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "8 GB DDR4",
+        "indicator": "down"
+      },
+      "ssd": {
+        "value": "256 GB SSD NVMe M.2",
+        "indicator": "neutral"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+    "flopWarnings": [
+      "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+      "RAM limitata a 8GB: può rallentare con decine di schede aperte"
+    ],
+    "idealFor": "Studio e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 179,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "notebook-hp-elitebook-850-g7-i-09808542",
+    "listingId": "820209808542",
+    "title": "Notebook HP EliteBook 850 G7 i5-10210U 8GB 256GB NVMe Win11 Pro",
+    "brand": "Notebook",
+    "model": "HP EliteBook 850",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "studio",
+      "lavoro"
+    ],
+    "condition": "Ricondizionato",
+    "price": 315,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/820209808542?_skw=laptop&hash=itembef850749e%3Ag%3APbsAAeSwAUNqxNuv&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/PbsAAeSwAUNqxNuv/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 315€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "neutral"
+      },
+      "cpu": {
+        "value": "Intel Core i5-10210U",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "8 GB DDR4",
+        "indicator": "down"
+      },
+      "ssd": {
+        "value": "256 GB SSD NVMe M.2",
+        "indicator": "neutral"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+    "flopWarnings": [
+      "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+      "RAM limitata a 8GB: può rallentare con decine di schede aperte"
+    ],
+    "idealFor": "Studio e lavoro d'ufficio.",
+    "weight": "1.80 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 315,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "dell-latitude-5540-15-6-intel--48296113",
+    "listingId": "377548296113",
+    "title": "Dell Latitude 5540 - 15,6\" - Intel Core i7 - 1365U - 16 GB RAM - 512 GB SSD",
+    "brand": "Dell",
+    "model": "Latitude 5540 -",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "studio",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 344,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/377548296113?_skw=laptop&hash=item57e7a1cfb1%3Ag%3AZT8AAeSwvflqxNJJ&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/ZT8AAeSwvflqxNJJ/s-l225.jpg",
+    "rating": 4.5,
+    "stamp": "cheaper_good",
+    "stampRationale": "Prezzo d'attacco minimo di 344€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "neutral"
+      },
+      "cpu": {
+        "value": "Intel Core i7-1365U",
+        "indicator": "double_up"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "up"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "up"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "Webcam integrata con sensore base per videochiamate ordinarie",
+    "flopWarnings": [
+      "Webcam integrata con sensore base per videochiamate ordinarie"
+    ],
+    "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 344,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "hp-zbook-fury-15-g7-xeon-w-108-63902999",
+    "listingId": "800763902999",
+    "title": "HP ZBook Fury 15 G7 | Xeon W-10885M | 32 GB | 1 TB SSD | Quadro T1000 | Windows 11",
+    "brand": "HP",
+    "model": "ZBook Fury 15",
+    "category": "gaming_ai",
+    "useCases": [
+      "creativita",
+      "programmazione",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 599,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/800763902999?_skw=notebook+Quadro&hash=itemba713f7c17%3Ag%3AjFEAAeSwmcFqxNha&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/jFEAAeSwmcFqxNha/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 599€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "15\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "NVIDIA Quadro T1000 (4GB GDDR6)",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core i5 Multicore",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "32 GB DDR4",
+        "indicator": "double_up"
+      },
+      "ssd": {
+        "value": "1 TB SSD NVMe PCIe",
+        "indicator": "double_up"
+      }
+    },
+    "topComment": "Scheda video professionale con driver certificati per software CAD e 3D",
+    "topHighlights": [
+      "Scheda video professionale con driver certificati per software CAD e 3D",
+      "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+      "Maxi SSD da 1 TB per salvare decine di giochi e progetti pesanti"
+    ],
+    "flopComment": "Peso superiore a 2.3 kg con alimentatore voluminoso",
+    "flopWarnings": [
+      "Peso superiore a 2.3 kg con alimentatore voluminoso"
+    ],
+    "idealFor": "Editing e creatività, sviluppo e programmazione e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 599,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "hp-elitebook-850-g4-i5-7200u-1-24139104",
+    "listingId": "960024139104",
+    "title": "HP EliteBook 850 G4 i5-7200U 15,6\" FHD Webcam Windows 10 Pro DE",
+    "brand": "HP",
+    "model": "EliteBook 850 G4",
+    "category": "budget_studenti",
+    "useCases": [
+      "studio"
+    ],
+    "condition": "Ricondizionato",
+    "price": 509,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/960024139104?_skw=notebook+i5+32GB&hash=itemdf85e5d560%3Ag%3AU9cAAeSwCFxqxNgW&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/U9cAAeSwCFxqxNgW/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 199€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "neutral"
+      },
+      "cpu": {
+        "value": "Intel Core i5-7200U",
+        "indicator": "down"
+      },
+      "ram": {
+        "value": "8 GB DDR4",
+        "indicator": "down"
+      },
+      "ssd": {
+        "value": "256 GB SSD NVMe M.2",
+        "indicator": "neutral"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+    "flopWarnings": [
+      "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+      "RAM limitata a 8GB: può rallentare con decine di schede aperte"
+    ],
+    "idealFor": "Studio.",
+    "weight": "1.84 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 199,
+        "date": "2026-10-06"
+      },
+      {
+        "price": 224,
+        "date": "2026-10-06"
+      },
+      {
+        "price": 509,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "acer-aspire-1-8gb-128gb-n6000--67864126",
+    "listingId": "168767864126",
+    "title": "Acer Aspire 1 8GB 128GB N6000 (AL15-32P) 15,6\" QWERTZ-HU ottimo",
+    "brand": "Acer",
+    "model": "Aspire 1 8GB",
+    "category": "budget_studenti",
+    "useCases": [
+      "studio"
+    ],
+    "condition": "Ricondizionato",
+    "price": 307,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/168767864126?_skw=laptop&hash=item274b593d3e%3Ag%3AJJAAAeSwevlqxNkz&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/JJAAAeSwevlqxNkz/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 307€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" 4K UHD (3840x2160) LED",
+        "indicator": "double_up"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "neutral"
+      },
+      "cpu": {
+        "value": "Intel Pentium Silver N6000",
+        "indicator": "down"
+      },
+      "ram": {
+        "value": "8 GB DDR4",
+        "indicator": "down"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "up"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "RAM limitata a 8GB: può rallentare con decine di schede aperte",
+    "flopWarnings": [
+      "RAM limitata a 8GB: può rallentare con decine di schede aperte"
+    ],
+    "idealFor": "Studio.",
+    "weight": "1.80 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 307,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "lenovo-thinksystem-01pe327-1-9-09704537",
+    "listingId": "820209704537",
+    "title": "Lenovo ThinkSystem 01PE327 1,92 TB 4XB7A13622 2,5\" lettura intensiva SATA 6Gb HS SSD",
+    "brand": "Lenovo",
+    "model": "ThinkSystem 01PE327 1,92",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "lavoro"
+    ],
+    "condition": "Nuovo",
+    "price": 512,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/820209704537?_skw=laptop&hash=itembef84ede59%3Ag%3AoMoAAeSwTatqxNXi&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/oMoAAeSwTatqxNXi/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 512€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core i5 Multicore",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "6 GB DDR4",
+        "indicator": "down"
+      },
+      "ssd": {
+        "value": "2 TB SSD NVMe PCIe",
+        "indicator": "double_up"
+      }
+    },
+    "topComment": "Maxi SSD da 2 TB per salvare decine di giochi e progetti pesanti",
+    "topHighlights": [
+      "Maxi SSD da 2 TB per salvare decine di giochi e progetti pesanti",
+      "Ottima dotazione di porte USB e ricarica rapida"
+    ],
+    "flopComment": "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering",
+    "flopWarnings": [
+      "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering",
+      "RAM limitata a 8GB: può rallentare con decine di schede aperte"
+    ],
+    "idealFor": "Lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 512,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "lenovo-thinkpad-t14-gen-2-32-g-67841136",
+    "listingId": "168767841136",
+    "title": "Lenovo ThinkPad T14 Gen 2 | 32 GB RYZEN 5 PRO | QWERTY | garanzia e fattura",
+    "brand": "Lenovo",
+    "model": "ThinkPad T14 Gen",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "studio",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 464,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/168767841136?_skw=laptop&hash=item274b58e370%3Ag%3AkrQAAeSwcJ1qhD2e&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/krQAAeSwcJ1qhD2e/s-l225.jpg",
+    "rating": 4.5,
+    "stamp": "cheaper_good",
+    "stampRationale": "Prezzo d'attacco minimo di 464€ senza fregature: monta 32GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "AMD Radeon Graphics integrata",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "AMD Ryzen 5 Multicore",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "32 GB DDR4",
+        "indicator": "double_up"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "up"
+      }
+    },
+    "topComment": "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+    "topHighlights": [
+      "32 GB di RAM: multitasking infinito e rendering pesante senza swap su disco",
+      "Ottima dotazione di porte USB e ricarica rapida"
+    ],
+    "flopComment": "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering",
+    "flopWarnings": [
+      "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering",
+      "Peso superiore a 2.3 kg con alimentatore voluminoso"
+    ],
+    "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
+    "weight": "1.48 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 464,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "istorage-diskashur-pro3-ssd-1t-60735906",
+    "listingId": "178560735906",
+    "title": "iStorage diskAshur PRO3 SSD 1TB – Secure Portable Solid State Drive - FIPS Level",
+    "brand": "iStorage",
+    "model": "diskAshur PRO3 SSD",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 544,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/178560735906?_skw=laptop&hash=item29930c9aa2%3Ag%3AFbsAAeSwtjZqxNUw&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/FbsAAeSwtjZqxNUw/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 544€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" FHD (1920x1080) IPS",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core i5 Multicore",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "neutral"
+      },
+      "ssd": {
+        "value": "1 TB SSD NVMe PCIe",
+        "indicator": "double_up"
+      }
+    },
+    "topComment": "Maxi SSD da 1 TB per salvare decine di giochi e progetti pesanti",
+    "topHighlights": [
+      "Maxi SSD da 1 TB per salvare decine di giochi e progetti pesanti",
+      "Ottima dotazione di porte USB e ricarica rapida"
+    ],
+    "flopComment": "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering",
+    "flopWarnings": [
+      "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering",
+      "Peso superiore a 2.3 kg con alimentatore voluminoso"
+    ],
+    "idealFor": "Sviluppo e programmazione e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 544,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "lenovo-thinkpad-t15p-g1-i7-108-24021973",
+    "listingId": "960024021973",
+    "title": "Lenovo ThinkPad T15p G1 i7-10850H 15,6\" FHD GTX 1050 Win 11 Pro IT",
+    "brand": "Lenovo",
+    "model": "ThinkPad T15p G1",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "lavoro"
+    ],
+    "condition": "Ricondizionato",
+    "price": 679,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/960024021973?_skw=notebook+i7+32GB&hash=itemdf85e40bd5%3Ag%3AaV4AAeSwp0JqxNRz&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/aV4AAeSwp0JqxNRz/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 589€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core i7-10850H",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "8 GB DDR4",
+        "indicator": "down"
+      },
+      "ssd": {
+        "value": "256 GB SSD NVMe M.2",
+        "indicator": "down"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+    "flopWarnings": [
+      "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+      "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering"
+    ],
+    "idealFor": "Lavoro d'ufficio.",
+    "weight": "2.07 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 589,
+        "date": "2026-10-06"
+      },
+      {
+        "price": 614,
+        "date": "2026-10-06"
+      },
+      {
+        "price": 679,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "lenovo-thinkpad-l13-yoga-gen-2-14754964",
+    "listingId": "860014754964",
+    "title": "Lenovo ThinkPad L13 Yoga Gen 2 i5 16 GB 512 GB SSD Touchscreen Classe B",
+    "brand": "Lenovo",
+    "model": "ThinkPad L13 Yoga",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "studio",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 276,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/860014754964?_skw=notebook+i5+16GB&hash=itemc83cdfbc94%3Ag%3ASRcAAeSw0T5qxNL-&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/SRcAAeSw0T5qxNL-/s-l225.jpg",
+    "rating": 4.5,
+    "stamp": "cheaper_good",
+    "stampRationale": "Prezzo d'attacco minimo di 276€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "neutral"
+      },
+      "cpu": {
+        "value": "Intel Core i5-1145G7",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "up"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "up"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "Webcam integrata con sensore base per videochiamate ordinarie",
+    "flopWarnings": [
+      "Webcam integrata con sensore base per videochiamate ordinarie"
+    ],
+    "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 276,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "hp-pavilion-15-eg0033na-11a-ge-37386713",
+    "listingId": "298737386713",
+    "title": "HP PAVILION 15-EG0033NA/11a generazione i3-1115G4/ 15,6\"/ Touch Screen/8GB Ram/AVVIATO",
+    "brand": "HP",
+    "model": "PAVILION 15-EG0033NA/11a generazione",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "studio",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 152,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/298737386713?_skw=laptop&hash=item458e22c4d9%3Ag%3A95AAAeSwm-xqxNKz&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/95AAAeSwm-xqxNKz/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 152€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" 4K UHD (3840x2160) LED",
+        "indicator": "double_up"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "neutral"
+      },
+      "cpu": {
+        "value": "Intel Core i5 Multicore",
+        "indicator": "neutral"
+      },
+      "ram": {
+        "value": "8 GB DDR4",
+        "indicator": "down"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "up"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "RAM limitata a 8GB: può rallentare con decine di schede aperte",
+    "flopWarnings": [
+      "RAM limitata a 8GB: può rallentare con decine di schede aperte"
+    ],
+    "idealFor": "Studio e lavoro d'ufficio.",
+    "weight": "1.70 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 152,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "hewlett-packard-laptop-windows-06700803",
+    "listingId": "206606700803",
+    "title": "Hewlett Packard Laptop Windows 11 Pro Core i5-1245U 16GB RAM 256GB SSD Japan",
+    "brand": "Hewlett",
+    "model": "Packard Laptop Windows",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 743,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/206606700803?_skw=laptop&hash=item301ab81103%3Ag%3Alo4AAeSwZPtqxNLr&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/lo4AAeSwZPtqxNLr/s-l225.jpg",
+    "rating": 4.0,
+    "stamp": "nessuno",
+    "stampRationale": "Prodotto bilanciato e affidabile a 743€ con un buon prezzo netto verificato.",
+    "specs": {
+      "screen": {
+        "value": "15.6\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel UHD Graphics integrata",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core i5-1245U",
+        "indicator": "up"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "neutral"
+      },
+      "ssd": {
+        "value": "256 GB SSD NVMe M.2",
+        "indicator": "down"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+    "flopWarnings": [
+      "SSD base da 256GB: spazio ridotto, consigliato upgrade a 512GB",
+      "Nessuna scheda grafica dedicata: NON adatto a gaming 3D moderno o rendering"
+    ],
+    "idealFor": "Sviluppo e programmazione e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 743,
+        "date": "2026-10-06"
+      }
+    ]
+  },
+  {
+    "id": "dell-latitude-7440-14-i7-1365u-23972535",
+    "listingId": "960023972535",
+    "title": "Dell Latitude 7440 14\" i7-1365U 13a generazione 16 GB RAM & 512 GB SSD - grigio grado C Regno Unito",
+    "brand": "Dell",
+    "model": "Latitude 7440 14\"",
+    "category": "lavoro_ufficio",
+    "useCases": [
+      "programmazione",
+      "studio",
+      "lavoro"
+    ],
+    "condition": "Usato",
+    "price": 381,
+    "store": "eBay.it",
+    "affiliateUrl": "https://www.ebay.it/itm/960023972535?_skw=laptop&hash=itemdf85e34ab7%3Ag%3ATKYAAeSwSWNqxNJh&mkevt=1&mkcid=1&mkrid=724-53478-19255-0&campid=5339209756&toolid=10001",
+    "imageUrl": "https://i.ebayimg.com/images/g/TKYAAeSwSWNqxNJh/s-l225.jpg",
+    "rating": 4.5,
+    "stamp": "cheaper_good",
+    "stampRationale": "Prezzo d'attacco minimo di 381€ senza fregature: monta 16GB di RAM e SSD veloce dove la concorrenza offre solo computer lenti.",
+    "specs": {
+      "screen": {
+        "value": "14\" FHD (1920x1080) LED",
+        "indicator": "neutral"
+      },
+      "gpu": {
+        "value": "Intel Iris Xe Graphics",
+        "indicator": "down"
+      },
+      "cpu": {
+        "value": "Intel Core i7-1365U",
+        "indicator": "double_up"
+      },
+      "ram": {
+        "value": "16 GB DDR4",
+        "indicator": "up"
+      },
+      "ssd": {
+        "value": "512 GB SSD NVMe M.2",
+        "indicator": "up"
+      }
+    },
+    "topComment": "Ottima dotazione di porte USB e ricarica rapida",
+    "topHighlights": [
+      "Ottima dotazione di porte USB e ricarica rapida",
+      "Testato e verificato con copertura di garanzia"
+    ],
+    "flopComment": "Webcam integrata con sensore base per videochiamate ordinarie",
+    "flopWarnings": [
+      "Webcam integrata con sensore base per videochiamate ordinarie"
+    ],
+    "idealFor": "Sviluppo e programmazione, studio e lavoro d'ufficio.",
+    "weight": "2.20 kg",
+    "warranty": "12 Mesi di Garanzia Inclusa",
+    "lastUpdated": "2026-10-06",
+    "priceHistory": [
+      {
+        "price": 381,
+        "date": "2026-10-06"
       }
     ]
   }
